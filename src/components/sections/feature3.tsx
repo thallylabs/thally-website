@@ -1,0 +1,121 @@
+"use client";
+
+import { Bot, Braces, Search, Workflow } from "lucide-react";
+import { type ComponentType } from "react";
+
+import {
+  ApiReferenceView,
+  ContentGraphView,
+  ReadinessView,
+  SearchConsoleView,
+} from "@/components/illustrations/thally-ui";
+import { SectionGrid, SectionHeader, SectionLines } from "@/components/section-decor";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+const FEATURES: {
+  title: string;
+  description: string;
+  icon: ComponentType<{ className?: string }>;
+  content: { title: string; description: string; view: ComponentType };
+}[] = [
+  {
+    title: "Content graph",
+    description: "One MDX source, every format projected from it.",
+    icon: Workflow,
+    content: {
+      title: "Author once. Thally does the projections.",
+      description:
+        "Every page is parsed into a typed graph. JSON, JSON-LD, Markdown, HTML, search, and embeddings are all generated from it, never maintained by hand. One source of truth, no drift.",
+      view: ContentGraphView,
+    },
+  },
+  {
+    title: "Search & answers",
+    description: "Hybrid search and grounded chat, one index.",
+    icon: Search,
+    content: {
+      title: "Search and answers, on the same index.",
+      description:
+        "A single ⌘K console spans full-text search, vector recall, and a grounded answer engine. Every reply cites the pages it came from, and it refuses to guess.",
+      view: SearchConsoleView,
+    },
+  },
+  {
+    title: "API reference",
+    description: "Your OpenAPI spec, rendered live and in sync.",
+    icon: Braces,
+    content: {
+      title: "Drop in a spec, get a living reference.",
+      description:
+        "Parameter tables, request and response schemas, code samples, and a Try-it console, regenerated on every build so the reference never drifts from the API.",
+      view: ApiReferenceView,
+    },
+  },
+  {
+    title: "Agent endpoints",
+    description: "llms.txt, MCP, and per-page JSON by default.",
+    icon: Bot,
+    content: {
+      title: "Legible to every machine reader.",
+      description:
+        "llms.txt, agent manifests, and per-page JSON ship with every deploy. Every site is also a remote MCP server at /api/mcp: attach it to any agent and your docs become native tools.",
+      view: ReadinessView,
+    },
+  },
+];
+
+export const Feature3 = () => {
+  return (
+    <section id="workflows" className="bg-accent relative py-16 md:py-24 lg:py-32">
+      <SectionGrid className="opacity-20" />
+      <SectionLines />
+      <div className="relative container">
+        <SectionHeader
+          title="One graph, read six different ways"
+          description="There's no glue code between search, chat, the API reference, and the agent layer. They're the same content graph, projected for whoever is reading."
+        />
+
+        <Tabs
+          defaultValue={FEATURES[0].title}
+          orientation="vertical"
+          className="mt-8 flex gap-4 max-lg:flex-col-reverse md:mt-12 lg:mt-20"
+        >
+          <TabsList className="bg-muted flex h-auto justify-start overflow-x-auto rounded-xl p-1.5 lg:basis-1/4 lg:flex-col">
+            {FEATURES.map((feature) => (
+              <TabsTrigger
+                key={feature.title}
+                value={feature.title}
+                className="text-muted-foreground data-[state=active]:bg-background data-[state=active]:text-foreground border-border w-full min-w-[200px] flex-1 justify-start rounded-lg border border-transparent px-4 py-3 text-start whitespace-normal transition-colors duration-300 data-[state=active]:shadow-sm lg:px-6 lg:py-4"
+              >
+                <div>
+                  <feature.icon className="text-primary size-7 md:size-8" />
+                  <h3 className="font-display mt-3 font-semibold">{feature.title}</h3>
+                  <p className="text-muted-foreground mt-1 text-sm">{feature.description}</p>
+                </div>
+              </TabsTrigger>
+            ))}
+          </TabsList>
+
+          {FEATURES.map((feature) => {
+            const View = feature.content.view;
+            return (
+              <TabsContent
+                className="border-border bg-card m-0 flex-1 overflow-hidden rounded-2xl border"
+                key={feature.title}
+                value={feature.title}
+              >
+                <div className="max-w-2xl p-5 text-lg text-balance lg:p-7">
+                  <h4 className="font-display inline font-semibold">{feature.content.title} </h4>
+                  <span className="text-muted-foreground font-medium text-pretty">{feature.content.description}</span>
+                </div>
+                <div className="bg-muted/50 border-border border-t p-4 lg:p-6">
+                  <View />
+                </div>
+              </TabsContent>
+            );
+          })}
+        </Tabs>
+      </div>
+    </section>
+  );
+};
