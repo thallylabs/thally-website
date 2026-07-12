@@ -1,6 +1,6 @@
 # Thally
 
-> Thally is the AI-native documentation platform for machines and humans. One MDX source serves structured JSON, JSON-LD, and Markdown to AI agents and polished HTML to human readers, from the same URL. A built-in docs agent turns product changes, GitHub mentions, and readiness findings into reviewed documentation pull requests. Self-hosted, open source (MIT), zero vendor lock-in.
+> Thally is the AI-native documentation platform for AI agents and humans. One MDX source serves structured JSON, JSON-LD, and Markdown to AI agents and polished HTML to human readers, from the same URL. A built-in docs agent turns product changes, GitHub mentions, and readiness findings into reviewed documentation pull requests. Self-hosted, open source (MIT), zero vendor lock-in.
 
 ## What Thally does
 
@@ -20,13 +20,23 @@
 
 - [Home](/): product overview, features, pricing, FAQ
 - [Pricing](/pricing): Free (self-host, MIT), Cloud (per editor), Enterprise (SSO, SLA)
+- [Blog](/blog): comparisons, guides, and product deep dives (RSS at /rss.xml)
 - [About](/about): team and mission
 - [FAQ](/faq): common questions on migration, automation, agents, self-hosting
 - [Contact](/contact): sales and support
 - [Sign up](/signup): start free
 
+## Blog highlights
+
+- [Thally vs Mintlify](/blog/thally-vs-mintlify): ownership, self-hosting, and machine readability compared
+- [Thally vs GitBook](/blog/thally-vs-gitbook): docs-as-code versus a hosted wiki
+- [Thally vs Docusaurus](/blog/thally-vs-docusaurus): two open-source paths to developer docs
+- [What is AI-native documentation?](/blog/what-is-ai-native-documentation): a definition, with checks
+- [Making docs agent-readable](/blog/agent-ready-docs-llms-txt-mcp): llms.txt, MCP, and content negotiation, step by step
+
 ## Pricing summary
 
 - Free: $0. Self-host forever. MIT licensed, commercial use OK. Unlimited pages and readers, all output formats, MCP server, hybrid search, docs agent with your own API key.
-- Cloud: per-editor pricing. Adds Thally AI answers and chat, Thally Track with one-click GitHub App, agent-readiness CI checks, admin dashboard and analytics, team roles.
-- Enterprise: SAML and SCIM SSO, audit log, 99.9% uptime SLA, self-hosted with support.
+- Cloud: $8 per editor/month ($60/editor/year billed annually), 14-day trial. Adds Thally AI answers and chat, Thally Track with one-click GitHub App, agent-readiness CI checks, admin dashboard and analytics, team roles.
+- Enterprise: $15 per editor/month ($120/editor/year billed annually). SAML and SCIM SSO, audit log, 99.9% uptime SLA, self-hosted with support.
+- Machine-readable pricing: [/pricing.md](/pricing.md)

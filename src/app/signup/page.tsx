@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 
@@ -5,6 +6,15 @@ import { Logo } from "@/components/layout/logo";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+
+export const metadata: Metadata = {
+  title: "Start free",
+  description:
+    "Create a Thally account in under two minutes. Free to self-host forever, or start a 14-day Cloud trial — no credit card required.",
+  alternates: {
+    canonical: "/signup",
+  },
+};
 
 const Signup = () => {
   return (

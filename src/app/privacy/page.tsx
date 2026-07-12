@@ -1,15 +1,15 @@
-"use client";
+import type { Metadata } from "next";
 
-import Privacy from "./privacy.mdx";
+import { PrivacyContent } from "./privacy-content";
 
-const Page = () => {
-  return (
-    <section className="mx-auto max-w-4xl px-4 py-16 md:py-28 lg:py-32">
-      <article className="prose prose-lg dark:prose-invert">
-        <Privacy />
-      </article>
-    </section>
-  );
+export const metadata: Metadata = {
+  title: "Privacy policy",
+  description: "How Thally collects, uses, and protects your data, on Cloud and when you self-host.",
+  alternates: {
+    canonical: "/privacy",
+  },
 };
 
-export default Page;
+export default function Page() {
+  return <PrivacyContent />;
+}

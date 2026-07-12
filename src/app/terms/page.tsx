@@ -1,15 +1,15 @@
-"use client";
+import type { Metadata } from "next";
 
-import Privacy from "./terms.mdx";
+import { TermsContent } from "./terms-content";
 
-const Page = () => {
-  return (
-    <section className="mx-auto max-w-4xl px-4 py-16 md:py-28 lg:py-32">
-      <article className="prose prose-lg dark:prose-invert">
-        <Privacy />
-      </article>
-    </section>
-  );
+export const metadata: Metadata = {
+  title: "Terms of service",
+  description: "The terms that govern your use of Thally Cloud and the MIT-licensed self-hosted platform.",
+  alternates: {
+    canonical: "/terms",
+  },
 };
 
-export default Page;
+export default function Page() {
+  return <TermsContent />;
+}

@@ -152,10 +152,10 @@ const About = () => {
             </Reveal>
             <Reveal className="max-w-xl text-lg lg:translate-x-24" delay={0.08}>
               <p>
-                We&apos;ve spent our careers gluing docs stacks together — a static site generator here, a search
-                vendor there, a chat widget, and sync scripts holding it all in line. Every format drifted from the
-                last. We wanted to start from the opposite end: one typed content graph, with every human and machine
-                format projected from it — never maintained by hand.
+                We&apos;ve spent our careers gluing docs stacks together — a static site generator here, a search vendor
+                there, a chat widget, and sync scripts holding it all in line. Every format drifted from the last. We
+                wanted to start from the opposite end: one typed content graph, with every human and machine format
+                projected from it — never maintained by hand.
               </p>
             </Reveal>
 
@@ -193,7 +193,7 @@ const About = () => {
                 to build with us, check out our open roles:
               </p>
               <Button asChild variant="outline" size="lg" className="mt-6 md:mt-8 lg:mt-10">
-                <Link href="#">
+                <Link href="/contact">
                   <span className="flex items-center gap-2 text-start">
                     View open roles
                     <ArrowRight className="size-4" />
@@ -213,8 +213,8 @@ const About = () => {
               Meet the team behind Thally
             </h2>
             <p className="text-muted-foreground mt-4 max-w-lg text-lg">
-              A small team across six time zones, united by one obsession: docs that stay true for every reader —
-              human or machine.
+              A small team across six time zones, united by one obsession: docs that stay true for every reader — human
+              or machine.
             </p>
           </Reveal>
 

@@ -196,6 +196,18 @@
     margin-top: 2rem;
     margin-bottom: 0.75rem;
   }
+
+  /* Inline code: drop the typography plugin's literal backticks, add a quiet chip. */
+  .prose :where(code)::before,
+  .prose :where(code)::after {
+    content: none !important;
+  }
+  .prose :where(code):not(:where(pre code)) {
+    background: var(--muted);
+    border-radius: 0.3rem;
+    padding: 0.125rem 0.35rem;
+    font-weight: 500;
+  }
 }
 
 @utility container {
@@ -233,6 +245,31 @@ html.theme-transition::view-transition-old(root) {
 html.theme-transition::view-transition-new(root) {
   z-index: 2;
   animation: theme-mask 0.5s ease-in forwards;
+}
+
+/* Migrate section: orbiting logo cluster + terminal caret */
+@keyframes orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit-spin-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+
+  50%,
+  100% {
+    opacity: 0;
+  }
 }
 
 /* Handle reduced motion preference globally */

@@ -1,0 +1,71 @@
+**The short answer:** both are MIT-licensed and free to self-host. Docusaurus is a mature React static-site framework you assemble yourself; Thally is a complete documentation platform with the AI layer built in: structured per-page output, an MCP server, hybrid search, and a docs agent that opens reviewed PRs. If you enjoy assembling your stack, Docusaurus is a great kit. If you want agent-ready docs out of the box, Thally saves you the assembly.
+
+## Two open-source philosophies
+
+Docusaurus, maintained by Meta, is one of the most successful docs frameworks ever shipped. It gives you a React site generator with versioning, i18n, MDX, and a huge plugin ecosystem. What you build on top is up to you.
+
+Thally is also open source (MIT), but it is a platform rather than a kit: search, AI chat, API reference, analytics, theming, and the machine-readability layer are part of the product, not plugins you select and maintain.
+
+The right choice depends on whether assembling and maintaining that stack is a cost or a hobby for your team.
+
+## The comparison at a glance
+
+| | Thally | Docusaurus |
+| --- | --- | --- |
+| License | MIT | MIT |
+| Self-hosting | Yes, free | Yes, free |
+| Machine output | JSON, JSON-LD, Markdown, HTML per page | HTML; structured output is DIY |
+| Search | Hybrid full-text + vector, built in | Typically Algolia DocSearch or a plugin |
+| AI chat | Retrieval-grounded with citations, built in | DIY via third-party services |
+| MCP server | Every deploy, `/api/mcp` | DIY |
+| API reference | OpenAPI-generated with Try-It console | Community plugins |
+| Docs automation | Agent drafts reviewed PRs from product changes | None built in |
+| Managed hosting | Optional, $8 per editor/month | None official; deploy anywhere |
+| Maturity | Newer platform | Battle-tested since 2017 |
+
+Docusaurus's plugin ecosystem is broad and moves fast; check the current docs for what exists today.
+
+## What "the AI layer" actually means
+
+With Docusaurus you can absolutely build agent-readable docs. You would add a plugin or custom code for llms.txt, write a build step that emits JSON per page, stand up your own MCP server, and wire a search index with embeddings. Each piece is a project, and each piece is yours to maintain through every Docusaurus major version.
+
+Thally ships that layer as the default:
+
+- every page serves **JSON, JSON-LD, Markdown, and HTML** from the same URL via content negotiation
+- **llms.txt**, agent manifests, and per-page JSON are generated on every build
+- an **MCP server** at `/api/mcp` exposes `search_docs`, `read_page`, `list_pages`, and `agent_readiness` as tools
+- the **agent-readiness score** grades every build deterministically from 0 to 100, and CI can fail below a threshold
+
+The question is not whether Docusaurus can be made agent-ready. It is whether you want that to be your team's job.
+
+## Keeping docs current
+
+Docusaurus renders what is in the repo; keeping the repo true to the product is entirely on you. That is fine for teams with strong docs culture and painful for everyone else.
+
+Thally attacks the drift problem directly. Thally Track watches your product repos and turns merged PRs into reviewed documentation PRs. The drift sweep flags pages whose source files changed since last verification. Comment `@thally document this` on any GitHub issue and the agent drafts the page. A human reviews and merges every change.
+
+## Cost of ownership
+
+Both are free to run. The difference is the second line item: engineering time. A Docusaurus stack with search, AI answers, and structured output is a real internal product with upgrades, plugin churn, and an on-call owner. Thally's equivalent features are maintained upstream, and if you want zero infrastructure, [Cloud is $8 per editor per month](/pricing) with readers always free.
+
+## Which should you choose?
+
+**Choose Thally if:**
+
+- you want agent-ready output, search, and AI chat without assembling plugins
+- documentation drift is a problem you want automated away
+- you want the option of managed hosting later without replatforming
+
+**Choose Docusaurus if:**
+
+- you want maximum control over every component and enjoy owning the stack
+- you rely on specific community plugins or heavy customization
+- versioned docs for many past releases is your central requirement
+
+## Migration is automated
+
+```bash
+npx create-thally migrate github.com/acme/docs
+```
+
+The migrator converts Docusaurus pages and sidebars to a Thally project, maps components where equivalents exist, and carries your redirects. Preview locally, then switch DNS. [Start free](/signup) or see [what the readiness score measures](/faq).

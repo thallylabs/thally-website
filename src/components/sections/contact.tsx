@@ -1,4 +1,4 @@
-import { Facebook, Linkedin, Twitter } from "lucide-react";
+import { Github, Twitter } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -90,14 +90,19 @@ export default function Contact() {
             <div>
               <h2 className="text-lg font-semibold">Follow us</h2>
               <div className="mt-3 flex gap-6">
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  <Facebook className="size-6" />
+                <Link
+                  href="https://github.com/kenny-io/thally"
+                  aria-label="Thally on GitHub"
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  <Github className="size-6" />
                 </Link>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
+                <Link
+                  href="https://x.com/thallydocs"
+                  aria-label="Thally on X"
+                  className="text-muted-foreground hover:text-foreground"
+                >
                   <Twitter className="size-6" />
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  <Linkedin className="size-6" />
                 </Link>
               </div>
             </div>

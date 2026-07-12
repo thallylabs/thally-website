@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 
@@ -6,6 +7,18 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+
+export const metadata: Metadata = {
+  title: "Log in",
+  description: "Log in to your Thally account.",
+  alternates: {
+    canonical: "/login",
+  },
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 const Login = () => {
   return (

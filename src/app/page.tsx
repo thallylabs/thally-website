@@ -11,27 +11,54 @@ import Logos from "@/components/sections/logos";
 import { Migrate } from "@/components/sections/migrate";
 import Pricing from "@/components/sections/pricing";
 import Testimonials from "@/components/sections/testimonials";
+import { SITE_TITLE, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Thally — Documentation for machines and humans",
+    absolute: SITE_TITLE,
+  },
+  alternates: {
+    canonical: "/",
   },
 };
 
 const productJsonLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
+  "@id": `${SITE_URL}/#software`,
   name: "Thally",
+  url: SITE_URL,
   applicationCategory: "DeveloperApplication",
   operatingSystem: "Web",
+  license: "https://opensource.org/license/mit",
   description:
-    "Thally is the AI-native documentation platform for machines and humans. One MDX source serves structured JSON, JSON-LD, and Markdown to AI agents and polished HTML to readers, from the same URL. A docs agent turns product changes, GitHub mentions, and readiness findings into reviewed documentation pull requests. Migrate from Mintlify, Docusaurus, or GitBook in one command and deploy anywhere.",
-  offers: {
-    "@type": "Offer",
-    price: "0",
-    priceCurrency: "USD",
-    description: "MIT licensed and free to self-host. Paid plans add managed hosting, Thally AI, Track, and team features.",
-  },
+    "Thally is the AI-native documentation platform for AI agents and humans. One MDX source serves structured JSON, JSON-LD, and Markdown to AI agents and polished HTML to readers, from the same URL. A docs agent turns product changes, GitHub mentions, and readiness findings into reviewed documentation pull requests. Migrate from Mintlify, Docusaurus, or GitBook in one command and deploy anywhere.",
+  publisher: { "@id": `${SITE_URL}/#organization` },
+  offers: [
+    {
+      "@type": "Offer",
+      name: "Free",
+      price: "0",
+      priceCurrency: "USD",
+      description: "MIT licensed and free to self-host forever, commercial use included.",
+    },
+    {
+      "@type": "Offer",
+      name: "Cloud",
+      price: "8",
+      priceCurrency: "USD",
+      description:
+        "Managed hosting at $8 per editor per month ($60 per editor per year, billed annually). Adds Thally AI answers, Thally Track, agent-readiness CI checks, admin dashboard, and team roles.",
+    },
+    {
+      "@type": "Offer",
+      name: "Enterprise",
+      price: "15",
+      priceCurrency: "USD",
+      description:
+        "$15 per editor per month ($120 per editor per year). SAML & SCIM SSO, audit log, 99.9% uptime SLA, self-hosted with support.",
+    },
+  ],
   featureList: [
     "AI-native output: JSON, JSON-LD, Markdown, and HTML from the same URL",
     "Remote MCP server at /api/mcp on every deployed site",

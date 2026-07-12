@@ -1,4 +1,4 @@
-import { Github, Linkedin, Twitter } from "lucide-react";
+import { Github, Twitter } from "lucide-react";
 import Link from "next/link";
 
 import { Logo } from "@/components/layout/logo";
@@ -19,6 +19,7 @@ const navigation = [
     title: "Company",
     links: [
       { name: "About", href: "/about" },
+      { name: "Blog", href: "/blog" },
       { name: "Pricing", href: "/pricing" },
     ],
   },
@@ -41,7 +42,6 @@ const navigation = [
 const socialLinks = [
   { icon: Github, href: "https://github.com/kenny-io/thally", label: "GitHub" },
   { icon: Twitter, href: "https://x.com/thallydocs", label: "X" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
 ];
 
 export const Footer = () => {
@@ -88,7 +88,9 @@ export const Footer = () => {
         </nav>
 
         <div className="flex flex-wrap items-center justify-between gap-4 py-8">
-          <p className="text-primary-foreground/60 dark:text-muted-foreground text-sm">© Thally - All rights reserved.</p>
+          <p className="text-primary-foreground/60 dark:text-muted-foreground text-sm">
+            © Thally - All rights reserved.
+          </p>
           <div className="flex items-center gap-4">
             {socialLinks.map((link) => (
               <Link

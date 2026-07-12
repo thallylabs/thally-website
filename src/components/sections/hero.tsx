@@ -52,9 +52,9 @@ const heroImageClassName =
   "border-border absolute top-0 left-0 w-full rounded-t-2xl rounded-b-none border border-b-0 object-cover object-left-top";
 
 const defaultProps: HeroFeatureSliderProps = {
-  heading: "Documentation for machines and humans.",
+  heading: "AI-native documentation for agents and humans.",
   description:
-    "Thally is the AI-native docs platform. One MDX source serves AI agents and human readers from the same URL. And when your product changes, Thally drafts the docs PR.",
+    "One MDX source serves AI agents and human readers from the same URL. And when your product changes, Thally drafts the docs PR.",
   buttonPrimary: {
     text: "Start free",
     href: "/signup",

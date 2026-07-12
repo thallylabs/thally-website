@@ -1,0 +1,58 @@
+**AI-native documentation** is documentation published in machine-readable structures (JSON, JSON-LD, Markdown) alongside the human-readable page, from the same URL, with discovery files and live endpoints that let AI agents find, read, and cite it without scraping. It is not documentation written by AI. It is documentation that machines can read as reliably as people can.
+
+## Why the definition matters now
+
+A growing share of "readers" hitting documentation sites are not people. They are coding assistants resolving an API question, research agents comparing products for a buyer, and answer engines deciding which source to cite. Estimates vary by site, but every docs team we talk to sees the same trend line: agent traffic is rising, and it does not render your CSS.
+
+Traditional docs serve that audience terribly. An agent hitting an HTML page has to scrape it: strip navigation, guess which `<div>` holds the content, reconstruct code blocks, and hope the page was not client-rendered into emptiness. Every scrape is a chance to misquote you.
+
+AI-native documentation removes the guesswork by serving structure on request.
+
+## The three layers of AI-native docs
+
+### 1. Structured output per page
+
+The same URL that renders HTML for a person returns structured data for a machine, selected by an `Accept` header or a query parameter:
+
+```bash
+curl https://docs.example.com/quickstart \
+  -H "Accept: application/json"
+```
+
+The response carries the page as data: title, description, section, body as both MDX and plain text, code blocks with languages, and provenance dates. JSON-LD gives answer engines the same content as schema.org markup, and Markdown serves agents that want prose.
+
+### 2. Discovery files
+
+Machines need a map. AI-native sites publish:
+
+- **llms.txt**: a concise, plain-markdown overview of the product with links to key pages
+- **per-page manifests**: metadata about formats, freshness, and structure
+- **sitemap.xml and robots.txt** that explicitly welcome AI crawlers
+
+These are cheap to generate and widely read. They are the difference between an agent finding your quickstart and an agent finding a competitor's blog post about your quickstart.
+
+### 3. Live endpoints
+
+The strongest form is an API the agent can call. With MCP (Model Context Protocol), a docs site exposes tools like `search_docs`, `read_page`, and `list_pages`. An agent attached to the endpoint queries your documentation the way your own search does, with no scraping and no stale index.
+
+Thally ships all three layers on every deploy, self-hosted included; that is the design goal behind [the platform](/). But the definition is bigger than any one product, and you can meet it with your own stack if you are willing to build and maintain the pieces.
+
+## What AI-native documentation is not
+
+- **Not AI-generated content.** Who wrote the words is orthogonal. AI-native describes how the published result is served.
+- **Not a chatbot bolted onto docs.** A chat widget helps humans on your site. It does nothing for the agent reading your docs from inside an IDE.
+- **Not separate "AI pages."** Serving different content to machines than to people is cloaking, and search engines penalize it. AI-native means the same content in more formats.
+
+## How to tell if your docs are AI-native
+
+Run these five checks against your own site:
+
+1. Does `curl -H "Accept: application/json"` on a docs URL return structured data?
+2. Does `/llms.txt` exist and describe your product accurately?
+3. Can an agent list and read your pages through an API or MCP endpoint?
+4. Do pages carry machine-legible last-updated and last-verified dates?
+5. Does your robots.txt allow the AI crawlers you want citing you?
+
+If you can answer yes to all five, your docs are ready for the traffic that is coming. If not, each "no" is a place where an agent will guess, and agents that guess misquote.
+
+A deterministic version of this checklist is what Thally's [agent-readiness score](/faq) grades on every build, from 0 to 100, so CI can enforce it. You can [start free](/signup) and see your own score in minutes.

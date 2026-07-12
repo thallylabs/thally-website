@@ -1,7 +1,8 @@
 "use client";
 
 import { Bot, Braces, Search, Workflow } from "lucide-react";
-import { type ComponentType } from "react";
+import { motion, useInView, useReducedMotion } from "motion/react";
+import { type ComponentType, useEffect, useRef, useState } from "react";
 
 import {
   ApiReferenceView,
@@ -11,6 +12,8 @@ import {
 } from "@/components/illustrations/thally-ui";
 import { SectionGrid, SectionHeader, SectionLines } from "@/components/section-decor";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
+const AUTO_ADVANCE_MS = 7000;
 
 const FEATURES: {
   title: string;
@@ -65,6 +68,26 @@ const FEATURES: {
 ];
 
 export const Feature3 = () => {
+  const reduce = useReducedMotion();
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(tabsRef, { amount: 0.4 });
+
+  const [active, setActive] = useState(FEATURES[0].title);
+  const [auto, setAuto] = useState(true);
+
+  const cycling = auto && inView && !reduce;
+
+  useEffect(() => {
+    if (!cycling) return;
+    const id = setTimeout(() => {
+      setActive((current) => {
+        const next = (FEATURES.findIndex((f) => f.title === current) + 1) % FEATURES.length;
+        return FEATURES[next].title;
+      });
+    }, AUTO_ADVANCE_MS);
+    return () => clearTimeout(id);
+  }, [active, cycling]);
+
   return (
     <section id="workflows" className="bg-accent relative py-16 md:py-24 lg:py-32">
       <SectionGrid className="opacity-20" />
@@ -76,24 +99,50 @@ export const Feature3 = () => {
         />
 
         <Tabs
-          defaultValue={FEATURES[0].title}
+          ref={tabsRef}
+          value={active}
+          onValueChange={(value) => {
+            setActive(value);
+            setAuto(false);
+          }}
           orientation="vertical"
           className="mt-8 flex gap-4 max-lg:flex-col-reverse md:mt-12 lg:mt-20"
         >
           <TabsList className="bg-muted flex h-auto justify-start overflow-x-auto rounded-xl p-1.5 lg:basis-1/4 lg:flex-col">
-            {FEATURES.map((feature) => (
-              <TabsTrigger
-                key={feature.title}
-                value={feature.title}
-                className="text-muted-foreground data-[state=active]:bg-background data-[state=active]:text-foreground border-border w-full min-w-[200px] flex-1 justify-start rounded-lg border border-transparent px-4 py-3 text-start whitespace-normal transition-colors duration-300 data-[state=active]:shadow-sm lg:px-6 lg:py-4"
-              >
-                <div>
-                  <feature.icon className="text-primary size-7 md:size-8" />
-                  <h3 className="font-display mt-3 font-semibold">{feature.title}</h3>
-                  <p className="text-muted-foreground mt-1 text-sm">{feature.description}</p>
-                </div>
-              </TabsTrigger>
-            ))}
+            {FEATURES.map((feature) => {
+              const isActive = active === feature.title;
+              return (
+                <TabsTrigger
+                  key={feature.title}
+                  value={feature.title}
+                  className="group text-muted-foreground data-[state=active]:text-foreground relative w-full min-w-[200px] flex-1 justify-start rounded-lg px-4 py-3 text-start whitespace-normal data-[state=active]:bg-transparent data-[state=active]:shadow-none lg:px-6 lg:py-4"
+                >
+                  {isActive && (
+                    <motion.span
+                      layoutId="feature-tab-highlight"
+                      className="border-border bg-background absolute inset-0 rounded-lg border shadow-sm"
+                      transition={reduce ? { duration: 0 } : { type: "spring", stiffness: 350, damping: 34 }}
+                    />
+                  )}
+                  <div className="relative">
+                    <feature.icon className="text-muted-foreground group-data-[state=active]:text-primary size-7 transition-colors duration-300 md:size-8" />
+                    <h3 className="font-display mt-3 font-semibold">{feature.title}</h3>
+                    <p className="text-muted-foreground mt-1 text-sm">{feature.description}</p>
+                  </div>
+                  {isActive && cycling && (
+                    <span className="bg-border absolute inset-x-4 bottom-2 h-0.5 overflow-hidden rounded-full lg:inset-x-6">
+                      <motion.span
+                        key={active}
+                        className="bg-primary/60 absolute inset-0 origin-left rounded-full"
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
+                        transition={{ duration: AUTO_ADVANCE_MS / 1000, ease: "linear" }}
+                      />
+                    </span>
+                  )}
+                </TabsTrigger>
+              );
+            })}
           </TabsList>
 
           {FEATURES.map((feature) => {
@@ -104,13 +153,20 @@ export const Feature3 = () => {
                 key={feature.title}
                 value={feature.title}
               >
-                <div className="max-w-2xl p-5 text-lg text-balance lg:p-7">
-                  <h4 className="font-display inline font-semibold">{feature.content.title} </h4>
-                  <span className="text-muted-foreground font-medium text-pretty">{feature.content.description}</span>
-                </div>
-                <div className="bg-muted/50 border-border border-t p-4 lg:p-6">
-                  <View />
-                </div>
+                <motion.div
+                  className="flex h-full flex-col lg:min-h-[480px]"
+                  initial={reduce ? false : { opacity: 0, y: 10, filter: "blur(3px)" }}
+                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <div className="max-w-2xl p-5 text-lg text-balance lg:p-7">
+                    <h4 className="font-display inline font-semibold">{feature.content.title} </h4>
+                    <span className="text-muted-foreground font-medium text-pretty">{feature.content.description}</span>
+                  </div>
+                  <div className="bg-muted/50 border-border flex flex-1 flex-col justify-center border-t p-4 lg:p-6">
+                    <View />
+                  </div>
+                </motion.div>
               </TabsContent>
             );
           })}

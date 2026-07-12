@@ -260,14 +260,6 @@ export const Automation = () => {
                     isActive ? "bg-card shadow-sm" : "hover:bg-card/60 border-transparent",
                   )}
                 >
-                  <span
-                    aria-hidden
-                    className={cn(
-                      "absolute top-5 bottom-5 left-0 w-0.5 rounded-full transition-opacity",
-                      isActive ? "opacity-100" : "opacity-0",
-                    )}
-                    style={{ background: trigger.accent }}
-                  />
                   <div className="flex items-center gap-2.5">
                     <Icon className="size-4" style={{ color: trigger.accent }} strokeWidth={2.25} />
                     <span className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">

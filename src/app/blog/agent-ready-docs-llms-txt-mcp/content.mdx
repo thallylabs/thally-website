@@ -1,0 +1,93 @@
+**The short version:** agent-ready documentation has three layers. Discovery files (llms.txt, sitemaps) so agents can find you. Structured per-page output (JSON, Markdown, JSON-LD) so agents can read you without scraping. Live endpoints (MCP) so agents can query you like a tool. This guide walks through each layer, in order of effort, with checks to prove each one works.
+
+## Why bother
+
+When a developer asks their coding assistant "how do I rotate an API token in Acme?", the assistant reads documentation on their behalf. If your docs parse cleanly, the answer quotes you correctly. If they do not, the agent reconstructs your content from scraped HTML and hopes. Multiply that by every AI-mediated question about your product, and machine readability stops being a nice-to-have.
+
+The good news: the work is layered, and the first layer takes an afternoon.
+
+## Layer 1: discovery files (an afternoon)
+
+### llms.txt
+
+Add a plain-markdown file at your site root that tells AI systems what your product is and where the important pages are:
+
+```markdown
+# Acme
+
+> Acme is a payments API for marketplaces. This site documents
+> the REST API, SDKs, and webhooks.
+
+## Key pages
+
+- [Quickstart](/quickstart): first charge in five minutes
+- [API reference](/api): every endpoint, with examples
+- [Webhooks](/webhooks): events, retries, signatures
+```
+
+Keep it under a few hundred lines, keep it current, and write it like an abstract, not a sitemap dump. The spec lives at llmstxt.org.
+
+### robots.txt
+
+Decide which AI crawlers you want reading you, and say so explicitly. If you want to be cited by ChatGPT, Claude, and Perplexity, allow GPTBot, ClaudeBot, and PerplexityBot. Blocking a crawler means that platform cannot quote you.
+
+**Check:** `curl https://yoursite.com/llms.txt` returns your file, and your robots.txt names the crawlers you care about.
+
+## Layer 2: structured output per page (the real work)
+
+The goal: the same URL that serves your HTML also serves the page as data.
+
+```bash
+# A person gets HTML. An agent gets structure.
+curl https://docs.acme.com/quickstart -H "Accept: application/json"
+curl https://docs.acme.com/quickstart?format=md
+```
+
+The JSON should carry the page as content, not markup: title, description, section, plain-text body, code blocks with their languages, and provenance dates (`lastUpdated`, `lastVerified`). JSON-LD adds schema.org semantics for answer engines; Markdown serves agents that want prose they can quote.
+
+Two implementation rules that save pain:
+
+1. **Generate all formats from one source at build time.** If HTML and JSON come from different pipelines, they will drift, and drifting formats are worse than no formats.
+2. **Never serve machines different content than people.** Same content, more formats. Different content is cloaking, and it erodes exactly the trust you are building.
+
+This layer is the expensive one to hand-roll, and it is the core of what an AI-native platform gives you for free. Every page on a Thally site ships all four formats from one content graph on every build.
+
+**Check:** pick three pages and diff the JSON body text against the rendered page. They should match exactly.
+
+## Layer 3: a live MCP endpoint (the differentiator)
+
+MCP (Model Context Protocol) lets an agent attach to your docs as a set of callable tools rather than a pile of URLs. A docs MCP server typically exposes:
+
+- `search_docs(query)`: ranked results from your real index
+- `read_page(slug)`: the structured page content
+- `list_pages()`: the site map as data
+
+The difference in practice: an agent with MCP access answers from your live content with your own search ranking. An agent without it depends on whatever a crawler indexed weeks ago.
+
+Every deployed Thally site exposes `/api/mcp` with those tools plus `agent_readiness`, no key or account required. If you are building your own, the MCP spec and SDKs are open; budget for auth decisions, rate limits, and keeping the index fresh.
+
+**Check:** attach the endpoint to any MCP-capable agent and ask it a question only your docs can answer. It should cite the right page.
+
+## Measuring it: make the checklist deterministic
+
+Ad-hoc checks rot. Turn the layers above into a score your CI understands:
+
+| Dimension | What it checks |
+| --- | --- |
+| Structured data | JSON/JSON-LD/Markdown parity per page |
+| Metadata | titles, descriptions, provenance dates |
+| Discovery | llms.txt, sitemap, robots, manifests |
+| Machine readability | content negotiation, clean plain text |
+| OpenAPI coverage | endpoints documented vs. spec |
+
+Thally computes exactly this as the agent-readiness score, a deterministic 0 to 100 grade per build. Teams gate CI on a threshold, and the docs agent opens PRs against the pages dragging the score down. Whatever stack you use, the principle stands: if agent readiness is not measured, it will quietly regress.
+
+## Where to start
+
+If you do nothing else this week, ship llms.txt and fix your robots.txt. That is discovery solved. Then decide whether layers 2 and 3 are a project you build or a platform you adopt. Migrating an existing docs site into Thally is one command, and the [free plan self-hosts forever](/pricing):
+
+```bash
+npx create-thally migrate github.com/acme/docs
+```
+
+Related reading: [What is AI-native documentation?](/blog/what-is-ai-native-documentation)
