@@ -1,16 +1,15 @@
 "use client";
 
+import { HelpCircle, LifeBuoy, MessageCircle, Sparkles } from "lucide-react";
+
 import {
+  Account as User,
   ArrowRight,
-  BookOpen,
-  HelpCircle,
-  LifeBuoy,
-  MessageCircle,
+  Guide as BookOpen,
+  type IconComponent,
   Search,
-  Shield,
-  Sparkles,
-  User,
-} from "lucide-react";
+  Trust as Shield,
+} from "@/components/icons";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
@@ -22,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 
-const categoryMeta: Record<Category, { icon: typeof LifeBuoy; description: string; accent: string }> = {
+const categoryMeta: Record<Category, { icon: IconComponent; description: string; accent: string }> = {
   Support: {
     icon: LifeBuoy,
     description: "Plans, onboarding, and getting help from our team.",

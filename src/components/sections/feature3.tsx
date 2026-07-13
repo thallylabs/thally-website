@@ -1,6 +1,6 @@
 "use client";
 
-import { Bot, Braces, Search, Workflow } from "lucide-react";
+import { Code, Mcp, Search, Structured } from "@/components/icons";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { type ComponentType, useEffect, useRef, useState } from "react";
 
@@ -24,7 +24,7 @@ const FEATURES: {
   {
     title: "Content graph",
     description: "One MDX source, every format projected from it.",
-    icon: Workflow,
+    icon: Structured,
     content: {
       title: "Author once. Thally does the projections.",
       description:
@@ -46,7 +46,7 @@ const FEATURES: {
   {
     title: "API reference",
     description: "Your OpenAPI spec, rendered live and in sync.",
-    icon: Braces,
+    icon: Code,
     content: {
       title: "Drop in a spec, get a living reference.",
       description:
@@ -57,7 +57,7 @@ const FEATURES: {
   {
     title: "Agent endpoints",
     description: "llms.txt, MCP, and per-page JSON by default.",
-    icon: Bot,
+    icon: Mcp,
     content: {
       title: "Legible to every machine reader.",
       description:

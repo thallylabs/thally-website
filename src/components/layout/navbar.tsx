@@ -1,6 +1,6 @@
 "use client";
 
-import { Bot, GitPullRequest, LayoutDashboard, PackageOpen, Workflow } from "lucide-react";
+import { Cloud, GitPullRequest, Mcp, Negotiation, Overview } from "@/components/icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -50,25 +50,25 @@ const Navbar = () => {
           title: "Content Graph",
           href: "/#features",
           description: "One MDX source, projected as HTML, JSON, JSON-LD, and Markdown.",
-          icon: Workflow,
+          icon: Negotiation,
         },
         {
           title: "Agent Layer",
           href: "/#workflows",
           description: "Grounded AI answers, llms.txt, MCP, and a readiness score for CI.",
-          icon: Bot,
+          icon: Mcp,
         },
         {
           title: "Migration & Hosting",
           href: "/#migrate",
           description: "Move from Mintlify, Docusaurus, or GitBook in one command. Deploy anywhere.",
-          icon: PackageOpen,
+          icon: Cloud,
         },
         {
           title: "Admin Dashboard",
           href: "/#dashboard",
           description: "Analytics, theming, team roles, and the agent's PR queue. Live, no rebuild.",
-          icon: LayoutDashboard,
+          icon: Overview,
         },
       ],
     },

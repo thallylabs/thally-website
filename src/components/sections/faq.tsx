@@ -59,7 +59,7 @@ const rightQuestions = [
   {
     question: "What's in the admin dashboard?",
     answer:
-      "A live dashboard at /admin: first-party analytics with top pages and content gaps, branding and theming that apply without a rebuild, the agent-readiness report, a queue of agent-drafted docs PRs, and team access with Owner, Editor, and Viewer roles from a git-committed roster. OIDC sign-in, no per-seat database.",
+      "A live dashboard at /admin: first-party analytics with top pages and content gaps, branding and theming that apply without a rebuild, the agent-readiness report, and a queue of agent-drafted docs PRs. Cloud teams also get managed Owner, Editor, and Viewer roles with OIDC sign-in.",
   },
   {
     question: "Does Thally support multiple languages?",

@@ -1,6 +1,12 @@
 "use client";
 
-import { ArrowRight, BookOpen, Braces, Gauge, type LucideIcon } from "lucide-react";
+import {
+  ArrowRight,
+  Guide,
+  type IconComponent,
+  Readiness,
+  Structured,
+} from "@/components/icons";
 import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -16,7 +22,7 @@ type HeroFeatureSliderImage = Image & {
 interface HeroFeatureSliderFeature {
   title: string;
   description: string;
-  icon: LucideIcon;
+  icon: IconComponent;
   color?: string;
   href?: string;
 }
@@ -67,17 +73,17 @@ const defaultProps: HeroFeatureSliderProps = {
     {
       title: "Structured for machines",
       description: "Every route returns JSON, JSON-LD, or Markdown on request. No scraping, ever.",
-      icon: Braces,
+      icon: Structured,
     },
     {
       title: "Typeset for humans",
       description: "The same source, rendered as semantic HTML your readers actually enjoy.",
-      icon: BookOpen,
+      icon: Guide,
     },
     {
       title: "Scored for agent-readiness",
       description: "A deterministic 0 to 100 grade on every build. Gate CI on it, and let the agent PR the fixes.",
-      icon: Gauge,
+      icon: Readiness,
     },
   ],
   images: [
