@@ -62,10 +62,16 @@ const comparisonFeatures: FeatureSection[] = [
         enterprise: "Unlimited",
       },
       {
-        name: "Editors",
-        free: "Unlimited",
-        cloud: "Per seat",
-        enterprise: "Per seat",
+        name: "Team members",
+        free: "Self-managed",
+        cloud: "3 included",
+        enterprise: "Custom",
+      },
+      {
+        name: "Additional team members",
+        free: "—",
+        cloud: "$20/mo or $200/yr",
+        enterprise: "Custom",
       },
     ],
   },
@@ -203,9 +209,7 @@ const PlanHeaders = ({
               />
             </CollapsibleTrigger>
             <Button asChild variant="outline" size="sm">
-              <Link href={pricingPlans[selectedPlan].href}>
-                {pricingPlans[selectedPlan].button.text}
-              </Link>
+              <Link href={pricingPlans[selectedPlan].href}>{pricingPlans[selectedPlan].button.text}</Link>
             </Button>
           </div>
           <CollapsibleContent className="flex flex-col space-y-2 p-2">
