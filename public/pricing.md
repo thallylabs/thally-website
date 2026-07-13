@@ -12,8 +12,10 @@ Thally is the AI-native documentation platform for AI agents and humans. All pri
 
 ## Thally Cloud
 
-- Monthly: $60 per editor / month
-- Annual: $600 per editor / year ($50 per month, billed annually; save $120)
+- Monthly platform fee: $60 per workspace / month
+- Annual platform fee: $600 per workspace / year ($50 per month equivalent; save $120)
+- Includes 3 team members in any role
+- Additional active members or pending invitations: $20 / month or $200 / year each
 - Trial: 14 days, no credit card required
 - Everything in Free, plus: Thally AI answers & chat, Thally Track with one-click GitHub App, agent-readiness CI checks, admin dashboard & docs analytics, Owner/Editor/Viewer roles
 - Best for: growing teams who want managed hosting and docs automation

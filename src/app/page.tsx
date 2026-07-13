@@ -49,7 +49,7 @@ const productJsonLd = {
       price: "60",
       priceCurrency: "USD",
       description:
-        "Thally Cloud is $60 per editor per month. Adds managed services, AI answers, Thally Track, readiness gates, documentation analytics, and team roles.",
+        "Thally Cloud is $60 per workspace per month with three team members included. Additional active members or pending invitations are $20 per month each. Adds managed services, AI answers, Thally Track, readiness gates, documentation analytics, and team roles.",
     },
     {
       "@type": "Offer",
@@ -57,7 +57,7 @@ const productJsonLd = {
       price: "600",
       priceCurrency: "USD",
       description:
-        "$600 per editor per year, equivalent to $50 per month and saving $120 annually.",
+        "$600 per workspace per year, equivalent to $50 per month and saving $120 annually. Three team members are included; additional members are $200 per year each.",
     },
     {
       "@type": "Offer",

@@ -50,15 +50,16 @@ const plans: PricingPlan[] = [
     tagline: "Managed services for growing teams",
     monthlyPrice: "$60",
     annualPrice: "$50",
-    priceUnit: "per editor / month",
-    monthlyBillingNote: "$60 billed monthly",
-    annualBillingNote: "$600 billed annually · save $120",
+    priceUnit: "per workspace / month",
+    monthlyBillingNote: "$60 billed monthly · 3 team members included",
+    annualBillingNote: "$600 billed annually · 3 team members included",
     features: [
       "Everything in Free",
       "Managed hosting or connected hosting",
       "Thally AI answers and docs analytics",
       "Thally Track and readiness gates",
-      "Owner, Editor, and free Viewer roles",
+      "Three team members in any role included",
+      "Additional members: $20/month or $200/year",
     ],
     cta: "Start 14-day trial",
     href: "/signup",
@@ -152,7 +153,7 @@ export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" 
                     <p className="text-muted-foreground mt-1 text-sm">{plan.tagline}</p>
                   </div>
                   {plan.popular ? (
-                    <span className="bg-primary text-primary-foreground rounded-md px-2 py-1 text-[0.65rem] font-semibold uppercase tracking-wide">
+                    <span className="bg-primary text-primary-foreground rounded-md px-2 py-1 text-[0.65rem] font-semibold tracking-wide uppercase">
                       Recommended
                     </span>
                   ) : null}
@@ -187,8 +188,8 @@ export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" 
         </div>
 
         <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-center text-xs leading-5">
-          Prices are in USD per billable editor. Owners and editors are billable;
-          viewers and documentation readers are always free.
+          Prices are in USD per workspace. Thally Cloud includes three team members regardless of role. Each additional
+          active member or pending invitation is $20 monthly or $200 annually. Documentation readers are always free.
         </p>
       </div>
     </section>
