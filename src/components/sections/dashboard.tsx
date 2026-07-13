@@ -1,6 +1,8 @@
 "use client";
 
-import { BarChart3, GitPullRequest, Palette, Users } from "lucide-react";
+import { Palette } from "lucide-react";
+
+import { GitPullRequest, Sites as BarChart3, Team as Users } from "@/components/icons";
 import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 

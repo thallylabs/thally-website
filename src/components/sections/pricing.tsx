@@ -1,66 +1,90 @@
 "use client";
 
-import { Check } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
+import { Check } from "@/components/icons";
 import { SectionGrid, SectionHeader, SectionLines } from "@/components/section-decor";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 
-const plans = [
+interface PricingPlan {
+  accent: string;
+  annualBillingNote: string;
+  annualPrice: string;
+  cta: string;
+  features: string[];
+  href: string;
+  monthlyBillingNote: string;
+  monthlyPrice: string;
+  name: string;
+  popular: boolean;
+  priceUnit?: string;
+  tagline: string;
+}
+
+const plans: PricingPlan[] = [
   {
     name: "Free",
-    tagline: "Self-host everything, forever",
+    tagline: "Own and run the engine yourself",
     monthlyPrice: "$0",
     annualPrice: "$0",
+    priceUnit: "forever",
+    monthlyBillingNote: "MIT licensed · no card required",
+    annualBillingNote: "MIT licensed · no card required",
     features: [
-      "MIT licensed, commercial use OK",
-      "Unlimited pages & readers",
-      "All four output formats + MCP server",
-      "⌘K hybrid search",
-      "Docs agent with your own API key",
+      "Unlimited pages and readers",
+      "HTML, Markdown, JSON, and JSON-LD",
+      "Remote MCP server and hybrid search",
+      "Deploy to any hosting provider",
+      "Commercial use included",
     ],
     cta: "Get started",
+    href: "/signup",
+    popular: false,
     accent: "var(--chart-3)",
   },
   {
-    name: "Cloud",
-    tagline: "Managed hosting for growing teams",
-    monthlyPrice: "$8",
-    annualPrice: "$60",
-    monthlyPerUnit: "per editor / mo",
-    annualPerUnit: "per editor / yr",
+    name: "Thally Cloud",
+    tagline: "Managed services for growing teams",
+    monthlyPrice: "$60",
+    annualPrice: "$50",
+    priceUnit: "per editor / month",
+    monthlyBillingNote: "$60 billed monthly",
+    annualBillingNote: "$600 billed annually · save $120",
     features: [
-      "Thally AI answers & chat",
-      "Thally Track + one-click GitHub App",
-      "Agent-readiness CI checks",
-      "Admin dashboard & docs analytics",
-      "Owner, Editor & Viewer roles",
+      "Everything in Free",
+      "Managed hosting or connected hosting",
+      "Thally AI answers and docs analytics",
+      "Thally Track and readiness gates",
+      "Owner, Editor, and free Viewer roles",
     ],
     cta: "Start 14-day trial",
+    href: "/signup",
     popular: true,
     accent: "var(--chart-1)",
   },
   {
     name: "Enterprise",
-    tagline: "For regulated & large orgs",
-    monthlyPrice: "$15",
-    annualPrice: "$120",
-    monthlyPerUnit: "per editor / mo",
-    annualPerUnit: "per editor / yr",
+    tagline: "Security and support tailored to you",
+    monthlyPrice: "Custom",
+    annualPrice: "Custom",
+    monthlyBillingNote: "Annual contract · invoiced",
+    annualBillingNote: "Annual contract · invoiced",
     features: [
-      "SAML & SCIM SSO",
-      "Audit log & 99.9% uptime SLA",
-      "Self-hosted with support",
+      "Everything in Thally Cloud",
+      "SAML SSO and SCIM provisioning",
+      "Audit-log access and custom terms",
+      "Migration and priority support",
       "Dedicated account manager",
-      "Custom onboarding",
     ],
-    cta: "Talk to sales",
+    cta: "Contact us",
+    href: "/contact",
+    popular: false,
     accent: "var(--chart-5)",
   },
-];
+] as const;
 
 export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" }) {
   const [isAnnual, setIsAnnual] = useState(true);
@@ -73,73 +97,99 @@ export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" 
       <div className="relative container">
         <SectionHeader
           eyebrow={headerTag === "h2" ? "Plans" : undefined}
-          title="Free to self-host, simple to scale"
-          description="Thally is open source. Run it yourself forever, and upgrade when you want managed hosting, AI answers, and enterprise controls. No surprise fees."
+          title="Start free. Add Thally Cloud when you want it."
+          description="Your documentation engine stays open source. Pay only when your team needs managed infrastructure, AI answers, automation, and shared workspace controls."
           align="center"
           layout="stack"
           as={headerTag}
         />
-        <div className="mt-4 flex justify-center">
-          <div className="border-border bg-muted inline-flex items-center gap-3 rounded-full border px-4 py-2">
-            <span className={cn("text-sm font-medium", !isAnnual && "text-foreground")}>Monthly</span>
-            <Switch checked={isAnnual} onCheckedChange={setIsAnnual} aria-label="Toggle annual billing" />
-            <span className={cn("text-sm font-medium", isAnnual && "text-foreground")}>
-              Annual <span className="text-chart-5 text-xs">(save 37%)</span>
-            </span>
+
+        <div className="mt-6 flex justify-center">
+          <div className="border-border bg-muted inline-flex items-center rounded-lg border p-1">
+            <button
+              className={cn(
+                "rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                !isAnnual ? "bg-background text-foreground shadow-sm" : "text-muted-foreground",
+              )}
+              onClick={() => setIsAnnual(false)}
+              type="button"
+            >
+              Monthly
+            </button>
+            <div className="sr-only">
+              <Switch checked={isAnnual} onCheckedChange={setIsAnnual} aria-label="Toggle annual billing" />
+            </div>
+            <button
+              className={cn(
+                "rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                isAnnual ? "bg-background text-foreground shadow-sm" : "text-muted-foreground",
+              )}
+              onClick={() => setIsAnnual(true)}
+              type="button"
+            >
+              Annual <span className="text-chart-5 ml-1 text-xs">Save 17%</span>
+            </button>
           </div>
         </div>
 
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 md:mt-12 lg:mt-16 lg:grid-cols-3 lg:gap-8">
-          {plans.map((plan) => (
-            <div key={plan.name} className={cn(plan.popular && "lg:scale-[1.04]")}>
-              <Card
+        <div className="mt-10 grid items-stretch gap-5 lg:mt-14 lg:grid-cols-3">
+          {plans.map((plan) => {
+            const price = isAnnual ? plan.annualPrice : plan.monthlyPrice;
+            const billingNote = isAnnual ? plan.annualBillingNote : plan.monthlyBillingNote;
+
+            return (
+              <article
                 className={cn(
-                  "relative flex h-full flex-col",
-                  plan.popular ? "border-primary/40 shadow-md" : "border-border",
+                  "bg-card relative flex min-h-[34rem] flex-col overflow-hidden rounded-3xl border p-6 shadow-sm md:p-7",
+                  plan.popular ? "border-primary/35 shadow-[0_22px_70px_-48px_hsl(var(--primary))]" : "border-border",
                 )}
+                key={plan.name}
               >
-                {plan.popular && (
-                  <span
-                    className="absolute -top-px left-1/2 -translate-x-1/2 rounded-b-lg px-3 py-1 text-xs font-semibold text-white"
-                    style={{ background: plan.accent }}
-                  >
-                    Most popular
-                  </span>
-                )}
-
-                <CardHeader className="pb-4">
-                  <h3 className="text-2xl font-semibold">{plan.name}</h3>
-                  <p className="text-muted-foreground text-sm">{plan.tagline}</p>
-                  <div className="mt-4">
-                    <p className="text-3xl font-semibold tracking-tight">
-                      {isAnnual ? plan.annualPrice : plan.monthlyPrice}
-                    </p>
-                    {(plan.monthlyPerUnit || plan.annualPerUnit) && (
-                      <p className="text-muted-foreground mt-1 text-sm">
-                        {isAnnual ? plan.annualPerUnit : plan.monthlyPerUnit}
-                      </p>
-                    )}
+                {plan.popular ? <span className="bg-chart-1 absolute inset-x-0 top-0 h-1" /> : null}
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="text-2xl font-semibold tracking-tight">{plan.name}</h3>
+                    <p className="text-muted-foreground mt-1 text-sm">{plan.tagline}</p>
                   </div>
-                </CardHeader>
+                  {plan.popular ? (
+                    <span className="bg-primary text-primary-foreground rounded-md px-2 py-1 text-[0.65rem] font-semibold uppercase tracking-wide">
+                      Recommended
+                    </span>
+                  ) : null}
+                </div>
 
-                <CardContent className="flex flex-1 flex-col gap-6">
-                  <Button variant={plan.popular ? "default" : "outline"} size="lg" className="w-full">
-                    {plan.cta}
-                  </Button>
+                <div className="mt-8 min-h-24">
+                  <div className="flex items-end gap-2">
+                    <span className="text-4xl font-semibold tracking-tight tabular-nums">{price}</span>
+                    {plan.priceUnit ? (
+                      <span className="text-muted-foreground pb-1 text-sm">{plan.priceUnit}</span>
+                    ) : null}
+                  </div>
+                  <p className="text-muted-foreground mt-2 text-xs">{billingNote}</p>
+                </div>
 
-                  <ul className="space-y-3">
-                    {plan.features.map((feature) => (
-                      <li key={feature} className="flex items-start gap-3 text-sm">
-                        <Check className="mt-0.5 size-4 shrink-0" style={{ color: plan.accent }} />
-                        <span className="text-muted-foreground">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
-          ))}
+                <Button asChild variant={plan.popular ? "default" : "outline"} size="lg" className="mt-5 w-full">
+                  <Link href={plan.href}>{plan.cta}</Link>
+                </Button>
+
+                <div className="border-border my-7 border-t" />
+                <ul className="space-y-3.5">
+                  {plan.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-3 text-sm">
+                      <Check className="mt-0.5 size-4 shrink-0" style={{ color: plan.accent }} />
+                      <span className="text-muted-foreground leading-5">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            );
+          })}
         </div>
+
+        <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-center text-xs leading-5">
+          Prices are in USD per billable editor. Owners and editors are billable;
+          viewers and documentation readers are always free.
+        </p>
       </div>
     </section>
   );

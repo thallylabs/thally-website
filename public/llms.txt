@@ -37,6 +37,6 @@
 ## Pricing summary
 
 - Free: $0. Self-host forever. MIT licensed, commercial use OK. Unlimited pages and readers, all output formats, MCP server, hybrid search, docs agent with your own API key.
-- Cloud: $8 per editor/month ($60/editor/year billed annually), 14-day trial. Adds Thally AI answers and chat, Thally Track with one-click GitHub App, agent-readiness CI checks, admin dashboard and analytics, team roles.
-- Enterprise: $15 per editor/month ($120/editor/year billed annually). SAML and SCIM SSO, audit log, 99.9% uptime SLA, self-hosted with support.
+- Thally Cloud: $60 per editor/month, or $600/editor/year ($50/month billed annually; save $120), with a 14-day trial. Adds Thally AI answers and chat, Thally Track with one-click GitHub App, agent-readiness CI checks, admin dashboard and analytics, and team roles.
+- Enterprise: Custom annual pricing. Adds SAML and SCIM SSO, audit-log access, custom terms, migration support, and priority support.
 - Machine-readable pricing: [/pricing.md](/pricing.md)

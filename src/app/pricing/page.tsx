@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { FAQ } from "@/components/sections/faq";
+import { NoLockIn } from "@/components/sections/no-lock-in";
 import Pricing from "@/components/sections/pricing";
 import Pricing2 from "@/components/sections/pricing2";
 import { SITE_URL } from "@/lib/site";
@@ -8,7 +9,7 @@ import { SITE_URL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Thally pricing: free to self-host forever (MIT licensed), Cloud at $8 per editor/month with Thally AI and Track, Enterprise at $15 per editor/month with SSO and a 99.9% SLA.",
+    "Thally pricing: free to self-host forever, Thally Cloud at $60 per editor monthly or $50 with annual billing, and custom Enterprise plans.",
   alternates: {
     canonical: "/pricing",
   },
@@ -20,14 +21,14 @@ const pricingJsonLd = {
   "@id": `${SITE_URL}/pricing#product`,
   name: "Thally",
   description:
-    "AI-native documentation platform for AI agents and humans. MIT licensed and free to self-host; Cloud and Enterprise plans are priced per editor.",
+    "AI-native documentation platform for AI agents and humans. MIT licensed and free to self-host, with Thally Cloud managed services and custom Enterprise plans.",
   brand: { "@id": `${SITE_URL}/#organization` },
   offers: {
     "@type": "AggregateOffer",
     priceCurrency: "USD",
     lowPrice: "0",
-    highPrice: "15",
-    offerCount: 3,
+    highPrice: "600",
+    offerCount: 4,
     offers: [
       {
         "@type": "Offer",
@@ -39,19 +40,25 @@ const pricingJsonLd = {
       },
       {
         "@type": "Offer",
-        name: "Cloud",
-        price: "8",
+        name: "Thally Cloud monthly",
+        price: "60",
         priceCurrency: "USD",
         description:
-          "$8 per editor/month, or $60 per editor/year billed annually. Thally AI answers and chat, Thally Track with one-click GitHub App, agent-readiness CI checks, admin dashboard and analytics, team roles. 14-day trial.",
+          "$60 per editor each month. Includes managed services, Thally AI answers, Thally Track, readiness gates, documentation analytics, and team roles. 14-day trial.",
+      },
+      {
+        "@type": "Offer",
+        name: "Thally Cloud annual",
+        price: "600",
+        priceCurrency: "USD",
+        description:
+          "$600 per editor each year, equivalent to $50 per month and saving $120 annually. Includes all Thally Cloud services and a 14-day trial.",
       },
       {
         "@type": "Offer",
         name: "Enterprise",
-        price: "15",
-        priceCurrency: "USD",
         description:
-          "$15 per editor/month, or $120 per editor/year billed annually. SAML and SCIM SSO, audit log, 99.9% uptime SLA, self-hosted with support, dedicated account manager.",
+          "Custom annual pricing with SAML and SCIM SSO, audit-log access, custom terms, migration support, and priority support.",
       },
     ],
   },
@@ -62,6 +69,7 @@ export default function Page() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingJsonLd) }} />
       <Pricing headerTag="h1" />
+      <NoLockIn />
       <Pricing2 />
       <FAQ />
     </>

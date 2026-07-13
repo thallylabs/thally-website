@@ -1,6 +1,13 @@
 "use client";
 
-import { AtSign, Check, GitMerge, GitPullRequest, type LucideIcon, Radar } from "lucide-react";
+import { AtSign, Check } from "lucide-react";
+
+import {
+  GitBranch as GitMerge,
+  GitPullRequest,
+  type IconComponent,
+  Track as Radar,
+} from "@/components/icons";
 import { motion, useReducedMotion } from "motion/react";
 import { type ComponentType, useState } from "react";
 
@@ -13,7 +20,7 @@ type Trigger = {
   label: string;
   title: string;
   description: string;
-  icon: LucideIcon;
+  icon: IconComponent;
   accent: string;
 };
 
