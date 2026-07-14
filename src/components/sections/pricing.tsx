@@ -146,7 +146,6 @@ export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" 
                 )}
                 key={plan.name}
               >
-                {plan.popular ? <span className="bg-chart-1 absolute inset-x-0 top-0 h-1" /> : null}
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h3 className="text-2xl font-semibold tracking-tight">{plan.name}</h3>
