@@ -1,7 +1,7 @@
 import { Github, Mail, Twitter } from "lucide-react";
 import Link from "next/link";
 
-import { DESTINATIONS, SOCIAL } from "@/lib/site";
+import { DESTINATIONS, LEGAL_ENTITY_NAME, SOCIAL } from "@/lib/site";
 
 import { Button } from "../ui/button";
 
@@ -20,9 +20,11 @@ export default function Contact() {
             <div>
               <h2 className="text-lg font-semibold">Corporate office</h2>
               <p className="text-muted-foreground mt-3 text-lg font-medium tracking-tight">
-                Level 5, 120 Collins Street
+                {LEGAL_ENTITY_NAME}
                 <br />
-                Melbourne VIC 3000, Australia
+                348 Business Bay
+                <br />
+                Dubai, UAE
               </p>
             </div>
 
@@ -32,7 +34,7 @@ export default function Contact() {
                 href={DESTINATIONS.email}
                 className="text-muted-foreground mt-3 inline-block text-lg font-medium tracking-tight"
               >
-                noreply@thally.io
+                team@thally.io
               </Link>
             </div>
 
