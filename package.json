@@ -2,7 +2,7 @@
   "name": "thally",
   "version": "1.0.0",
   "private": true,
-  "author": "Your Name <you@example.com>",
+  "author": "Fairspleet LLC <team@thally.io>",
   "license": "UNLICENSED",
   "scripts": {
     "dev": "next dev --turbopack",

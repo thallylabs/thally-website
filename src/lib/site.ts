@@ -7,6 +7,8 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://thally.io";
 
 export const SITE_NAME = "Thally";
 
+export const LEGAL_ENTITY_NAME = "Fairspleet LLC";
+
 export const SITE_TAGLINE = "AI-Native Documentation for Agents and Humans";
 
 export const SITE_TITLE = `${SITE_NAME} — ${SITE_TAGLINE}`;
@@ -21,9 +23,9 @@ export const DESTINATIONS = {
   app: "https://app.thally.io",
   docs: "https://docs.thally.io",
   docsQuickstart: "https://docs.thally.io/quickstart",
-  email: "mailto:noreply@thally.io",
+  email: "mailto:team@thally.io",
   login: "https://app.thally.io/login",
-  sales: "mailto:noreply@thally.io?subject=Thally%20Enterprise",
+  sales: "mailto:team@thally.io?subject=Thally%20Enterprise",
   signup: "https://app.thally.io/register",
 } as const;
 

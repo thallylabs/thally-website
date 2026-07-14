@@ -6,7 +6,15 @@ import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { ConditionalFooter } from "@/components/layout/conditional-footer";
 import Navbar from "@/components/layout/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
-import { OG_DESCRIPTION, SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL, SOCIAL } from "@/lib/site";
+import {
+  LEGAL_ENTITY_NAME,
+  OG_DESCRIPTION,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+  SOCIAL,
+} from "@/lib/site";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -48,7 +56,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Thally" }],
   creator: "Thally",
-  publisher: "Thally",
+  publisher: LEGAL_ENTITY_NAME,
   robots: {
     index: true,
     follow: true,
@@ -89,9 +97,17 @@ const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "@id": `${SITE_URL}/#organization`,
-  name: SITE_NAME,
+  name: LEGAL_ENTITY_NAME,
+  alternateName: SITE_NAME,
+  legalName: LEGAL_ENTITY_NAME,
   url: SITE_URL,
   description: SITE_DESCRIPTION,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "348 Business Bay",
+    addressLocality: "Dubai",
+    addressCountry: "AE",
+  },
   logo: {
     "@type": "ImageObject",
     url: `${SITE_URL}/favicon/favicon-512.png`,

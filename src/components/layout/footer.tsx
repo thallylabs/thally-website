@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Logo } from "@/components/layout/logo";
 import { SectionGrid } from "@/components/section-decor";
 import { Button } from "@/components/ui/button";
-import { DESTINATIONS, SOCIAL } from "@/lib/site";
+import { DESTINATIONS, LEGAL_ENTITY_NAME, SOCIAL } from "@/lib/site";
 
 const navigation = [
   {
@@ -91,7 +91,7 @@ export const Footer = () => {
 
         <div className="flex flex-wrap items-center justify-between gap-4 py-8">
           <p className="text-primary-foreground/60 dark:text-muted-foreground text-sm">
-            © Thally - All rights reserved.
+            © {LEGAL_ENTITY_NAME}. Thally is a Fairspleet product. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             {socialLinks.map((link) => (
