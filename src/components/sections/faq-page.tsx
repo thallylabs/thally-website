@@ -1,6 +1,8 @@
 "use client";
 
 import { HelpCircle, LifeBuoy, MessageCircle, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { useMemo, useState } from "react";
 
 import {
   Account as User,
@@ -10,15 +12,13 @@ import {
   Search,
   Trust as Shield,
 } from "@/components/icons";
-import Link from "next/link";
-import { useMemo, useState } from "react";
-
 import { SectionGrid, SectionLines } from "@/components/section-decor";
 import { type Category, type FAQItem, faqItems } from "@/components/sections/faq-page-data";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { DESTINATIONS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const categoryMeta: Record<Category, { icon: IconComponent; description: string; accent: string }> = {
@@ -59,15 +59,15 @@ const helpLinks = [
     icon: MessageCircle,
   },
   {
-    title: "Read the blog",
-    description: "Comparisons, guides, and product deep dives.",
-    href: "/blog",
+    title: "Read the documentation",
+    description: "Quickstarts, guides, and product reference.",
+    href: DESTINATIONS.docs,
     icon: BookOpen,
   },
   {
     title: "Start free",
     description: "Self-host in minutes. No credit card required.",
-    href: "/signup",
+    href: DESTINATIONS.signup,
     icon: Sparkles,
   },
 ];

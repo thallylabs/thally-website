@@ -7,6 +7,7 @@ import { Check } from "@/components/icons";
 import { SectionGrid, SectionHeader, SectionLines } from "@/components/section-decor";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
+import { DESTINATIONS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 interface PricingPlan {
@@ -40,8 +41,8 @@ const plans: PricingPlan[] = [
       "Deploy to any hosting provider",
       "Commercial use included",
     ],
-    cta: "Get started",
-    href: "/signup",
+    cta: "Read the quickstart",
+    href: DESTINATIONS.docsQuickstart,
     popular: false,
     accent: "var(--chart-3)",
   },
@@ -62,7 +63,7 @@ const plans: PricingPlan[] = [
       "Additional members: $20/month or $200/year",
     ],
     cta: "Start 14-day trial",
-    href: "/signup",
+    href: DESTINATIONS.signup,
     popular: true,
     accent: "var(--chart-1)",
   },
@@ -80,8 +81,8 @@ const plans: PricingPlan[] = [
       "Migration and priority support",
       "Dedicated account manager",
     ],
-    cta: "Contact us",
-    href: "/contact",
+    cta: "Talk to sales",
+    href: DESTINATIONS.sales,
     popular: false,
     accent: "var(--chart-5)",
   },
@@ -146,7 +147,6 @@ export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" 
                 )}
                 key={plan.name}
               >
-                {plan.popular ? <span className="bg-chart-1 absolute inset-x-0 top-0 h-1" /> : null}
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h3 className="text-2xl font-semibold tracking-tight">{plan.name}</h3>

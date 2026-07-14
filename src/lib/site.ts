@@ -17,8 +17,18 @@ export const SITE_DESCRIPTION =
 export const OG_DESCRIPTION =
   "One source, read natively by AI agents and humans. JSON, JSON-LD & Markdown for agents; HTML for people — same URL. When your product ships, Thally drafts the docs PR.";
 
+export const DESTINATIONS = {
+  app: "https://app.thally.io",
+  docs: "https://docs.thally.io",
+  docsQuickstart: "https://docs.thally.io/quickstart",
+  email: "mailto:noreply@thally.io",
+  login: "https://app.thally.io/login",
+  sales: "mailto:noreply@thally.io?subject=Thally%20Enterprise",
+  signup: "https://app.thally.io/register",
+} as const;
+
 export const SOCIAL = {
-  github: "https://github.com/kenny-io/thally",
+  github: "https://github.com/thallylabs/thally",
   x: "https://x.com/thallydocs",
   xHandle: "@thallydocs",
 };
