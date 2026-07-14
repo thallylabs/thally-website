@@ -24,7 +24,8 @@
 - [About](/about): team and mission
 - [FAQ](/faq): common questions on migration, automation, agents, self-hosting
 - [Contact](/contact): sales and support
-- [Sign up](/signup): start free
+- [Sign up](https://app.thally.io/register): start free
+- [Documentation](https://docs.thally.io): quickstarts, guides, and product reference
 
 ## Blog highlights
 

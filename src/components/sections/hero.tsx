@@ -1,18 +1,13 @@
 "use client";
 
-import {
-  ArrowRight,
-  Guide,
-  type IconComponent,
-  Readiness,
-  Structured,
-} from "@/components/icons";
 import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { ArrowRight, Guide, type IconComponent, Readiness, Structured } from "@/components/icons";
 import { sectionTitleClassName } from "@/components/section-decor";
 import { Button } from "@/components/ui/button";
+import { DESTINATIONS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 type HeroFeatureSliderImage = Image & {
@@ -63,11 +58,11 @@ const defaultProps: HeroFeatureSliderProps = {
     "One MDX source serves AI agents and human readers from the same URL. And when your product changes, Thally drafts the docs PR.",
   buttonPrimary: {
     text: "Start free",
-    href: "/signup",
+    href: DESTINATIONS.signup,
   },
   buttonSecondary: {
-    text: "View pricing",
-    href: "/pricing",
+    text: "Read the docs",
+    href: DESTINATIONS.docs,
   },
   features: [
     {

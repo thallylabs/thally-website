@@ -1,10 +1,10 @@
 "use client";
 
-import { Cloud, GitPullRequest, Mcp, Negotiation, Overview } from "@/components/icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
+import { Cloud, GitPullRequest, Mcp, Negotiation, Overview } from "@/components/icons";
 import { Logo } from "@/components/layout/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { DESTINATIONS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const Navbar = () => {
@@ -73,6 +74,7 @@ const Navbar = () => {
       ],
     },
     { label: "Pricing", href: "/pricing" },
+    { label: "Docs", href: DESTINATIONS.docs },
     { label: "Blog", href: "/blog" },
     { label: "About", href: "/about" },
     { label: "FAQ", href: "/faq" },
@@ -143,13 +145,13 @@ const Navbar = () => {
 
           {/* Auth Buttons */}
           <div className="flex items-center gap-2.5">
-            <Link href="/signup" className="hidden lg:block">
+            <Link href={DESTINATIONS.signup} className="hidden lg:block">
               <Button variant="ghost" className="text-muted-foreground">
                 Sign up
               </Button>
             </Link>
             <Link
-              href="/login"
+              href={DESTINATIONS.login}
               className={`transition-opacity duration-300 ${isMenuOpen ? "max-lg:pointer-events-none max-lg:opacity-0" : "opacity-100"}`}
             >
               <Button variant="outline">Log in</Button>
@@ -194,12 +196,12 @@ const Navbar = () => {
         )}
       >
         <div className="mt-8 space-y-2">
-          <Link href="/signup" className="block" onClick={() => setIsMenuOpen(false)}>
+          <Link href={DESTINATIONS.signup} className="block" onClick={() => setIsMenuOpen(false)}>
             <Button size="sm" className="w-full">
               Sign up
             </Button>
           </Link>
-          <Link href="/login" className="block" onClick={() => setIsMenuOpen(false)}>
+          <Link href={DESTINATIONS.login} className="block" onClick={() => setIsMenuOpen(false)}>
             <Button size="sm" className="w-full" variant="outline">
               Log in
             </Button>

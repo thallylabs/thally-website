@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { Check, ChevronsUpDown } from "@/components/icons";
+import { DESTINATIONS } from "@/lib/site";
 
 import { Button } from "../ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
@@ -21,15 +22,15 @@ interface FeatureSection {
 const pricingPlans = [
   {
     name: "Free",
-    href: "/signup",
+    href: DESTINATIONS.docsQuickstart,
     button: {
-      text: "Get started",
+      text: "Read the quickstart",
       variant: "outline" as const,
     },
   },
   {
     name: "Thally Cloud",
-    href: "/signup",
+    href: DESTINATIONS.signup,
     button: {
       text: "Start 14-day trial",
       variant: "outline" as const,
@@ -37,7 +38,7 @@ const pricingPlans = [
   },
   {
     name: "Enterprise",
-    href: "/contact",
+    href: DESTINATIONS.sales,
     button: {
       text: "Talk to sales",
       variant: "outline" as const,

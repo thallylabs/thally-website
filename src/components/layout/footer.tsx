@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Logo } from "@/components/layout/logo";
 import { SectionGrid } from "@/components/section-decor";
 import { Button } from "@/components/ui/button";
+import { DESTINATIONS, SOCIAL } from "@/lib/site";
 
 const navigation = [
   {
@@ -26,6 +27,7 @@ const navigation = [
   {
     title: "Support",
     links: [
+      { name: "Documentation", href: DESTINATIONS.docs },
       { name: "FAQ", href: "/faq" },
       { name: "Contact", href: "/contact" },
     ],
@@ -40,8 +42,8 @@ const navigation = [
 ];
 
 const socialLinks = [
-  { icon: Github, href: "https://github.com/kenny-io/thally", label: "GitHub" },
-  { icon: Twitter, href: "https://x.com/thallydocs", label: "X" },
+  { icon: Github, href: SOCIAL.github, label: "GitHub" },
+  { icon: Twitter, href: SOCIAL.x, label: "X" },
 ];
 
 export const Footer = () => {
@@ -63,7 +65,7 @@ export const Footer = () => {
             </h2>
           </div>
           <Button asChild variant="secondary" size="lg">
-            <Link href="/signup">Start free</Link>
+            <Link href={DESTINATIONS.signup}>Start free</Link>
           </Button>
         </div>
 
