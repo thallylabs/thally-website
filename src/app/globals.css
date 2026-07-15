@@ -208,6 +208,55 @@
     margin-bottom: 0.75rem;
   }
 
+  .legal-prose > :first-child {
+    margin-top: 0;
+  }
+
+  .legal-prose :where(h2) {
+    scroll-margin-top: 2rem;
+    border-top: 1px solid var(--border);
+    padding-top: 2.75rem;
+    margin-top: 4rem !important;
+    margin-bottom: 1.25rem !important;
+    font-size: 1.65rem !important;
+    line-height: 1.25 !important;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  .legal-prose :where(h3) {
+    margin-top: 2.25rem;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 650;
+  }
+
+  .legal-prose :where(p, li) {
+    color: var(--muted-foreground);
+    line-height: 1.8;
+  }
+
+  .legal-prose :where(strong) {
+    color: var(--foreground);
+    font-weight: 600;
+  }
+
+  .legal-prose :where(a) {
+    color: var(--foreground);
+    text-decoration-color: color-mix(in oklab, var(--foreground) 35%, transparent);
+    text-underline-offset: 0.2em;
+    transition: text-decoration-color 180ms ease;
+  }
+
+  .legal-prose :where(a:hover) {
+    text-decoration-color: var(--foreground);
+  }
+
+  .legal-prose :where(ul) {
+    padding-left: 1.25rem;
+  }
+
   /* Inline code: drop the typography plugin's literal backticks, add a quiet chip. */
   .prose :where(code)::before,
   .prose :where(code)::after {
