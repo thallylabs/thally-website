@@ -84,7 +84,7 @@ const Navbar = () => {
   const bgColor = "bg-popover";
 
   return (
-    <header className={cn("relative z-50", bgColor)}>
+    <header className={cn("relative z-50 overflow-x-clip", bgColor)}>
       <div className="max-w-9xl container">
         <div className="flex items-center justify-between py-3">
           {/* Logo */}

@@ -1,16 +1,10 @@
 "use client";
 
 import { AtSign, Check } from "lucide-react";
-
-import {
-  GitBranch as GitMerge,
-  GitPullRequest,
-  type IconComponent,
-  Track as Radar,
-} from "@/components/icons";
 import { motion, useReducedMotion } from "motion/react";
 import { type ComponentType, useState } from "react";
 
+import { GitBranch as GitMerge, GitPullRequest, type IconComponent, Track as Radar } from "@/components/icons";
 import { Avatar } from "@/components/illustrations/thally-ui";
 import { SectionGrid, SectionHeader, SectionLines } from "@/components/section-decor";
 import { cn } from "@/lib/utils";
@@ -30,7 +24,7 @@ const TRIGGERS: Trigger[] = [
     label: "Tag it",
     title: "Mention @thally anywhere on GitHub.",
     description:
-      "Comment on any issue or pull request and the agent drafts the docs PR. Add the docs-preview label and reviewers see the docs alongside the code, before the feature merges.",
+      "Comment on an issue or pull request to draft the docs PR. Add the docs-preview label so reviewers can read the docs beside the code before merge.",
     icon: AtSign,
     accent: "var(--chart-1)",
   },
@@ -39,16 +33,16 @@ const TRIGGERS: Trigger[] = [
     label: "Track it",
     title: "Thally Track watches your product repos.",
     description:
-      "Connect a repo with the one-click GitHub App. When a product PR merges, Track distills what changed and the agent opens a reviewed docs PR. The feature ships, the docs follow.",
+      "Connect a repo with the GitHub App. When a product PR merges, Track identifies the relevant changes and drafts a docs PR for review.",
     icon: GitMerge,
     accent: "var(--chart-2)",
   },
   {
     id: "score",
     label: "Score it",
-    title: "Ailing metrics become pull requests.",
+    title: "Low scores become fix pull requests.",
     description:
-      "The readiness report names the exact pages dragging your score down, and the drift sweep flags docs whose source code changed. The agent turns both into PRs that fix them.",
+      "The readiness report names the pages lowering your score. Drift sweeps flag docs whose source changed. The agent drafts fixes for both.",
     icon: Radar,
     accent: "var(--chart-5)",
   },
@@ -170,17 +164,7 @@ function ScoreFlow() {
   );
 }
 
-function PrCard({
-  title,
-  meta,
-  checks,
-  delay = 0,
-}: {
-  title: string;
-  meta: string;
-  checks: string[];
-  delay?: number;
-}) {
+function PrCard({ title, meta, checks, delay = 0 }: { title: string; meta: string; checks: string[]; delay?: number }) {
   const reduce = useReducedMotion();
   return (
     <motion.div
@@ -207,7 +191,7 @@ function PrCard({
             color: "var(--chart-5)",
           }}
         >
-          Open · awaiting review
+          Open, awaiting review
         </span>
       </div>
       <div className="flex flex-wrap gap-x-4 gap-y-1.5 p-3">
@@ -245,7 +229,7 @@ export const Automation = () => {
       <div className="relative container">
         <SectionHeader
           title="The feature shipped. The docs already know."
-          description="Every trigger produces the same thing: a documentation pull request drafted by the Thally agent, in your house style, on your infrastructure. It never merges. A human always does."
+          description="Every trigger produces a documentation pull request in your house style and on your infrastructure. Thally never merges it. A human decides what lands."
         />
 
         <div className="mt-10 grid gap-5 lg:mt-16 lg:grid-cols-[5fr_6fr] lg:gap-10">

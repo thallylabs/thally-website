@@ -47,7 +47,8 @@ export function NoLockIn() {
               Pay for the service. Keep the site.
             </h2>
             <p className="text-muted-foreground mt-7 max-w-lg text-lg leading-relaxed text-pretty md:text-xl">
-              Thally earns your business with useful services—not by holding your content, renderer, hosting, or domain.
+              Thally earns your business with useful services, not by holding your content, renderer, hosting, or
+              domain.
             </p>
 
             <div

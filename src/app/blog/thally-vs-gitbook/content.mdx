@@ -31,20 +31,20 @@ The honest question is: who writes, and who reviews? Answer that and this sectio
 
 ## Machine readers change the calculus
 
-A growing share of documentation traffic never renders your CSS. It is an AI agent answering a developer's question, evaluating your product for a buyer, or wiring up an integration. Serving that reader well is Thally's core design goal:
+AI agents now read documentation to answer developer questions, compare products, and build integrations. Those readers do not render your CSS. Serving them structured content is a core Thally design goal:
 
 - every page returns **JSON, JSON-LD, or Markdown** on request, from the same URL as the HTML
 - **llms.txt** and per-page manifests ship on every build
 - the built-in **MCP server** turns your docs into callable tools for any agent
 - the **agent-readiness score** grades every build from 0 to 100, and CI can enforce a floor
 
-GitBook publishes clean HTML and has been adding AI features on the platform side. But if agent traffic is a first-class audience for you, structured output by default is the difference between being quoted accurately and being scraped approximately.
+GitBook publishes clean HTML and continues to add AI features to its platform. If agent traffic is a first-class audience, the practical difference is whether structured output ships by default or whether agents begin with rendered HTML.
 
 ## Ownership and cost
 
 Thally is MIT licensed. Self-hosting is free forever with unlimited pages and readers; you deploy a Next.js repo you own to any host. Thally Cloud is $60 per workspace each month, or $600 per workspace each year ($50 per month equivalent), with three team members included. Additional active members or pending invitations are $20 per month or $200 per year each. It adds managed services, Thally AI, Track, and the dashboard. Enterprise pricing is custom and adds SSO, audit-log access, custom terms, and priority support. Details are on the [pricing page](/pricing).
 
-GitBook is a hosted product with per-user pricing; see their pricing page for current tiers. There is no self-hosted GitBook, which is the main structural difference: with a hosted wiki you are renting the venue, with Thally you own the building.
+GitBook is a hosted product with per-user pricing, so check its pricing page for current tiers. The main structural difference is ownership: GitBook operates the platform, while a Thally site remains a repository you can deploy yourself.
 
 ## Which should you choose?
 

@@ -1,9 +1,9 @@
 "use client";
 
-import { Code, Mcp, Search, Structured } from "@/components/icons";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { type ComponentType, useEffect, useRef, useState } from "react";
 
+import { Code, Mcp, Search, Structured } from "@/components/icons";
 import {
   ApiReferenceView,
   ContentGraphView,
@@ -28,7 +28,7 @@ const FEATURES: {
     content: {
       title: "Author once. Thally does the projections.",
       description:
-        "Every page is parsed into a typed graph. JSON, JSON-LD, Markdown, HTML, search, and embeddings are all generated from it, never maintained by hand. One source of truth, no drift.",
+        "Every page becomes a typed graph. Thally generates JSON, JSON-LD, Markdown, HTML, search, and embeddings from it, so you maintain one source instead of six.",
       view: ContentGraphView,
     },
   },
@@ -39,7 +39,7 @@ const FEATURES: {
     content: {
       title: "Search and answers, on the same index.",
       description:
-        "A single ⌘K console spans full-text search, vector recall, and a grounded answer engine. Every reply cites the pages it came from, and it refuses to guess.",
+        "One ⌘K console combines full-text search, vector recall, and grounded answers. Each answer cites its source pages and says when the docs do not contain an answer.",
       view: SearchConsoleView,
     },
   },
@@ -50,7 +50,7 @@ const FEATURES: {
     content: {
       title: "Drop in a spec, get a living reference.",
       description:
-        "Parameter tables, request and response schemas, code samples, and a Try-it console, regenerated on every build so the reference never drifts from the API.",
+        "Generate parameter tables, schemas, code samples, and a Try-it console from your OpenAPI spec on every build.",
       view: ApiReferenceView,
     },
   },
@@ -61,7 +61,7 @@ const FEATURES: {
     content: {
       title: "Legible to every machine reader.",
       description:
-        "llms.txt, agent manifests, and per-page JSON ship with every deploy. Every site is also a remote MCP server at /api/mcp: attach it to any agent and your docs become native tools.",
+        "Every deploy includes llms.txt, agent manifests, per-page JSON, and a remote MCP server at /api/mcp. Connect the endpoint to give agents direct access to your docs as tools.",
       view: ReadinessView,
     },
   },
@@ -95,7 +95,7 @@ export const Feature3 = () => {
       <div className="relative container">
         <SectionHeader
           title="One graph, read six different ways"
-          description="There's no glue code between search, chat, the API reference, and the agent layer. They're the same content graph, projected for whoever is reading."
+          description="Search, chat, the API reference, and agent endpoints all use the same content graph. Each reader gets the format it needs without a separate pipeline."
         />
 
         <Tabs

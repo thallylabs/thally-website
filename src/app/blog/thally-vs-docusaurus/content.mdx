@@ -2,11 +2,11 @@
 
 ## Two open-source philosophies
 
-Docusaurus, maintained by Meta, is one of the most successful docs frameworks ever shipped. It gives you a React site generator with versioning, i18n, MDX, and a huge plugin ecosystem. What you build on top is up to you.
+Docusaurus, maintained by Meta, is a widely adopted docs framework. It gives you a React site generator with versioning, i18n, MDX, and a broad plugin ecosystem. What you build on top is up to you.
 
 Thally is also open source (MIT), but it is a platform rather than a kit: search, AI chat, API reference, analytics, theming, and the machine-readability layer are part of the product, not plugins you select and maintain.
 
-The right choice depends on whether assembling and maintaining that stack is a cost or a hobby for your team.
+The right choice depends on how much of the documentation stack your team wants to assemble and maintain.
 
 ## The comparison at a glance
 
@@ -21,11 +21,11 @@ The right choice depends on whether assembling and maintaining that stack is a c
 | API reference | OpenAPI-generated with Try-It console | Community plugins |
 | Docs automation | Agent drafts reviewed PRs from product changes | None built in |
 | Managed hosting | Optional, from $50 per workspace/month billed annually; 3 team members included | None official; deploy anywhere |
-| Maturity | Newer platform | Battle-tested since 2017 |
+| Maturity | Newer platform | Available since 2017 |
 
 Docusaurus's plugin ecosystem is broad and moves fast; check the current docs for what exists today.
 
-## What "the AI layer" actually means
+## What the AI layer includes
 
 With Docusaurus you can absolutely build agent-readable docs. You would add a plugin or custom code for llms.txt, write a build step that emits JSON per page, stand up your own MCP server, and wire a search index with embeddings. Each piece is a project, and each piece is yours to maintain through every Docusaurus major version.
 
@@ -40,13 +40,13 @@ The question is not whether Docusaurus can be made agent-ready. It is whether yo
 
 ## Keeping docs current
 
-Docusaurus renders what is in the repo; keeping the repo true to the product is entirely on you. That is fine for teams with strong docs culture and painful for everyone else.
+Docusaurus renders what is in the repository, while your team owns the process that keeps those files current. That works well when the team already has a strong documentation practice.
 
 Thally attacks the drift problem directly. Thally Track watches your product repos and turns merged PRs into reviewed documentation PRs. The drift sweep flags pages whose source files changed since last verification. Comment `@thally document this` on any GitHub issue and the agent drafts the page. A human reviews and merges every change.
 
 ## Cost of ownership
 
-Both are free to run. The difference is the second line item: engineering time. A Docusaurus stack with search, AI answers, and structured output is a real internal product with upgrades, plugin churn, and an on-call owner. Thally's equivalent features are maintained upstream, and if you want zero infrastructure, [Thally Cloud is $60 per workspace monthly or $50 with annual billing](/pricing), with three team members included and readers always free.
+Both are free to run. The second cost is engineering time. A Docusaurus stack with search, AI answers, and structured output needs upgrades, plugin maintenance, and an internal owner. Thally maintains those features upstream. [Thally Cloud costs $60 per workspace monthly or $50 with annual billing](/pricing), with three team members included and unlimited public readers.
 
 ## Which should you choose?
 

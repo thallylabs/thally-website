@@ -1,10 +1,10 @@
 "use client";
 
-import { ArrowRight } from "@/components/icons";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { ArrowRight } from "@/components/icons";
 import { SectionGrid, SectionHeader } from "@/components/section-decor";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -51,7 +51,7 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      "The migration from Mintlify really was one command. Claude and ChatGPT started quoting our docs correctly the same week.",
+      "The migration from Mintlify was one command. Claude and ChatGPT started quoting our docs correctly the same week.",
     author: "Tomas Berg",
     role: "DevRel Lead, Brightwire",
     image: "/images/testimonials/tomas-berg.jpg",
