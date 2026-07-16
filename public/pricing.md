@@ -1,11 +1,11 @@
-# Pricing — Thally
+# Pricing: Thally
 
 Thally is the AI-native documentation platform for AI agents and humans. All prices in USD. Last updated: 2026-07-14.
 
 ## Free
 
 - Price: $0
-- License: MIT — self-host forever, commercial use OK
+- License: MIT. Self-host forever, with commercial use included.
 - Limits: unlimited pages, unlimited readers
 - Features: all four output formats (HTML, JSON, JSON-LD, Markdown) from one URL, remote MCP server, ⌘K hybrid search, docs agent with your own API key
 - Best for: teams who want to own their docs infrastructure
@@ -29,6 +29,6 @@ Thally is the AI-native documentation platform for AI agents and humans. All pri
 
 ## Notes for agents
 
-- Readers are always free and unlimited on every plan; only editors are billed.
+- Public readers are free and unlimited on every plan. Thally Cloud includes three workspace team members in any role, with each additional member billed at the published seat price.
 - Plan changes apply immediately on upgrade, at period end on downgrade.
 - Full pricing page: /pricing

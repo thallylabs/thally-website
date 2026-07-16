@@ -11,90 +11,120 @@ export const faqItems: FAQItem[] = [
     category: "Support",
     question: "Is there a free version?",
     answer:
-      "Yes. Thally is MIT-licensed and free to self-host forever — unlimited pages, readers, and commercial use, no credit card required. Paid plans add managed hosting and team features.",
+      "Yes. Thally is open source under the MIT license and free to self-host forever. The free version includes unlimited pages and readers, all four output formats, and the MCP server. Cloud and Enterprise add managed services, AI answers, and team controls.",
   },
   {
     category: "Support",
     question: "How do I get help if I get stuck?",
     answer:
-      "Every plan includes community support on Discord and GitHub, plus searchable documentation. Cloud plans add priority support from a real person, and Enterprise customers get a dedicated account manager.",
+      "Everyone can search the docs or open an issue on GitHub. Cloud customers receive priority support, while Enterprise adds migration support and a dedicated account manager.",
   },
   {
     category: "Support",
     question: "What are your support hours?",
     answer:
-      "Support is staffed Monday to Friday across US and EU time zones, with a typical first response under four hours on paid plans.",
+      "Our team supports customers across US and EU business hours. Enterprise customers can arrange coverage and response commitments for production-critical issues.",
+  },
+  {
+    category: "Support",
+    question: "How quickly will I hear back?",
+    answer:
+      "We usually reply to sales and support messages within one business day. Enterprise response commitments depend on your support agreement.",
   },
   {
     category: "Account",
-    question: "How do I invite my team?",
+    question: "How do I invite teammates?",
     answer:
-      "Open Settings → Members, paste in a list of email addresses, and pick a role — Owner, Editor, or Viewer. Invited teammates land straight in the right project.",
+      "Owners and Editors can invite teammates by email from the admin dashboard. Thally Cloud includes three team members in any role, and each additional member is billed at the published seat price.",
   },
   {
     category: "Account",
-    question: "Can I change plans later?",
+    question: "What roles are available?",
     answer:
-      "Any time. Upgrades take effect immediately and downgrades apply at the end of your billing period — no emails required. You can also export everything and move to self-hosting whenever you like.",
+      "Owner, Editor, and Viewer. Owners manage billing and SSO, Editors write and publish, and Viewers get read access to private documentation.",
   },
   {
     category: "Account",
-    question: "What happens if I forget my password?",
+    question: "How does billing work?",
     answer:
-      "Use the “Forgot password” link on the login screen and we’ll email you a secure reset link. SSO users sign in through their identity provider.",
+      "Thally Cloud costs $60 per workspace when billed monthly or $600 when billed annually, which saves 17%. Three team members are included. Additional members cost $20 per month or $200 per year.",
+  },
+  {
+    category: "Account",
+    question: "Can I change my plan later?",
+    answer:
+      "Yes. You can change or cancel your plan. Your docs remain in a Git repository you own, so cancelling paid services does not take away your content or site source.",
   },
   {
     category: "Features",
-    question: "Which formats does every page ship in?",
+    question: "What output formats does Thally produce?",
     answer:
-      "Each page is served as JSON, JSON-LD, and Markdown for machines, and as semantic HTML for readers, from the same URL, chosen by a content-negotiation header. Search indexes and embeddings are generated from the same graph.",
+      "Every page serves polished HTML for people plus JSON, JSON-LD, and Markdown for machines. All four formats come from one MDX source and the same URL.",
   },
   {
     category: "Features",
-    question: "What can Thally AI do?",
+    question: "How does search work?",
     answer:
-      "Thally AI answers questions with retrieval-grounded chat that cites the exact pages it quotes, and it can draft docs PRs from changes in your product repo — all opt-in and reviewable.",
+      "⌘K hybrid search blends keyword and semantic matching over your indexed docs, returning instant results with inline previews and jump-to-section links.",
   },
   {
     category: "Features",
-    question: "How does the API reference work?",
+    question: "How does the AI assistant avoid hallucinating?",
     answer:
-      "Drop an OpenAPI spec into your project and Thally generates endpoint pages with parameter tables, schemas, code samples, and an interactive Try-it console — regenerated on every build.",
+      "Answers are retrieval-grounded: the engine only quotes your indexed docs and cites the exact pages inline. If the docs don't contain an answer, it says so rather than guessing.",
+  },
+  {
+    category: "Features",
+    question: "Is there an API reference?",
+    answer:
+      "Yes. Point Thally at an OpenAPI spec and it renders a fully typed reference with a live Try-It console, wired up automatically on every deploy.",
   },
   {
     category: "Security",
     question: "Can I self-host Thally?",
     answer:
-      "Yes — the whole engine is MIT-licensed and deploys anywhere with one command. There's no database; configuration is committed to git, so your docs stay entirely on infrastructure you control.",
+      "Yes. Run the open-source engine wherever Next.js runs, including Vercel, Netlify, Cloudflare, Docker with the included Dockerfile, or a static export.",
   },
   {
     category: "Security",
     question: "Do you support SSO?",
     answer:
-      "SAML and SCIM single sign-on are available on the Enterprise plan, alongside audit logs and role-based access with Owner, Editor, and Viewer roles.",
+      "Enterprise includes SAML and SCIM single sign-on with automated user provisioning and de-provisioning tied to your identity provider.",
   },
   {
     category: "Security",
-    question: "How is my data protected on Cloud?",
+    question: "How is my data handled?",
     answer:
-      "All data is encrypted in transit (TLS 1.2+) and at rest (AES-256). We run regular backups and undergo independent penetration testing.",
+      "Your content stays in your Git repo. Cloud processes only what's needed to serve and index your docs, and never trains models on your content.",
+  },
+  {
+    category: "Security",
+    question: "Are you compliant?",
+    answer:
+      "Enterprise ships with a full audit log, a 99.9% uptime SLA, and SOC 2 documentation available on request under NDA.",
   },
   {
     category: "Other",
-    question: "Can I migrate from another docs tool?",
+    question: "How do I migrate from another tool?",
     answer:
-      "Yes. The CLI migrates existing Markdown and MDX content, and the built-in link and anchor checks validate everything before you switch DNS.",
+      "One command: npx create-thally migrate <your-repo-url>. It detects Mintlify, Docusaurus, or GitBook, converts every page to clean MDX, rebuilds navigation, and carries your redirects.",
   },
   {
     category: "Other",
-    question: "Do you offer refunds?",
+    question: "What is your refund policy?",
     answer:
-      "If Thally isn’t the right fit within your first 30 days on a paid plan, contact us and we’ll refund your most recent payment.",
+      "If Thally is not the right fit within your first 30 days on a paid plan, contact our team to request a refund of your most recent payment. Enterprise agreements, misuse, and repeat subscriptions are excluded. Cancellations take effect at the end of the current billing period.",
   },
   {
     category: "Other",
-    question: "Where can I see what you’re shipping?",
+    question: "Do you offer discounts?",
     answer:
-      "Our public changelog is RSS-backed and updated with every release, so you — and your feed reader — can always see what just shipped.",
+      "Thally's open-source engine is free for every project, including commercial use. Contact our team to discuss nonprofit or education pricing for managed services.",
+  },
+  {
+    category: "Other",
+    question: "Where can I request a feature?",
+    answer:
+      "Open a discussion on GitHub or send a note to our team. Roadmap items ship continuously, and the docs agent often turns requests into reviewed PRs.",
   },
 ];

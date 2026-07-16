@@ -2,7 +2,7 @@
 
 ## Why bother
 
-When a developer asks their coding assistant "how do I rotate an API token in Acme?", the assistant reads documentation on their behalf. If your docs parse cleanly, the answer quotes you correctly. If they do not, the agent reconstructs your content from scraped HTML and hopes. Multiply that by every AI-mediated question about your product, and machine readability stops being a nice-to-have.
+When a developer asks their coding assistant "how do I rotate an API token in Acme?", the assistant reads documentation on their behalf. Clean structure gives it reliable source material. Without that structure, the agent has to reconstruct the answer from scraped HTML. Machine readability now affects how accurately other systems explain your product.
 
 The good news: the work is layered, and the first layer takes an afternoon.
 
@@ -29,7 +29,7 @@ Keep it under a few hundred lines, keep it current, and write it like an abstrac
 
 ### robots.txt
 
-Decide which AI crawlers you want reading you, and say so explicitly. If you want to be cited by ChatGPT, Claude, and Perplexity, allow GPTBot, ClaudeBot, and PerplexityBot. Blocking a crawler means that platform cannot quote you.
+Decide which AI crawlers you want reading your site, and state that policy explicitly. If you want GPTBot, ClaudeBot, or PerplexityBot to crawl your docs directly, allow the corresponding user agent. A blocked crawler may have to rely on other indexed sources.
 
 **Check:** `curl https://yoursite.com/llms.txt` returns your file, and your robots.txt names the crawlers you care about.
 
@@ -47,7 +47,7 @@ The JSON should carry the page as content, not markup: title, description, secti
 
 Two implementation rules that save pain:
 
-1. **Generate all formats from one source at build time.** If HTML and JSON come from different pipelines, they will drift, and drifting formats are worse than no formats.
+1. **Generate all formats from one source at build time.** Separate HTML and JSON pipelines can drift and give readers conflicting answers.
 2. **Never serve machines different content than people.** Same content, more formats. Different content is cloaking, and it erodes exactly the trust you are building.
 
 This layer is the expensive one to hand-roll, and it is the core of what an AI-native platform gives you for free. Every page on a Thally site ships all four formats from one content graph on every build.
@@ -62,7 +62,7 @@ MCP (Model Context Protocol) lets an agent attach to your docs as a set of calla
 - `read_page(slug)`: the structured page content
 - `list_pages()`: the site map as data
 
-The difference in practice: an agent with MCP access answers from your live content with your own search ranking. An agent without it depends on whatever a crawler indexed weeks ago.
+The practical difference is freshness and control. An agent with MCP access queries your live content through your search ranking. Without it, the agent may depend on an older crawler index.
 
 Every deployed Thally site exposes `/api/mcp` with those tools plus `agent_readiness`, no key or account required. If you are building your own, the MCP spec and SDKs are open; budget for auth decisions, rate limits, and keeping the index fresh.
 
@@ -80,11 +80,11 @@ Ad-hoc checks rot. Turn the layers above into a score your CI understands:
 | Machine readability | content negotiation, clean plain text |
 | OpenAPI coverage | endpoints documented vs. spec |
 
-Thally computes exactly this as the agent-readiness score, a deterministic 0 to 100 grade per build. Teams gate CI on a threshold, and the docs agent opens PRs against the pages dragging the score down. Whatever stack you use, the principle stands: if agent readiness is not measured, it will quietly regress.
+Thally turns these checks into an agent-readiness score from 0 to 100 on every build. You can gate CI on a threshold and ask the docs agent to draft fixes for low-scoring pages. Whatever stack you use, measuring the checks makes regressions visible.
 
 ## Where to start
 
-If you do nothing else this week, ship llms.txt and fix your robots.txt. That is discovery solved. Then decide whether layers 2 and 3 are a project you build or a platform you adopt. Migrating an existing docs site into Thally is one command, and the [free plan self-hosts forever](/pricing):
+Start with llms.txt and an explicit robots.txt policy. Then decide whether layers 2 and 3 are infrastructure your team wants to build or a platform you want to adopt. Migrating an existing docs site into Thally takes one command, and the [free plan self-hosts forever](/pricing):
 
 ```bash
 npx create-thally migrate github.com/acme/docs

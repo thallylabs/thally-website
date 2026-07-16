@@ -70,7 +70,7 @@ const comparisonFeatures: FeatureSection[] = [
       },
       {
         name: "Additional team members",
-        free: "—",
+        free: "Not applicable",
         cloud: "$20/mo or $200/yr",
         enterprise: "Custom",
       },

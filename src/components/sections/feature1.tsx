@@ -310,7 +310,7 @@ export const Feature1 = () => {
           <div>
             <SectionHeader
               title="Every page your product needs, from one source"
-              description="Guides, API references, and changelogs are projections of the same typed content graph—written once in MDX and never maintained by hand."
+              description="Guides, API references, and changelogs come from the same typed content graph. Write once in MDX instead of maintaining separate copies."
               layout="stack"
             />
 

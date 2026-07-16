@@ -16,8 +16,8 @@ export function BlogIndex() {
             The Thally blog
           </h1>
           <p className="text-muted-foreground mt-4 text-lg text-pretty">
-            Comparisons, guides, and product deep dives on documentation that serves AI agents and humans from one
-            source.
+            Practical guides and honest comparisons for teams building documentation that works for people and AI agents
+            from one source.
           </p>
         </div>
 

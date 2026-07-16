@@ -1,112 +1,72 @@
 "use client";
 
-import { HelpCircle, LifeBuoy, MessageCircle, Sparkles } from "lucide-react";
+import { SearchX, X } from "lucide-react";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-import {
-  Account as User,
-  ArrowRight,
-  Guide as BookOpen,
-  type IconComponent,
-  Search,
-  Trust as Shield,
-} from "@/components/icons";
-import { SectionGrid, SectionLines } from "@/components/section-decor";
+import { ArrowRight, Search } from "@/components/icons";
+import { SectionGrid } from "@/components/section-decor";
 import { type Category, type FAQItem, faqItems } from "@/components/sections/faq-page-data";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DESTINATIONS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
-const categoryMeta: Record<Category, { icon: IconComponent; description: string; accent: string }> = {
+const categoryMeta: Record<Category, { id: string; description: string }> = {
   Support: {
-    icon: LifeBuoy,
+    id: "support",
     description: "Plans, onboarding, and getting help from our team.",
-    accent: "var(--chart-1)",
   },
   Account: {
-    icon: User,
+    id: "account",
     description: "Invites, billing, roles, and account settings.",
-    accent: "var(--chart-2)",
   },
   Features: {
-    icon: Sparkles,
+    id: "features",
     description: "Formats, search, AI answers, and the API reference.",
-    accent: "var(--chart-3)",
   },
   Security: {
-    icon: Shield,
+    id: "security",
     description: "Self-hosting, SSO, compliance, and data handling.",
-    accent: "var(--chart-5)",
   },
   Other: {
-    icon: HelpCircle,
+    id: "other",
     description: "Migrations, refunds, and everything else.",
-    accent: "var(--chart-4)",
   },
 };
 
 const categories = Object.keys(categoryMeta) as Category[];
 
-const helpLinks = [
-  {
-    title: "Contact support",
-    description: "Reach a real person — we usually reply within a day.",
-    href: "/contact",
-    icon: MessageCircle,
-  },
-  {
-    title: "Read the documentation",
-    description: "Quickstarts, guides, and product reference.",
-    href: DESTINATIONS.docs,
-    icon: BookOpen,
-  },
-  {
-    title: "Start free",
-    description: "Self-host in minutes. No credit card required.",
-    href: DESTINATIONS.signup,
-    icon: Sparkles,
-  },
-];
-
-function FAQAccordion({ items, showCategory = false }: { items: FAQItem[]; showCategory?: boolean }) {
-  if (items.length === 0) {
-    return (
-      <div className="text-muted-foreground flex flex-col items-center justify-center px-6 py-16 text-center">
-        <Search className="mb-4 size-8 opacity-40" />
-        <p className="font-medium">No questions match your search.</p>
-        <p className="mt-1 text-sm">Try a different keyword or browse by category.</p>
-      </div>
-    );
-  }
-
+function FAQAccordion({
+  items,
+  showCategory = false,
+  className,
+}: {
+  items: FAQItem[];
+  showCategory?: boolean;
+  className?: string;
+}) {
   return (
-    <Accordion type="single" collapsible className="w-full">
-      {items.map((item, i) => (
+    <Accordion type="single" collapsible className={cn("border-border w-full border-t", className)}>
+      {items.map((item, index) => (
         <AccordionItem
           key={`${item.category}-${item.question}`}
-          value={`${item.category}-${i}`}
-          className="border-border border-b px-6 last:border-0"
+          value={`${item.category}-${index}`}
+          className="border-border"
         >
-          <AccordionTrigger className="py-5 text-start text-base font-medium hover:no-underline">
-            <span className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-3">
-              {showCategory && (
-                <span
-                  className="text-muted-foreground inline-flex rounded-full border px-2.5 py-0.5 text-xs font-medium"
-                  style={{ borderColor: `color-mix(in oklab, ${categoryMeta[item.category].accent} 35%, transparent)` }}
-                >
+          <AccordionTrigger className="py-4 text-start text-sm font-medium hover:no-underline">
+            {showCategory ? (
+              <span className="flex flex-col gap-1.5">
+                <span className="text-muted-foreground text-[0.6875rem] font-semibold tracking-[0.06em] uppercase">
                   {item.category}
                 </span>
-              )}
-              <span>{item.question}</span>
-            </span>
+                <span>{item.question}</span>
+              </span>
+            ) : (
+              item.question
+            )}
           </AccordionTrigger>
-          <AccordionContent className="text-muted-foreground pb-5 text-base leading-relaxed">
-            {item.answer}
-          </AccordionContent>
+          <AccordionContent className="text-foreground pb-4 text-sm leading-[1.6]">{item.answer}</AccordionContent>
         </AccordionItem>
       ))}
     </Accordion>
@@ -116,175 +76,201 @@ function FAQAccordion({ items, showCategory = false }: { items: FAQItem[]; showC
 export const FAQPage = () => {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<Category>("Support");
+  const sectionRefs = useRef<Partial<Record<Category, HTMLElement | null>>>({});
+
+  const normalizedQuery = query.trim().toLowerCase();
+  const isSearching = normalizedQuery.length > 0;
 
   const filteredItems = useMemo(() => {
-    const normalized = query.trim().toLowerCase();
-    if (!normalized) return [];
+    if (!normalizedQuery) return [];
 
     return faqItems.filter(
       (item) =>
-        item.question.toLowerCase().includes(normalized) ||
-        item.answer.toLowerCase().includes(normalized) ||
-        item.category.toLowerCase().includes(normalized),
+        item.question.toLowerCase().includes(normalizedQuery) || item.answer.toLowerCase().includes(normalizedQuery),
     );
-  }, [query]);
+  }, [normalizedQuery]);
 
-  const isSearching = query.trim().length > 0;
+  useEffect(() => {
+    if (isSearching) return;
+
+    const updateActiveCategory = () => {
+      const marker = window.scrollY + 160;
+      let current = categories[0];
+
+      categories.forEach((category) => {
+        const section = sectionRefs.current[category];
+        if (!section) return;
+
+        const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+        if (sectionTop <= marker) current = category;
+      });
+
+      setActiveCategory(current);
+    };
+
+    window.addEventListener("scroll", updateActiveCategory, { passive: true });
+    updateActiveCategory();
+
+    return () => window.removeEventListener("scroll", updateActiveCategory);
+  }, [isSearching]);
+
+  const scrollToCategory = (category: Category) => {
+    const section = sectionRefs.current[category];
+    if (!section) return;
+
+    const top = section.getBoundingClientRect().top + window.scrollY - 96;
+    window.scrollTo({ top, behavior: "smooth" });
+  };
 
   return (
-    <section className="relative py-16 md:py-28 lg:py-32">
-      <SectionGrid className="opacity-15" />
-      <SectionLines />
+    <>
+      <section className="border-border relative overflow-hidden border-b py-16 md:pt-[5.5rem] md:pb-16">
+        <SectionGrid className="[mask-image:radial-gradient(ellipse_at_50%_0%,black,transparent_68%)] opacity-40" />
 
-      <div className="relative container">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-2xl space-y-3">
-            <h1 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
-              Answers for every part of Thally
-            </h1>
-            <p className="text-muted-foreground text-lg text-balance">
-              Browse by topic or search below — plans, security, features, and getting your team up and running.
-            </p>
-          </div>
+        <div className="relative container text-center">
+          <h1 className="font-display text-[clamp(2.25rem,5vw,3.5rem)] leading-[1.05] font-bold tracking-[-0.03em] text-balance">
+            How can we help?
+          </h1>
+          <p className="text-muted-foreground mx-auto mt-[1.125rem] max-w-xl text-lg leading-[1.55] text-pretty">
+            Search the knowledge base or browse plans, security, product features, and team setup by topic.
+          </p>
 
-          <div className="relative w-full lg:max-w-sm">
-            <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
-            <Input
+          <div className="relative mx-auto mt-8 max-w-xl">
+            <Search className="text-muted-foreground pointer-events-none absolute top-1/2 left-4 size-[1.125rem] -translate-y-1/2" />
+            <input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search questions..."
-              className="bg-background h-11 pl-10"
-              aria-label="Search FAQ"
+              placeholder="Search questions…"
+              aria-label="Search questions"
+              className="border-border bg-card text-foreground placeholder:text-muted-foreground focus:border-ring/60 focus:ring-ring/20 h-[3.125rem] w-full rounded-lg border py-[0.9375rem] pr-11 pl-[2.875rem] text-[0.9375rem] shadow-sm transition-[border-color,box-shadow] duration-200 outline-none focus:ring-3"
             />
+            {isSearching && (
+              <button
+                type="button"
+                onClick={() => setQuery("")}
+                aria-label="Clear search"
+                className="bg-muted text-muted-foreground hover:text-foreground absolute top-1/2 right-3 flex size-[1.625rem] -translate-y-1/2 items-center justify-center rounded-full transition-colors"
+              >
+                <X className="size-3.5" />
+              </button>
+            )}
           </div>
         </div>
+      </section>
 
-        {isSearching ? (
-          <div className="border-border bg-card mt-10 overflow-hidden rounded-2xl border md:mt-14">
-            <div className="border-border flex items-center justify-between border-b px-6 py-4">
-              <p className="text-sm font-medium">
-                {filteredItems.length} result{filteredItems.length === 1 ? "" : "s"} for &ldquo;{query.trim()}&rdquo;
+      <section className="relative">
+        <div className="container pt-16 pb-[7.5rem]">
+          {isSearching ? (
+            <div className="mx-auto max-w-[47.5rem]">
+              <p className="text-muted-foreground mb-1 text-sm font-medium">
+                {filteredItems.length} {filteredItems.length === 1 ? "result" : "results"} for &ldquo;{query.trim()}
+                &rdquo;
               </p>
-              <Button variant="ghost" size="sm" onClick={() => setQuery("")}>
-                Clear search
-              </Button>
-            </div>
-            <FAQAccordion items={filteredItems} showCategory />
-          </div>
-        ) : (
-          <Tabs
-            value={activeCategory}
-            onValueChange={(value) => setActiveCategory(value as Category)}
-            orientation="vertical"
-            className="mt-10 flex gap-6 max-lg:flex-col md:mt-14 lg:gap-10"
-          >
-            <TabsList className="bg-muted/60 flex h-auto w-full justify-start overflow-x-auto rounded-2xl p-1.5 lg:max-w-xs lg:flex-col lg:overflow-visible">
-              {categories.map((category) => {
-                const meta = categoryMeta[category];
-                const Icon = meta.icon;
-                const count = faqItems.filter((item) => item.category === category).length;
 
-                return (
-                  <TabsTrigger
-                    key={category}
-                    value={category}
-                    className="text-muted-foreground data-[state=active]:bg-background data-[state=active]:text-foreground w-full min-w-[220px] flex-1 justify-start rounded-xl px-4 py-3 text-start whitespace-normal transition-colors duration-300 data-[state=active]:shadow-sm lg:px-5 lg:py-4"
-                  >
-                    <div className="flex w-full items-start gap-3">
-                      <div
-                        className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-lg"
-                        style={{
-                          backgroundColor: `color-mix(in oklab, ${meta.accent} 14%, transparent)`,
-                          color: meta.accent,
-                        }}
-                      >
-                        <Icon className="size-4" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <div className="flex items-center justify-between gap-2">
-                          <h2 className="font-display font-semibold">{category}</h2>
-                          <span className="text-muted-foreground text-xs">{count}</span>
-                        </div>
-                        <p className="text-muted-foreground mt-1 text-sm text-pretty">{meta.description}</p>
-                      </div>
-                    </div>
-                  </TabsTrigger>
-                );
-              })}
-            </TabsList>
-
-            {categories.map((category) => {
-              const meta = categoryMeta[category];
-              const Icon = meta.icon;
-              const items = faqItems.filter((item) => item.category === category);
-
-              return (
-                <TabsContent
-                  key={category}
-                  value={category}
-                  className="bg-card m-0 flex-1 overflow-hidden rounded-2xl border"
-                >
-                  <div
-                    className="border-border flex items-start gap-4 border-b px-6 py-5"
-                    style={{
-                      background: `linear-gradient(135deg, color-mix(in oklab, ${meta.accent} 8%, transparent), transparent 55%)`,
-                    }}
-                  >
-                    <div
-                      className="flex size-11 shrink-0 items-center justify-center rounded-xl"
-                      style={{
-                        backgroundColor: `color-mix(in oklab, ${meta.accent} 16%, transparent)`,
-                        color: meta.accent,
-                      }}
+              {filteredItems.length > 0 ? (
+                <FAQAccordion items={filteredItems} showCategory className="mt-2" />
+              ) : (
+                <div className="text-muted-foreground py-[4.5rem] text-center">
+                  <SearchX className="mx-auto mb-3.5 size-[1.875rem]" />
+                  <p className="text-[0.9375rem]">
+                    No questions match your search. Try a different term or{" "}
+                    <button
+                      type="button"
+                      onClick={() => setQuery("")}
+                      className="text-foreground font-semibold underline underline-offset-3"
                     >
-                      <Icon className="size-5" />
-                    </div>
-                    <div>
-                      <h2 className="font-display text-xl font-semibold tracking-tight">{category}</h2>
-                      <p className="text-muted-foreground mt-1 text-sm">{meta.description}</p>
-                    </div>
-                  </div>
-                  <FAQAccordion items={items} />
-                </TabsContent>
-              );
-            })}
-          </Tabs>
-        )}
+                      browse all topics
+                    </button>
+                    .
+                  </p>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="grid grid-cols-[13.75rem_minmax(0,1fr)] items-start gap-[4.5rem] max-[860px]:grid-cols-1 max-[860px]:gap-8">
+              <nav className="sticky top-24 max-[860px]:static" aria-label="FAQ topics">
+                <p className="text-muted-foreground mb-3 text-xs font-semibold tracking-[0.08em] uppercase">Topics</p>
+                <ul className="flex list-none flex-col p-0 max-[860px]:flex-row max-[860px]:flex-wrap max-[860px]:gap-2">
+                  {categories.map((category) => {
+                    const isActive = category === activeCategory;
+                    const count = faqItems.filter((item) => item.category === category).length;
 
-        <div className="mt-16 md:mt-20">
-          <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <h2 className="font-display text-2xl font-semibold tracking-tight">Still need help?</h2>
-              <p className="text-muted-foreground mt-1">
-                Our team is here if you can&apos;t find what you&apos;re looking for.
+                    return (
+                      <li key={category} className="max-[860px]:shrink-0">
+                        <button
+                          type="button"
+                          onClick={() => scrollToCategory(category)}
+                          aria-current={isActive ? "true" : undefined}
+                          className={cn(
+                            "flex w-full items-center justify-between gap-2.5 border-l-2 bg-transparent px-3 py-[0.5625rem] text-left text-sm font-medium transition-colors duration-150 max-[860px]:rounded-full max-[860px]:border max-[860px]:px-3.5 max-[860px]:py-[0.4375rem]",
+                            isActive
+                              ? "border-foreground text-foreground"
+                              : "border-border text-muted-foreground hover:text-foreground",
+                          )}
+                        >
+                          {category}
+                          <span className="text-xs font-medium tabular-nums opacity-70">{count}</span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </nav>
+
+              <div className="flex min-w-0 flex-col gap-14">
+                {categories.map((category) => {
+                  const items = faqItems.filter((item) => item.category === category);
+
+                  return (
+                    <section
+                      key={category}
+                      id={categoryMeta[category].id}
+                      ref={(element) => {
+                        sectionRefs.current[category] = element;
+                      }}
+                      className="scroll-mt-24"
+                    >
+                      <div className="mb-2">
+                        <h2 className="font-display text-2xl font-semibold tracking-[-0.02em]">{category}</h2>
+                        <p className="text-muted-foreground mt-1.5 text-sm leading-normal">
+                          {categoryMeta[category].description}
+                        </p>
+                      </div>
+                      <FAQAccordion items={items} />
+                    </section>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden pb-32">
+        <div className="container">
+          <div className="border-border bg-card relative overflow-hidden rounded-xl border px-6 py-12 text-center shadow-sm sm:px-12 sm:py-14">
+            <SectionGrid className="[mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)] opacity-40" />
+            <div className="relative mx-auto flex max-w-xl flex-col items-center gap-4">
+              <h2 className="font-display text-3xl font-semibold tracking-[-0.02em]">Still have a question?</h2>
+              <p className="text-muted-foreground text-[1.0625rem] leading-[1.55]">
+                Can&apos;t find what you&apos;re looking for? Our team usually replies within one business day. You can
+                also ask the grounded AI assistant inside the docs.
               </p>
+              <div className="mt-1 flex flex-wrap justify-center gap-3">
+                <Button asChild>
+                  <Link href="/contact">
+                    Contact support
+                    <ArrowRight className="size-4" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link href={DESTINATIONS.docs}>Read the docs</Link>
+                </Button>
+              </div>
             </div>
           </div>
-
-          <div className="grid gap-4 sm:grid-cols-3">
-            {helpLinks.map((link) => {
-              const Icon = link.icon;
-              return (
-                <Link
-                  key={link.title}
-                  href={link.href}
-                  className={cn(
-                    "group border-border bg-muted/40 hover:bg-muted/70 flex flex-col rounded-2xl border p-5 transition-colors",
-                  )}
-                >
-                  <Icon className="text-primary size-5" />
-                  <h3 className="font-display mt-4 font-semibold">{link.title}</h3>
-                  <p className="text-muted-foreground mt-1 text-sm text-pretty">{link.description}</p>
-                  <span className="text-primary mt-4 inline-flex items-center gap-1 text-sm font-medium opacity-0 transition-opacity group-hover:opacity-100">
-                    Learn more
-                    <ArrowRight className="size-3.5" />
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };

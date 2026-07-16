@@ -11,7 +11,7 @@ export default function Contact() {
       <div className="container max-w-4xl">
         <h1 className="font-display text-center text-4xl font-semibold tracking-tight sm:text-5xl">Contact us</h1>
         <p className="text-muted-foreground mt-4 text-center">
-          Tell us what you&apos;re building — we usually reply within a day.
+          Tell us what you&apos;re building. We usually reply within one business day.
         </p>
 
         <div className="mt-8 flex max-md:flex-col md:mt-12 md:divide-x lg:mt-20">

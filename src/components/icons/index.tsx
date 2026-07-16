@@ -1,14 +1,14 @@
-import type { CSSProperties, ComponentType, SVGProps } from "react";
+import type { ComponentType, CSSProperties, SVGProps } from "react";
 
 /* ─────────────────────────────────────────────────────────────────────────
-   Thally icon pack — a CUSTOM family, not stock Lucide.
+   Thally icon pack: a CUSTOM family, not stock Lucide.
 
    Grammar (Thally's own "handwriting"):
    • Duotone. A ~16% tint FILL sits under a keyline STROKE, echoing the tinted
      fills Thally uses everywhere (color-mix chart-N 15%). Bare glyphs use one
      color for both, so the wash reads automatically on any surface.
-   • The LEAF. The brand mark — two lobes meeting at a tip, a tapering vein
-     seam, a curled stem — is a reusable primitive that recurs across the
+   • The LEAF. The brand mark, two lobes meeting at a tip, a tapering vein
+     seam, and a curled stem, is a reusable primitive that recurs across the
      brand marks (agent, readiness, track, trust, structured).
    • Duality. "Documentation for machines and humans" is drawn literally.
 
@@ -16,7 +16,7 @@ import type { CSSProperties, ComponentType, SVGProps } from "react";
    tinted fill markup and s is the stroke markup (f is painted first, under s).
 
    Ported from thally-cloud/public/thally-icons-pack. Wrapped so each glyph is
-   a className-accepting component — a drop-in for the lucide icons this site
+   a className-accepting component and a drop-in for the lucide icons this site
    used to import.
    ──────────────────────────────────────────────────────────────────────── */
 
@@ -28,7 +28,7 @@ const LEAF_STEM = "M6.5 20C5.6 21.4 4.6 21.9 3.6 21.6";
 type IconDef = string | { f: string; s: string };
 
 export const ICONS: Record<string, IconDef> = {
-  // ── Brand marks (custom — no Lucide equivalent) ──────────────────────────
+  // ── Brand marks (custom, with no Lucide equivalent) ──────────────────────
   leaf: {
     f: `<path d="${LEAF_BODY}"/>`,
     s: `<path d="${LEAF_BODY}"/><path d="${LEAF_VEIN}"/><path d="${LEAF_STEM}"/>`,
@@ -74,7 +74,7 @@ export const ICONS: Record<string, IconDef> = {
     s: `<path d="M9 4.5H8a2 2 0 0 0-2 2v3a2 2 0 0 1-2 2 2 2 0 0 1 2 2v3a2 2 0 0 0 2 2h1"/><path d="M15 4.5h1a2 2 0 0 1 2 2v3a2 2 0 0 0 2 2 2 2 0 0 0-2 2v3a2 2 0 0 1-2 2h-1"/><path d="M10.3 14C9.2 11.5 11 9 13.7 8.7 12.6 11.2 11.4 13.7 10.3 14Z"/><path d="M10.3 14C11.6 12.4 12.9 10.6 13.6 9.2"/>`,
   },
 
-  // ── Navigation — every glyph carries a leaf, seed, or vein cue ────────────
+  // ── Navigation: every glyph carries a leaf, seed, or vein cue ─────────────
   overview: {
     f: `<rect x="3" y="3" width="7.5" height="7.5" rx="1.8"/><path d="M14 10.4C13.2 8 15.2 5.1 20 4.6 19.4 9.2 16.9 10.9 14 10.4Z"/>`,
     s: `<rect x="3" y="3" width="7.5" height="7.5" rx="1.8"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.8"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.8"/><path d="M14 10.4C13.2 8 15.2 5.1 20 4.6 19.4 9.2 16.9 10.9 14 10.4Z"/><path d="M14 10.4C15.8 9.1 17.5 7.3 18.6 5.7"/>`,
@@ -116,7 +116,7 @@ export const ICONS: Record<string, IconDef> = {
     s: `<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>`,
   },
 
-  // ── Actions — the primary stroke terminates in a leaf tip ─────────────────
+  // ── Actions: the primary stroke terminates in a leaf tip ──────────────────
   "arrow-right": {
     f: `<path d="M13.8 12C13.5 8.9 15.3 6.4 19.8 5.6 19.6 9.9 17.4 12.2 13.8 12Z"/>`,
     s: `<path d="M4 12h9.9"/><path d="M13.8 12C13.5 8.9 15.3 6.4 19.8 5.6 19.6 9.9 17.4 12.2 13.8 12Z"/><path d="M14.4 11.2C16.3 9.9 18 8.2 19 6.6"/>`,
@@ -148,7 +148,7 @@ export const ICONS: Record<string, IconDef> = {
     s: `<path d="M4.5 9A8 8 0 0 1 18.9 8.3"/><path d="M4 3.5v5h5"/><path d="M19.5 15A8 8 0 0 1 5.1 15.7"/><path d="M20 20.5v-5h-5"/><path d="M12 15.2C11 13.4 12.2 11.2 14.6 10.5 15.2 12.8 14.1 14.7 12 15.2Z"/>`,
   },
 
-  // ── Product — leaf woven into each utility form ───────────────────────────
+  // ── Product: leaf woven into each utility form ────────────────────────────
   cloud: {
     f: `<path d="M10.5 16C9.4 14.1 10.6 11.4 13.4 10.5 14.1 12.9 12.9 15.4 10.5 16Z"/>`,
     s: `<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/><path d="M10.5 16C9.4 14.1 10.6 11.4 13.4 10.5 14.1 12.9 12.9 15.4 10.5 16Z"/><path d="M10.5 16C11.5 14.6 12.6 13.1 13.2 11.8"/>`,
@@ -212,9 +212,7 @@ export type IconName = keyof typeof ICONS;
 function markup(def: IconDef, fillOpacity: number): string {
   const stroke = typeof def === "string" ? def : def.s;
   const fill = typeof def === "string" ? "" : def.f;
-  const fillLayer = fill
-    ? `<g fill="currentColor" stroke="none" opacity="${fillOpacity}">${fill}</g>`
-    : "";
+  const fillLayer = fill ? `<g fill="currentColor" stroke="none" opacity="${fillOpacity}">${fill}</g>` : "";
   return fillLayer + `<g>${stroke}</g>`;
 }
 
@@ -267,7 +265,7 @@ export function Icon({
   );
 }
 
-/* Tinted container — Thally's standard icon frame (rounded square or circle,
+/* Tinted container: Thally's standard icon frame (rounded square or circle,
    ~15% chart-color wash, icon stroked in the full chart color). */
 export interface IconTileProps {
   name: IconName | string;
@@ -320,7 +318,7 @@ export function IconTile({
 export type ThallyIconProps = Omit<IconProps, "name">;
 export type ThallyIcon = ComponentType<ThallyIconProps>;
 
-/* Structural type satisfied by both lucide and Thally glyph components — use
+/* Structural type satisfied by both lucide and Thally glyph components. Use
    it for `icon:` fields in arrays that still mix the two families. */
 export type IconComponent = ComponentType<{
   className?: string;
@@ -384,7 +382,7 @@ export const Data = make("data");
 export const Key = make("key");
 export const Lock = make("lock");
 
-/* ArrowLeft — the site's one back-arrow; reuse arrow-right, mirrored. */
+/* ArrowLeft is the site's one back arrow; reuse arrow-right, mirrored. */
 export const ArrowLeft: ThallyIcon = (props) => (
   <Icon name="arrow-right" {...props} style={{ transform: "scaleX(-1)", ...props.style }} />
 );

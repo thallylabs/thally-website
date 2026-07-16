@@ -2,9 +2,9 @@
 
 ## Why the definition matters now
 
-A growing share of "readers" hitting documentation sites are not people. They are coding assistants resolving an API question, research agents comparing products for a buyer, and answer engines deciding which source to cite. Estimates vary by site, but every docs team we talk to sees the same trend line: agent traffic is rising, and it does not render your CSS.
+Many documentation requests now come through coding assistants, research agents, and answer engines. These systems resolve API questions, compare products, and decide which sources to cite without rendering your CSS.
 
-Traditional docs serve that audience terribly. An agent hitting an HTML page has to scrape it: strip navigation, guess which `<div>` holds the content, reconstruct code blocks, and hope the page was not client-rendered into emptiness. Every scrape is a chance to misquote you.
+Traditional HTML makes that audience do extra work. An agent has to strip navigation, locate the main content, reconstruct code blocks, and handle client-rendered pages. Each reconstruction step creates another opportunity to lose context.
 
 AI-native documentation removes the guesswork by serving structure on request.
 
@@ -29,7 +29,7 @@ Machines need a map. AI-native sites publish:
 - **per-page manifests**: metadata about formats, freshness, and structure
 - **sitemap.xml and robots.txt** that explicitly welcome AI crawlers
 
-These are cheap to generate and widely read. They are the difference between an agent finding your quickstart and an agent finding a competitor's blog post about your quickstart.
+These files are inexpensive to generate and give crawlers a direct map to your primary documentation. Without them, an agent may find a secondary source before it finds your quickstart.
 
 ### 3. Live endpoints
 
@@ -53,6 +53,6 @@ Run these five checks against your own site:
 4. Do pages carry machine-legible last-updated and last-verified dates?
 5. Does your robots.txt allow the AI crawlers you want citing you?
 
-If you can answer yes to all five, your docs are ready for the traffic that is coming. If not, each "no" is a place where an agent will guess, and agents that guess misquote.
+If you can answer yes to all five, your docs give agents a reliable path to the source. Each "no" identifies a point where an agent may have to infer structure or use an indirect source.
 
 A deterministic version of this checklist is what Thally's [agent-readiness score](/faq) grades on every build, from 0 to 100, so CI can enforce it. You can [start free](https://app.thally.io/register) and see your own score in minutes.

@@ -1,6 +1,5 @@
 "use client";
 
-import { RefreshCw as RotateCcw } from "@/components/icons";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -17,6 +16,7 @@ import {
   SiVitepress,
 } from "react-icons/si";
 
+import { RefreshCw as RotateCcw } from "@/components/icons";
 import { ThallyMark } from "@/components/layout/logo";
 import { SectionGrid, SectionHeader } from "@/components/section-decor";
 import { cn } from "@/lib/utils";
@@ -321,7 +321,7 @@ export const Migrate = () => {
           <div>
             <SectionHeader
               title="Move in with one command. Leave whenever you want."
-              description="The migrator detects your current platform, converts every page to clean MDX, rebuilds the navigation, carries your redirects, and wires up your OpenAPI spec. No manual copying, no reformatting."
+              description="The migrator detects your platform, converts each page to clean MDX, rebuilds navigation, carries redirects, and connects your OpenAPI spec. No manual copying or reformatting."
               layout="stack"
             />
             <MigrationOrbit />

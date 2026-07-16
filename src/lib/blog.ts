@@ -37,7 +37,7 @@ export const blogPosts: BlogPost[] = [
           "Yes. Run npx create-thally migrate against your docs repo and the migrator converts pages to clean MDX, rebuilds navigation, carries redirects, and wires up your OpenAPI spec. Most migrations finish in minutes.",
       },
       {
-        question: "Is Thally really free to self-host?",
+        question: "Is Thally free to self-host?",
         answer:
           "Yes. The whole engine is MIT licensed, including commercial use, with unlimited pages and readers. Paid plans add managed hosting, Thally AI, Track, and team features, never the core.",
       },
