@@ -11,7 +11,6 @@ import Logos from "@/components/sections/logos";
 import { Migrate } from "@/components/sections/migrate";
 import { NoLockIn } from "@/components/sections/no-lock-in";
 import Pricing from "@/components/sections/pricing";
-import Testimonials from "@/components/sections/testimonials";
 import { SITE_TITLE, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -54,10 +53,10 @@ const productJsonLd = {
     {
       "@type": "Offer",
       name: "Thally Cloud annual",
-      price: "600",
+      price: "50",
       priceCurrency: "USD",
       description:
-        "$600 per workspace per year, equivalent to $50 per month and saving $120 annually. Three team members are included; additional members are $200 per year each.",
+        "$50 per workspace per month with an annual subscription, billed monthly. Three team members are included. Each additional active member or pending invitation adds $20 to the monthly bill.",
     },
     {
       "@type": "Offer",
@@ -95,7 +94,6 @@ export default function Home() {
       <Migrate />
       <Dashboard />
       <Feature1 />
-      <Testimonials />
       <NoLockIn />
       <Pricing />
       <FAQ />

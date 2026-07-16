@@ -9,7 +9,7 @@ import { SITE_URL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Thally pricing: free to self-host forever, Thally Cloud at $60 per workspace monthly or $600 annually with three team members included, and custom Enterprise plans.",
+    "Thally pricing: free to self-host forever, or choose Thally Cloud at $60 per month on a monthly subscription and $50 per month on an annual subscription.",
   alternates: {
     canonical: "/pricing",
   },
@@ -27,7 +27,7 @@ const pricingJsonLd = {
     "@type": "AggregateOffer",
     priceCurrency: "USD",
     lowPrice: "0",
-    highPrice: "600",
+    highPrice: "60",
     offerCount: 4,
     offers: [
       {
@@ -36,7 +36,7 @@ const pricingJsonLd = {
         price: "0",
         priceCurrency: "USD",
         description:
-          "Self-host everything, forever. MIT licensed, commercial use OK. Unlimited pages and readers, all four output formats, MCP server, hybrid search, docs agent with your own API key.",
+          "Host Thally yourself for free. Includes unlimited pages and readers, fast documentation search, structured content for AI assistants, and automatic draft updates using your own AI provider.",
       },
       {
         "@type": "Offer",
@@ -44,21 +44,21 @@ const pricingJsonLd = {
         price: "60",
         priceCurrency: "USD",
         description:
-          "$60 per workspace each month with three team members included. Additional active members or pending invitations are $20 per month each. Includes managed services, Thally AI answers, Thally Track, readiness gates, and analytics. 14-day trial.",
+          "$60 per workspace each month. Includes managed hosting, cited AI answers, automatic draft updates when product changes affect the documentation, quality checks, and analytics. 14-day trial.",
       },
       {
         "@type": "Offer",
         name: "Thally Cloud annual",
-        price: "600",
+        price: "50",
         priceCurrency: "USD",
         description:
-          "$600 per workspace each year, equivalent to $50 per month, with three team members included. Additional active members or pending invitations are $200 per year each. Includes all Thally Cloud services and a 14-day trial.",
+          "$50 per workspace per month with an annual subscription, billed monthly. Includes managed hosting, cited AI answers, automatic draft updates when product changes affect the documentation, quality checks, analytics, and a 14-day trial.",
       },
       {
         "@type": "Offer",
         name: "Enterprise",
         description:
-          "Custom annual pricing with SAML and SCIM SSO, audit-log access, custom terms, migration support, and priority support.",
+          "Custom annual pricing with company-wide sign-in, automatic account management, activity history, custom terms, hands-on migration, and priority support.",
       },
     ],
   },

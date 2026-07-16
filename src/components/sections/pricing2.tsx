@@ -51,28 +51,16 @@ const comparisonFeatures: FeatureSection[] = [
     category: "Usage",
     features: [
       {
-        name: "Pages & readers",
+        name: "Documentation pages and readers",
         free: "Unlimited",
         cloud: "Unlimited",
         enterprise: "Unlimited",
       },
       {
-        name: "Docs projects",
+        name: "Documentation sites",
         free: "Self-hosted",
         cloud: "Unlimited",
         enterprise: "Unlimited",
-      },
-      {
-        name: "Team members",
-        free: "Self-managed",
-        cloud: "3 included",
-        enterprise: "Custom",
-      },
-      {
-        name: "Additional team members",
-        free: "Not applicable",
-        cloud: "$20/mo or $200/yr",
-        enterprise: "Custom",
       },
     ],
   },
@@ -80,37 +68,37 @@ const comparisonFeatures: FeatureSection[] = [
     category: "Features",
     features: [
       {
-        name: "MDX authoring & components",
+        name: "Markdown and reusable components",
         free: true,
         cloud: true,
         enterprise: true,
       },
       {
-        name: "HTML, JSON, JSON-LD & Markdown output",
+        name: "Pages built for people and AI tools",
         free: true,
         cloud: true,
         enterprise: true,
       },
       {
-        name: "Agent endpoints (llms.txt, MCP)",
+        name: "Built-in connections for AI assistants",
         free: true,
         cloud: true,
         enterprise: true,
       },
       {
-        name: "OpenAPI reference & Try-it console",
+        name: "Interactive API documentation",
         free: true,
         cloud: true,
         enterprise: true,
       },
       {
-        name: "Thally AI answers & chat",
+        name: "AI answers with source links",
         free: false,
         cloud: true,
         enterprise: true,
       },
       {
-        name: "Readiness score CI gate",
+        name: "Automated documentation quality checks",
         free: false,
         cloud: true,
         enterprise: true,
@@ -128,13 +116,13 @@ const comparisonFeatures: FeatureSection[] = [
         enterprise: true,
       },
       {
-        name: "Team roles (Owner / Editor / Viewer)",
+        name: "Workspace permissions",
         free: false,
         cloud: true,
         enterprise: true,
       },
       {
-        name: "Audit log",
+        name: "Activity history",
         free: false,
         cloud: false,
         enterprise: true,
@@ -145,13 +133,13 @@ const comparisonFeatures: FeatureSection[] = [
     category: "Support",
     features: [
       {
-        name: "Community support",
+        name: "Community help",
         free: true,
         cloud: true,
         enterprise: true,
       },
       {
-        name: "Priority support",
+        name: "Priority help from our team",
         free: false,
         cloud: true,
         enterprise: true,
@@ -163,7 +151,7 @@ const comparisonFeatures: FeatureSection[] = [
         enterprise: true,
       },
       {
-        name: "Uptime SLA",
+        name: "Service availability guarantee",
         free: false,
         cloud: false,
         enterprise: true,

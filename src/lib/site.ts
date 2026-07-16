@@ -31,6 +31,4 @@ export const DESTINATIONS = {
 
 export const SOCIAL = {
   github: "https://github.com/thallylabs/thally",
-  x: "https://x.com/thallydocs",
-  xHandle: "@thallydocs",
 };

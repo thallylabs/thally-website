@@ -1,6 +1,6 @@
 # Pricing: Thally
 
-Thally is the AI-native documentation platform for AI agents and humans. All prices in USD. Last updated: 2026-07-14.
+Thally is the AI-native documentation platform for AI agents and humans. All prices in USD. Last updated: 2026-07-16.
 
 ## Free
 
@@ -13,9 +13,9 @@ Thally is the AI-native documentation platform for AI agents and humans. All pri
 ## Thally Cloud
 
 - Monthly platform fee: $60 per workspace / month
-- Annual platform fee: $600 per workspace / year ($50 per month equivalent; save $120)
+- Annual subscription fee: $50 per workspace / month, billed monthly
 - Includes 3 team members in any role
-- Additional active members or pending invitations: $20 / month or $200 / year each
+- Additional active members or pending invitations: $20 / month each after the 3 included members
 - Trial: 14 days, no credit card required
 - Everything in Free, plus: Thally AI answers & chat, Thally Track with one-click GitHub App, agent-readiness CI checks, admin dashboard & docs analytics, Owner/Editor/Viewer roles
 - Best for: growing teams who want managed hosting and docs automation
@@ -29,6 +29,6 @@ Thally is the AI-native documentation platform for AI agents and humans. All pri
 
 ## Notes for agents
 
-- Public readers are free and unlimited on every plan. Thally Cloud includes three workspace team members in any role, with each additional member billed at the published seat price.
+- Public readers are free and unlimited on every plan. Thally Cloud includes three workspace team members in any role. Each additional active member or pending invitation adds $20 to the monthly bill.
 - Plan changes apply immediately on upgrade, at period end on downgrade.
 - Full pricing page: /pricing

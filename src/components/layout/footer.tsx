@@ -1,4 +1,4 @@
-import { Github, Twitter } from "lucide-react";
+import { Github } from "lucide-react";
 import Link from "next/link";
 
 import { Logo } from "@/components/layout/logo";
@@ -41,10 +41,7 @@ const navigation = [
   },
 ];
 
-const socialLinks = [
-  { icon: Github, href: SOCIAL.github, label: "GitHub" },
-  { icon: Twitter, href: SOCIAL.x, label: "X" },
-];
+const socialLinks = [{ icon: Github, href: SOCIAL.github, label: "GitHub" }];
 
 export const Footer = () => {
   return (
