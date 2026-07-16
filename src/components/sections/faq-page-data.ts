@@ -35,7 +35,7 @@ export const faqItems: FAQItem[] = [
     category: "Account",
     question: "How do I invite teammates?",
     answer:
-      "Owners and Editors can invite teammates by email from the admin dashboard. Thally Cloud includes three team members in any role, and each additional member is billed at the published seat price.",
+      "Owners and Editors can invite teammates by email from the admin dashboard. Thally Cloud includes three team members in any role. Each additional active member or pending invitation adds $20 to the monthly bill.",
   },
   {
     category: "Account",
@@ -47,7 +47,7 @@ export const faqItems: FAQItem[] = [
     category: "Account",
     question: "How does billing work?",
     answer:
-      "Thally Cloud costs $60 per workspace when billed monthly or $600 when billed annually, which saves 17%. Three team members are included. Additional members cost $20 per month or $200 per year.",
+      "Thally Cloud costs $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly. Three team members are included, and each additional member adds $20 to the monthly bill.",
   },
   {
     category: "Account",

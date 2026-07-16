@@ -89,7 +89,6 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: OG_DESCRIPTION,
-    creator: SOCIAL.xHandle,
   },
 };
 
@@ -114,7 +113,7 @@ const organizationJsonLd = {
     width: 512,
     height: 512,
   },
-  sameAs: [SOCIAL.github, SOCIAL.x],
+  sameAs: [SOCIAL.github],
 };
 
 const websiteJsonLd = {

@@ -33,7 +33,7 @@ const POINTS = [
     icon: Users,
     title: "Roles from a git-committed roster.",
     description:
-      "Owner, Editor, and Viewer access lives in your repo and goes through code review. OIDC sign-in, no database, no per-seat fees.",
+      "Owner, Editor, and Viewer access lives in your repo and goes through code review. OIDC sign-in requires no separate authentication database.",
     accent: "var(--chart-4)",
   },
 ];

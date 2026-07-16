@@ -38,6 +38,6 @@
 ## Pricing summary
 
 - Free: $0. Self-host forever. MIT licensed, commercial use OK. Unlimited pages and readers, all output formats, MCP server, hybrid search, docs agent with your own API key.
-- Thally Cloud: $60/workspace/month, or $600/workspace/year ($50/month equivalent; save $120), with a 14-day trial and 3 team members included regardless of role. Each additional active member or pending invitation is $20/month or $200/year. Adds Thally AI answers and chat, Thally Track with one-click GitHub App, agent-readiness CI checks, admin dashboard, analytics, and team roles.
+- Thally Cloud: $60/workspace/month on a monthly subscription, or $50/workspace/month on an annual subscription. Both are billed monthly and include a 14-day trial plus 3 team members in any role. Each additional active member or pending invitation adds $20 to the monthly bill. Includes Thally AI answers and chat, Thally Track with one-click GitHub App, agent-readiness CI checks, admin dashboard, analytics, and team roles.
 - Enterprise: Custom annual pricing. Adds SAML and SCIM SSO, audit-log access, custom terms, migration support, and priority support.
 - Machine-readable pricing: [/pricing.md](/pricing.md)

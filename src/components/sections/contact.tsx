@@ -1,4 +1,4 @@
-import { Github, Mail, Twitter } from "lucide-react";
+import { Github, Mail } from "lucide-react";
 import Link from "next/link";
 
 import { DESTINATIONS, LEGAL_ENTITY_NAME, SOCIAL } from "@/lib/site";
@@ -47,9 +47,6 @@ export default function Contact() {
                   className="text-muted-foreground hover:text-foreground"
                 >
                   <Github className="size-6" />
-                </Link>
-                <Link href={SOCIAL.x} aria-label="Thally on X" className="text-muted-foreground hover:text-foreground">
-                  <Twitter className="size-6" />
                 </Link>
               </div>
             </div>

@@ -36,10 +36,10 @@ const plans: PricingPlan[] = [
     annualBillingNote: "MIT licensed · no card required",
     features: [
       "Unlimited pages and readers",
-      "HTML, Markdown, JSON, and JSON-LD",
-      "Remote MCP server and hybrid search",
+      "Pages built for people and AI tools",
+      "Fast search across all your docs",
       "Deploy to any hosting provider",
-      "Commercial use included",
+      "Commercial use under the MIT license",
     ],
     cta: "Read the quickstart",
     href: DESTINATIONS.docsQuickstart,
@@ -52,15 +52,14 @@ const plans: PricingPlan[] = [
     monthlyPrice: "$60",
     annualPrice: "$50",
     priceUnit: "per workspace / month",
-    monthlyBillingNote: "$60 billed monthly · 3 team members included",
-    annualBillingNote: "$600 billed annually · 3 team members included",
+    monthlyBillingNote: "$60 billed monthly",
+    annualBillingNote: "$50 billed monthly on an annual subscription",
     features: [
       "Everything in Free",
-      "Managed hosting or connected hosting",
-      "Thally AI answers and docs analytics",
-      "Thally Track and readiness gates",
-      "Three team members in any role included",
-      "Additional members: $20/month or $200/year",
+      "Managed hosting or use your current host",
+      "AI answers with links to the source",
+      "Automatic draft updates when your product changes",
+      "Documentation analytics and quality checks",
     ],
     cta: "Start 14-day trial",
     href: DESTINATIONS.signup,
@@ -76,9 +75,9 @@ const plans: PricingPlan[] = [
     annualBillingNote: "Annual contract · invoiced",
     features: [
       "Everything in Thally Cloud",
-      "SAML SSO and SCIM provisioning",
-      "Audit-log access and custom terms",
-      "Migration and priority support",
+      "Single sign-on and automated account access",
+      "Activity history and custom contract terms",
+      "Hands-on migration and priority support",
       "Dedicated account manager",
     ],
     cta: "Talk to sales",
@@ -100,7 +99,7 @@ export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" 
         <SectionHeader
           eyebrow={headerTag === "h2" ? "Plans" : undefined}
           title="Start free. Add Thally Cloud when you want it."
-          description="Your documentation engine stays open source. Pay only when your team needs managed infrastructure, AI answers, automation, and shared workspace controls."
+          description="Your documentation stays open source. Upgrade when you want managed hosting, cited AI answers, automatic updates, and a shared workspace for your team."
           align="center"
           layout="stack"
           as={headerTag}
@@ -119,7 +118,7 @@ export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" 
               Monthly
             </button>
             <div className="sr-only">
-              <Switch checked={isAnnual} onCheckedChange={setIsAnnual} aria-label="Toggle annual billing" />
+              <Switch checked={isAnnual} onCheckedChange={setIsAnnual} aria-label="Toggle annual subscription" />
             </div>
             <button
               className={cn(
@@ -188,8 +187,7 @@ export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" 
         </div>
 
         <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-center text-xs leading-5">
-          Prices are in USD per workspace. Thally Cloud includes three team members regardless of role. Each additional
-          active member or pending invitation is $20 monthly or $200 annually. Documentation readers are always free.
+          Prices are in USD per workspace. Documentation readers are always free.
         </p>
       </div>
     </section>
