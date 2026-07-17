@@ -3,10 +3,10 @@ import { OG_SIZE, renderOgImage } from "@/lib/og/template";
 export const dynamic = "force-static";
 export const size = OG_SIZE;
 export const contentType = "image/png";
-export const alt = "About Thally";
+export const alt = "About the Thally team";
 
 export default function Image() {
   return renderOgImage({
-    title: "Documentation for every reader.",
+    title: "The team behind Thally.",
   });
 }
