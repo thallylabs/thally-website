@@ -1,9 +1,9 @@
 "use client";
 
-import { ArrowUpRight } from "@/components/icons";
 import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 
+import { ArrowUpRight } from "@/components/icons";
 import { type BlogPost, formatPostDate } from "@/lib/blog";
 
 export function CategoryChip({ post }: { post: BlogPost }) {
