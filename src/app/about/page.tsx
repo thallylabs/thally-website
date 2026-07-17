@@ -5,7 +5,7 @@ import About from "@/components/sections/about";
 export const metadata: Metadata = {
   title: "About us",
   description:
-    "Meet the team behind Thally, the AI-native documentation platform serving AI agents and humans from one source.",
+    "Learn why Thally publishes documentation for people and AI agents from one source, and how its open-source core keeps teams in control.",
   alternates: {
     canonical: "/about",
   },
