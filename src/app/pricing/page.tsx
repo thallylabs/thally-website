@@ -14,14 +14,22 @@ export const metadata: Metadata = {
   },
 };
 
+// SoftwareApplication (same @id as the homepage node, so the statements merge
+// into one entity) rather than Product: Google's Product snippets report
+// expects review/aggregateRating on Product markup, and Thally has no
+// first-party on-page ratings to reference yet.
 const pricingJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Product",
-  "@id": `${SITE_URL}/pricing#product`,
+  "@type": "SoftwareApplication",
+  "@id": `${SITE_URL}/#software`,
   name: "Thally",
+  url: SITE_URL,
+  applicationCategory: "DeveloperApplication",
+  operatingSystem: "Web",
+  license: "https://opensource.org/license/mit",
   description:
     "AI-native documentation platform for AI agents and humans. MIT licensed and free to self-host; Cloud and Enterprise plans are priced per editor.",
-  brand: { "@id": `${SITE_URL}/#organization` },
+  publisher: { "@id": `${SITE_URL}/#organization` },
   offers: {
     "@type": "AggregateOffer",
     priceCurrency: "USD",
