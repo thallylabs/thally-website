@@ -1,0 +1,5 @@
+/signup https://app.thally.io/register 301!
+/login https://app.thally.io/login 301!
+/docs https://docs.thally.io 301!
+/docs/* https://docs.thally.io/:splat 301!
+/documentation https://docs.thally.io 301!

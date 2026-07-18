@@ -1,47 +1,28 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
-import Image from "next/image";
 import Link from "next/link";
 
+import { ArrowRight } from "@/components/icons";
 import { ThallyMark } from "@/components/layout/logo";
 import { Button } from "@/components/ui/button";
 
-const OFFICE_IMAGE = "https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80&auto=format&fit=crop";
-
-const stats = [
-  { value: "MIT", label: "Open source, yours forever" },
-  { value: "12k+", label: "Docs sites running Thally" },
-  { value: "98/100", label: "Median agent-readiness score" },
-  { value: "<50ms", label: "Search, resolved client-side" },
-];
-
-const team = [
+const principles = [
   {
-    name: "Elias Chen",
-    role: "Co-founder & CEO",
-    image: "/images/testimonials/tomas-berg.jpg",
+    title: "One source",
+    description: "Write in MDX and publish HTML, Markdown, JSON, and JSON-LD without maintaining separate copies.",
   },
   {
-    name: "Maya Sullivan",
-    role: "Co-founder & CTO",
-    image: "/images/testimonials/amara-okafor.jpg",
+    title: "Git stays in charge",
+    description: "Documentation lives beside the product, with changes reviewed through the pull-request workflow.",
   },
   {
-    name: "James Okonkwo",
-    role: "Head of Product",
-    image: "/images/testimonials/daniel-reyes.jpg",
+    title: "Every reader gets a useful format",
+    description: "People get a polished site while search tools, assistants, and agents get structured content.",
   },
   {
-    name: "Sofia Andersson",
-    role: "Head of Design",
-    image: "/images/testimonials/priya-nair.jpg",
-  },
-  {
-    name: "Noah Patel",
-    role: "Engineering Lead",
-    image: "/images/testimonials/sam-whitfield.jpg",
+    title: "Hosting is your decision",
+    description: "Self-host the open-source core or use Thally Cloud when you want the infrastructure managed for you.",
   },
 ];
 
@@ -74,178 +55,110 @@ const About = () => {
   const reduce = useReducedMotion();
 
   return (
-    <>
-      <section className="bg-background py-24 md:py-32">
-        <div className="container">
+    <section className="bg-background py-24 md:py-32">
+      <div className="container">
+        <Reveal className="max-w-3xl lg:translate-x-24">
+          <p className="text-primary mb-4 text-sm font-semibold tracking-widest uppercase">About Thally</p>
+          <h1 className="font-display max-w-[760px] text-3xl leading-tight font-semibold tracking-tight text-balance md:text-4xl lg:text-5xl">
+            Documentation should work for people and AI agents without becoming two separate products.
+          </h1>
+        </Reveal>
+
+        <div className="mt-12 grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
+          <motion.div
+            className="from-primary relative flex min-h-[300px] items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br to-[color-mix(in_oklab,var(--chart-1)_65%,var(--primary))] lg:min-h-[460px]"
+            initial={reduce ? undefined : { opacity: 0, scale: 0.97 }}
+            whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div
+              aria-hidden
+              className="absolute inset-0 [mask-image:radial-gradient(circle_at_center,black,transparent_70%)] opacity-30"
+              style={{
+                backgroundImage: "radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px)",
+                backgroundSize: "20px 20px",
+              }}
+            />
+            <ThallyMark inverted className="size-28 opacity-90 md:size-36" />
+          </motion.div>
+
+          <motion.div
+            className="border-border bg-card flex min-h-[240px] flex-col justify-between rounded-3xl border p-8 lg:min-h-0"
+            initial={reduce ? undefined : { opacity: 0, x: 24 }}
+            whileInView={reduce ? undefined : { opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <p className="text-muted-foreground text-sm font-medium tracking-widest uppercase">The premise</p>
+            <p className="font-display mt-10 text-2xl leading-8 font-semibold text-balance">
+              Keep one source of truth. Give every reader the format it can use.
+            </p>
+          </motion.div>
+        </div>
+
+        <div className="mt-24 space-y-16 md:mt-32 md:space-y-24">
           <Reveal className="max-w-2xl lg:translate-x-24">
-            <h1 className="font-display max-w-[640px] flex-1 text-3xl leading-tight font-semibold tracking-tight text-balance md:text-4xl lg:text-5xl">
-              We&apos;re Thally. We build documentation for the readers docs never had.
-            </h1>
-          </Reveal>
-
-          {/* Hero imagery: branded poster (back), office photo (middle), tagline card (front) */}
-          <div className="relative mt-12 min-h-[280px] lg:min-h-[500px]">
-            <motion.div
-              className="from-primary relative z-10 flex aspect-video w-full max-w-[770px] items-center justify-center overflow-hidden rounded-3xl bg-gradient-to-br to-[color-mix(in_oklab,var(--chart-1)_65%,var(--primary))]"
-              initial={reduce ? undefined : { opacity: 0, scale: 0.97 }}
-              whileInView={reduce ? undefined : { opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <div
-                aria-hidden
-                className="absolute inset-0 [mask-image:radial-gradient(circle_at_center,black,transparent_70%)] opacity-30"
-                style={{
-                  backgroundImage: "radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px)",
-                  backgroundSize: "20px 20px",
-                }}
-              />
-              <ThallyMark inverted className="size-28 opacity-90" />
-            </motion.div>
-
-            <motion.div
-              className="border-background absolute top-10 left-[58%] z-20 hidden aspect-[4/5] w-[max(16vw,200px)] overflow-hidden rounded-2xl border-4 shadow-xl lg:block xl:left-[56%] xl:w-[240px]"
-              initial={reduce ? undefined : { opacity: 0, x: 32, y: -12 }}
-              whileInView={reduce ? undefined : { opacity: 1, x: 0, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.65, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <Image src={OFFICE_IMAGE} alt="Thally team workspace" fill className="object-cover" sizes="240px" />
-            </motion.div>
-
-            <motion.div
-              className="border-background bg-card absolute top-[46%] left-[68%] z-30 hidden aspect-[1.5/1.4] w-[max(18vw,220px)] items-center justify-center rounded-2xl border-4 shadow-xl lg:flex xl:left-[66%]"
-              initial={reduce ? undefined : { opacity: 0, y: 40 }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <p className="font-display px-6 text-center text-lg font-semibold text-balance">
-                One source. Read perfectly by machines and humans.
-              </p>
-            </motion.div>
-
-            {/* Mobile office photo — sits between poster and narrative */}
-            <motion.div
-              className="border-background relative mt-6 aspect-[16/10] w-full overflow-hidden rounded-2xl border-4 lg:hidden"
-              initial={reduce ? undefined : { opacity: 0, y: 20 }}
-              whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55, delay: 0.1 }}
-            >
-              <Image src={OFFICE_IMAGE} alt="Thally team workspace" fill className="object-cover" sizes="100vw" />
-            </motion.div>
-          </div>
-
-          {/* Narrative */}
-          <Reveal className="mt-28 max-w-xl lg:mt-10 lg:translate-x-24">
-            <p className="text-lg leading-7">
-              The way documentation gets read has changed — but most docs tools haven&apos;t. Half your readers are now
-              AI agents scraping HTML that was never meant for them. We think machines deserve first-class docs, from
-              the same source your human readers already trust.
+            <h2 className="font-display text-2xl leading-8 font-semibold md:text-3xl">
+              Documentation is read in more places than a browser.
+            </h2>
+            <p className="mt-6 text-lg leading-8">
+              Developers still visit documentation sites, but they also ask coding assistants, use search, and send
+              agents to find answers on their behalf. Thally is built so those readers can use the same source instead
+              of relying on a second, manually maintained knowledge base.
             </p>
           </Reveal>
 
-          <div className="mt-6 space-y-6 md:mt-8 md:space-y-8 lg:mt-10 lg:space-y-10">
-            <Reveal className="font-display max-w-xl text-2xl leading-8 font-semibold md:text-3xl lg:translate-x-24">
-              We were always told docs tooling stopped at rendered pages.
-            </Reveal>
-            <Reveal className="max-w-xl text-lg lg:translate-x-24" delay={0.08}>
-              <p>
-                We&apos;ve spent our careers gluing docs stacks together — a static site generator here, a search vendor
-                there, a chat widget, and sync scripts holding it all in line. Every format drifted from the last. We
-                wanted to start from the opposite end: one typed content graph, with every human and machine format
-                projected from it — never maintained by hand.
-              </p>
-            </Reveal>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {principles.map((principle, index) => (
+              <motion.article
+                key={principle.title}
+                className="border-border bg-card rounded-2xl border p-6 md:p-8"
+                initial={reduce ? undefined : { opacity: 0, y: 20 }}
+                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.45, delay: (index % 2) * 0.08, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <h3 className="font-display text-xl font-semibold">{principle.title}</h3>
+                <p className="text-muted-foreground mt-3 leading-7">{principle.description}</p>
+              </motion.article>
+            ))}
+          </div>
 
-            <div className="grid gap-4 py-6 sm:grid-cols-2 lg:grid-cols-4 lg:py-10">
-              {stats.map((s, i) => (
-                <motion.div
-                  key={s.label}
-                  className="border-border bg-card rounded-2xl border p-6"
-                  initial={reduce ? undefined : { opacity: 0, y: 20 }}
-                  whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.45, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <div className="font-display text-primary text-4xl font-semibold tracking-tight">{s.value}</div>
-                  <div className="text-muted-foreground mt-2 text-sm">{s.label}</div>
-                </motion.div>
-              ))}
-            </div>
+          <Reveal className="ml-auto max-w-2xl lg:-translate-x-24">
+            <h2 className="font-display text-2xl leading-8 font-semibold md:text-3xl">
+              Open source at the core, managed when it helps.
+            </h2>
+            <p className="mt-6 text-lg leading-8">
+              Thally&apos;s core is available under the MIT license. You can self-host it, keep your content in Git, and
+              move the site to the infrastructure you choose. Thally Cloud is the optional managed service for teams
+              that want hosted infrastructure, AI answers, analytics, and workspace controls.
+            </p>
+          </Reveal>
 
-            <Reveal className="ml-auto max-w-xl text-lg leading-7 lg:-translate-x-24">
-              <p>
-                Thally is open source under the MIT license — self-host it anywhere, own every byte, and commercialize
-                freely. Search, chat, the API reference, and the agent layer aren&apos;t integrations; they&apos;re the
-                same graph, read six different ways.
+          <Reveal className="border-border bg-card rounded-3xl border p-8 md:p-12">
+            <div className="max-w-2xl">
+              <p className="text-primary text-sm font-semibold tracking-widest uppercase">Who is behind Thally</p>
+              <h2 className="font-display mt-4 text-2xl leading-8 font-semibold md:text-3xl">
+                Thally is built and operated by Fairspleet LLC.
+              </h2>
+              <p className="text-muted-foreground mt-5 text-lg leading-8">
+                We build Thally to make documentation easier to own, publish, and use across human and machine readers.
+                Contact us directly with questions about the product, support, or company.
               </p>
-            </Reveal>
-
-            <Reveal className="font-display ml-auto max-w-xl text-2xl leading-8 font-semibold md:text-3xl lg:-translate-x-24">
-              We&apos;re a small, deliberate team — not your standard tech startup.
-            </Reveal>
-            <Reveal className="ml-auto max-w-xl text-lg leading-7 lg:-translate-x-24" delay={0.08}>
-              <p>
-                We&apos;re founder- and team-owned, sustainable, and intentionally small. Over time we&apos;ll make this
-                page more polished, but right now we&apos;re focused on shipping for our customers. If you&apos;d like
-                to build with us, check out our open roles:
-              </p>
-              <Button asChild variant="outline" size="lg" className="mt-6 md:mt-8 lg:mt-10">
+              <Button asChild variant="outline" size="lg" className="mt-8">
                 <Link href="/contact">
                   <span className="flex items-center gap-2 text-start">
-                    View open roles
+                    Contact Thally
                     <ArrowRight className="size-4" />
                   </span>
                 </Link>
               </Button>
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* Team */}
-      <section className="section-padding border-border border-t">
-        <div className="container">
-          <Reveal>
-            <h2 className="font-display max-w-xl text-3xl font-semibold tracking-tight text-balance sm:text-4xl md:text-5xl">
-              Meet the team behind Thally
-            </h2>
-            <p className="text-muted-foreground mt-4 max-w-lg text-lg">
-              A small team across six time zones, united by one obsession: docs that stay true for every reader — human
-              or machine.
-            </p>
+            </div>
           </Reveal>
-
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3 lg:gap-8">
-            {team.map((member, i) => (
-              <motion.article
-                key={member.name}
-                className="group"
-                initial={reduce ? undefined : { opacity: 0, y: 28 }}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: (i % 3) * 0.1, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <div className="border-border relative aspect-[4/5] overflow-hidden rounded-2xl border">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                </div>
-                <h3 className="mt-4 text-lg font-semibold">{member.name}</h3>
-                <p className="text-muted-foreground text-sm">{member.role}</p>
-              </motion.article>
-            ))}
-          </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

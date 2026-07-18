@@ -38,16 +38,16 @@ Note: `next start` does not work with static export.
 
 ## Project Structure
 
-- `src/app/` — routes: home, pricing, about, FAQ, contact, login/signup, terms, privacy
-- `src/components/sections/` — landing page sections (hero, automation, features, migrate, dashboard, testimonials, pricing, FAQ)
-- `src/components/layout/` — navbar, footer, logo
-- `src/components/illustrations/thally-ui.tsx` — shared product-UI illustration primitives
-- `src/components/ui/` — shadcn/ui components
-- `public/llms.txt` — agent-readable summary of the site and product
+- `src/app/`: routes for home, pricing, about, FAQ, contact, login/signup, terms, and privacy
+- `src/components/sections/`: landing page sections (hero, automation, features, migration, dashboard, testimonials, pricing, FAQ)
+- `src/components/layout/`: navbar, footer, and logo
+- `src/components/illustrations/thally-ui.tsx`: shared product UI illustration primitives
+- `src/components/ui/`: shadcn/ui components
+- `public/llms.txt`: agent-readable summary of the site and product
 
 ## Housekeeping
 
-- `pnpm lint` — ESLint with auto-fix
-- `pnpm format` — Prettier
+- `pnpm lint`: ESLint with auto-fix
+- `pnpm format`: Prettier
 
 Before deploying, set the production domain in `metadataBase` (`src/app/layout.tsx`).

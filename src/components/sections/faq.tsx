@@ -6,65 +6,65 @@ const leftQuestions = [
   {
     question: "What is Thally?",
     answer:
-      "Thally is an AI-native documentation platform for machines and humans. You write MDX once, and every page ships as JSON, JSON-LD, and Markdown for AI agents and as polished HTML for readers, all from the same URL. It also automates the upkeep: a docs agent turns product changes into reviewed pull requests.",
+      "Thally is a documentation platform for people and AI assistants. Write your documentation once, then publish a polished website for readers and reliable, structured content for AI tools. Thally can also draft documentation updates when your product changes.",
   },
   {
     question: "How is Thally different from other docs tools?",
     answer:
-      "Conventional docs tools render pages for people and stop there. Thally treats machines as first-class readers of the same source, ships a remote MCP server with every deploy, grades every build with an agent-readiness score, and keeps docs current automatically with agent-drafted PRs from your product repos.",
+      "Most documentation tools focus only on the website people read. Thally also publishes versions that AI assistants can understand, checks every update for quality, and drafts documentation changes when your product changes.",
   },
   {
     question: "How do I migrate from Mintlify, Docusaurus, or GitBook?",
     answer:
-      "One command: npx create-thally migrate <your-repo-url>. The migrator detects the platform (Mintlify, Docusaurus, GitBook, Nextra, VitePress, Starlight, or plain Markdown), converts every page to clean MDX, rebuilds navigation, carries your redirects, and wires OpenAPI specs into the API reference automatically.",
+      "Run one migration command with your current documentation repository. Thally detects Mintlify, Docusaurus, GitBook, Nextra, VitePress, Starlight, or plain Markdown, then converts your pages, rebuilds navigation, preserves redirects, and imports your API documentation.",
   },
   {
-    question: "What is Thally Track?",
+    question: "How does Thally keep my docs up to date?",
     answer:
-      "Track watches the product repos you register. When a PR merges there, it distills what changed and the docs agent drafts a documentation PR for your review. Label a PR docs-preview and the docs are drafted before the feature even merges, so reviewers see docs alongside code.",
+      "Connect your product repository and Thally watches for changes that affect your documentation. When a pull request merges, Thally drafts the relevant documentation updates for your team to review. It never publishes changes without your approval.",
   },
   {
     question: "Can Thally write docs for me?",
     answer:
-      "Yes, as reviewed pull requests. Give the agent an instruction, a diff, or a product PR, or just comment @thally on any GitHub issue or pull request. It drafts the smallest correct change in your house style and self-validates before opening the PR. It never merges; a human always does.",
+      "Yes. Give Thally an instruction or connect it to a product change. It drafts a focused documentation update in your team’s style and sends it for review. Thally never publishes the change without your approval.",
   },
   {
     question: "Is there a free plan?",
     answer:
-      "Thally is MIT-licensed and free to self-host forever, commercial use included. Paid plans add managed hosting, Thally AI answers, Track with the one-click GitHub App, and team features.",
+      "Thally is MIT licensed and free to self-host forever, including for commercial use. Paid plans add managed hosting, cited AI answers, automatic draft updates when your product changes, and shared workspace features.",
   },
 ];
 
 const rightQuestions = [
   {
-    question: "What does the readiness score measure?",
+    question: "How does Thally check documentation quality?",
     answer:
-      "Every build gets a deterministic 0 to 100 grade covering structured data, metadata, discovery files, machine readability, and OpenAPI coverage, with subscores that name the exact pages dragging the number down. You can gate CI on a threshold, and the agent can open PRs to fix what's ailing.",
+      "Every build receives a 0 to 100 quality score. Thally checks whether people and AI tools can find, read, and understand each page, then shows you what needs attention. You can prevent lower-quality changes from publishing and ask Thally to draft the fixes.",
   },
   {
-    question: "What are agent endpoints?",
+    question: "How can AI assistants read my docs?",
     answer:
-      "Every deploy ships llms.txt, ai.txt, skill.md, AGENTS.md, per-page JSON, and a remote MCP server at /api/mcp, so crawlers and AI agents consume your docs correctly instead of scraping them. Attach the MCP endpoint to any agent and your docs become native tools, no key or account required.",
+      "Every Thally site automatically publishes versions of your documentation that AI assistants can read reliably. Assistants can search your docs, open pages, and follow your navigation without scraping the visual website.",
   },
   {
     question: "How does the AI chat avoid hallucinating?",
     answer:
-      "Answers are retrieval-grounded: the engine only quotes your indexed docs and cites the exact pages inline. If the docs don't contain an answer, it says so.",
+      "The AI answers only from your published documentation and links to the exact source pages. If your docs do not contain an answer, it says so instead of guessing.",
   },
   {
     question: "Where can I deploy Thally?",
     answer:
-      "Anywhere Next.js runs: Vercel, Netlify, Cloudflare, Docker with the included Dockerfile, or a static export. Your docs are a repo you own, so there's no vendor lock-in in either direction.",
+      "Deploy with Vercel, Netlify, Cloudflare, Docker, or as a static website. You can also use Thally Cloud. In every case, your documentation remains in a repository you own.",
   },
   {
     question: "What's in the admin dashboard?",
     answer:
-      "A live dashboard at /admin: first-party analytics with top pages and content gaps, branding and theming that apply without a rebuild, the agent-readiness report, a queue of agent-drafted docs PRs, and team access with Owner, Editor, and Viewer roles from a git-committed roster. OIDC sign-in, no per-seat database.",
+      "The dashboard shows reader analytics, branding controls, documentation quality checks, and draft updates waiting for review. Cloud teams also get secure sign-in and workspace permissions for owners, editors, and viewers.",
   },
   {
     question: "Does Thally support multiple languages?",
     answer:
-      "Yes. One command translates your entire site while preserving code blocks, components, and URLs. Every locale gets its own indexable URL with automatic hreflang tags, a built-in language switcher, and graceful fallbacks; a missing translation never returns a 404.",
+      "Yes. One command translates your site while preserving code samples, components, and URLs. Each language gets pages that search engines can find, a built-in language switcher, and sensible fallbacks when a translation is missing.",
   },
 ];
 

@@ -17,8 +17,8 @@ The comparison gets interesting one level down.
 | MCP server | Built into every deploy at `/api/mcp` | Available through the hosted platform |
 | llms.txt | Generated on every build | Supported |
 | Docs automation | Docs agent opens reviewed PRs from product changes | AI-assisted writing in the editor |
-| Pricing model | Free self-hosted; Cloud from $8 per editor/month | Tiered hosted plans; see their pricing page |
-| Vendor lock-in | None; static export any time | Content is portable, platform is not |
+| Pricing model | Free self-hosted; Thally Cloud from $50 per workspace/month on an annual subscription with 3 team members | Tiered hosted plans; see their pricing page |
+| Portability | Content, renderer, and static export remain yours | Content is portable; the hosted platform is vendor-operated |
 
 Mintlify moves quickly and its capabilities evolve; treat their current documentation as the source of truth for their side of this table.
 
@@ -26,11 +26,11 @@ Mintlify moves quickly and its capabilities evolve; treat their current document
 
 A Thally site is a Next.js repository. You can read every line that serves your docs, deploy it to Vercel, Netlify, Cloudflare, Docker, or a static bucket, and leave whenever you want with a working site in hand. The engine is MIT licensed, so self-hosting is free forever, commercial use included.
 
-Mintlify hosts the platform for you. That is genuinely valuable: zero infrastructure, zero upgrades, a support team on call. The trade is that the rendering pipeline, hosting, and roadmap belong to the vendor. Your content stays portable; your site does not.
+Mintlify hosts and maintains the platform for you. That removes infrastructure and upgrade work from your team. The tradeoff is that the vendor controls the rendering pipeline, hosting, and roadmap. Your content remains portable, but the hosted product does not move with it.
 
-Which trade is right depends on your team. Regulated companies and infrastructure-minded teams tend to want the repo. Small teams that would rather never see a deploy log tend to want the platform.
+Which tradeoff is right depends on your team. Choose the repository when control and deployment flexibility matter most. Choose the hosted platform when reducing infrastructure ownership matters more.
 
-## Machine readability: the widening gap
+## Machine readability
 
 This is the axis where the two products differ most. Every page a Thally site publishes is available in four formats from the same URL: rendered HTML for people, and JSON, JSON-LD, or Markdown for machines, selected by an `Accept` header or a `?format=` parameter. There is no scraping step. An agent asks for structure and receives structure.
 
@@ -44,7 +44,7 @@ Mintlify has been adding AI capabilities to its hosted platform as well, includi
 
 ## When the product changes
 
-Documentation rots at the moment your product moves. The two platforms answer this differently.
+Documentation starts drifting when the product changes. The two platforms address that problem differently.
 
 Thally treats drift as a first-class problem. Mention `@thally document this` on any GitHub issue or PR and the docs agent drafts a documentation pull request. Connect a repo with Thally Track and merged product PRs become reviewed docs PRs automatically. The weekly drift sweep flags pages whose source code changed since they were last verified. Nothing merges without a human.
 
@@ -52,7 +52,7 @@ Mintlify's AI helps you write and edit within the platform. It is a strong autho
 
 ## Pricing
 
-Thally is free to self-host with unlimited pages and readers. Thally Cloud is $8 per editor per month ($60 per editor per year billed annually) and adds managed hosting, Thally AI answers, Track, readiness CI checks, and the admin dashboard. Enterprise is $15 per editor per month with SSO, audit logs, and a 99.9% SLA. Readers are never billed. Full details are on the [pricing page](/pricing) and in the machine-readable [pricing.md](/pricing.md).
+Thally is free to self-host with unlimited pages and readers. Thally Cloud is $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include three team members. Each additional active member or pending invitation adds $20 to the monthly bill. Thally Cloud adds managed services, Thally AI answers, Track, readiness gates, and the admin dashboard. Enterprise pricing is custom and adds SSO, audit-log access, custom terms, and priority support. Readers are never billed. Full details are on the [pricing page](/pricing) and in the machine-readable [pricing.md](/pricing.md).
 
 Mintlify prices its hosted tiers separately; their pricing page is the source of truth.
 
@@ -79,4 +79,4 @@ If you decide to switch, the migrator does the heavy lifting:
 npx create-thally migrate github.com/acme/docs
 ```
 
-It detects the source platform, converts every page to clean MDX, rebuilds navigation, carries redirects, and wires up your OpenAPI spec. You get a running local preview before you change a single DNS record. [Start free](/signup) or read more in the [FAQ](/faq).
+It detects the source platform, converts every page to clean MDX, rebuilds navigation, carries redirects, and wires up your OpenAPI spec. You get a running local preview before you change a single DNS record. [Start free](https://app.thally.io/register) or read more in the [FAQ](/faq).

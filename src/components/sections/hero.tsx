@@ -1,12 +1,13 @@
 "use client";
 
-import { ArrowRight, BookOpen, Braces, Gauge, type LucideIcon } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { ArrowRight, Guide, type IconComponent, Readiness, Structured } from "@/components/icons";
 import { sectionTitleClassName } from "@/components/section-decor";
 import { Button } from "@/components/ui/button";
+import { DESTINATIONS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 type HeroFeatureSliderImage = Image & {
@@ -16,7 +17,7 @@ type HeroFeatureSliderImage = Image & {
 interface HeroFeatureSliderFeature {
   title: string;
   description: string;
-  icon: LucideIcon;
+  icon: IconComponent;
   color?: string;
   href?: string;
 }
@@ -54,30 +55,30 @@ const heroImageClassName =
 const defaultProps: HeroFeatureSliderProps = {
   heading: "AI-native documentation for agents and humans.",
   description:
-    "One MDX source serves AI agents and human readers from the same URL. And when your product changes, Thally drafts the docs PR.",
+    "One MDX source serves AI agents and human readers from the same URL. When your product changes, Thally drafts the docs PR.",
   buttonPrimary: {
     text: "Start free",
-    href: "/signup",
+    href: DESTINATIONS.signup,
   },
   buttonSecondary: {
-    text: "View pricing",
-    href: "/pricing",
+    text: "Read the docs",
+    href: DESTINATIONS.docs,
   },
   features: [
     {
       title: "Structured for machines",
-      description: "Every route returns JSON, JSON-LD, or Markdown on request. No scraping, ever.",
-      icon: Braces,
+      description: "Every route returns JSON, JSON-LD, or Markdown on request, so agents can read without scraping.",
+      icon: Structured,
     },
     {
       title: "Typeset for humans",
-      description: "The same source, rendered as semantic HTML your readers actually enjoy.",
-      icon: BookOpen,
+      description: "The same source becomes semantic HTML that is clear, fast, and easy to navigate.",
+      icon: Guide,
     },
     {
       title: "Scored for agent-readiness",
-      description: "A deterministic 0 to 100 grade on every build. Gate CI on it, and let the agent PR the fixes.",
-      icon: Gauge,
+      description: "Get a deterministic 0 to 100 grade on every build. Gate CI and let the agent draft the fixes.",
+      icon: Readiness,
     },
   ],
   images: [

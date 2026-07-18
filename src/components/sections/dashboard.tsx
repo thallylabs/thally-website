@@ -1,9 +1,10 @@
 "use client";
 
-import { BarChart3, GitPullRequest, Palette, Users } from "lucide-react";
+import { Palette } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 
+import { GitPullRequest, Sites as BarChart3, Team as Users } from "@/components/icons";
 import { SectionGrid, SectionHeader } from "@/components/section-decor";
 
 const POINTS = [
@@ -18,21 +19,21 @@ const POINTS = [
     icon: BarChart3,
     title: "Analytics that point at gaps.",
     description:
-      "First-party traffic, top pages, and the search terms that returned nothing, so you know exactly which page to write next.",
+      "See first-party traffic, top pages, and searches with no results, so your team knows which documentation to write next.",
     accent: "var(--chart-2)",
   },
   {
     icon: GitPullRequest,
     title: "A queue for agent-drafted PRs.",
     description:
-      "Every docs task the agent produces, from Track, drift sweeps, or @thally mentions, waits here for human review.",
+      "Review every docs task from Track, drift sweeps, and @thally mentions in one queue before anything merges.",
     accent: "var(--chart-5)",
   },
   {
     icon: Users,
     title: "Roles from a git-committed roster.",
     description:
-      "Owner, Editor, and Viewer access lives in your repo and goes through code review. OIDC sign-in, no database, no per-seat fees.",
+      "Owner, Editor, and Viewer access lives in your repo and goes through code review. OIDC sign-in requires no separate authentication database.",
     accent: "var(--chart-4)",
   },
 ];
@@ -47,7 +48,7 @@ export const Dashboard = () => {
       <div className="relative container">
         <SectionHeader
           title="Mission control, built in"
-          description="Every deploy ships an admin dashboard at /admin. Branding, analytics, team access, and the agent's PR queue all live in one place and change the live site instantly."
+          description="Every deploy includes an admin dashboard at /admin. Manage branding, analytics, team access, and agent-drafted PRs in one place."
         />
 
         <div className="relative mt-10 lg:mt-16" style={{ perspective: 1400 }}>

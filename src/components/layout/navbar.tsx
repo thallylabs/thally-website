@@ -1,10 +1,10 @@
 "use client";
 
-import { Bot, GitPullRequest, LayoutDashboard, PackageOpen, Workflow } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
+import { Cloud, GitPullRequest, Mcp, Negotiation, Overview } from "@/components/icons";
 import { Logo } from "@/components/layout/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { DESTINATIONS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 const Navbar = () => {
@@ -50,29 +51,30 @@ const Navbar = () => {
           title: "Content Graph",
           href: "/#features",
           description: "One MDX source, projected as HTML, JSON, JSON-LD, and Markdown.",
-          icon: Workflow,
+          icon: Negotiation,
         },
         {
           title: "Agent Layer",
           href: "/#workflows",
           description: "Grounded AI answers, llms.txt, MCP, and a readiness score for CI.",
-          icon: Bot,
+          icon: Mcp,
         },
         {
           title: "Migration & Hosting",
           href: "/#migrate",
           description: "Move from Mintlify, Docusaurus, or GitBook in one command. Deploy anywhere.",
-          icon: PackageOpen,
+          icon: Cloud,
         },
         {
           title: "Admin Dashboard",
           href: "/#dashboard",
           description: "Analytics, theming, team roles, and the agent's PR queue. Live, no rebuild.",
-          icon: LayoutDashboard,
+          icon: Overview,
         },
       ],
     },
     { label: "Pricing", href: "/pricing" },
+    { label: "Docs", href: DESTINATIONS.docs },
     { label: "Blog", href: "/blog" },
     { label: "About", href: "/about" },
     { label: "FAQ", href: "/faq" },
@@ -82,7 +84,7 @@ const Navbar = () => {
   const bgColor = "bg-popover";
 
   return (
-    <header className={cn("relative z-50", bgColor)}>
+    <header className={cn("relative z-50 overflow-x-clip", bgColor)}>
       <div className="max-w-9xl container">
         <div className="flex items-center justify-between py-3">
           {/* Logo */}
@@ -143,13 +145,13 @@ const Navbar = () => {
 
           {/* Auth Buttons */}
           <div className="flex items-center gap-2.5">
-            <Link href="/signup" className="hidden lg:block">
+            <Link href={DESTINATIONS.signup} className="hidden lg:block">
               <Button variant="ghost" className="text-muted-foreground">
                 Sign up
               </Button>
             </Link>
             <Link
-              href="/login"
+              href={DESTINATIONS.login}
               className={`transition-opacity duration-300 ${isMenuOpen ? "max-lg:pointer-events-none max-lg:opacity-0" : "opacity-100"}`}
             >
               <Button variant="outline">Log in</Button>
@@ -194,12 +196,12 @@ const Navbar = () => {
         )}
       >
         <div className="mt-8 space-y-2">
-          <Link href="/signup" className="block" onClick={() => setIsMenuOpen(false)}>
+          <Link href={DESTINATIONS.signup} className="block" onClick={() => setIsMenuOpen(false)}>
             <Button size="sm" className="w-full">
               Sign up
             </Button>
           </Link>
-          <Link href="/login" className="block" onClick={() => setIsMenuOpen(false)}>
+          <Link href={DESTINATIONS.login} className="block" onClick={() => setIsMenuOpen(false)}>
             <Button size="sm" className="w-full" variant="outline">
               Log in
             </Button>

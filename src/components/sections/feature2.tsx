@@ -150,9 +150,7 @@ function ChatCard() {
     <div className="space-y-2">
       <div className="flex items-start gap-2">
         <Avatar initials="MR" i={2} />
-        <div className="bg-muted rounded-lg rounded-tl-none px-2.5 py-1.5 text-[11px]">
-          How do I rotate API tokens?
-        </div>
+        <div className="bg-muted rounded-lg rounded-tl-none px-2.5 py-1.5 text-[11px]">How do I rotate API tokens?</div>
       </div>
       <div className="flex items-start justify-end gap-2">
         <div
@@ -199,19 +197,21 @@ const ITEMS: ItemType[] = [
   {
     title: "A readiness score you can gate CI on.",
     description:
-      "A deterministic 0 to 100 grade per build, naming the exact pages that drag it down. The agent turns ailing metrics into fix PRs.",
+      "Get a deterministic 0 to 100 grade on every build, with the exact pages lowering it. The agent turns failed checks into fix PRs.",
     illustration: <ReadinessScoreCard />,
     className: "md:col-span-3 md:row-span-3",
   },
   {
-    title: "Docs that maintain themselves.",
-    description: "Builds validate links and resync your spec. Product changes and mentions become reviewed docs PRs.",
+    title: "Docs maintenance, drafted for review.",
+    description:
+      "Builds validate links and resync your spec. Product changes and mentions become docs PRs your team reviews.",
     illustration: <AutomationCard />,
     className: "md:col-span-3 md:row-span-3 md:col-start-4",
   },
   {
-    title: "Find anything in under 50ms.",
-    description: "⌘K search runs full-text and vector recall on one index. No third-party search box.",
+    title: "Search without leaving the docs.",
+    description:
+      "⌘K combines full-text and vector recall on one index, with no third-party search service to configure.",
     illustration: <PaletteCard />,
     className: "md:col-span-2 md:row-span-2 md:row-start-4",
   },
@@ -223,7 +223,7 @@ const ITEMS: ItemType[] = [
   },
   {
     title: "Every build gets a report card.",
-    description: "Checks run on each deploy, so machine readers never meet a stale page.",
+    description: "Checks run on every deploy and flag stale or incomplete pages before they reach machine readers.",
     illustration: <BuildReportCard />,
     className: "md:col-span-2 md:row-span-2 md:col-start-5 md:row-start-4",
   },

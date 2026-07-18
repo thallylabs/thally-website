@@ -1,264 +1,355 @@
 "use client";
 
-import { Command, Languages, Rss, Search } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
+import {
+  AnimatePresence,
+  motion,
+  type MotionValue,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+} from "motion/react";
+import { useRef, useState } from "react";
 
 import { SectionGrid, SectionHeader, SectionLines } from "@/components/section-decor";
 
-const GUIDE_TABS = ["Guide", "API", "Changelog"];
+const FEATURES = [
+  {
+    id: "guide",
+    number: "01",
+    label: "Product guides",
+    description: "Write clean MDX with Steps, Tabs, Cards, Mermaid, callouts, and more.",
+  },
+  {
+    id: "api",
+    number: "02",
+    label: "API reference",
+    description: "Drop in an OpenAPI spec for parameter tables, samples, and a live Try-it console.",
+  },
+  {
+    id: "changelog",
+    number: "03",
+    label: "Changelog & search",
+    description: "Ship RSS changelogs, hybrid search, versioning, and translations from the same source.",
+  },
+] as const;
 
-const GUIDE_STEPS = [
-  { n: "1", title: "Install the CLI", code: "npm i -g thally" },
-  { n: "2", title: "Write in MDX", code: "<Steps>, <Tabs>, <Card>" },
-  { n: "3", title: "Preview locally", code: "thally dev" },
-];
+type FeatureId = (typeof FEATURES)[number]["id"];
 
-const GUIDE_COMPONENTS = ["Steps", "Tabs", "Cards", "Mermaid", "Callouts", "Code groups"];
+const contentTransition = { type: "spring" as const, duration: 0.38, bounce: 0 };
 
-const ENDPOINTS = [
-  { method: "GET", path: "/v1/pages", color: "var(--chart-2)" },
-  { method: "POST", path: "/v1/tokens/rotate", color: "var(--chart-1)" },
-];
+const WORKSPACE_FILES: Record<FeatureId, string> = {
+  guide: "quickstart.mdx",
+  api: "openapi.yaml",
+  changelog: "changelog.md",
+};
 
-const RESPONSE_LINES = [
-  { text: "{", color: "var(--muted-foreground)" },
-  { text: '  "token": "thly_9f2c…",', color: "var(--chart-2)" },
-  { text: '  "expires_in": 86400', color: "var(--chart-4)" },
-  { text: "}", color: "var(--muted-foreground)" },
-];
+function GuideDemo() {
+  const steps = [
+    ["1", "Install the CLI", "npm i -g thally"],
+    ["2", "Write in MDX", "<Steps> <Tabs> <Card>"],
+    ["3", "Preview locally", "thally dev"],
+  ];
 
-const LOCALES = ["de", "ja", "fr", "pt"];
-
-function GuidesVignette() {
   return (
-    <div>
-      <div className="border-border bg-background overflow-hidden rounded-xl border">
-        <div className="border-border flex items-center gap-1 border-b px-3 py-2">
-          {GUIDE_TABS.map((tab, i) => (
-            <span
-              key={tab}
-              className={
-                i === 0
-                  ? "bg-muted rounded-md px-2 py-0.5 text-[10px] font-medium"
-                  : "text-muted-foreground px-2 py-0.5 text-[10px]"
-              }
-            >
-              {tab}
+    <div className="mx-auto max-w-md py-4 md:py-8">
+      <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">Quickstart.mdx</p>
+      <h3 className="mt-3 text-2xl font-semibold tracking-tight">Build your first guide</h3>
+      <div className="mt-8 space-y-0">
+        {steps.map(([number, title, code], index) => (
+          <div key={number} className="relative grid grid-cols-[2rem_1fr] gap-3 pb-7 last:pb-0">
+            {index < steps.length - 1 && (
+              <span aria-hidden className="bg-border absolute top-7 bottom-0 left-[15px] w-px" />
+            )}
+            <span className="border-border bg-background relative z-[1] flex size-8 items-center justify-center rounded-lg border font-mono text-xs">
+              {number}
             </span>
-          ))}
-        </div>
-        <div className="p-4">
-          {GUIDE_STEPS.map((step, i) => (
-            <div key={step.n} className="relative flex gap-3 pb-4 last:pb-0">
-              {i < GUIDE_STEPS.length - 1 && (
-                <span aria-hidden className="bg-border absolute top-6 bottom-0 left-[10px] w-px" />
-              )}
-              <span className="border-border bg-background z-[1] flex size-5 shrink-0 items-center justify-center rounded-full border text-[10px] font-semibold">
-                {step.n}
-              </span>
-              <div className="min-w-0">
-                <p className="text-[11px] leading-5 font-medium">{step.title}</p>
-                <code className="bg-muted text-muted-foreground mt-1 inline-block rounded px-1.5 py-0.5 font-mono text-[9px]">
-                  {step.code}
-                </code>
-              </div>
+            <div>
+              <p className="text-sm font-semibold">{title}</p>
+              <code className="bg-muted text-muted-foreground mt-2 inline-block rounded-md px-2 py-1 font-mono text-xs">
+                {code}
+              </code>
             </div>
-          ))}
-        </div>
-      </div>
-      <div className="mt-3 flex flex-wrap gap-1.5">
-        {GUIDE_COMPONENTS.map((component) => (
-          <span
-            key={component}
-            className="border-border bg-background text-muted-foreground rounded-full border px-2 py-0.5 text-[10px] font-medium"
-          >
-            {component}
-          </span>
-        ))}
-        <span className="text-muted-foreground/70 px-1 py-0.5 text-[10px] font-medium">+ 19 more</span>
-      </div>
-    </div>
-  );
-}
-
-function ApiVignette() {
-  return (
-    <div className="border-border bg-background overflow-hidden rounded-xl border">
-      <div className="divide-border divide-y">
-        {ENDPOINTS.map((endpoint) => (
-          <div key={endpoint.path} className="flex items-center gap-2 px-3 py-2">
-            <span
-              className="w-11 rounded px-1.5 py-0.5 text-center text-[9px] font-bold text-white"
-              style={{ background: endpoint.color }}
-            >
-              {endpoint.method}
-            </span>
-            <span className="truncate font-mono text-[10px] font-medium">{endpoint.path}</span>
           </div>
         ))}
       </div>
-      <div className="border-border bg-muted/40 border-t p-3">
-        <div className="flex items-center justify-between">
-          <span className="text-[10px] font-semibold">Try it</span>
-          <span
-            className="rounded px-2 py-0.5 text-[9px] font-semibold"
-            style={{
-              background: "color-mix(in oklab, var(--chart-5) 18%, transparent)",
-              color: "var(--chart-5)",
-            }}
-          >
-            200 OK · 84ms
-          </span>
-        </div>
-        <div className="mt-2 space-y-0.5 font-mono text-[10px] leading-relaxed">
-          {RESPONSE_LINES.map((line, i) => (
-            <p key={i} className="truncate" style={{ color: line.color }}>
-              {line.text}
-            </p>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
 
-function ChangelogVignette() {
+function ApiDemo() {
   return (
-    <div className="grid gap-3 sm:grid-cols-3">
-      <div className="border-border bg-background rounded-xl border p-3">
-        <div className="flex items-center justify-between">
-          <span
-            className="rounded-full px-2 py-0.5 font-mono text-[9px] font-semibold"
-            style={{
-              background: "color-mix(in oklab, var(--chart-1) 18%, transparent)",
-              color: "color-mix(in oklab, var(--chart-1) 60%, var(--foreground))",
-            }}
-          >
-            v2.4
-          </span>
-          <Rss className="text-muted-foreground size-3" />
+    <div className="mx-auto max-w-md py-4 md:py-8">
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">API reference</p>
+          <h3 className="mt-3 text-2xl font-semibold tracking-tight">Rotate access token</h3>
         </div>
-        <p className="mt-2 text-[11px] leading-snug font-medium">Webhook delivery retries</p>
-        <p className="text-muted-foreground mt-1 text-[10px] leading-snug">
-          Exponential backoff, dead-letter queue, and per-event logs.
-        </p>
+        <span className="bg-chart-1/15 text-chart-5 rounded-md px-2 py-1 font-mono text-xs font-semibold">POST</span>
       </div>
-
-      <div className="border-border bg-background rounded-xl border p-3">
-        <div className="border-border flex items-center gap-1.5 rounded-md border px-2 py-1.5">
-          <Search className="text-muted-foreground size-3 shrink-0" />
-          <span className="truncate text-[10px] font-medium">rotate tokens</span>
-          <span className="border-border text-muted-foreground ml-auto flex shrink-0 items-center gap-0.5 rounded border px-1 py-0.5 text-[8px]">
-            <Command className="size-2" />K
+      <div className="border-border mt-8 overflow-hidden rounded-xl border">
+        <div className="border-border flex items-center gap-3 border-b px-4 py-3">
+          <span className="bg-chart-1/15 text-chart-5 rounded px-2 py-0.5 font-mono text-[10px] font-semibold">
+            POST
           </span>
+          <code className="font-mono text-xs">/v1/tokens/rotate</code>
         </div>
-        <p className="text-muted-foreground mt-2 text-[10px] leading-snug">
-          12 results across guides, API, and changelog.
-        </p>
-      </div>
-
-      <div className="border-border bg-background rounded-xl border p-3">
-        <div className="flex items-center gap-1.5">
-          <Languages className="text-muted-foreground size-3 shrink-0" />
-          <span className="bg-muted rounded px-1.5 py-0.5 font-mono text-[9px] font-semibold">en</span>
-          <span className="text-muted-foreground text-[10px]">→</span>
-          {LOCALES.map((locale) => (
-            <span key={locale} className="border-border rounded border px-1.5 py-0.5 font-mono text-[9px] font-medium">
-              {locale}
+        <div className="bg-muted/35 p-4 font-mono text-xs leading-6">
+          <div className="flex items-center justify-between font-sans">
+            <span className="text-xs font-semibold">Response</span>
+            <span className="bg-chart-5/10 text-chart-5 rounded px-2 py-0.5 text-[10px] font-semibold">
+              200 OK · 84ms
             </span>
-          ))}
+          </div>
+          <pre className="text-muted-foreground mt-4 overflow-hidden">{`{\n  "token": "thly_9f2c…",\n  "expires_in": 86400\n}`}</pre>
         </div>
-        <code className="bg-muted text-muted-foreground mt-2 inline-block rounded px-1.5 py-0.5 font-mono text-[9px]">
-          thally translate --locale de
-        </code>
       </div>
     </div>
   );
 }
 
-const SOLUTIONS = [
-  {
-    industry: "Product guides",
-    headline: "Write guides in MDX with 25+ built-in components: Steps, Tabs, Cards, Mermaid, and more.",
-    stat: "4 formats from one source",
-    accent: "var(--chart-5)",
-    vignette: GuidesVignette,
-    span: "lg:col-span-7",
-    cols: "lg:grid-cols-2",
-  },
-  {
-    industry: "API reference",
-    headline: "Drop in an OpenAPI spec and get parameter tables, code samples, and a live Try-it console.",
-    stat: "Zero drift from your spec",
-    accent: "var(--chart-2)",
-    vignette: ApiVignette,
-    span: "lg:col-span-5",
-    cols: null,
-  },
-  {
-    industry: "Changelog, search & more",
-    headline: "RSS-backed changelogs, hybrid ⌘K search, versioning, and one-command translation to any locale.",
-    stat: "Search resolves in under 50ms",
-    accent: "var(--chart-1)",
-    vignette: ChangelogVignette,
-    span: "lg:col-span-12",
-    cols: "lg:grid-cols-[2fr_3fr]",
-  },
-];
+function ChangelogDemo() {
+  return (
+    <div className="mx-auto max-w-md py-4 md:py-8">
+      <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">Changelog</p>
+      <div className="mt-3 flex items-end justify-between gap-4">
+        <h3 className="text-2xl font-semibold tracking-tight">Webhook delivery retries</h3>
+        <span className="bg-chart-1/15 text-chart-5 rounded-md px-2 py-1 font-mono text-xs font-semibold">v2.4</span>
+      </div>
+      <p className="text-muted-foreground mt-5 text-sm leading-relaxed">
+        Exponential backoff, a dead-letter queue, and per-event logs make failed deliveries easy to find and replay.
+      </p>
+      <div className="border-border mt-8 border-y py-4">
+        <div className="border-border bg-background flex items-center gap-3 rounded-lg border px-4 py-3">
+          <span aria-hidden className="text-muted-foreground text-sm">
+            ⌕
+          </span>
+          <span className="text-sm font-medium">rotate tokens</span>
+          <kbd className="border-border bg-muted text-muted-foreground ml-auto rounded border px-1.5 py-0.5 font-mono text-[10px]">
+            ⌘ K
+          </kbd>
+        </div>
+        <p className="text-muted-foreground mt-3 text-xs">12 results across guides, API reference, and changelog.</p>
+      </div>
+    </div>
+  );
+}
+
+function WorkspaceContent({ feature }: { feature: FeatureId }) {
+  return (
+    <>
+      {feature === "guide" && <GuideDemo />}
+      {feature === "api" && <ApiDemo />}
+      {feature === "changelog" && <ChangelogDemo />}
+    </>
+  );
+}
+
+function WorkspaceWindow({ feature }: { feature: FeatureId }) {
+  return (
+    <div className="border-border bg-secondary/45 rounded-[1.25rem] border p-1.5">
+      <div className="border-border bg-card min-h-[30rem] overflow-hidden rounded-[calc(1.25rem-6px)] border">
+        <div className="border-border flex items-center gap-1.5 border-b px-4 py-3">
+          <span className="bg-muted-foreground/20 size-2.5 rounded-full" />
+          <span className="bg-muted-foreground/20 size-2.5 rounded-full" />
+          <span className="bg-muted-foreground/20 size-2.5 rounded-full" />
+          <span className="text-muted-foreground ml-2 font-mono text-[11px]">{WORKSPACE_FILES[feature]}</span>
+          <span className="text-muted-foreground/60 ml-auto font-mono text-[10px]">docs.thally.io</span>
+        </div>
+        <div className="px-6 py-7 sm:px-10">
+          <WorkspaceContent feature={feature} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MobileFeatureDemo({ active, reduce }: { active: FeatureId; reduce: boolean | null }) {
+  return (
+    <div className="border-border bg-secondary/45 rounded-[1.25rem] border p-1.5 lg:hidden">
+      <div className="border-border bg-card min-h-[30rem] overflow-hidden rounded-[calc(1.25rem-6px)] border">
+        <div className="border-border flex items-center gap-1.5 border-b px-4 py-3">
+          <span className="bg-muted-foreground/20 size-2.5 rounded-full" />
+          <span className="bg-muted-foreground/20 size-2.5 rounded-full" />
+          <span className="bg-muted-foreground/20 size-2.5 rounded-full" />
+          <span className="text-muted-foreground ml-2 font-mono text-[11px]">docs.thally.io</span>
+        </div>
+        <div className="px-6 py-7 sm:px-10">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={active}
+              initial={reduce ? false : { opacity: 0, y: 10, filter: "blur(4px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              exit={reduce ? undefined : { opacity: 0, y: -6, filter: "blur(3px)" }}
+              transition={contentTransition}
+            >
+              <WorkspaceContent feature={active} />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function WorkspaceCard({
+  feature,
+  index,
+  active,
+  progress,
+  reduce,
+}: {
+  feature: (typeof FEATURES)[number];
+  index: number;
+  active: number;
+  progress: MotionValue<number>;
+  reduce: boolean | null;
+}) {
+  const relative = useTransform(progress, (value) => Math.min(value * 2.4, 2) - index);
+  const x = useTransform(relative, (value) => {
+    const distance = Math.min(Math.abs(value), 2);
+    const amount = 52 * distance + 10 * distance * distance;
+    return value < 0 ? amount : -amount;
+  });
+  const y = useTransform(relative, (value) => {
+    const distance = Math.min(Math.abs(value), 2);
+    const amount = 34 * distance + 7 * distance * distance;
+    return value < 0 ? amount : -amount;
+  });
+  const rotate = useTransform(relative, (value) => -value * 4.5);
+  const scale = useTransform(relative, (value) => 1 - Math.min(Math.abs(value), 1.6) * 0.045);
+  const opacity = useTransform(relative, (value) => Math.max(0.34, 1 - Math.min(Math.abs(value), 1.6) * 0.35));
+  const filter = useTransform(relative, (value) => `blur(${Math.min(2.2, Math.abs(value) * 1.2)}px)`);
+  const isActive = index === active;
+
+  return (
+    <article
+      aria-hidden={!isActive}
+      className="absolute inset-x-0 top-1/2 -translate-y-1/2"
+      style={{ zIndex: isActive ? 3 : index < active ? 1 : 2, pointerEvents: isActive ? "auto" : "none" }}
+    >
+      <motion.div
+        className="will-change-[transform,opacity,filter]"
+        style={reduce ? { opacity: isActive ? 1 : 0 } : { x, y, rotate, scale, opacity, filter }}
+      >
+        <WorkspaceWindow feature={feature.id} />
+      </motion.div>
+    </article>
+  );
+}
+
+function WorkspaceDeck({
+  active,
+  progress,
+  reduce,
+}: {
+  active: number;
+  progress: MotionValue<number>;
+  reduce: boolean | null;
+}) {
+  return (
+    <div className="relative hidden min-h-[34rem] lg:block" aria-live="polite">
+      {FEATURES.map((feature, index) => {
+        return (
+          <WorkspaceCard
+            key={feature.id}
+            feature={feature}
+            index={index}
+            active={active}
+            progress={progress}
+            reduce={reduce}
+          />
+        );
+      })}
+      <p className="text-muted-foreground absolute right-3 bottom-0 font-mono text-[11px]">
+        {String(active + 1).padStart(2, "0")} / 03
+      </p>
+    </div>
+  );
+}
 
 export const Feature1 = () => {
+  const [active, setActive] = useState<FeatureId>("guide");
+  const sectionRef = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 180, damping: 28, mass: 0.4, restDelta: 0.0005 });
+
+  useMotionValueEvent(scrollYProgress, "change", (progress) => {
+    if (reduce) return;
+    const nextIndex = Math.min(FEATURES.length - 1, Math.round(Math.min(progress * 2.4, 2)));
+    setActive((current) => (current === FEATURES[nextIndex].id ? current : FEATURES[nextIndex].id));
+  });
+
+  const activeIndex = FEATURES.findIndex((feature) => feature.id === active);
+
+  const selectFeature = (feature: FeatureId, index: number) => {
+    setActive(feature);
+    if (reduce || !sectionRef.current || window.innerWidth < 1024) return;
+
+    const sectionTop = sectionRef.current.getBoundingClientRect().top + window.scrollY;
+    const scrollRange = sectionRef.current.offsetHeight - window.innerHeight;
+    const targetProgress = Math.min(index / 2.4, 1);
+    window.scrollTo({ top: sectionTop + scrollRange * targetProgress, behavior: "auto" });
+  };
 
   return (
-    <section id="solutions" className="section-padding relative">
-      <SectionGrid className="opacity-25" />
+    <section
+      ref={sectionRef}
+      id="solutions"
+      className={`relative ${reduce ? "py-20 md:py-32" : "py-20 md:py-32 lg:h-[280vh] lg:py-0"}`}
+    >
+      <SectionGrid className="opacity-15" mask="linear-gradient(to_bottom,black,transparent_78%)" />
       <SectionLines />
 
-      <div className="relative container">
-        <SectionHeader
-          title="Every page your product needs, from one source"
-          description="Product guides, API references, and changelogs are all projections of the same typed content graph, written once in MDX and never maintained by hand."
-        />
+      <div
+        className={`relative container ${reduce ? "" : "lg:sticky lg:top-0 lg:flex lg:min-h-screen lg:items-center"}`}
+      >
+        <div className="grid w-full items-center gap-14 lg:grid-cols-2 lg:gap-20">
+          <div>
+            <SectionHeader
+              title="Every page your product needs, from one source"
+              description="Guides, API references, and changelogs come from the same typed content graph. Write once in MDX instead of maintaining separate copies."
+              layout="stack"
+            />
 
-        <div className="mt-10 grid gap-5 lg:mt-16 lg:grid-cols-12">
-          {SOLUTIONS.map((item, i) => {
-            const Vignette = item.vignette;
-            const horizontal = item.cols !== null;
-            return (
-              <motion.article
-                key={item.industry}
-                className={`border-border bg-card relative flex flex-col overflow-hidden rounded-2xl border ${item.span}`}
-                initial={reduce ? undefined : { opacity: 0, y: 20 }}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.55, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <div className={horizontal ? `grid flex-1 ${item.cols}` : "flex flex-1 flex-col"}>
-                  <div className="p-6 lg:p-7">
-                    <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
-                      {item.industry}
-                    </span>
-                    <p className="mt-3 text-xl leading-snug font-semibold text-balance">{item.headline}</p>
-                    <p className="text-muted-foreground mt-3 text-sm">{item.stat}</p>
-                  </div>
-                  <div
-                    className={
-                      horizontal
-                        ? "border-border bg-muted/40 flex flex-col justify-center border-t p-4 lg:border-t-0 lg:border-l lg:p-5"
-                        : "border-border bg-muted/40 mt-auto border-t p-4 lg:p-5"
-                    }
+            <div className="border-border mt-10 border-t md:mt-14">
+              {FEATURES.map((feature, index) => {
+                const selected = active === feature.id;
+                return (
+                  <button
+                    key={feature.id}
+                    type="button"
+                    onClick={() => selectFeature(feature.id, index)}
+                    aria-pressed={selected}
+                    className="border-border group grid w-full grid-cols-[2.5rem_1fr] gap-3 border-b py-5 text-left active:scale-[0.99]"
                   >
-                    <Vignette />
-                  </div>
-                </div>
-                <div
-                  aria-hidden
-                  className="absolute top-4 right-4 size-8 border-t border-r"
-                  style={{ borderColor: `color-mix(in oklab, ${item.accent} 40%, transparent)` }}
-                />
-              </motion.article>
-            );
-          })}
+                    <span className="text-muted-foreground pt-1 font-mono text-[11px]">{feature.number}</span>
+                    <span>
+                      <span className="flex items-center justify-between gap-4">
+                        <span className="text-base font-semibold">{feature.label}</span>
+                        <motion.span
+                          aria-hidden
+                          animate={{ opacity: selected ? 1 : 0, x: selected ? 0 : -4 }}
+                          transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                          className="text-chart-5 text-sm"
+                        >
+                          →
+                        </motion.span>
+                      </span>
+                      <span className="text-muted-foreground mt-1 block max-w-md text-sm leading-relaxed">
+                        {feature.description}
+                      </span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <MobileFeatureDemo active={active} reduce={reduce} />
+          <WorkspaceDeck active={activeIndex} progress={smoothProgress} reduce={reduce} />
         </div>
       </div>
     </section>

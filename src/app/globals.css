@@ -20,6 +20,8 @@
   --muted-foreground: oklch(0.5 0.013 140);
   --accent: oklch(0.955 0.009 138);
   --accent-foreground: oklch(0.28 0.015 138);
+  --accent-2: oklch(0.55 0.14 292);
+  --accent-2-foreground: oklch(0.15 0.02 292);
   --destructive: oklch(0.619 0.212 20);
   --destructive-foreground: oklch(0.99 0.007 106);
 
@@ -29,7 +31,7 @@
 
   --chart-1: oklch(0.8 0.19 124);
   --chart-2: oklch(0.5 0.12 165);
-  --chart-3: oklch(0.4 0.07 184);
+  --chart-3: oklch(0.55 0.14 292);
   --chart-4: oklch(0.66 0.16 132);
   --chart-5: oklch(0.54 0.1 150);
 
@@ -52,41 +54,48 @@
 }
 
 .dark {
-  --background: oklch(0.26 0.045 188);
-  --foreground: oklch(0.95 0.008 107);
-  --card: oklch(0.327 0.05 186);
-  --card-foreground: oklch(0.95 0.008 107);
-  --popover: oklch(0.26 0.045 188);
-  --popover-foreground: oklch(0.95 0.008 107);
-  --primary: oklch(0.9 0.17 122);
-  --primary-foreground: oklch(0.235 0.017 138);
-  --secondary: oklch(0.33 0.03 180);
-  --secondary-foreground: oklch(0.95 0.008 107);
-  --muted: oklch(0.33 0.03 180);
-  --muted-foreground: oklch(0.75 0.02 120);
-  --accent: oklch(0.36 0.05 184);
-  --accent-foreground: oklch(0.95 0.008 107);
+  --background: oklch(0.12 0.01 152);
+  --foreground: oklch(0.95 0.01 106);
+  --card: oklch(0.135 0.01 152);
+  --card-foreground: oklch(0.95 0.01 106);
+  --popover: oklch(0.135 0.01 152);
+  --popover-foreground: oklch(0.95 0.01 106);
+  --primary: oklch(0.86 0.19 123);
+  --primary-foreground: oklch(0.2 0.02 150);
+  --secondary: oklch(0.18 0.012 152);
+  --secondary-foreground: oklch(0.95 0.01 106);
+  --muted: oklch(0.18 0.012 152);
+  --muted-foreground: oklch(0.68 0.02 140);
+  --accent: oklch(0.18 0.012 152);
+  --accent-foreground: oklch(0.95 0.01 106);
+  --accent-2: oklch(0.74 0.12 292);
+  --accent-2-foreground: oklch(0.15 0.02 292);
   --destructive: oklch(0.62 0.2 20);
   --destructive-foreground: oklch(0.98 0.007 106);
 
-  --border: oklch(0.95 0.008 107 / 0.12);
-  --input: oklch(0.4 0.03 182);
-  --ring: oklch(0.9 0.17 122);
+  --border: oklch(0.95 0.01 106 / 0.1);
+  --input: oklch(0.3 0.014 152);
+  --ring: oklch(0.86 0.19 123);
 
-  --chart-1: oklch(0.9 0.17 122);
+  --chart-1: oklch(0.86 0.19 123);
   --chart-2: oklch(0.62 0.13 168);
-  --chart-3: oklch(0.5 0.08 182);
+  --chart-3: oklch(0.74 0.12 292);
   --chart-4: oklch(0.78 0.16 128);
   --chart-5: oklch(0.58 0.1 150);
 
-  --sidebar: oklch(0.24 0.04 188);
-  --sidebar-foreground: oklch(0.95 0.008 107);
-  --sidebar-primary: oklch(0.9 0.17 122);
-  --sidebar-primary-foreground: oklch(0.235 0.017 138);
-  --sidebar-accent: oklch(0.36 0.05 184);
-  --sidebar-accent-foreground: oklch(0.95 0.008 107);
-  --sidebar-border: oklch(0.4 0.03 182);
-  --sidebar-ring: oklch(0.9 0.17 122);
+  --sidebar: oklch(0.135 0.01 152);
+  --sidebar-foreground: oklch(0.95 0.01 106);
+  --sidebar-primary: oklch(0.86 0.19 123);
+  --sidebar-primary-foreground: oklch(0.2 0.02 150);
+  --sidebar-accent: oklch(0.18 0.012 152);
+  --sidebar-accent-foreground: oklch(0.95 0.01 106);
+  --sidebar-border: oklch(0.95 0.01 106 / 0.1);
+  --sidebar-ring: oklch(0.86 0.19 123);
+  /* Dark cards separate with hairline borders, not raised shadows. */
+  --shadow-2xs: 0 0 #0000;
+  --shadow-xs: 0 0 #0000;
+  --shadow-sm: 0 0 #0000;
+  --shadow-md: 0 0 #0000;
 }
 
 @theme inline {
@@ -104,6 +113,8 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-accent-2: var(--accent-2);
+  --color-accent-2-foreground: var(--accent-2-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
@@ -195,6 +206,55 @@
     line-height: 1.75rem;
     margin-top: 2rem;
     margin-bottom: 0.75rem;
+  }
+
+  .legal-prose > :first-child {
+    margin-top: 0;
+  }
+
+  .legal-prose :where(h2) {
+    scroll-margin-top: 2rem;
+    border-top: 1px solid var(--border);
+    padding-top: 2.75rem;
+    margin-top: 4rem !important;
+    margin-bottom: 1.25rem !important;
+    font-size: 1.65rem !important;
+    line-height: 1.25 !important;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+
+  .legal-prose :where(h3) {
+    margin-top: 2.25rem;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 650;
+  }
+
+  .legal-prose :where(p, li) {
+    color: var(--muted-foreground);
+    line-height: 1.8;
+  }
+
+  .legal-prose :where(strong) {
+    color: var(--foreground);
+    font-weight: 600;
+  }
+
+  .legal-prose :where(a) {
+    color: var(--foreground);
+    text-decoration-color: color-mix(in oklab, var(--foreground) 35%, transparent);
+    text-underline-offset: 0.2em;
+    transition: text-decoration-color 180ms ease;
+  }
+
+  .legal-prose :where(a:hover) {
+    text-decoration-color: var(--foreground);
+  }
+
+  .legal-prose :where(ul) {
+    padding-left: 1.25rem;
   }
 
   /* Inline code: drop the typography plugin's literal backticks, add a quiet chip. */

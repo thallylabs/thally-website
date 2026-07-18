@@ -8,6 +8,7 @@ import { BlogCard, CategoryChip, PostMeta } from "@/components/blog/blog-card";
 import { SectionGrid, SectionLines } from "@/components/section-decor";
 import { Button } from "@/components/ui/button";
 import { type BlogPost, relatedPosts } from "@/lib/blog";
+import { DESTINATIONS } from "@/lib/site";
 
 export function PostShell({ post, children }: { post: BlogPost; children: ReactNode }) {
   const reduce = useReducedMotion();
@@ -62,17 +63,17 @@ export function PostShell({ post, children }: { post: BlogPost; children: ReactN
               style={{ borderColor: `color-mix(in oklab, ${post.accent} 40%, transparent)` }}
             />
             <h2 className="font-display max-w-md text-2xl leading-snug font-semibold text-balance">
-              See your docs the way an agent sees them.
+              See what your docs give an AI agent.
             </h2>
             <p className="text-muted-foreground mt-2 max-w-md text-sm">
-              Free to self-host forever. Readers are never billed.
+              Self-host free under the MIT license. No credit card required.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button asChild size="lg">
-                <Link href="/signup">Start free</Link>
+                <Link href={DESTINATIONS.signup}>Start free</Link>
               </Button>
               <Button asChild variant="outline" size="lg">
-                <Link href="/pricing">View pricing</Link>
+                <Link href={DESTINATIONS.docs}>Read the docs</Link>
               </Button>
             </div>
           </div>

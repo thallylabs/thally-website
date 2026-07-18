@@ -1,7 +1,10 @@
 "use client";
 
-import { Check, ChevronsUpDown } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
+
+import { Check, ChevronsUpDown } from "@/components/icons";
+import { DESTINATIONS } from "@/lib/site";
 
 import { Button } from "../ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
@@ -11,7 +14,7 @@ interface FeatureSection {
   features: {
     name: string;
     free: string | boolean;
-    startup: string | boolean;
+    cloud: string | boolean;
     enterprise: string | boolean;
   }[];
 }
@@ -19,22 +22,25 @@ interface FeatureSection {
 const pricingPlans = [
   {
     name: "Free",
+    href: DESTINATIONS.docsQuickstart,
     button: {
-      text: "Get started",
+      text: "Read the quickstart",
       variant: "outline" as const,
     },
   },
   {
-    name: "Cloud",
+    name: "Thally Cloud",
+    href: DESTINATIONS.signup,
     button: {
-      text: "Get started",
+      text: "Start 14-day trial",
       variant: "outline" as const,
     },
   },
   {
     name: "Enterprise",
+    href: DESTINATIONS.sales,
     button: {
-      text: "Get a demo",
+      text: "Talk to sales",
       variant: "outline" as const,
     },
   },
@@ -45,22 +51,16 @@ const comparisonFeatures: FeatureSection[] = [
     category: "Usage",
     features: [
       {
-        name: "Pages & readers",
+        name: "Documentation pages and readers",
         free: "Unlimited",
-        startup: "Unlimited",
+        cloud: "Unlimited",
         enterprise: "Unlimited",
       },
       {
-        name: "Docs projects",
+        name: "Documentation sites",
         free: "Self-hosted",
-        startup: "Unlimited",
+        cloud: "Unlimited",
         enterprise: "Unlimited",
-      },
-      {
-        name: "Editors",
-        free: "Unlimited",
-        startup: "Per seat",
-        enterprise: "Per seat",
       },
     ],
   },
@@ -68,57 +68,63 @@ const comparisonFeatures: FeatureSection[] = [
     category: "Features",
     features: [
       {
-        name: "MDX authoring & components",
+        name: "Markdown and reusable components",
         free: true,
-        startup: true,
+        cloud: true,
         enterprise: true,
       },
       {
-        name: "HTML, JSON, JSON-LD & Markdown output",
+        name: "Pages built for people and AI tools",
         free: true,
-        startup: true,
+        cloud: true,
         enterprise: true,
       },
       {
-        name: "Agent endpoints (llms.txt, MCP)",
+        name: "Built-in connections for AI assistants",
         free: true,
-        startup: true,
+        cloud: true,
         enterprise: true,
       },
       {
-        name: "OpenAPI reference & Try-it console",
+        name: "Interactive API documentation",
         free: true,
-        startup: true,
+        cloud: true,
         enterprise: true,
       },
       {
-        name: "Thally AI answers & chat",
+        name: "AI answers with source links",
         free: false,
-        startup: true,
+        cloud: true,
         enterprise: true,
       },
       {
-        name: "Readiness score CI gate",
+        name: "Automated documentation quality checks",
         free: false,
-        startup: true,
+        cloud: true,
         enterprise: true,
       },
       {
-        name: "Custom domain & managed hosting",
+        name: "Custom domain",
         free: false,
-        startup: true,
+        cloud: true,
         enterprise: true,
       },
       {
-        name: "Team roles (Owner / Editor / Viewer)",
+        name: "Managed hosting (optional)",
         free: false,
-        startup: true,
+        cloud: true,
         enterprise: true,
       },
       {
-        name: "Audit log",
+        name: "Workspace permissions",
         free: false,
-        startup: false,
+        cloud: true,
+        enterprise: true,
+      },
+      {
+        name: "Activity history",
+        free: false,
+        cloud: false,
         enterprise: true,
       },
     ],
@@ -127,27 +133,27 @@ const comparisonFeatures: FeatureSection[] = [
     category: "Support",
     features: [
       {
-        name: "Community support",
+        name: "Community help",
         free: true,
-        startup: true,
+        cloud: true,
         enterprise: true,
       },
       {
-        name: "Priority support",
+        name: "Priority help from our team",
         free: false,
-        startup: true,
+        cloud: true,
         enterprise: true,
       },
       {
         name: "Account manager",
         free: false,
-        startup: false,
+        cloud: false,
         enterprise: true,
       },
       {
-        name: "Uptime SLA",
+        name: "Service availability guarantee",
         free: false,
-        startup: false,
+        cloud: false,
         enterprise: true,
       },
     ],
@@ -155,7 +161,7 @@ const comparisonFeatures: FeatureSection[] = [
 ];
 
 const Pricing2 = () => {
-  const [selectedPlan, setSelectedPlan] = useState(1); // Default to Startup plan
+  const [selectedPlan, setSelectedPlan] = useState(1); // Default to Thally Cloud
 
   return (
     <section className="pb-16 md:pb-28 lg:pb-32">
@@ -191,8 +197,8 @@ const PlanHeaders = ({
                 aria-hidden="true"
               />
             </CollapsibleTrigger>
-            <Button variant="outline" size="sm">
-              {pricingPlans[selectedPlan].button.text}
+            <Button asChild variant="outline" size="sm">
+              <Link href={pricingPlans[selectedPlan].href}>{pricingPlans[selectedPlan].button.text}</Link>
             </Button>
           </div>
           <CollapsibleContent className="flex flex-col space-y-2 p-2">
@@ -222,8 +228,8 @@ const PlanHeaders = ({
         {pricingPlans.map((plan, index) => (
           <div key={index} className="flex flex-col">
             <h3 className="mb-4 text-2xl font-semibold">{plan.name}</h3>
-            <Button variant="outline" className="w-fit">
-              {plan.button.text}
+            <Button asChild variant="outline" className="w-fit">
+              <Link href={plan.href}>{plan.button.text}</Link>
             </Button>
           </div>
         ))}
@@ -249,7 +255,7 @@ const FeatureSections = ({ selectedPlan }: { selectedPlan: number }) => (
             <div className="md:hidden">
               <div className="flex items-center gap-1 py-3">
                 {(() => {
-                  const value = [feature.free, feature.startup, feature.enterprise][selectedPlan];
+                  const value = [feature.free, feature.cloud, feature.enterprise][selectedPlan];
                   return typeof value === "boolean" ? (
                     value ? (
                       <Check className="text-primary/80 size-5" />
@@ -265,7 +271,7 @@ const FeatureSections = ({ selectedPlan }: { selectedPlan: number }) => (
             </div>
             {/* Desktop View - All Plans */}
             <div className="hidden md:col-span-3 md:grid md:grid-cols-3">
-              {[feature.free, feature.startup, feature.enterprise].map((value, i) => (
+              {[feature.free, feature.cloud, feature.enterprise].map((value, i) => (
                 <div key={i} className="flex items-center py-3">
                   {typeof value === "boolean" ? (
                     value ? (

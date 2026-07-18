@@ -9,8 +9,8 @@ import { Feature3 } from "@/components/sections/feature3";
 import Hero from "@/components/sections/hero";
 import Logos from "@/components/sections/logos";
 import { Migrate } from "@/components/sections/migrate";
+import { NoLockIn } from "@/components/sections/no-lock-in";
 import Pricing from "@/components/sections/pricing";
-import Testimonials from "@/components/sections/testimonials";
 import { SITE_TITLE, SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -44,19 +44,25 @@ const productJsonLd = {
     },
     {
       "@type": "Offer",
-      name: "Cloud",
-      price: "8",
+      name: "Thally Cloud monthly",
+      price: "60",
       priceCurrency: "USD",
       description:
-        "Managed hosting at $8 per editor per month ($60 per editor per year, billed annually). Adds Thally AI answers, Thally Track, agent-readiness CI checks, admin dashboard, and team roles.",
+        "Thally Cloud is $60 per workspace per month with three team members included. Additional active members or pending invitations are $20 per month each. Adds managed services, AI answers, Thally Track, readiness gates, documentation analytics, and team roles.",
+    },
+    {
+      "@type": "Offer",
+      name: "Thally Cloud annual",
+      price: "50",
+      priceCurrency: "USD",
+      description:
+        "$50 per workspace per month with an annual subscription, billed monthly. Three team members are included. Each additional active member or pending invitation adds $20 to the monthly bill.",
     },
     {
       "@type": "Offer",
       name: "Enterprise",
-      price: "15",
-      priceCurrency: "USD",
       description:
-        "$15 per editor per month ($120 per editor per year). SAML & SCIM SSO, audit log, 99.9% uptime SLA, self-hosted with support.",
+        "Custom annual pricing with SAML and SCIM SSO, audit-log access, custom terms, migration support, and priority support.",
     },
   ],
   featureList: [
@@ -88,7 +94,7 @@ export default function Home() {
       <Migrate />
       <Dashboard />
       <Feature1 />
-      <Testimonials />
+      <NoLockIn />
       <Pricing />
       <FAQ />
     </>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { FAQ } from "@/components/sections/faq";
+import { NoLockIn } from "@/components/sections/no-lock-in";
 import Pricing from "@/components/sections/pricing";
 import Pricing2 from "@/components/sections/pricing2";
 import { SITE_URL } from "@/lib/site";
@@ -8,7 +9,7 @@ import { SITE_URL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Thally pricing: free to self-host forever (MIT licensed), Cloud at $8 per editor/month with Thally AI and Track, Enterprise at $15 per editor/month with SSO and a 99.9% SLA.",
+    "Thally pricing: free to self-host forever, or choose Thally Cloud at $60 per month on a monthly subscription and $50 per month on an annual subscription.",
   alternates: {
     canonical: "/pricing",
   },
@@ -28,14 +29,14 @@ const pricingJsonLd = {
   operatingSystem: "Web",
   license: "https://opensource.org/license/mit",
   description:
-    "AI-native documentation platform for AI agents and humans. MIT licensed and free to self-host; Cloud and Enterprise plans are priced per editor.",
-  publisher: { "@id": `${SITE_URL}/#organization` },
+    "AI-native documentation platform for AI agents and humans. MIT licensed and free to self-host, with Thally Cloud managed services and custom Enterprise plans.",
+  brand: { "@id": `${SITE_URL}/#organization` },
   offers: {
     "@type": "AggregateOffer",
     priceCurrency: "USD",
     lowPrice: "0",
-    highPrice: "15",
-    offerCount: 3,
+    highPrice: "60",
+    offerCount: 4,
     offers: [
       {
         "@type": "Offer",
@@ -43,23 +44,29 @@ const pricingJsonLd = {
         price: "0",
         priceCurrency: "USD",
         description:
-          "Self-host everything, forever. MIT licensed, commercial use OK. Unlimited pages and readers, all four output formats, MCP server, hybrid search, docs agent with your own API key.",
+          "Host Thally yourself for free. Includes unlimited pages and readers, fast documentation search, structured content for AI assistants, and automatic draft updates using your own AI provider.",
       },
       {
         "@type": "Offer",
-        name: "Cloud",
-        price: "8",
+        name: "Thally Cloud monthly",
+        price: "60",
         priceCurrency: "USD",
         description:
-          "$8 per editor/month, or $60 per editor/year billed annually. Thally AI answers and chat, Thally Track with one-click GitHub App, agent-readiness CI checks, admin dashboard and analytics, team roles. 14-day trial.",
+          "$60 per workspace each month. Includes managed hosting, cited AI answers, automatic draft updates when product changes affect the documentation, quality checks, and analytics. 14-day trial.",
+      },
+      {
+        "@type": "Offer",
+        name: "Thally Cloud annual",
+        price: "50",
+        priceCurrency: "USD",
+        description:
+          "$50 per workspace per month with an annual subscription, billed monthly. Includes managed hosting, cited AI answers, automatic draft updates when product changes affect the documentation, quality checks, analytics, and a 14-day trial.",
       },
       {
         "@type": "Offer",
         name: "Enterprise",
-        price: "15",
-        priceCurrency: "USD",
         description:
-          "$15 per editor/month, or $120 per editor/year billed annually. SAML and SCIM SSO, audit log, 99.9% uptime SLA, self-hosted with support, dedicated account manager.",
+          "Custom annual pricing with company-wide sign-in, automatic account management, activity history, custom terms, hands-on migration, and priority support.",
       },
     ],
   },
@@ -70,6 +77,7 @@ export default function Page() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingJsonLd) }} />
       <Pricing headerTag="h1" />
+      <NoLockIn />
       <Pricing2 />
       <FAQ />
     </>

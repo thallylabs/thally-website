@@ -8,6 +8,6 @@ export const alt = "Thally pricing";
 export default function Image() {
   return renderOgImage({
     title: "Free to self-host, simple to scale.",
-    pills: ["Free $0", "Cloud $8/editor", "Enterprise $15/editor"],
+    pills: ["Free $0", "Cloud from $50/workspace", "Enterprise custom"],
   });
 }

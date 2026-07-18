@@ -1,9 +1,10 @@
-import { Github, Twitter } from "lucide-react";
+import { Github } from "lucide-react";
 import Link from "next/link";
 
 import { Logo } from "@/components/layout/logo";
 import { SectionGrid } from "@/components/section-decor";
 import { Button } from "@/components/ui/button";
+import { DESTINATIONS, LEGAL_ENTITY_NAME, SOCIAL } from "@/lib/site";
 
 const navigation = [
   {
@@ -26,6 +27,7 @@ const navigation = [
   {
     title: "Support",
     links: [
+      { name: "Documentation", href: DESTINATIONS.docs },
       { name: "FAQ", href: "/faq" },
       { name: "Contact", href: "/contact" },
     ],
@@ -39,10 +41,7 @@ const navigation = [
   },
 ];
 
-const socialLinks = [
-  { icon: Github, href: "https://github.com/kenny-io/thally", label: "GitHub" },
-  { icon: Twitter, href: "https://x.com/thallydocs", label: "X" },
-];
+const socialLinks = [{ icon: Github, href: SOCIAL.github, label: "GitHub" }];
 
 export const Footer = () => {
   return (
@@ -63,7 +62,7 @@ export const Footer = () => {
             </h2>
           </div>
           <Button asChild variant="secondary" size="lg">
-            <Link href="/signup">Start free</Link>
+            <Link href={DESTINATIONS.signup}>Start free</Link>
           </Button>
         </div>
 
@@ -89,7 +88,7 @@ export const Footer = () => {
 
         <div className="flex flex-wrap items-center justify-between gap-4 py-8">
           <p className="text-primary-foreground/60 dark:text-muted-foreground text-sm">
-            © Thally - All rights reserved.
+            © {LEGAL_ENTITY_NAME}. Thally is a Fairspleet product. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             {socialLinks.map((link) => (

@@ -4,7 +4,7 @@ import { TermsContent } from "./terms-content";
 
 export const metadata: Metadata = {
   title: "Terms of service",
-  description: "The terms that govern your use of Thally Cloud and the MIT-licensed self-hosted platform.",
+  description: "The terms that govern Thally Cloud and other hosted Thally services.",
   alternates: {
     canonical: "/terms",
   },
