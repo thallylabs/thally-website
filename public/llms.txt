@@ -26,6 +26,11 @@
 - [Contact](/contact): sales and support
 - [Sign up](https://app.thally.io/register): start free
 - [Documentation](https://docs.thally.io): quickstarts, guides, and product reference
+- [Thally Editorial Team](/authors/thally-team): author identity and review responsibilities
+- [Editorial policy](/editorial-policy): sourcing, review, AI-assistance, and corrections policy
+- [Agent-readiness methodology](/agent-readiness-methodology): deterministic checks and limitations
+- [Expanded agent corpus](/llms-full.txt): first-party articles and canonical pricing in one text file
+- [Methodology manifest](/agent-readiness.json): machine-readable conformance categories and evidence
 
 ## Blog highlights
 
@@ -41,3 +46,10 @@
 - Thally Cloud: $60/workspace/month on a monthly subscription, or $50/workspace/month on an annual subscription. Both are billed monthly and include a 14-day trial plus 3 team members in any role. Each additional active member or pending invitation adds $20 to the monthly bill. Includes Thally AI answers and chat, Thally Track with one-click GitHub App, agent-readiness CI checks, admin dashboard, analytics, and team roles.
 - Enterprise: Custom annual pricing. Adds SAML and SCIM SSO, audit-log access, custom terms, migration support, and priority support.
 - Machine-readable pricing: [/pricing.md](/pricing.md)
+
+## Trust and reuse
+
+- Canonical HTML pages remain the source of truth. Alternate formats should preserve the same substantive claims.
+- Editorial content is maintained by the Thally Editorial Team and follows the published editorial policy.
+- The agent-readiness score measures technical conformance. It does not guarantee ranking or citation.
+- Quote or summarize with a link to the canonical page and preserve the page's stated publication and update dates.

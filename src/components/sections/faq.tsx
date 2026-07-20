@@ -2,7 +2,7 @@ import { SectionGrid, SectionHeader } from "@/components/section-decor";
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 
-const leftQuestions = [
+const homeQuestions = [
   {
     question: "What is Thally?",
     answer:
@@ -24,19 +24,6 @@ const leftQuestions = [
       "Connect your product repository and Thally watches for changes that affect your documentation. When a pull request merges, Thally drafts the relevant documentation updates for your team to review. It never publishes changes without your approval.",
   },
   {
-    question: "Can Thally write docs for me?",
-    answer:
-      "Yes. Give Thally an instruction or connect it to a product change. It drafts a focused documentation update in your team’s style and sends it for review. Thally never publishes the change without your approval.",
-  },
-  {
-    question: "Is there a free plan?",
-    answer:
-      "Thally is MIT licensed and free to self-host forever, including for commercial use. Paid plans add managed hosting, cited AI answers, automatic draft updates when your product changes, and shared workspace features.",
-  },
-];
-
-const rightQuestions = [
-  {
     question: "How does Thally check documentation quality?",
     answer:
       "Every build receives a 0 to 100 quality score. Thally checks whether people and AI tools can find, read, and understand each page, then shows you what needs attention. You can prevent lower-quality changes from publishing and ask Thally to draft the fixes.",
@@ -46,44 +33,59 @@ const rightQuestions = [
     answer:
       "Every Thally site automatically publishes versions of your documentation that AI assistants can read reliably. Assistants can search your docs, open pages, and follow your navigation without scraping the visual website.",
   },
+];
+
+const pricingQuestions = [
   {
-    question: "How does the AI chat avoid hallucinating?",
+    question: "Is there a free plan?",
     answer:
-      "The AI answers only from your published documentation and links to the exact source pages. If your docs do not contain an answer, it says so instead of guessing.",
+      "Yes. Thally is MIT licensed and free to self-host forever, including commercial use, with unlimited documentation pages and readers.",
   },
   {
-    question: "Where can I deploy Thally?",
+    question: "How much does Thally Cloud cost?",
     answer:
-      "Deploy with Vercel, Netlify, Cloudflare, Docker, or as a static website. You can also use Thally Cloud. In every case, your documentation remains in a repository you own.",
+      "Thally Cloud costs $60 per workspace each month, or $50 per workspace each month on an annual subscription billed monthly. Both options include three team members and a 14-day trial.",
   },
   {
-    question: "What's in the admin dashboard?",
+    question: "Are documentation readers billed?",
     answer:
-      "The dashboard shows reader analytics, branding controls, documentation quality checks, and draft updates waiting for review. Cloud teams also get secure sign-in and workspace permissions for owners, editors, and viewers.",
+      "No. Public documentation readers are free and unlimited on every plan. Thally Cloud pricing applies to the workspace and its active team members, not the people reading your docs.",
   },
   {
-    question: "Does Thally support multiple languages?",
+    question: "Can I use my own hosting?",
     answer:
-      "Yes. One command translates your site while preserving code samples, components, and URLs. Each language gets pages that search engines can find, a built-in language switcher, and sensible fallbacks when a translation is missing.",
+      "Yes. Deploy the open-source engine to Vercel, Netlify, Cloudflare, Docker, or another compatible host. Thally Cloud can also manage hosting without taking ownership of your repository or domain.",
+  },
+  {
+    question: "What happens if I cancel Thally Cloud?",
+    answer:
+      "Your documentation repository and published site remain yours. Paid services stop at the end of the billing period, while the free self-hosted engine continues to build and serve your documentation.",
+  },
+  {
+    question: "What is included with Enterprise?",
+    answer:
+      "Enterprise adds SAML and SCIM single sign-on, audit-log access, custom terms, hands-on migration support, priority support, and a dedicated account manager under a custom annual contract.",
   },
 ];
 
-const allQuestions = [...leftQuestions, ...rightQuestions];
+export const FAQ = ({ context = "home" }: { context?: "home" | "pricing" }) => {
+  const questions = context === "pricing" ? pricingQuestions : homeQuestions;
+  const midpoint = Math.ceil(questions.length / 2);
+  const leftQuestions = questions.slice(0, midpoint);
+  const rightQuestions = questions.slice(midpoint);
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: questions.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
+  };
 
-const faqJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: allQuestions.map((item) => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.answer,
-    },
-  })),
-};
-
-export const FAQ = () => {
   return (
     <section className="relative pb-16 md:pb-28 lg:pb-32">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
@@ -91,7 +93,11 @@ export const FAQ = () => {
       <div className="relative container mx-auto lg:max-w-5xl">
         <SectionHeader
           title="Frequently asked questions"
-          description="Quick answers about migration, automation, agents, self-hosting, and how Thally fits your stack."
+          description={
+            context === "pricing"
+              ? "Clear answers about plans, billing, hosting, cancellation, and Enterprise support."
+              : "Quick answers about migration, automation, agents, self-hosting, and how Thally fits your stack."
+          }
           align="center"
           layout="stack"
           className="mx-auto"

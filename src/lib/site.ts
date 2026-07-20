@@ -14,7 +14,7 @@ export const SITE_TAGLINE = "AI-Native Documentation for Agents and Humans";
 export const SITE_TITLE = `${SITE_NAME} | ${SITE_TAGLINE}`;
 
 export const SITE_DESCRIPTION =
-  "Thally is the AI-native documentation platform for AI agents and humans. One MDX source ships JSON, JSON-LD, Markdown, and HTML from the same URL, exposes a remote MCP server on every site, and drafts reviewed docs PRs when your product changes. Migrate from Mintlify, Docusaurus, or GitBook in one command. Open source, MIT.";
+  "Thally is the open-source, AI-native documentation platform. Publish HTML, Markdown, JSON, JSON-LD, and MCP tools from one MDX source.";
 
 export const OG_DESCRIPTION =
   "One source for AI agents and humans. Agents get JSON, JSON-LD, and Markdown. People get HTML at the same URL. When your product ships, Thally drafts the docs PR.";
@@ -32,3 +32,7 @@ export const DESTINATIONS = {
 export const SOCIAL = {
   github: "https://github.com/thallylabs/thally",
 };
+
+export const EDITORIAL_TEAM_NAME = "Thally Editorial Team";
+
+export const EDITORIAL_TEAM_URL = `${SITE_URL}/authors/thally-team`;

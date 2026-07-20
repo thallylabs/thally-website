@@ -7,7 +7,7 @@ import type { ReactNode } from "react";
 import { BlogCard, CategoryChip, PostMeta } from "@/components/blog/blog-card";
 import { SectionGrid, SectionLines } from "@/components/section-decor";
 import { Button } from "@/components/ui/button";
-import { type BlogPost, relatedPosts } from "@/lib/blog";
+import { type BlogPost, formatPostDate, relatedPosts } from "@/lib/blog";
 import { DESTINATIONS } from "@/lib/site";
 
 export function PostShell({ post, children }: { post: BlogPost; children: ReactNode }) {
@@ -27,6 +27,13 @@ export function PostShell({ post, children }: { post: BlogPost; children: ReactN
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
         >
           <header>
+            <nav aria-label="Breadcrumb" className="text-muted-foreground mb-5 flex items-center gap-2 text-sm">
+              <Link className="hover:text-foreground transition-colors" href="/blog">
+                Blog
+              </Link>
+              <span aria-hidden>/</span>
+              <span aria-current="page">{post.cardTitle}</span>
+            </nav>
             <div className="flex items-center gap-3">
               <CategoryChip post={post} />
               <PostMeta post={post} />
@@ -37,10 +44,33 @@ export function PostShell({ post, children }: { post: BlogPost; children: ReactN
             <p className="text-muted-foreground mt-5 text-lg leading-relaxed text-pretty md:text-xl">
               {post.description}
             </p>
-            <p className="text-muted-foreground border-border mt-6 border-b pb-6 text-sm">By the Thally team</p>
+            <div className="text-muted-foreground border-border mt-6 flex flex-wrap gap-x-3 gap-y-1 border-b pb-6 text-sm">
+              <span>
+                By{" "}
+                <Link className="text-foreground underline underline-offset-4" href="/authors/thally-team" rel="author">
+                  Thally Editorial Team
+                </Link>
+              </span>
+              <span>
+                Published <time dateTime={post.date}>{formatPostDate(post.date)}</time>
+              </span>
+              <span>
+                Updated <time dateTime={post.updated}>{formatPostDate(post.updated)}</time>
+              </span>
+              {post.verified && (
+                <span>
+                  Sources verified <time dateTime={post.verified}>{formatPostDate(post.verified)}</time>
+                </span>
+              )}
+            </div>
           </header>
 
           <div className="prose prose-lg dark:prose-invert mt-10 max-w-none">{children}</div>
+
+          <p className="text-muted-foreground mt-8 text-sm">
+            Published under the <Link href="/editorial-policy">Thally editorial policy</Link>. Technical conformance is
+            defined in the <Link href="/agent-readiness-methodology">agent-readiness methodology</Link>.
+          </p>
 
           {post.faq && post.faq.length > 0 && (
             <div className="mt-14">

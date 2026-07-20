@@ -1,9 +1,9 @@
 "use client";
 
-import { ArrowUpRight } from "@/components/icons";
 import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 
+import { ArrowUpRight } from "@/components/icons";
 import { type BlogPost, formatPostDate } from "@/lib/blog";
 
 export function CategoryChip({ post }: { post: BlogPost }) {
@@ -23,7 +23,7 @@ export function CategoryChip({ post }: { post: BlogPost }) {
 export function PostMeta({ post }: { post: BlogPost }) {
   return (
     <p className="text-muted-foreground text-xs">
-      <time dateTime={post.date}>{formatPostDate(post.date)}</time> · {post.readingTime} min read
+      Updated <time dateTime={post.updated}>{formatPostDate(post.updated)}</time> · {post.readingTime} min read
     </p>
   );
 }

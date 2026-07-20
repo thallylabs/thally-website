@@ -5,9 +5,9 @@ import { blogPosts } from "@/lib/blog";
 import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "AI Documentation Guides and Comparisons",
   description:
-    "Comparisons, guides, and product deep dives from Thally: AI-native documentation, agent-ready docs, and how Thally stacks up against Mintlify, GitBook, and Docusaurus.",
+    "Evidence-led guides and comparisons about AI-native documentation, agent-readable docs, MCP, llms.txt, migration, and docs automation.",
   alternates: {
     canonical: "/blog",
     types: {
@@ -31,8 +31,9 @@ const blogJsonLd = {
     headline: post.title,
     description: post.description,
     datePublished: post.date,
+    dateModified: post.updated,
     url: `${SITE_URL}/blog/${post.slug}`,
-    author: { "@id": `${SITE_URL}/#organization` },
+    author: { "@id": `${SITE_URL}/authors/thally-team#team` },
   })),
 };
 

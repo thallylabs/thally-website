@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "name": "Thally agent-readiness methodology",
+  "version": "1.0",
+  "lastReviewed": "2026-07-19",
+  "canonical": "https://thally.io/agent-readiness-methodology",
+  "maintainer": {
+    "name": "Thally Editorial Team",
+    "url": "https://thally.io/authors/thally-team",
+    "email": "team@thally.io"
+  },
+  "purpose": "Evaluate whether documentation provides the technical conditions for AI discovery, retrieval, interpretation, and citation.",
+  "guarantee": false,
+  "limitations": "Conformance does not guarantee ranking, answer inclusion, or citation by any search or AI system.",
+  "categories": ["discovery", "identity", "structure", "retrieval", "trust", "parity"],
+  "releaseChecks": [
+    "production-origin-safety",
+    "canonical-presence",
+    "single-descriptive-h1",
+    "metadata-presence",
+    "json-ld-validity",
+    "discovery-file-presence",
+    "machine-readable-pricing",
+    "copy-character-policy"
+  ],
+  "evidence": {
+    "llms": "https://thally.io/llms.txt",
+    "llmsFull": "https://thally.io/llms-full.txt",
+    "sitemap": "https://thally.io/sitemap.xml",
+    "robots": "https://thally.io/robots.txt",
+    "pricing": "https://thally.io/pricing.md",
+    "editorialPolicy": "https://thally.io/editorial-policy"
+  }
+}

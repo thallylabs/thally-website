@@ -34,6 +34,7 @@ const productJsonLd = {
   description:
     "Thally is the AI-native documentation platform for AI agents and humans. One MDX source serves structured JSON, JSON-LD, and Markdown to AI agents and polished HTML to readers, from the same URL. A docs agent turns product changes, GitHub mentions, and readiness findings into reviewed documentation pull requests. Migrate from Mintlify, Docusaurus, or GitBook in one command and deploy anywhere.",
   publisher: { "@id": `${SITE_URL}/#organization` },
+  mainEntityOfPage: SITE_URL,
   offers: [
     {
       "@type": "Offer",
@@ -57,12 +58,6 @@ const productJsonLd = {
       priceCurrency: "USD",
       description:
         "$50 per workspace per month with an annual subscription, billed monthly. Three team members are included. Each additional active member or pending invitation adds $20 to the monthly bill.",
-    },
-    {
-      "@type": "Offer",
-      name: "Enterprise",
-      description:
-        "Custom annual pricing with SAML and SCIM SSO, audit-log access, custom terms, migration support, and priority support.",
     },
   ],
   featureList: [
@@ -96,7 +91,7 @@ export default function Home() {
       <Feature1 />
       <NoLockIn />
       <Pricing />
-      <FAQ />
+      <FAQ context="home" />
     </>
   );
 }

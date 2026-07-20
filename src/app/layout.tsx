@@ -90,14 +90,22 @@ export const metadata: Metadata = {
     title: SITE_TITLE,
     description: OG_DESCRIPTION,
   },
+  verification: {
+    ...(process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : {}),
+    other: {
+      ...(process.env.BING_SITE_VERIFICATION
+        ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION }
+        : {}),
+    },
+  },
 };
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "@id": `${SITE_URL}/#organization`,
-  name: LEGAL_ENTITY_NAME,
-  alternateName: SITE_NAME,
+  name: SITE_NAME,
+  alternateName: LEGAL_ENTITY_NAME,
   legalName: LEGAL_ENTITY_NAME,
   url: SITE_URL,
   description: SITE_DESCRIPTION,
@@ -114,6 +122,12 @@ const organizationJsonLd = {
     height: 512,
   },
   sameAs: [SOCIAL.github],
+  contactPoint: {
+    "@type": "ContactPoint",
+    email: "team@thally.io",
+    contactType: "sales and support",
+    availableLanguage: ["English"],
+  },
 };
 
 const websiteJsonLd = {

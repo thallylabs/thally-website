@@ -1,10 +1,9 @@
 "use client";
 
 import { Check, Command, Sparkles } from "lucide-react";
-
-import { ArrowRight, Docs as FileText, Json as Braces, Search } from "@/components/icons";
 import { motion, useReducedMotion } from "motion/react";
 
+import { ArrowRight, Docs as FileText, Json as Braces, Search } from "@/components/icons";
 import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ */

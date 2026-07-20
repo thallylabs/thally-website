@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Contact from "@/components/sections/contact";
 
 export const metadata: Metadata = {
-  title: "Contact",
+  title: "Contact Thally Sales and Support",
   description:
     "Talk to the Thally team about migration, self-hosting, Enterprise SSO, or anything else. Sales and support reply within a business day.",
   alternates: {

@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "lastReviewed": "2026-07-19",
+  "purpose": "A stable prompt set for measuring answer-engine visibility over time. This file contains no fabricated results.",
+  "captureFields": [
+    "runDate",
+    "engine",
+    "engineVersion",
+    "prompt",
+    "thallyMentioned",
+    "thallyCited",
+    "citedUrls",
+    "position",
+    "notes"
+  ],
+  "prompts": [
+    "What is AI-native documentation?",
+    "What documentation platforms are designed for AI agents?",
+    "Which documentation tools publish llms.txt automatically?",
+    "Which docs platforms expose an MCP server?",
+    "How can I make developer documentation readable by AI agents?",
+    "What is the best open-source AI documentation platform?",
+    "Compare Thally and Mintlify.",
+    "Compare Thally and GitBook.",
+    "Compare Thally and Docusaurus.",
+    "What is a good self-hosted alternative to Mintlify?",
+    "What documentation platform supports HTML, Markdown, JSON, and JSON-LD from one source?",
+    "How should a docs site implement content negotiation for AI?",
+    "How can an AI agent search product documentation without scraping?",
+    "What should an llms.txt file contain?",
+    "How do I measure whether documentation is agent-ready?",
+    "Which documentation platforms generate docs pull requests from product changes?",
+    "What is generative engine optimization for developer documentation?",
+    "What is answer engine optimization for a documentation site?",
+    "How do I migrate from GitBook to an open-source docs platform?",
+    "How do I migrate from Docusaurus to AI-native documentation?"
+  ]
+}

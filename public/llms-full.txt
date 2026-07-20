@@ -1,0 +1,543 @@
+# Thally full agent corpus
+
+> Expanded first-party content for retrieval and citation. Canonical HTML pages remain the source of truth.
+
+Generated from the same repository as thally.io. Last generated: 2026-07-19.
+# Thally
+
+> Thally is the AI-native documentation platform for AI agents and humans. One MDX source serves structured JSON, JSON-LD, and Markdown to AI agents and polished HTML to human readers from the same URL. A built-in docs agent turns product changes, GitHub mentions, and readiness findings into documentation pull requests for human review. The engine is open source under the MIT license, and your content stays in Git.
+
+## What Thally does
+
+- AI-native output: every docs page supports content negotiation (?format=json, ?format=md, Accept headers). Agents get structured data; humans get the same pre-rendered UI.
+- Remote MCP server: every deployed docs site exposes /api/mcp. Attach it to any agent and the docs become native tools (search_docs, read_page, list_pages, agent_readiness). No key, no account.
+- Agent-readiness score: a deterministic 0-100 grade per build covering structured data, metadata, discovery files, machine readability, and OpenAPI coverage. Gate CI on a threshold, then ask the agent to draft fixes for low-scoring pages.
+- Docs agent: turn an instruction, a diff, or a product PR into a reviewed docs pull request. Comment "@thally document this" on any GitHub issue or PR to trigger it. The agent never merges; a human always does.
+- Thally Track: register product repos and merged PRs there become reviewed documentation PRs automatically. A docs-preview label drafts docs before the feature merges.
+- Provenance and drift: machine-legible lastUpdated / lastVerified dates, plus deterministic drift detection against the source code each page documents.
+- Authoring: MDX with 25+ components, OpenAPI-generated API reference with an interactive Try-It console, hybrid full-text + vector search, retrieval-grounded AI chat with inline citations.
+- Multi-language: one command translates the whole site; locale URLs, hreflang, and graceful fallbacks.
+- Admin dashboard: first-party analytics, live theming with no rebuild, Owner/Editor/Viewer roles from a git-committed roster, and a queue of agent-drafted docs PRs.
+- Migration: one command moves docs from Mintlify, Docusaurus, GitBook, Nextra, VitePress, Starlight, or plain Markdown. Components, navigation, redirects, and OpenAPI specs are converted automatically.
+- Deployment: Vercel, Netlify, Cloudflare, Docker, or static export. The docs are a Next.js repo you own.
+
+## Pages
+
+- [Home](/): product overview, features, pricing, FAQ
+- [Pricing](/pricing): Free (self-host, MIT), Cloud (workspace platform fee), Enterprise (SSO, SLA)
+- [Blog](/blog): comparisons, guides, and product deep dives (RSS at /rss.xml)
+- [About](/about): team and mission
+- [FAQ](/faq): common questions on migration, automation, agents, self-hosting
+- [Contact](/contact): sales and support
+- [Sign up](https://app.thally.io/register): start free
+- [Documentation](https://docs.thally.io): quickstarts, guides, and product reference
+- [Thally Editorial Team](/authors/thally-team): author identity and review responsibilities
+- [Editorial policy](/editorial-policy): sourcing, review, AI-assistance, and corrections policy
+- [Agent-readiness methodology](/agent-readiness-methodology): deterministic checks and limitations
+- [Expanded agent corpus](/llms-full.txt): first-party articles and canonical pricing in one text file
+- [Methodology manifest](/agent-readiness.json): machine-readable conformance categories and evidence
+
+## Blog highlights
+
+- [Thally vs Mintlify](/blog/thally-vs-mintlify): ownership, self-hosting, and machine readability compared
+- [Thally vs GitBook](/blog/thally-vs-gitbook): docs-as-code versus a hosted wiki
+- [Thally vs Docusaurus](/blog/thally-vs-docusaurus): two open-source paths to developer docs
+- [What is AI-native documentation?](/blog/what-is-ai-native-documentation): a definition, with checks
+- [Making docs agent-readable](/blog/agent-ready-docs-llms-txt-mcp): llms.txt, MCP, and content negotiation, step by step
+
+## Pricing summary
+
+- Free: $0. Self-host forever. MIT licensed, commercial use OK. Unlimited pages and readers, all output formats, MCP server, hybrid search, docs agent with your own API key.
+- Thally Cloud: $60/workspace/month on a monthly subscription, or $50/workspace/month on an annual subscription. Both are billed monthly and include a 14-day trial plus 3 team members in any role. Each additional active member or pending invitation adds $20 to the monthly bill. Includes Thally AI answers and chat, Thally Track with one-click GitHub App, agent-readiness CI checks, admin dashboard, analytics, and team roles.
+- Enterprise: Custom annual pricing. Adds SAML and SCIM SSO, audit-log access, custom terms, migration support, and priority support.
+- Machine-readable pricing: [/pricing.md](/pricing.md)
+
+## Trust and reuse
+
+- Canonical HTML pages remain the source of truth. Alternate formats should preserve the same substantive claims.
+- Editorial content is maintained by the Thally Editorial Team and follows the published editorial policy.
+- The agent-readiness score measures technical conformance. It does not guarantee ranking or citation.
+- Quote or summarize with a link to the canonical page and preserve the page's stated publication and update dates.
+
+
+---
+
+# Canonical pricing
+
+# Pricing: Thally
+
+Thally is the AI-native documentation platform for AI agents and humans. All prices in USD. Last updated: 2026-07-19.
+
+## Free
+
+- Price: $0
+- License: MIT. Self-host forever, with commercial use included.
+- Limits: unlimited pages, unlimited readers
+- Features: all four output formats (HTML, JSON, JSON-LD, Markdown) from one URL, remote MCP server, ⌘K hybrid search, docs agent with your own API key
+- Best for: teams who want to own their docs infrastructure
+
+## Thally Cloud
+
+- Monthly platform fee: $60 per workspace / month
+- Annual subscription fee: $50 per workspace / month, billed monthly
+- Includes 3 team members in any role
+- Additional active members or pending invitations: $20 / month each after the 3 included members
+- Trial: 14 days, no credit card required
+- Everything in Free, plus: Thally AI answers & chat, Thally Track with one-click GitHub App, agent-readiness CI checks, admin dashboard & docs analytics, Owner/Editor/Viewer roles
+- Best for: growing teams who want managed hosting and docs automation
+
+## Enterprise
+
+- Price: Custom annual contract
+- Everything in Thally Cloud, plus: SAML & SCIM SSO, audit log, 99.9% uptime SLA, self-hosted with support, dedicated account manager, custom onboarding
+- Contact: /contact
+- Best for: regulated and large organizations
+
+## Notes for agents
+
+- Public readers are free and unlimited on every plan. Thally Cloud includes three workspace team members in any role. Each additional active member or pending invitation adds $20 to the monthly bill.
+- Plan changes apply immediately on upgrade, at period end on downgrade.
+- Full pricing page: /pricing
+
+
+---
+
+# Article: Thally vs Mintlify
+
+Canonical URL: https://thally.io/blog/thally-vs-mintlify
+
+**The short answer:** choose Thally if you want to own your docs infrastructure and serve AI agents natively; choose Mintlify if you want a fully managed, hosted platform and never want to think about deployment. Both render polished MDX documentation. The differences are ownership, machine readability, and what happens when your product changes.
+
+## What both platforms do well
+
+Mintlify and Thally solve the same surface problem: beautiful developer documentation written in MDX, with API references generated from OpenAPI specs, full-text search, and AI chat over your content. If your only requirement is "good-looking docs, fast," either will get you there.
+
+The comparison gets interesting one level down.
+
+## The comparison at a glance
+
+| | Thally | Mintlify |
+| --- | --- | --- |
+| Source model | Docs-as-code, a Next.js repo you own | Docs-as-code on a hosted platform |
+| License | MIT, open source | Proprietary platform |
+| Self-hosting | Yes, free forever | No, platform is hosted |
+| Machine output | JSON, JSON-LD, Markdown, and HTML from the same URL | HTML-first; AI features via the hosted platform |
+| MCP server | Built into every deploy at `/api/mcp` | Available through the hosted platform |
+| llms.txt | Generated on every build | Supported |
+| Docs automation | Docs agent opens reviewed PRs from product changes | AI-assisted writing in the editor |
+| Pricing model | Free self-hosted; Thally Cloud from $50 per workspace/month on an annual subscription with 3 team members | Tiered hosted plans; see their pricing page |
+| Portability | Content, renderer, and static export remain yours | Content is portable; the hosted platform is vendor-operated |
+
+Mintlify moves quickly and its capabilities evolve; treat their current documentation as the source of truth for their side of this table.
+
+## Ownership: a repo versus a platform
+
+A Thally site is a Next.js repository. You can read every line that serves your docs, deploy it to Vercel, Netlify, Cloudflare, Docker, or a static bucket, and leave whenever you want with a working site in hand. The engine is MIT licensed, so self-hosting is free forever, commercial use included.
+
+Mintlify hosts and maintains the platform for you. That removes infrastructure and upgrade work from your team. The tradeoff is that the vendor controls the rendering pipeline, hosting, and roadmap. Your content remains portable, but the hosted product does not move with it.
+
+Which tradeoff is right depends on your team. Choose the repository when control and deployment flexibility matter most. Choose the hosted platform when reducing infrastructure ownership matters more.
+
+## Machine readability
+
+This is the axis where the two products differ most. Every page a Thally site publishes is available in four formats from the same URL: rendered HTML for people, and JSON, JSON-LD, or Markdown for machines, selected by an `Accept` header or a `?format=` parameter. There is no scraping step. An agent asks for structure and receives structure.
+
+On top of that, every deploy ships:
+
+- an **MCP server** at `/api/mcp`, so agents can call `search_docs`, `read_page`, and `list_pages` as native tools
+- **llms.txt** and per-page agent manifests for discovery
+- an **agent-readiness score**, a deterministic 0 to 100 grade you can gate CI on
+
+Mintlify has been adding AI capabilities to its hosted platform as well, including assistant features and agent-facing improvements. The structural difference is that Thally's machine layer is part of the open-source engine itself, so it works identically on a self-hosted deploy behind your firewall.
+
+## When the product changes
+
+Documentation starts drifting when the product changes. The two platforms address that problem differently.
+
+Thally treats drift as a first-class problem. Mention `@thally document this` on any GitHub issue or PR and the docs agent drafts a documentation pull request. Connect a repo with Thally Track and merged product PRs become reviewed docs PRs automatically. The weekly drift sweep flags pages whose source code changed since they were last verified. Nothing merges without a human.
+
+Mintlify's AI helps you write and edit within the platform. It is a strong authoring assistant; it is not a pipeline from your product repo to a reviewed docs PR.
+
+## Pricing
+
+Thally is free to self-host with unlimited pages and readers. Thally Cloud is $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include three team members. Each additional active member or pending invitation adds $20 to the monthly bill. Thally Cloud adds managed services, Thally AI answers, Track, readiness gates, and the admin dashboard. Enterprise pricing is custom and adds SSO, audit-log access, custom terms, and priority support. Readers are never billed. Full details are on the [pricing page](/pricing) and in the machine-readable [pricing.md](/pricing.md).
+
+Mintlify prices its hosted tiers separately; their pricing page is the source of truth.
+
+## Which should you choose?
+
+**Choose Thally if:**
+
+- you want AI agents to read your docs natively, without scraping
+- self-hosting, MIT licensing, or data residency matters to you
+- you want product changes to become reviewed docs PRs automatically
+- you want to gate CI on documentation quality
+
+**Choose Mintlify if:**
+
+- you want a fully managed platform with no infrastructure at all
+- your team prefers a vendor-operated editor and support relationship
+- self-hosting is a non-goal
+
+## Migrating takes one command
+
+If you decide to switch, the migrator does the heavy lifting:
+
+```bash
+npx create-thally migrate github.com/acme/docs
+```
+
+It detects the source platform, converts every page to clean MDX, rebuilds navigation, carries redirects, and wires up your OpenAPI spec. You get a running local preview before you change a single DNS record. [Start free](https://app.thally.io/register) or read more in the [FAQ](/faq).
+
+## Sources and verification
+
+Mintlify capabilities were checked against its [AI-native documentation](https://www.mintlify.com/docs/ai-native) and [official documentation](https://www.mintlify.com/docs). Thally capabilities and prices were checked against the current product repository, [documentation](https://docs.thally.io), and [machine-readable pricing](/pricing.md). Sources were last verified July 19, 2026. Read our [editorial policy](/editorial-policy) for the comparison process.
+
+---
+
+# Article: Thally vs GitBook
+
+Canonical URL: https://thally.io/blog/thally-vs-gitbook
+
+**The short answer:** GitBook is a hosted knowledge base with a polished WYSIWYG editor, ideal when most authors are not developers. Thally is a docs-as-code platform that serves structured output to AI agents and ships a docs automation pipeline. If your docs live next to your code and your readers include machines, Thally is the better fit. If your priority is a friendly editor for a mixed team, GitBook is a fine choice.
+
+## Two different center-of-gravity decisions
+
+Every documentation tool optimizes for someone. GitBook optimizes for the writer in the browser: block-based editing, comments, change requests, and a git sync feature for teams that want both worlds. Thally optimizes for the repository and the reader, human or machine: MDX in git, pull-request review, and every page published as data as well as HTML.
+
+Neither is wrong. They are different bets about where documentation should live.
+
+## The comparison at a glance
+
+| | Thally | GitBook |
+| --- | --- | --- |
+| Authoring model | MDX in a git repo, PR review | WYSIWYG editor, optional git sync |
+| License | MIT, open source | Proprietary |
+| Self-hosting | Yes, free | No |
+| Machine output | JSON, JSON-LD, Markdown, HTML per page | HTML-first |
+| MCP server | Every deploy, `/api/mcp` | Not a core feature; check current docs |
+| API reference | Generated from OpenAPI with Try-It console | OpenAPI support on the platform |
+| Docs automation | Agent drafts reviewed PRs from product changes | AI assistant features in the editor |
+| Best for | Developer docs, agent traffic, self-hosters | Internal wikis, mixed technical teams |
+
+GitBook ships new features regularly; their documentation is the source of truth for current capabilities.
+
+## Authoring: who writes your docs?
+
+If your writers are engineers, docs-as-code wins on friction: the docs PR rides along with the code PR, review happens in one place, and CI can block a release when documentation is missing. Thally leans into this fully. Even the admin dashboard writes through git, so every edit is a reviewed pull request with an audit trail.
+
+If your writers are support, product, or marketing people who do not want to see git, GitBook's editor is genuinely excellent, and its change-request workflow gives non-developers a review process that feels like suggestions in a document rather than a diff.
+
+The honest question is: who writes, and who reviews? Answer that and this section decides itself.
+
+## Machine readers change the calculus
+
+AI agents now read documentation to answer developer questions, compare products, and build integrations. Those readers do not render your CSS. Serving them structured content is a core Thally design goal:
+
+- every page returns **JSON, JSON-LD, or Markdown** on request, from the same URL as the HTML
+- **llms.txt** and per-page manifests ship on every build
+- the built-in **MCP server** turns your docs into callable tools for any agent
+- the **agent-readiness score** grades every build from 0 to 100, and CI can enforce a floor
+
+GitBook publishes clean HTML and continues to add AI features to its platform. If agent traffic is a first-class audience, the practical difference is whether structured output ships by default or whether agents begin with rendered HTML.
+
+## Ownership and cost
+
+Thally is MIT licensed. Self-hosting is free forever with unlimited pages and readers; you deploy a Next.js repo you own to any host. Thally Cloud is $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include three team members. Each additional active member or pending invitation adds $20 to the monthly bill. Thally Cloud adds managed services, Thally AI, Track, and the dashboard. Enterprise pricing is custom and adds SSO, audit-log access, custom terms, and priority support. Details are on the [pricing page](/pricing).
+
+GitBook is a hosted product with per-user pricing, so check its pricing page for current tiers. The main structural difference is ownership: GitBook operates the platform, while a Thally site remains a repository you can deploy yourself.
+
+## Which should you choose?
+
+**Choose Thally if:**
+
+- documentation belongs in git next to the code it documents
+- AI agents are part of your audience today or will be soon
+- you want reviewed docs PRs generated from product changes
+- you need self-hosting or an open-source license
+
+**Choose GitBook if:**
+
+- most of your authors will never open a terminal
+- you want a hosted editor with built-in review workflows
+- your docs are primarily an internal knowledge base
+
+## Switching is not a rewrite
+
+The migrator imports GitBook content, converts pages to MDX, and rebuilds your navigation:
+
+```bash
+npx create-thally migrate <your-docs-source>
+```
+
+You review the converted site locally before switching DNS. [Start free](https://app.thally.io/register), or ask us anything via the [contact page](/contact).
+
+## Sources and verification
+
+GitBook capabilities were checked against its [AI documentation overview](https://gitbook.com/docs/getting-started/ai-documentation) and [official documentation](https://gitbook.com/docs). Thally capabilities and prices were checked against the current product repository, [documentation](https://docs.thally.io), and [machine-readable pricing](/pricing.md). Sources were last verified July 19, 2026. Read our [editorial policy](/editorial-policy) for the comparison process.
+
+---
+
+# Article: Thally vs Docusaurus
+
+Canonical URL: https://thally.io/blog/thally-vs-docusaurus
+
+**The short answer:** both are MIT-licensed and free to self-host. Docusaurus is a mature React static-site framework you assemble yourself; Thally is a complete documentation platform with the AI layer built in: structured per-page output, an MCP server, hybrid search, and a docs agent that opens reviewed PRs. If you enjoy assembling your stack, Docusaurus is a great kit. If you want agent-ready docs out of the box, Thally saves you the assembly.
+
+## Two open-source philosophies
+
+Docusaurus, maintained by Meta, is a widely adopted docs framework. It gives you a React site generator with versioning, i18n, MDX, and a broad plugin ecosystem. What you build on top is up to you.
+
+Thally is also open source (MIT), but it is a platform rather than a kit: search, AI chat, API reference, analytics, theming, and the machine-readability layer are part of the product, not plugins you select and maintain.
+
+The right choice depends on how much of the documentation stack your team wants to assemble and maintain.
+
+## The comparison at a glance
+
+| | Thally | Docusaurus |
+| --- | --- | --- |
+| License | MIT | MIT |
+| Self-hosting | Yes, free | Yes, free |
+| Machine output | JSON, JSON-LD, Markdown, HTML per page | HTML; structured output is DIY |
+| Search | Hybrid full-text + vector, built in | Typically Algolia DocSearch or a plugin |
+| AI chat | Retrieval-grounded with citations, built in | DIY via third-party services |
+| MCP server | Every deploy, `/api/mcp` | DIY |
+| API reference | OpenAPI-generated with Try-It console | Community plugins |
+| Docs automation | Agent drafts reviewed PRs from product changes | None built in |
+| Managed hosting | Optional, from $50 per workspace/month on an annual subscription; 3 team members included | None official; deploy anywhere |
+| Maturity | Newer platform | Available since 2017 |
+
+Docusaurus's plugin ecosystem is broad and moves fast; check the current docs for what exists today.
+
+## What the AI layer includes
+
+With Docusaurus you can absolutely build agent-readable docs. You would add a plugin or custom code for llms.txt, write a build step that emits JSON per page, stand up your own MCP server, and wire a search index with embeddings. Each piece is a project, and each piece is yours to maintain through every Docusaurus major version.
+
+Thally ships that layer as the default:
+
+- every page serves **JSON, JSON-LD, Markdown, and HTML** from the same URL via content negotiation
+- **llms.txt**, agent manifests, and per-page JSON are generated on every build
+- an **MCP server** at `/api/mcp` exposes `search_docs`, `read_page`, `list_pages`, and `agent_readiness` as tools
+- the **agent-readiness score** grades every build deterministically from 0 to 100, and CI can fail below a threshold
+
+The question is not whether Docusaurus can be made agent-ready. It is whether you want that to be your team's job.
+
+## Keeping docs current
+
+Docusaurus renders what is in the repository, while your team owns the process that keeps those files current. That works well when the team already has a strong documentation practice.
+
+Thally attacks the drift problem directly. Thally Track watches your product repos and turns merged PRs into reviewed documentation PRs. The drift sweep flags pages whose source files changed since last verification. Comment `@thally document this` on any GitHub issue and the agent drafts the page. A human reviews and merges every change.
+
+## Cost of ownership
+
+Both are free to run. The second cost is engineering time. A Docusaurus stack with search, AI answers, and structured output needs upgrades, plugin maintenance, and an internal owner. Thally maintains those features upstream. [Thally Cloud costs $60 per workspace per month on a monthly subscription or $50 per month on an annual subscription](/pricing). Both are billed monthly and include three team members plus unlimited public readers.
+
+## Which should you choose?
+
+**Choose Thally if:**
+
+- you want agent-ready output, search, and AI chat without assembling plugins
+- documentation drift is a problem you want automated away
+- you want the option of managed hosting later without replatforming
+
+**Choose Docusaurus if:**
+
+- you want maximum control over every component and enjoy owning the stack
+- you rely on specific community plugins or heavy customization
+- versioned docs for many past releases is your central requirement
+
+## Migration is automated
+
+```bash
+npx create-thally migrate github.com/acme/docs
+```
+
+The migrator converts Docusaurus pages and sidebars to a Thally project, maps components where equivalents exist, and carries your redirects. Preview locally, then switch DNS. [Start free](https://app.thally.io/register) or see [what the readiness score measures](/faq).
+
+## Sources and verification
+
+Docusaurus capabilities were checked against its [official documentation](https://docusaurus.io/docs) and [deployment guide](https://docusaurus.io/docs/deployment). Thally capabilities and prices were checked against the current product repository, [documentation](https://docs.thally.io), and [machine-readable pricing](/pricing.md). Sources were last verified July 19, 2026. Read our [editorial policy](/editorial-policy) for the comparison process.
+
+---
+
+# Article: AI-native documentation
+
+Canonical URL: https://thally.io/blog/what-is-ai-native-documentation
+
+**AI-native documentation** is documentation published in machine-readable structures (JSON, JSON-LD, Markdown) alongside the human-readable page, from the same URL, with discovery files and live endpoints that let AI agents find, read, and cite it without scraping. It is not documentation written by AI. It is documentation that machines can read as reliably as people can.
+
+## Why the definition matters now
+
+Many documentation requests now come through coding assistants, research agents, and answer engines. These systems resolve API questions, compare products, and decide which sources to cite without rendering your CSS.
+
+Traditional HTML makes that audience do extra work. An agent has to strip navigation, locate the main content, reconstruct code blocks, and handle client-rendered pages. Each reconstruction step creates another opportunity to lose context.
+
+AI-native documentation removes the guesswork by serving structure on request.
+
+## The three layers of AI-native docs
+
+### 1. Structured output per page
+
+The same URL that renders HTML for a person returns structured data for a machine, selected by an `Accept` header or a query parameter:
+
+```bash
+curl https://docs.example.com/quickstart \
+  -H "Accept: application/json"
+```
+
+The response carries the page as data: title, description, section, body as both MDX and plain text, code blocks with languages, and provenance dates. JSON-LD gives answer engines the same content as schema.org markup, and Markdown serves agents that want prose.
+
+### 2. Discovery files
+
+Machines need a map. AI-native sites publish:
+
+- **llms.txt**: a concise, plain-markdown overview of the product with links to key pages
+- **per-page manifests**: metadata about formats, freshness, and structure
+- **sitemap.xml and robots.txt** that explicitly welcome AI crawlers
+
+These files are inexpensive to generate and give crawlers a direct map to your primary documentation. Without them, an agent may find a secondary source before it finds your quickstart.
+
+### 3. Live endpoints
+
+The strongest form is an API the agent can call. With MCP (Model Context Protocol), a docs site exposes tools like `search_docs`, `read_page`, and `list_pages`. An agent attached to the endpoint queries your documentation the way your own search does, with no scraping and no stale index.
+
+Thally ships all three layers on every deploy, self-hosted included; that is the design goal behind [the platform](/). But the definition is bigger than any one product, and you can meet it with your own stack if you are willing to build and maintain the pieces.
+
+## What AI-native documentation is not
+
+- **Not AI-generated content.** Who wrote the words is orthogonal. AI-native describes how the published result is served.
+- **Not a chatbot bolted onto docs.** A chat widget helps humans on your site. It does nothing for the agent reading your docs from inside an IDE.
+- **Not separate "AI pages."** Serving different content to machines than to people is cloaking, and search engines penalize it. AI-native means the same content in more formats.
+
+## How to tell if your docs are AI-native
+
+Run these five checks against your own site:
+
+1. Does `curl -H "Accept: application/json"` on a docs URL return structured data?
+2. Does `/llms.txt` exist and describe your product accurately?
+3. Can an agent list and read your pages through an API or MCP endpoint?
+4. Do pages carry machine-legible last-updated and last-verified dates?
+5. Does your robots.txt allow the AI crawlers you want citing you?
+
+If you can answer yes to all five, your docs give agents a reliable path to the source. Each "no" identifies a point where an agent may have to infer structure or use an indirect source.
+
+A deterministic version of this checklist is what Thally's [agent-readiness score](/faq) grades on every build, from 0 to 100, so CI can enforce it. You can [start free](https://app.thally.io/register) and see your own score in minutes.
+
+## Primary references
+
+- [Google Search guidance for AI features](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide)
+- [llms.txt proposal and examples](https://llmstxt.org)
+- [Model Context Protocol specification](https://modelcontextprotocol.io/specification/latest)
+- [Thally agent-readiness methodology](/agent-readiness-methodology)
+
+This article follows the [Thally editorial policy](/editorial-policy) and was last reviewed July 19, 2026.
+
+---
+
+# Article: Agent-readable documentation
+
+Canonical URL: https://thally.io/blog/agent-ready-docs-llms-txt-mcp
+
+**The short version:** agent-ready documentation has three layers. Discovery files (llms.txt, sitemaps) so agents can find you. Structured per-page output (JSON, Markdown, JSON-LD) so agents can read you without scraping. Live endpoints (MCP) so agents can query you like a tool. This guide walks through each layer, in order of effort, with checks to prove each one works.
+
+## Why bother
+
+When a developer asks their coding assistant "how do I rotate an API token in Acme?", the assistant reads documentation on their behalf. Clean structure gives it reliable source material. Without that structure, the agent has to reconstruct the answer from scraped HTML. Machine readability now affects how accurately other systems explain your product.
+
+The good news: the work is layered, and the first layer takes an afternoon.
+
+## Layer 1: discovery files (an afternoon)
+
+### llms.txt
+
+Add a plain-markdown file at your site root that tells AI systems what your product is and where the important pages are:
+
+```markdown
+# Acme
+
+> Acme is a payments API for marketplaces. This site documents
+> the REST API, SDKs, and webhooks.
+
+## Key pages
+
+- [Quickstart](/quickstart): first charge in five minutes
+- [API reference](/api): every endpoint, with examples
+- [Webhooks](/webhooks): events, retries, signatures
+```
+
+Keep it under a few hundred lines, keep it current, and write it like an abstract, not a sitemap dump. The spec lives at llmstxt.org.
+
+### robots.txt
+
+Decide which AI crawlers you want reading your site, and state that policy explicitly. If you want GPTBot, ClaudeBot, or PerplexityBot to crawl your docs directly, allow the corresponding user agent. A blocked crawler may have to rely on other indexed sources.
+
+**Check:** `curl https://yoursite.com/llms.txt` returns your file, and your robots.txt names the crawlers you care about.
+
+## Layer 2: structured output per page (the real work)
+
+The goal: the same URL that serves your HTML also serves the page as data.
+
+```bash
+# A person gets HTML. An agent gets structure.
+curl https://docs.acme.com/quickstart -H "Accept: application/json"
+curl https://docs.acme.com/quickstart?format=md
+```
+
+The JSON should carry the page as content, not markup: title, description, section, plain-text body, code blocks with their languages, and provenance dates (`lastUpdated`, `lastVerified`). JSON-LD adds schema.org semantics for answer engines; Markdown serves agents that want prose they can quote.
+
+Two implementation rules that save pain:
+
+1. **Generate all formats from one source at build time.** Separate HTML and JSON pipelines can drift and give readers conflicting answers.
+2. **Never serve machines different content than people.** Same content, more formats. Different content is cloaking, and it erodes exactly the trust you are building.
+
+This layer is the expensive one to hand-roll, and it is the core of what an AI-native platform gives you for free. Every page on a Thally site ships all four formats from one content graph on every build.
+
+**Check:** pick three pages and diff the JSON body text against the rendered page. They should match exactly.
+
+## Layer 3: a live MCP endpoint (the differentiator)
+
+MCP (Model Context Protocol) lets an agent attach to your docs as a set of callable tools rather than a pile of URLs. A docs MCP server typically exposes:
+
+- `search_docs(query)`: ranked results from your real index
+- `read_page(slug)`: the structured page content
+- `list_pages()`: the site map as data
+
+The practical difference is freshness and control. An agent with MCP access queries your live content through your search ranking. Without it, the agent may depend on an older crawler index.
+
+Every deployed Thally site exposes `/api/mcp` with those tools plus `agent_readiness`, no key or account required. If you are building your own, the MCP spec and SDKs are open; budget for auth decisions, rate limits, and keeping the index fresh.
+
+**Check:** attach the endpoint to any MCP-capable agent and ask it a question only your docs can answer. It should cite the right page.
+
+## Measuring it: make the checklist deterministic
+
+Ad-hoc checks rot. Turn the layers above into a score your CI understands:
+
+| Dimension | What it checks |
+| --- | --- |
+| Structured data | JSON/JSON-LD/Markdown parity per page |
+| Metadata | titles, descriptions, provenance dates |
+| Discovery | llms.txt, sitemap, robots, manifests |
+| Machine readability | content negotiation, clean plain text |
+| OpenAPI coverage | endpoints documented vs. spec |
+
+Thally turns these checks into an agent-readiness score from 0 to 100 on every build. You can gate CI on a threshold and ask the docs agent to draft fixes for low-scoring pages. Whatever stack you use, measuring the checks makes regressions visible.
+
+## Where to start
+
+Start with llms.txt and an explicit robots.txt policy. Then decide whether layers 2 and 3 are infrastructure your team wants to build or a platform you want to adopt. Migrating an existing docs site into Thally takes one command, and the [free plan self-hosts forever](/pricing):
+
+```bash
+npx create-thally migrate github.com/acme/docs
+```
+
+Related reading: [What is AI-native documentation?](/blog/what-is-ai-native-documentation)
+
+## Primary references
+
+- [llms.txt proposal and examples](https://llmstxt.org)
+- [Model Context Protocol specification](https://modelcontextprotocol.io/specification/latest)
+- [Google Search guidance for AI features](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide)
+- [OpenAI publisher and developer FAQ](https://help.openai.com/en/articles/12627856-publishers-and-developers-faq)
+- [Thally agent-readiness methodology](/agent-readiness-methodology)
+
+This guide follows the [Thally editorial policy](/editorial-policy) and was last reviewed July 19, 2026.

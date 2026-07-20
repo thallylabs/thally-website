@@ -1,6 +1,6 @@
 # Pricing: Thally
 
-Thally is the AI-native documentation platform for AI agents and humans. All prices in USD. Last updated: 2026-07-16.
+Thally is the AI-native documentation platform for AI agents and humans. All prices in USD. Last updated: 2026-07-19.
 
 ## Free
 
