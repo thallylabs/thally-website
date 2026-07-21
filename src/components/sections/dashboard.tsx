@@ -31,9 +31,8 @@ const POINTS = [
   },
   {
     icon: Users,
-    title: "Roles from a git-committed roster.",
-    description:
-      "Owner, Editor, and Viewer access lives in your repo and goes through code review. OIDC sign-in requires no separate authentication database.",
+    title: "Workspace roles in Thally Cloud.",
+    description: "Invite teammates and assign Owner, Editor, or Viewer access from the Cloud workspace.",
     accent: "var(--chart-4)",
   },
 ];
@@ -47,8 +46,8 @@ export const Dashboard = () => {
 
       <div className="relative container">
         <SectionHeader
-          title="Mission control, built in"
-          description="Every deploy includes an admin dashboard at /admin. Manage branding, analytics, team access, and agent-drafted PRs in one place."
+          title="Manage the service around your docs"
+          description="Use app.thally.io to manage sites, deployments, analytics, team access, and agent-drafted work."
         />
 
         <div className="relative mt-10 lg:mt-16" style={{ perspective: 1400 }}>
@@ -65,14 +64,14 @@ export const Dashboard = () => {
                 <span className="size-2.5 rounded-full bg-white/15" />
                 <span className="size-2.5 rounded-full bg-white/15" />
                 <span className="absolute left-1/2 -translate-x-1/2 rounded-md bg-white/5 px-3 py-1 font-mono text-[10px] text-white/50">
-                  yourdocs.com/admin
+                  app.thally.io/sites/acme-docs
                 </span>
               </div>
               <Image
                 src="/images/admin-dashboard.png"
-                alt="Thally admin dashboard, Analytics view: human and agent traffic, engagement, and top pages"
-                width={2000}
-                height={1054}
+                alt="Thally Cloud analytics showing traffic from people and AI tools, engagement, and top pages"
+                width={2560}
+                height={1440}
                 className="w-full"
                 sizes="(max-width: 1400px) 100vw, 1400px"
               />
