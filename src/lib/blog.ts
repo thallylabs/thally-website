@@ -8,10 +8,14 @@ export interface BlogFAQ {
 export interface BlogPost {
   slug: string;
   title: string;
+  /** Search-result title. The root layout appends the Thally brand. */
+  seoTitle: string;
   /** Short display title for cards and OG images. */
   cardTitle: string;
   description: string;
   date: string;
+  updated: string;
+  verified?: string;
   category: BlogCategory;
   readingTime: number;
   accent: string;
@@ -23,10 +27,13 @@ export const blogPosts: BlogPost[] = [
   {
     slug: "thally-vs-mintlify",
     title: "Thally vs Mintlify: which docs platform is built for AI agents?",
+    seoTitle: "Thally vs Mintlify for AI Documentation",
     cardTitle: "Thally vs Mintlify",
     description:
-      "Both render beautiful MDX docs. The differences are ownership, self-hosting, and how deeply AI agents can read your docs. A fair, side-by-side comparison.",
+      "Compare Thally and Mintlify on ownership, self-hosting, AI-readable output, MCP, automation, migration, and pricing using primary sources.",
     date: "2026-07-11",
+    updated: "2026-07-19",
+    verified: "2026-07-19",
     category: "Comparison",
     readingTime: 7,
     accent: "var(--chart-1)",
@@ -51,10 +58,13 @@ export const blogPosts: BlogPost[] = [
   {
     slug: "thally-vs-gitbook",
     title: "Thally vs GitBook: docs-as-code or a hosted wiki?",
+    seoTitle: "Thally vs GitBook for Developer Documentation",
     cardTitle: "Thally vs GitBook",
     description:
-      "GitBook is a polished hosted editor for teams that want a wiki. Thally is a docs-as-code platform your agents can read natively. Here is how to choose.",
+      "Compare Thally and GitBook on authoring, Git workflows, AI-readable output, MCP, self-hosting, migration, and team collaboration.",
     date: "2026-07-08",
+    updated: "2026-07-19",
+    verified: "2026-07-19",
     category: "Comparison",
     readingTime: 6,
     accent: "var(--chart-2)",
@@ -74,10 +84,13 @@ export const blogPosts: BlogPost[] = [
   {
     slug: "thally-vs-docusaurus",
     title: "Thally vs Docusaurus: two open-source paths to developer docs",
+    seoTitle: "Thally vs Docusaurus for AI-Ready Docs",
     cardTitle: "Thally vs Docusaurus",
     description:
-      "Both are open source and self-hostable. Docusaurus gives you a React static-site framework; Thally adds the AI layer: structured output, MCP, search, and a docs agent.",
+      "Compare two open-source documentation stacks on setup, ownership, structured output, MCP, search, automation, migration, and maintenance.",
     date: "2026-07-01",
+    updated: "2026-07-19",
+    verified: "2026-07-19",
     category: "Comparison",
     readingTime: 6,
     accent: "var(--chart-5)",
@@ -97,10 +110,12 @@ export const blogPosts: BlogPost[] = [
   {
     slug: "what-is-ai-native-documentation",
     title: "What is AI-native documentation?",
+    seoTitle: "AI-Native Documentation: Definition and Checklist",
     cardTitle: "What is AI-native documentation?",
     description:
-      "AI-native documentation serves structured data to machines and rendered pages to people from the same URL, so agents stop scraping and start reading. A definition, with examples.",
+      "Learn what AI-native documentation means, how it differs from AI-assisted writing, and how to test discovery, structure, freshness, and agent access.",
     date: "2026-06-25",
+    updated: "2026-07-19",
     category: "Product",
     readingTime: 5,
     accent: "var(--chart-4)",
@@ -120,10 +135,12 @@ export const blogPosts: BlogPost[] = [
   {
     slug: "agent-ready-docs-llms-txt-mcp",
     title: "How to make your docs readable by AI agents: llms.txt, MCP, and content negotiation",
+    seoTitle: "Make Documentation Readable by AI Agents",
     cardTitle: "Making docs agent-readable",
     description:
-      "A practical guide to the three layers of agent-ready documentation: discovery files, structured per-page output, and a live MCP server, with the checks to prove it works.",
+      "Build agent-readable documentation with crawlable HTML, llms.txt, structured page formats, content negotiation, MCP, provenance, and repeatable tests.",
     date: "2026-06-18",
+    updated: "2026-07-19",
     category: "Guide",
     readingTime: 8,
     accent: "var(--chart-3)",

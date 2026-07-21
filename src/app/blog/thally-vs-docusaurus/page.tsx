@@ -8,7 +8,7 @@ import { PostBody } from "./body";
 const post = getPost("thally-vs-docusaurus");
 
 export const metadata: Metadata = {
-  title: post.title,
+  title: post.seoTitle,
   description: post.description,
   alternates: {
     canonical: `/blog/${post.slug}`,
@@ -18,6 +18,8 @@ export const metadata: Metadata = {
     title: post.title,
     description: post.description,
     publishedTime: post.date,
+    modifiedTime: post.updated,
+    authors: ["/authors/thally-team"],
     url: `${SITE_URL}/blog/${post.slug}`,
   },
 };
@@ -29,10 +31,10 @@ const articleJsonLd = {
   headline: post.title,
   description: post.description,
   datePublished: post.date,
-  dateModified: post.date,
+  dateModified: post.updated,
   url: `${SITE_URL}/blog/${post.slug}`,
   image: `${SITE_URL}/blog/${post.slug}/opengraph-image`,
-  author: { "@id": `${SITE_URL}/#organization` },
+  author: { "@id": `${SITE_URL}/authors/thally-team#team` },
   publisher: { "@id": `${SITE_URL}/#organization` },
   isPartOf: { "@id": `${SITE_URL}/blog#blog` },
   mainEntityOfPage: `${SITE_URL}/blog/${post.slug}`,

@@ -16,12 +16,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const AUTO_ADVANCE_MS = 7000;
 
 const FEATURES: {
+  id: string;
   title: string;
   description: string;
   icon: ComponentType<{ className?: string }>;
   content: { title: string; description: string; view: ComponentType };
 }[] = [
   {
+    id: "content-graph",
     title: "Content graph",
     description: "One MDX source, every format projected from it.",
     icon: Structured,
@@ -33,6 +35,7 @@ const FEATURES: {
     },
   },
   {
+    id: "search-answers",
     title: "Search & answers",
     description: "Hybrid search and grounded chat, one index.",
     icon: Search,
@@ -44,6 +47,7 @@ const FEATURES: {
     },
   },
   {
+    id: "api-reference",
     title: "API reference",
     description: "Your OpenAPI spec, rendered live and in sync.",
     icon: Code,
@@ -55,6 +59,7 @@ const FEATURES: {
     },
   },
   {
+    id: "agent-endpoints",
     title: "Agent endpoints",
     description: "llms.txt, MCP, and per-page JSON by default.",
     icon: Mcp,
@@ -72,7 +77,7 @@ export const Feature3 = () => {
   const tabsRef = useRef<HTMLDivElement>(null);
   const inView = useInView(tabsRef, { amount: 0.4 });
 
-  const [active, setActive] = useState(FEATURES[0].title);
+  const [active, setActive] = useState(FEATURES[0].id);
   const [auto, setAuto] = useState(true);
 
   const cycling = auto && inView && !reduce;
@@ -81,8 +86,8 @@ export const Feature3 = () => {
     if (!cycling) return;
     const id = setTimeout(() => {
       setActive((current) => {
-        const next = (FEATURES.findIndex((f) => f.title === current) + 1) % FEATURES.length;
-        return FEATURES[next].title;
+        const next = (FEATURES.findIndex((f) => f.id === current) + 1) % FEATURES.length;
+        return FEATURES[next].id;
       });
     }, AUTO_ADVANCE_MS);
     return () => clearTimeout(id);
@@ -110,11 +115,11 @@ export const Feature3 = () => {
         >
           <TabsList className="bg-muted flex h-auto justify-start overflow-x-auto rounded-xl p-1.5 lg:basis-1/4 lg:flex-col">
             {FEATURES.map((feature) => {
-              const isActive = active === feature.title;
+              const isActive = active === feature.id;
               return (
                 <TabsTrigger
-                  key={feature.title}
-                  value={feature.title}
+                  key={feature.id}
+                  value={feature.id}
                   className="group text-muted-foreground data-[state=active]:text-foreground relative w-full min-w-[200px] flex-1 justify-start rounded-lg px-4 py-3 text-start whitespace-normal data-[state=active]:bg-transparent data-[state=active]:shadow-none lg:px-6 lg:py-4"
                 >
                   {isActive && (
@@ -150,8 +155,8 @@ export const Feature3 = () => {
             return (
               <TabsContent
                 className="border-border bg-card m-0 flex-1 overflow-hidden rounded-2xl border"
-                key={feature.title}
-                value={feature.title}
+                key={feature.id}
+                value={feature.id}
               >
                 <motion.div
                   className="flex h-full flex-col lg:min-h-[480px]"
@@ -160,7 +165,7 @@ export const Feature3 = () => {
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <div className="max-w-2xl p-5 text-lg text-balance lg:p-7">
-                    <h4 className="font-display inline font-semibold">{feature.content.title} </h4>
+                    <h3 className="font-display inline font-semibold">{feature.content.title} </h3>
                     <span className="text-muted-foreground font-medium text-pretty">{feature.content.description}</span>
                   </div>
                   <div className="bg-muted/50 border-border flex flex-1 flex-col justify-center border-t p-4 lg:p-6">

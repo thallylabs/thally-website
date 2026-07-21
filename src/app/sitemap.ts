@@ -62,6 +62,24 @@ const routes: SitemapRoute[] = [
     sources: ["src/app/contact", "src/components/sections/contact.tsx"],
   },
   {
+    path: "/authors/thally-team",
+    priority: 0.5,
+    changeFrequency: "monthly",
+    sources: ["src/app/authors/thally-team"],
+  },
+  {
+    path: "/editorial-policy",
+    priority: 0.5,
+    changeFrequency: "monthly",
+    sources: ["src/app/editorial-policy"],
+  },
+  {
+    path: "/agent-readiness-methodology",
+    priority: 0.6,
+    changeFrequency: "monthly",
+    sources: ["src/app/agent-readiness-methodology", "public/agent-readiness.json"],
+  },
+  {
     path: "/privacy",
     priority: 0.2,
     changeFrequency: "yearly",
@@ -107,7 +125,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const postEntries = blogPosts.map((post) => ({
     url: `${SITE_URL}/blog/${post.slug}`,
-    lastModified: getLastModified([`src/app/blog/${post.slug}`]),
+    lastModified: new Date(`${post.updated}T00:00:00Z`),
     changeFrequency: "monthly" as const,
     priority: 0.7,
   }));

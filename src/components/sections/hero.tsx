@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import NextImage from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -202,7 +203,9 @@ const Hero = (props: Partial<HeroFeatureSliderProps>) => {
                       <Icon className="size-3.5 lg:size-4" strokeWidth={2.25} />
                     </span>
                     <div className="min-w-0 flex-1">
-                      <h3 className="text-foreground leading-6 font-semibold lg:leading-7">{feature.title}</h3>
+                      <span className="text-foreground block leading-6 font-semibold lg:leading-7">
+                        {feature.title}
+                      </span>
                       <p className="text-muted-foreground mt-0.5 max-w-sm text-sm text-balance">
                         {feature.description}
                       </p>
@@ -216,34 +219,31 @@ const Hero = (props: Partial<HeroFeatureSliderProps>) => {
 
         <div className="container mx-auto mt-12 md:mt-20 lg:mt-24">
           <div className="relative aspect-video w-full overflow-hidden rounded-t-2xl">
-            {heroImages.map((heroImage, index) => {
-              const isActive = activeImageIndex === index;
-
-              return (
-                <motion.div
-                  key={heroImage.src}
-                  className={cn("absolute inset-0", !isActive && "pointer-events-none")}
-                  initial={false}
-                  animate={{ opacity: isActive ? 1 : 0 }}
-                  transition={crossfadeTransition}
-                  style={{ zIndex: isActive ? 10 : 0 }}
-                  aria-hidden={!isActive}
-                >
-                  {heroImage.srcDark ? (
-                    <>
-                      <img src={heroImage.src} alt={heroImage.alt} className={cn(heroImageClassName, "dark:hidden")} />
-                      <img
-                        src={heroImage.srcDark}
-                        alt={heroImage.alt}
-                        className={cn(heroImageClassName, "hidden dark:block")}
-                      />
-                    </>
-                  ) : (
-                    <img src={heroImage.src} alt={heroImage.alt} className={heroImageClassName} />
-                  )}
-                </motion.div>
-              );
-            })}
+            <AnimatePresence initial={false} mode="sync">
+              {heroImages.map((heroImage, index) => {
+                if (activeImageIndex !== index) return null;
+                return (
+                  <motion.div
+                    key={heroImage.src}
+                    className="absolute inset-0"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={crossfadeTransition}
+                  >
+                    <NextImage
+                      src={heroImage.src}
+                      alt={heroImage.alt}
+                      className={heroImageClassName}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 1200px"
+                      priority={index === 0}
+                      quality={82}
+                    />
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
           </div>
         </div>
       </div>

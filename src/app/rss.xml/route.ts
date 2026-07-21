@@ -18,12 +18,13 @@ export function GET() {
       <description>${escapeXml(post.description)}</description>
       <category>${post.category}</category>
       <pubDate>${new Date(`${post.date}T00:00:00Z`).toUTCString()}</pubDate>
+      <dcterms:modified>${new Date(`${post.updated}T00:00:00Z`).toISOString()}</dcterms:modified>
     </item>`;
     })
     .join("\n");
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dcterms="http://purl.org/dc/terms/">
   <channel>
     <title>${escapeXml(`${SITE_NAME} Blog`)}</title>
     <link>${SITE_URL}/blog</link>

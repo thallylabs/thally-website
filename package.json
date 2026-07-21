@@ -5,8 +5,11 @@
   "author": "Fairspleet LLC <team@thally.io>",
   "license": "UNLICENSED",
   "scripts": {
+    "prebuild": "node scripts/generate-llms-full.mjs",
     "dev": "next dev --turbopack",
     "build": "next build",
+    "audit:seo": "node scripts/seo-audit.mjs",
+    "audit:release": "npm run prebuild && next build --webpack && npm run audit:seo",
     "start": "next start",
     "lint": "eslint . --fix",
     "format": "prettier --write ."

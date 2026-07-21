@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { FAQ } from "@/components/sections/faq";
 import { NoLockIn } from "@/components/sections/no-lock-in";
@@ -7,7 +8,7 @@ import Pricing2 from "@/components/sections/pricing2";
 import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Pricing",
+  title: "Thally Pricing: Open Source and Cloud Plans",
   description:
     "Thally pricing: free to self-host forever, or choose Thally Cloud at $60 per month on a monthly subscription and $50 per month on an annual subscription.",
   alternates: {
@@ -15,10 +16,9 @@ export const metadata: Metadata = {
   },
 };
 
-// SoftwareApplication (same @id as the homepage node, so the statements merge
-// into one entity) rather than Product: Google's Product snippets report
-// expects review/aggregateRating on Product markup, and Thally has no
-// first-party on-page ratings to reference yet.
+// This node describes the application for entity understanding. Google requires
+// a genuine visible review or aggregate rating for a SoftwareApplication rich
+// result, so this markup intentionally makes no rich-result eligibility claim.
 const pricingJsonLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
@@ -31,12 +31,13 @@ const pricingJsonLd = {
   description:
     "AI-native documentation platform for AI agents and humans. MIT licensed and free to self-host, with Thally Cloud managed services and custom Enterprise plans.",
   publisher: { "@id": `${SITE_URL}/#organization` },
+  mainEntityOfPage: `${SITE_URL}/pricing`,
   offers: {
     "@type": "AggregateOffer",
     priceCurrency: "USD",
     lowPrice: "0",
     highPrice: "60",
-    offerCount: 4,
+    offerCount: 3,
     offers: [
       {
         "@type": "Offer",
@@ -62,12 +63,6 @@ const pricingJsonLd = {
         description:
           "$50 per workspace per month with an annual subscription, billed monthly. Includes managed hosting, cited AI answers, automatic draft updates when product changes affect the documentation, quality checks, analytics, and a 14-day trial.",
       },
-      {
-        "@type": "Offer",
-        name: "Enterprise",
-        description:
-          "Custom annual pricing with company-wide sign-in, automatic account management, activity history, custom terms, hands-on migration, and priority support.",
-      },
     ],
   },
 };
@@ -77,9 +72,18 @@ export default function Page() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingJsonLd) }} />
       <Pricing headerTag="h1" />
+      <section className="container pb-12 text-center">
+        <p className="text-muted-foreground text-sm">
+          AI agents and procurement tools can read the same current plan details in{" "}
+          <Link className="text-foreground underline underline-offset-4" href="/pricing.md">
+            machine-readable pricing
+          </Link>
+          .
+        </p>
+      </section>
       <NoLockIn />
       <Pricing2 />
-      <FAQ />
+      <FAQ context="pricing" />
     </>
   );
 }
