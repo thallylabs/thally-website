@@ -53,17 +53,17 @@ const OPTIMIZED_HERO_IMAGES: Record<string, { src: string; srcSet: string }> = {
   "/images/hero1.png": {
     src: "/images/hero1-1600.webp",
     srcSet:
-      "/images/hero1-800.webp 800w, /images/hero1-1200.webp 1200w, /images/hero1-1600.webp 1600w",
+      "/images/hero1-600.webp 600w, /images/hero1-800.webp 800w, /images/hero1-1200.webp 1200w, /images/hero1-1600.webp 1600w",
   },
   "/images/hero2.png": {
     src: "/images/hero2-1600.webp",
     srcSet:
-      "/images/hero2-800.webp 800w, /images/hero2-1200.webp 1200w, /images/hero2-1600.webp 1600w",
+      "/images/hero2-600.webp 600w, /images/hero2-800.webp 800w, /images/hero2-1200.webp 1200w, /images/hero2-1600.webp 1600w",
   },
   "/images/hero3.png": {
     src: "/images/hero3-1600.webp",
     srcSet:
-      "/images/hero3-800.webp 800w, /images/hero3-1200.webp 1200w, /images/hero3-1600.webp 1600w",
+      "/images/hero3-600.webp 600w, /images/hero3-800.webp 800w, /images/hero3-1200.webp 1200w, /images/hero3-1600.webp 1600w",
   },
 };
 
