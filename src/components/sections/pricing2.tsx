@@ -110,7 +110,7 @@ const comparisonFeatures: FeatureSection[] = [
         enterprise: true,
       },
       {
-        name: "Managed Track runs",
+        name: "Thally-drafted updates",
         free: false,
         cloud: true,
         enterprise: true,

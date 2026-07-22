@@ -14,10 +14,10 @@ export const SITE_TAGLINE = "Docs That Keep Up With the Product";
 export const SITE_TITLE = `${SITE_NAME} | ${SITE_TAGLINE}`;
 
 export const SITE_DESCRIPTION =
-  "Thally helps software teams publish one documentation source for people and AI tools, then keep it current through review-gated updates with Thally Track.";
+  "Thally helps software teams publish one documentation source for people and AI tools, then keep it current through review-gated updates drafted by Thally.";
 
 export const OG_DESCRIPTION =
-  "Start a new docs site or bring your existing docs to Thally. Then connect product repos so Track can draft reviewable updates when the docs need to change.";
+  "Start a new docs site or bring your existing docs to Thally. Then connect product repos so Thally can draft reviewable updates when the docs need to change.";
 
 export const DESTINATIONS = {
   app: "https://app.thally.io",

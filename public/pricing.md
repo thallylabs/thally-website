@@ -17,7 +17,7 @@ Thally is a documentation platform with an MIT-licensed engine and optional mana
 - Includes 3 team members in any role
 - Additional active members or pending invitations: $20 / month each after the 3 included members
 - Trial: 14 days, no credit card required
-- Everything in Free, plus: managed hosting, Thally AI answers and chat, managed Track runs for relevant merged changes, docs analytics, and Owner/Editor/Viewer workspace roles
+- Everything in Free, plus: managed hosting, Thally AI answers and chat, Thally-drafted updates for relevant merged changes, docs analytics, and Owner/Editor/Viewer workspace roles
 - Best for: growing teams who want managed hosting and docs automation
 
 ## Enterprise

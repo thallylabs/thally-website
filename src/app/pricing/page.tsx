@@ -53,7 +53,7 @@ const pricingJsonLd = {
         price: "60",
         priceCurrency: "USD",
         description:
-          "$60 per workspace each month. Includes managed hosting, cited AI answers, managed Track runs for relevant merged changes, quality checks, and analytics. 14-day trial.",
+          "$60 per workspace each month. Includes managed hosting, cited AI answers, Thally-drafted updates for relevant merged changes, quality checks, and analytics. 14-day trial.",
       },
       {
         "@type": "Offer",
@@ -61,7 +61,7 @@ const pricingJsonLd = {
         price: "50",
         priceCurrency: "USD",
         description:
-          "$50 per workspace per month with an annual subscription, billed monthly. Includes managed hosting, cited AI answers, managed Track runs for relevant merged changes, quality checks, analytics, and a 14-day trial.",
+          "$50 per workspace per month with an annual subscription, billed monthly. Includes managed hosting, cited AI answers, Thally-drafted updates for relevant merged changes, quality checks, analytics, and a 14-day trial.",
       },
     ],
   },

@@ -26,7 +26,7 @@ const POINTS = [
     icon: GitPullRequest,
     title: "A queue for agent-drafted PRs.",
     description:
-      "Review every docs task from Track, drift sweeps, and @thally mentions in one queue before anything merges.",
+      "Review every docs task from Thally, drift sweeps, and @thally mentions in one queue before anything merges.",
     accent: "var(--chart-5)",
   },
   {

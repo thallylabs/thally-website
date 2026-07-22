@@ -32,7 +32,7 @@ const productJsonLd = {
   operatingSystem: "Web",
   license: "https://opensource.org/license/mit",
   description:
-    "Thally is a documentation platform for publishing one source for people and AI tools. Once the docs site is live, connect product repositories so Thally Track can draft reviewable updates for relevant merged changes.",
+    "Thally is a documentation platform for publishing one source for people and AI tools. Once the docs site is live, connect product repositories so Thally can draft reviewable updates for relevant merged changes.",
   publisher: { "@id": `${SITE_URL}/#organization` },
   mainEntityOfPage: SITE_URL,
   offers: [
@@ -49,7 +49,7 @@ const productJsonLd = {
       price: "60",
       priceCurrency: "USD",
       description:
-        "Thally Cloud is $60 per workspace per month with three team members included. Additional active members or pending invitations are $20 per month each. Adds managed hosting, AI answers, managed Track runs, documentation analytics, and workspace roles.",
+        "Thally Cloud is $60 per workspace per month with three team members included. Additional active members or pending invitations are $20 per month each. Adds managed hosting, AI answers, Thally-drafted updates, documentation analytics, and workspace roles.",
     },
     {
       "@type": "Offer",

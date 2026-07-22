@@ -58,7 +58,7 @@ const plans: PricingPlan[] = [
       "Everything in Free",
       "Managed hosting for your Thally sites",
       "AI answers with links to the source",
-      "Managed Track runs for relevant merged changes",
+      "Thally-drafted updates for relevant merged changes",
       "Documentation analytics and quality checks",
     ],
     cta: "Start 14-day trial",
@@ -99,7 +99,7 @@ export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" 
         <SectionHeader
           eyebrow={headerTag === "h2" ? "Plans" : undefined}
           title="Use the open-source engine for free. Add Cloud for the service."
-          description="Run the MIT-licensed engine yourself, or use Thally Cloud for managed hosting, cited AI answers, managed Track runs, analytics, and a shared workspace."
+          description="Run the MIT-licensed engine yourself, or use Thally Cloud for managed hosting, cited AI answers, Thally-drafted updates, analytics, and a shared workspace."
           align="center"
           layout="stack"
           as={headerTag}

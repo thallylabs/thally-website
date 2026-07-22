@@ -56,13 +56,13 @@ const heroImageClassName =
 const defaultProps: HeroFeatureSliderProps = {
   heading: "Docs that keep up with the product.",
   description:
-    "Start a new docs site or bring your existing docs to Thally. When the site is live, connect product repos so Track can draft reviewable updates when the docs need to change.",
+    "Start a new docs site or bring your existing docs to Thally. When the site is live, connect product repos so Thally can draft reviewable updates when the docs need to change.",
   buttonPrimary: {
     text: "Create your docs site",
     href: DESTINATIONS.signup,
   },
   buttonSecondary: {
-    text: "See how Track works",
+    text: "See how Thally works",
     href: "#automation",
   },
   features: [
@@ -78,7 +78,8 @@ const defaultProps: HeroFeatureSliderProps = {
     },
     {
       title: "Updates stay reviewable",
-      description: "After Track is connected, relevant merged product changes can become docs PRs your team reviews.",
+      description:
+        "After you connect product repos, Thally can turn relevant merged changes into docs PRs your team reviews.",
       icon: Readiness,
     },
   ],

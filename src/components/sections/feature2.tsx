@@ -77,7 +77,7 @@ function AutomationCard() {
     { when: "Spec changes", then: "Regen API docs" },
     { when: "Broken link", then: "Fail CI" },
     { when: "@thally comment", then: "Draft docs PR" },
-    { when: "Product PR merged", then: "Docs PR via Track" },
+    { when: "Product PR merged", then: "Docs PR via Thally" },
   ];
   const reduce = useReducedMotion();
   return (

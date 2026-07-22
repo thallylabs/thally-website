@@ -5,7 +5,7 @@
 Generated from the same repository as thally.io. Last generated: 2026-07-19.
 # Thally
 
-> Thally helps software teams publish one documentation source as HTML for people and structured formats for AI tools. Once the docs site is live, connect product repositories so Thally Track can draft reviewable updates for relevant merged changes. The publishing engine is open source under the MIT license.
+> Thally helps software teams publish one documentation source as HTML for people and structured formats for AI tools. Once the docs site is live, connect product repositories so Thally can draft reviewable updates for relevant merged changes. The publishing engine is open source under the MIT license.
 
 ## What Thally does
 
@@ -13,11 +13,11 @@ Generated from the same repository as thally.io. Last generated: 2026-07-19.
 - Remote MCP server: every deployed docs site exposes /api/mcp. Attach it to any agent and the docs become native tools (search_docs, read_page, list_pages, agent_readiness). No key, no account.
 - Agent-readiness score: a deterministic 0-100 grade per build covering structured data, metadata, discovery files, machine readability, and OpenAPI coverage. Gate CI on a threshold, then ask the agent to draft fixes for low-scoring pages.
 - Docs agent: turn an instruction, a diff, or a product PR into a reviewed docs pull request. Comment "@thally document this" on any GitHub issue or PR to trigger it. The agent never merges; a human always does.
-- Thally Track: after a Thally site is live, choose the product repos Track should watch. Relevant merged PRs can become reviewed documentation PRs. Track may decide that no docs change is needed.
+- Thally Track: after a Thally site is live, choose the product repos Thally should watch. Relevant merged PRs can become reviewed documentation PRs. Thally may decide that no docs change is needed.
 - Provenance and drift: machine-legible lastUpdated / lastVerified dates, plus deterministic drift detection against the source code each page documents.
 - Authoring: MDX with 25+ components, OpenAPI-generated API reference with an interactive Try-It console, hybrid full-text + vector search, retrieval-grounded AI chat with inline citations.
 - Multi-language: one command translates the whole site; locale URLs, hreflang, and graceful fallbacks.
-- Thally Cloud workspace: manage sites, deployments, analytics, AI answers, Track, and Owner/Editor/Viewer workspace access from app.thally.io.
+- Thally Cloud workspace: manage sites, deployments, analytics, AI answers, Thally Track, and Owner/Editor/Viewer workspace access from app.thally.io.
 - Migration: use Thally Cloud with a public docs site, or run the CLI against a supported repository. Thally converts supported pages to MDX and rebuilds the navigation for review before publishing.
 - Deployment: Vercel, Netlify, Cloudflare, Docker, or static export. The docs are a deployable Next.js project.
 
@@ -83,7 +83,7 @@ Thally is a documentation platform with an MIT-licensed engine and optional mana
 - Includes 3 team members in any role
 - Additional active members or pending invitations: $20 / month each after the 3 included members
 - Trial: 14 days, no credit card required
-- Everything in Free, plus: managed hosting, Thally AI answers and chat, managed Track runs for relevant merged changes, docs analytics, and Owner/Editor/Viewer workspace roles
+- Everything in Free, plus: managed hosting, Thally AI answers and chat, Thally-drafted updates for relevant merged changes, docs analytics, and Owner/Editor/Viewer workspace roles
 - Best for: growing teams who want managed hosting and docs automation
 
 ## Enterprise
@@ -154,13 +154,13 @@ Mintlify has been adding AI capabilities to its hosted platform as well, includi
 
 Documentation starts drifting when the product changes. The two platforms address that problem differently.
 
-Thally treats drift as a first-class problem. After a Thally docs repository is connected, mention `@thally document this` on a GitHub issue or PR to request a documentation pull request. Once a site is live and product repositories are mapped, Track evaluates merged product PRs and can draft a docs PR when the documentation needs to change. Nothing merges without a human.
+Thally treats drift as a first-class problem. After a Thally docs repository is connected, mention `@thally document this` on a GitHub issue or PR to request a documentation pull request. Once a site is live and product repositories are mapped, Thally evaluates merged product PRs and can draft a docs PR when the documentation needs to change. Nothing merges without a human.
 
 Mintlify's AI helps you write and edit within the platform. It is a strong authoring assistant; it is not a pipeline from your product repo to a reviewed docs PR.
 
 ## Pricing
 
-Thally is free to self-host with unlimited pages and readers. Thally Cloud is $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include three team members. Each additional active member or pending invitation adds $20 to the monthly bill. Thally Cloud adds managed services, Thally AI answers, Track, readiness gates, and the Cloud dashboard. Enterprise pricing is custom and scoped to each customer's security, identity, support, and contract requirements. Readers are never billed. Full details are on the [pricing page](/pricing) and in the machine-readable [pricing.md](/pricing.md).
+Thally is free to self-host with unlimited pages and readers. Thally Cloud is $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include three team members. Each additional active member or pending invitation adds $20 to the monthly bill. Thally Cloud adds managed services, AI answers, documentation automation, readiness gates, and the Cloud dashboard. Enterprise pricing is custom and scoped to each customer's security, identity, support, and contract requirements. Readers are never billed. Full details are on the [pricing page](/pricing) and in the machine-readable [pricing.md](/pricing.md).
 
 Mintlify prices its hosted tiers separately; their pricing page is the source of truth.
 
@@ -170,7 +170,7 @@ Mintlify prices its hosted tiers separately; their pricing page is the source of
 
 - you want AI agents to read your docs natively, without scraping
 - self-hosting, MIT licensing, or data residency matters to you
-- you want relevant merged product changes to become reviewable docs PRs after Track is configured
+- you want relevant merged product changes to become reviewable docs PRs after product repositories are connected to Thally
 - you want to gate CI on documentation quality
 
 **Choose Mintlify if:**
@@ -243,7 +243,7 @@ GitBook publishes clean HTML and continues to add AI features to its platform. I
 
 ## Ownership and cost
 
-Thally is MIT licensed. Self-hosting is free forever with unlimited pages and readers; you can deploy the Next.js project to any compatible host. Thally Cloud is $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include three team members. Each additional active member or pending invitation adds $20 to the monthly bill. Thally Cloud adds managed services, Thally AI, Track, and the dashboard. Enterprise pricing is custom and scoped to each customer's security, identity, support, and contract requirements. Details are on the [pricing page](/pricing).
+Thally is MIT licensed. Self-hosting is free forever with unlimited pages and readers; you can deploy the Next.js project to any compatible host. Thally Cloud is $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include three team members. Each additional active member or pending invitation adds $20 to the monthly bill. Thally Cloud adds managed services, AI answers, documentation automation, and the dashboard. Enterprise pricing is custom and scoped to each customer's security, identity, support, and contract requirements. Details are on the [pricing page](/pricing).
 
 GitBook is a hosted product with per-user pricing, so check its pricing page for current tiers. The main structural difference is ownership: GitBook operates the platform, while a Thally site remains a repository you can deploy yourself.
 

@@ -1,6 +1,6 @@
 # Thally
 
-The Thally marketing site. Thally helps software teams publish one documentation source for people and AI tools, then keep it current through review-gated updates with Thally Track.
+The Thally marketing site. Thally helps software teams publish one documentation source for people and AI tools, then keep it current through review-gated updates drafted by Thally.
 
 Built with Next.js 16 (App Router), Tailwind CSS v4, shadcn/ui, and Motion.
 

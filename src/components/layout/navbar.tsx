@@ -68,7 +68,7 @@ const Navbar = () => {
         {
           title: "Cloud Dashboard",
           href: "/#dashboard",
-          description: "Manage sites, analytics, team roles, AI answers, and Track from Thally Cloud.",
+          description: "Manage sites, analytics, team roles, AI answers, and Thally Track from Thally Cloud.",
           icon: Overview,
         },
       ],

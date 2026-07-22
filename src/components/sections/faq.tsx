@@ -6,12 +6,12 @@ const homeQuestions = [
   {
     question: "What is Thally?",
     answer:
-      "Thally is a documentation platform for publishing one source for people and AI tools. Start a new site or bring your existing docs, then connect product repositories if you want Track to draft reviewable updates.",
+      "Thally is a documentation platform for publishing one source for people and AI tools. Start a new site or bring your existing docs, then connect product repositories if you want Thally to draft reviewable updates.",
   },
   {
     question: "How is Thally different from other docs tools?",
     answer:
-      "Thally keeps the documentation source and publishing engine under your control. The same content serves people and AI tools, and Track can draft docs PRs from relevant merged product changes after you connect the repositories.",
+      "Thally keeps the documentation source and publishing engine under your control. The same content serves people and AI tools, and Thally can draft docs PRs from relevant merged product changes after you connect the repositories.",
   },
   {
     question: "How do I migrate from Mintlify, Docusaurus, or GitBook?",
@@ -21,7 +21,7 @@ const homeQuestions = [
   {
     question: "How does Thally keep my docs up to date?",
     answer:
-      "First publish or connect a Thally docs site. Then choose the product repositories Track should watch. When a relevant pull request merges, Track can draft a documentation update for review. It can also decide that no docs change is needed, and it never merges by itself.",
+      "First publish or connect a Thally docs site. Then choose the product repositories Thally should watch. When a relevant pull request merges, Thally can draft a documentation update for review. It can also decide that no docs change is needed, and it never merges by itself.",
   },
   {
     question: "How does Thally check documentation quality?",
