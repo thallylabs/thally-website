@@ -7,7 +7,6 @@ import { Feature1 } from "@/components/sections/feature1";
 import { Feature2 } from "@/components/sections/feature2";
 import { Feature3 } from "@/components/sections/feature3";
 import Hero from "@/components/sections/hero";
-import { HowItWorks } from "@/components/sections/how-it-works";
 import Logos from "@/components/sections/logos";
 import { Migrate } from "@/components/sections/migrate";
 import { NoLockIn } from "@/components/sections/no-lock-in";
@@ -82,17 +81,16 @@ export default function Home() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       <Hero />
-      <HowItWorks />
+      <Logos />
       <Automation />
       <div className="mx-2.5 overflow-hidden rounded-4xl lg:mx-4">
         <Feature2 />
         <Feature3 />
       </div>
-      <Logos />
       <Migrate />
-      <NoLockIn />
       <Dashboard />
       <Feature1 />
+      <NoLockIn />
       <Pricing />
       <FAQ context="home" />
     </>
