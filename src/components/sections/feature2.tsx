@@ -202,7 +202,7 @@ const ITEMS: ItemType[] = [
     className: "md:col-span-3 md:row-span-3",
   },
   {
-    title: "Docs maintenance, drafted for review.",
+    title: "Thally drafts maintenance. You review every change.",
     description:
       "Thally validates links and resyncs your OpenAPI spec on every build. Relevant product changes and @thally mentions can become docs PRs your team reviews.",
     illustration: <AutomationCard />,
@@ -222,8 +222,8 @@ const ITEMS: ItemType[] = [
     className: "md:col-span-2 md:row-span-2 md:col-start-3 md:row-start-4",
   },
   {
-    title: "Every build gets a report card.",
-    description: "Checks run on every deploy and flag stale or incomplete pages before they reach machine readers.",
+    title: "Catch weak pages before you publish.",
+    description: "Every deploy flags stale or incomplete pages before people or AI tools rely on them.",
     illustration: <BuildReportCard />,
     className: "md:col-span-2 md:row-span-2 md:col-start-5 md:row-start-4",
   },
@@ -236,8 +236,8 @@ export const Feature2 = () => {
 
       <div className="relative container">
         <SectionHeader
-          title="One source for people and AI tools"
-          description="Write once in MDX. Thally publishes polished pages for people, structured formats for AI tools, and checks both on every build."
+          title="Give people and AI tools one source of truth"
+          description="Write once in MDX. Thally publishes polished pages for people, structured formats for AI tools, and checks your docs on every build."
         />
 
         <div className="mt-8 grid grid-cols-1 gap-4 md:mt-12 md:auto-rows-fr md:grid-cols-6 md:grid-rows-5 lg:mt-20">

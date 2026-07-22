@@ -9,19 +9,19 @@ import { Button } from "@/components/ui/button";
 
 const principles = [
   {
-    title: "One source",
+    title: "Maintain one source",
     description: "Write in MDX and publish HTML, Markdown, JSON, and JSON-LD without maintaining separate copies.",
   },
   {
-    title: "Git stays in charge",
-    description: "Documentation lives beside the product, with changes reviewed through the pull-request workflow.",
+    title: "Keep Git in charge",
+    description: "Keep your docs beside your product and review changes through the pull-request workflow.",
   },
   {
-    title: "Every reader gets a useful format",
-    description: "People get a polished site while search tools, assistants, and agents get structured content.",
+    title: "Serve every reader",
+    description: "Give people a polished site and give search tools, assistants, and agents structured content.",
   },
   {
-    title: "Hosting is your decision",
+    title: "Choose where you host",
     description: "Self-host the open-source core or use Thally Cloud when you want the infrastructure managed for you.",
   },
 ];
@@ -60,7 +60,7 @@ const About = () => {
         <Reveal className="max-w-3xl lg:translate-x-24">
           <p className="text-primary mb-4 text-sm font-semibold tracking-widest uppercase">About Thally</p>
           <h1 className="font-display max-w-[760px] text-3xl leading-tight font-semibold tracking-tight text-balance md:text-4xl lg:text-5xl">
-            Documentation should work for people and AI agents without becoming two separate products.
+            Your docs should work for people and AI agents without becoming two separate products.
           </h1>
         </Reveal>
 
@@ -100,12 +100,12 @@ const About = () => {
         <div className="mt-24 space-y-16 md:mt-32 md:space-y-24">
           <Reveal className="max-w-2xl lg:translate-x-24">
             <h2 className="font-display text-2xl leading-8 font-semibold md:text-3xl">
-              Documentation is read in more places than a browser.
+              Your docs are read in more places than a browser.
             </h2>
             <p className="mt-6 text-lg leading-8">
-              Developers still visit documentation sites, but they also ask coding assistants, use search, and send
-              agents to find answers on their behalf. Thally is built so those readers can use the same source instead
-              of relying on a second, manually maintained knowledge base.
+              People still visit your documentation site, but they also ask coding assistants, use search, and send
+              agents to find answers. Thally gives every reader the same source instead of making you maintain a second
+              knowledge base.
             </p>
           </Reveal>
 
@@ -127,7 +127,7 @@ const About = () => {
 
           <Reveal className="ml-auto max-w-2xl lg:-translate-x-24">
             <h2 className="font-display text-2xl leading-8 font-semibold md:text-3xl">
-              Open source at the core, managed when it helps.
+              Own the core. Add managed services when they help.
             </h2>
             <p className="mt-6 text-lg leading-8">
               Thally&apos;s core is available under the MIT license. You can self-host it, keep your content in Git, and
@@ -143,8 +143,8 @@ const About = () => {
                 Thally is built and operated by Fairspleet LLC.
               </h2>
               <p className="text-muted-foreground mt-5 text-lg leading-8">
-                We build Thally to make documentation easier to own, publish, and use across human and machine readers.
-                Contact us directly with questions about the product, support, or company.
+                We build Thally so you can own and publish one documentation source for people and AI tools. Contact us
+                directly with questions about the product, support, or company.
               </p>
               <Button asChild variant="outline" size="lg" className="mt-8">
                 <Link href="/contact">

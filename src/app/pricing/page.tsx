@@ -10,7 +10,7 @@ import { SITE_URL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Thally Pricing: Open Source and Cloud Plans",
   description:
-    "Thally pricing: free to self-host forever, or choose Thally Cloud at $60 per month on a monthly subscription and $50 per month on an annual subscription.",
+    "Self-host Thally for free, or choose Thally Cloud at $60 per workspace each month on a monthly subscription or $50 on an annual subscription.",
   alternates: {
     canonical: "/pricing",
   },

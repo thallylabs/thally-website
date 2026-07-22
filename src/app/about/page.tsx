@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import About from "@/components/sections/about";
 
 export const metadata: Metadata = {
-  title: "About Thally: Documentation That Keeps Up",
+  title: "About Thally: One Source for Every Reader",
   description:
-    "Meet the team behind Thally, the documentation platform for machine-readable publishing and review-gated maintenance.",
+    "Learn how Thally helps you publish one documentation source for people and AI tools while keeping the source and hosting choices under your control.",
   alternates: {
     canonical: "/about",
   },

@@ -95,8 +95,8 @@ export const FAQ = ({ context = "home" }: { context?: "home" | "pricing" }) => {
           title="Frequently asked questions"
           description={
             context === "pricing"
-              ? "Clear answers about plans, billing, hosting, cancellation, and Enterprise support."
-              : "Quick answers about migration, automation, agents, self-hosting, and how Thally fits your stack."
+              ? "Find answers about plans, billing, hosting, cancellation, and Enterprise support."
+              : "Find answers about migration, automation, AI tools, self-hosting, and how Thally fits your stack."
           }
           align="center"
           layout="stack"

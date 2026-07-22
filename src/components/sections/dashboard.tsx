@@ -10,28 +10,28 @@ import { SectionGrid, SectionHeader } from "@/components/section-decor";
 const POINTS = [
   {
     icon: Palette,
-    title: "Rebrand without a rebuild.",
+    title: "Update your brand without rebuilding.",
     description:
       "Themes, accent colors, and per-mode logos apply to the live site the moment an Owner saves them. No merge, no redeploy.",
     accent: "var(--chart-1)",
   },
   {
     icon: BarChart3,
-    title: "Analytics that point at gaps.",
+    title: "Find the gaps in your docs.",
     description:
       "See first-party traffic, top pages, and searches with no results, so your team knows which documentation to write next.",
     accent: "var(--chart-2)",
   },
   {
     icon: GitPullRequest,
-    title: "One queue for every reviewable docs task.",
+    title: "Review every docs task in one queue.",
     description:
       "Review updates from merged product changes, drift sweeps, and @thally mentions before anything merges.",
     accent: "var(--chart-5)",
   },
   {
     icon: Users,
-    title: "Workspace roles in Thally Cloud.",
+    title: "Give each teammate the right access.",
     description: "Invite teammates and assign Owner, Editor, or Viewer access from the Cloud workspace.",
     accent: "var(--chart-4)",
   },
@@ -46,8 +46,8 @@ export const Dashboard = () => {
 
       <div className="relative container">
         <SectionHeader
-          title="Manage sites, analytics, and docs updates in one place"
-          description="Use app.thally.io to manage sites, deployments, analytics, team access, and docs updates drafted by Thally."
+          title="Manage your sites, analytics, and docs updates in one place"
+          description="Use Thally Cloud to manage your sites, deployments, analytics, team access, and docs updates drafted by Thally."
         />
 
         <div className="relative mt-10 lg:mt-16" style={{ perspective: 1400 }}>

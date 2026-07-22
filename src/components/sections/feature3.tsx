@@ -28,7 +28,7 @@ const FEATURES: {
     description: "One MDX source, every format projected from it.",
     icon: Structured,
     content: {
-      title: "Author once. Thally does the projections.",
+      title: "Write once. Thally creates every format.",
       description:
         "Every page becomes a typed graph. Thally generates JSON, JSON-LD, Markdown, HTML, search, and embeddings from it, so you maintain one source instead of six.",
       view: ContentGraphView,
@@ -40,7 +40,7 @@ const FEATURES: {
     description: "Hybrid search and grounded chat, one index.",
     icon: Search,
     content: {
-      title: "Search and answers, on the same index.",
+      title: "Give readers search and answers from one index.",
       description:
         "One ⌘K console combines full-text search, vector recall, and grounded answers. Each answer cites its source pages and says when the docs do not contain an answer.",
       view: SearchConsoleView,
@@ -64,7 +64,7 @@ const FEATURES: {
     description: "llms.txt, MCP, and per-page JSON by default.",
     icon: Mcp,
     content: {
-      title: "Legible to every machine reader.",
+      title: "Give AI tools a direct path to your docs.",
       description:
         "Every deploy includes llms.txt, agent manifests, per-page JSON, and a remote MCP server at /api/mcp. Connect the endpoint to give agents direct access to your docs as tools.",
       view: ReadinessView,
@@ -99,8 +99,8 @@ export const Feature3 = () => {
       <SectionLines />
       <div className="relative container">
         <SectionHeader
-          title="One graph, read six different ways"
-          description="Search, chat, the API reference, and agent endpoints all use the same content graph. Each reader gets the format it needs without a separate pipeline."
+          title="Maintain one source. Serve every reader."
+          description="Search, chat, your API reference, and agent endpoints all use the same content graph. You give each reader the format it needs without maintaining a separate pipeline."
         />
 
         <Tabs

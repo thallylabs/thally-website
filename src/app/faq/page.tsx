@@ -5,9 +5,9 @@ import { faqItems } from "@/components/sections/faq-page-data";
 import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Thally FAQ: AI-Native Documentation",
+  title: "Thally FAQ: Pricing, Features, and Support",
   description:
-    "Answers about Thally: free self-hosting, migration from Mintlify, Docusaurus, or GitBook, AI agent output formats, MCP server, SSO, security, and support.",
+    "Find answers about Thally pricing, self-hosting, migration, AI tool access, MCP, SSO, security, and support.",
   alternates: {
     canonical: "/faq",
   },

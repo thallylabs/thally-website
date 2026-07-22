@@ -28,7 +28,7 @@ interface PricingPlan {
 const plans: PricingPlan[] = [
   {
     name: "Free",
-    tagline: "Own and run the engine yourself",
+    tagline: "Run Thally on your infrastructure",
     monthlyPrice: "$0",
     annualPrice: "$0",
     priceUnit: "forever",
@@ -48,7 +48,7 @@ const plans: PricingPlan[] = [
   },
   {
     name: "Thally Cloud",
-    tagline: "Managed services for growing teams",
+    tagline: "Let Thally manage hosting and services",
     monthlyPrice: "$60",
     annualPrice: "$50",
     priceUnit: "per workspace / month",
@@ -68,7 +68,7 @@ const plans: PricingPlan[] = [
   },
   {
     name: "Enterprise",
-    tagline: "Security and support tailored to you",
+    tagline: "Shape security and support around your needs",
     monthlyPrice: "Custom",
     annualPrice: "Custom",
     monthlyBillingNote: "Annual contract · invoiced",
@@ -98,8 +98,8 @@ export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" 
       <div className="relative container">
         <SectionHeader
           eyebrow={headerTag === "h2" ? "Plans" : undefined}
-          title="Start with the free, open-source engine. Add Thally Cloud when you want managed services."
-          description="The MIT-licensed engine costs $0 and runs on your infrastructure. Thally Cloud adds managed hosting, cited AI answers, Thally-drafted updates, analytics, and a shared workspace."
+          title="Start free. Add Thally Cloud when you want managed services."
+          description="Run Thally's MIT-licensed engine on your infrastructure for $0. Choose Thally Cloud when you want managed hosting, cited AI answers, docs updates drafted by Thally, analytics, and a shared workspace."
           align="center"
           layout="stack"
           as={headerTag}
