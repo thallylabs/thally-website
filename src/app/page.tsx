@@ -64,7 +64,7 @@ const productJsonLd = {
     "MIT-licensed publishing engine",
     "HTML, JSON, JSON-LD, and Markdown from the same content source",
     "Remote MCP server at /api/mcp on every deployed site",
-    "Agent-readiness score with CI gating and agent-drafted fix PRs",
+    "Agent-readiness score with CI gating and Thally-drafted fix PRs",
     "Docs agent: @thally GitHub mentions can become reviewed docs PRs",
     "Thally Track: relevant merged product PRs can become documentation PRs",
     "Migration from Mintlify, Docusaurus, GitBook, Nextra, VitePress, and Starlight",

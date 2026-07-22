@@ -24,9 +24,9 @@ const POINTS = [
   },
   {
     icon: GitPullRequest,
-    title: "A queue for agent-drafted PRs.",
+    title: "One queue for every reviewable docs task.",
     description:
-      "Review every docs task from Thally, drift sweeps, and @thally mentions in one queue before anything merges.",
+      "Review updates from merged product changes, drift sweeps, and @thally mentions before anything merges.",
     accent: "var(--chart-5)",
   },
   {
@@ -46,8 +46,8 @@ export const Dashboard = () => {
 
       <div className="relative container">
         <SectionHeader
-          title="Manage the service around your docs"
-          description="Use app.thally.io to manage sites, deployments, analytics, team access, and agent-drafted work."
+          title="Manage sites, analytics, and docs updates in one place"
+          description="Use app.thally.io to manage sites, deployments, analytics, team access, and docs updates drafted by Thally."
         />
 
         <div className="relative mt-10 lg:mt-16" style={{ perspective: 1400 }}>

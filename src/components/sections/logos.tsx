@@ -8,7 +8,7 @@ export default function Logos() {
   return (
     <section className="bg-background overflow-hidden py-12 md:py-20 lg:py-24">
       <p className="text-muted-foreground container mb-8 text-center text-sm font-medium tracking-wide">
-        Read natively by the agents your readers already use
+        Built for the AI tools your readers already use
       </p>
       <Marquee className="mask-[linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] py-2">
         <MarqueeContent speed={35}>

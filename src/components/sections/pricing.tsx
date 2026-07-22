@@ -98,8 +98,8 @@ export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" 
       <div className="relative container">
         <SectionHeader
           eyebrow={headerTag === "h2" ? "Plans" : undefined}
-          title="Use the open-source engine for free. Add Cloud for the service."
-          description="Run the MIT-licensed engine yourself, or use Thally Cloud for managed hosting, cited AI answers, Thally-drafted updates, analytics, and a shared workspace."
+          title="Start with the free, open-source engine. Add Thally Cloud when you want managed services."
+          description="The MIT-licensed engine costs $0 and runs on your infrastructure. Thally Cloud adds managed hosting, cited AI answers, Thally-drafted updates, analytics, and a shared workspace."
           align="center"
           layout="stack"
           as={headerTag}

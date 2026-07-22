@@ -62,13 +62,13 @@ const defaultProps: HeroFeatureSliderProps = {
     href: DESTINATIONS.signup,
   },
   buttonSecondary: {
-    text: "See how Thally works",
+    text: "See how Thally updates docs",
     href: "#automation",
   },
   features: [
     {
       title: "Start fresh or bring your docs",
-      description: "Create a new site, connect an existing Thally project, or migrate your current documentation.",
+      description: "Create a new site, connect an existing Thally project, or migrate your current docs.",
       icon: Guide,
     },
     {
@@ -78,8 +78,7 @@ const defaultProps: HeroFeatureSliderProps = {
     },
     {
       title: "Updates stay reviewable",
-      description:
-        "After you connect product repos, Thally can turn relevant merged changes into docs PRs your team reviews.",
+      description: "Connect product repos, then review every docs PR Thally drafts from relevant merged changes.",
       icon: Readiness,
     },
   ],

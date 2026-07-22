@@ -22,27 +22,27 @@ const TRIGGERS: Trigger[] = [
   {
     id: "mention",
     label: "Tag it",
-    title: "Ask for a docs update from GitHub.",
+    title: "Request a docs update from GitHub.",
     description:
-      "After your Thally docs repository is connected, mention @thally on an issue or pull request to request a reviewable update.",
+      "In a connected GitHub repo, mention @thally on an issue or pull request to request a reviewable docs update.",
     icon: AtSign,
     accent: "var(--chart-1)",
   },
   {
     id: "track",
     label: "Thally Track",
-    title: "Thally evaluates merged product PRs.",
+    title: "Thally checks merged product changes against your docs.",
     description:
-      "After your site is live, choose the product repositories Thally should watch. Relevant merged changes can become docs PRs for review.",
+      "Choose the product repos Thally should watch. When a merged change affects the docs, Thally drafts an update for review.",
     icon: GitMerge,
     accent: "var(--chart-2)",
   },
   {
     id: "score",
     label: "Score it",
-    title: "Quality findings can become fix PRs.",
+    title: "Turn quality findings into fix PRs.",
     description:
-      "The readiness report names the pages lowering your score. Ask the agent to prepare reviewable fixes for supported findings.",
+      "The readiness report identifies the pages lowering your score. Ask Thally to prepare reviewable fixes for the findings it can resolve.",
     icon: Radar,
     accent: "var(--chart-5)",
   },
@@ -116,7 +116,7 @@ function TrackFlow() {
       </motion.div>
       <PrCard
         title="docs: document per-project webhook secrets"
-        meta="Drafted by the agent · labeled origin: track"
+        meta="Drafted by Thally · labeled origin: track"
         checks={["Updated 2 pages, added 1", "Registered in navigation"]}
         delay={0.25}
       />
@@ -228,8 +228,8 @@ export const Automation = () => {
 
       <div className="relative container">
         <SectionHeader
-          title="Connect product repositories. Review the docs changes."
-          description="Once your Thally site is live, Thally can evaluate merged changes from the product repositories you choose. It drafts an update only when the docs need one. Your team decides what lands."
+          title="Connect your product repos. Review every docs update."
+          description="Once your docs site is live, connect the product repos you want Thally to watch. It drafts an update only when the docs need one. Your team decides what lands."
         />
 
         <div className="mt-10 grid gap-5 lg:mt-16 lg:grid-cols-[5fr_6fr] lg:gap-10">

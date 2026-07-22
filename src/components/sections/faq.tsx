@@ -6,7 +6,7 @@ const homeQuestions = [
   {
     question: "What is Thally?",
     answer:
-      "Thally is a documentation platform for publishing one source for people and AI tools. Start a new site or bring your existing docs, then connect product repositories if you want Thally to draft reviewable updates.",
+      "Thally is a documentation platform that publishes one source for people and AI tools. Start a new site or bring your existing docs, then connect product repos if you want Thally to draft reviewable updates.",
   },
   {
     question: "How is Thally different from other docs tools?",
@@ -16,12 +16,12 @@ const homeQuestions = [
   {
     question: "How do I migrate from Mintlify, Docusaurus, or GitBook?",
     answer:
-      "In Thally Cloud, choose the migration path and provide your public docs site. For a local migration, run the create-thally-docs CLI against a GitHub repository. Thally converts supported pages to MDX and rebuilds the navigation.",
+      "In Thally Cloud, provide your public docs URL to start a migration. To migrate locally, run the create-thally-docs CLI against a GitHub repository. Thally converts supported pages to MDX and rebuilds the navigation.",
   },
   {
     question: "How does Thally keep my docs up to date?",
     answer:
-      "First publish or connect a Thally docs site. Then choose the product repositories Thally should watch. When a relevant pull request merges, Thally can draft a documentation update for review. It can also decide that no docs change is needed, and it never merges by itself.",
+      "First publish or connect a Thally docs site. Then choose the product repos Thally should watch. When a merged pull request affects the docs, Thally can draft an update for review or report that no change is needed. Nothing merges without your approval.",
   },
   {
     question: "How does Thally check documentation quality?",
@@ -31,7 +31,7 @@ const homeQuestions = [
   {
     question: "How can AI assistants read my docs?",
     answer:
-      "Every Thally site automatically publishes versions of your documentation that AI assistants can read reliably. Assistants can search your docs, open pages, and follow your navigation without scraping the visual website.",
+      "Every Thally page can return HTML, JSON, JSON-LD, or Markdown from the same source. AI assistants can search your docs, open pages, and follow your navigation without scraping the visual website.",
   },
 ];
 
