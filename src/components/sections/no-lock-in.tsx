@@ -15,19 +15,20 @@ const guarantees = [
   },
   {
     number: "03",
-    title: "Hosting is optional",
+    title: "Self-hosting stays available",
     description:
-      "Use Thally Cloud or connect your own Vercel, Netlify, Docker, or Render deployment for the same plan price.",
+      "Clone the repository and deploy the open-source engine wherever Next.js runs. Managed hosting is a service, not a content lock-in.",
   },
   {
     number: "04",
-    title: "Your domain stays yours",
-    description: "Every paid plan supports custom domains. Your audience is never held behind a Thally subdomain.",
+    title: "Your domain stays under your control",
+    description: "Thally never takes ownership of your domain. Use it wherever you deploy the site.",
   },
   {
     number: "05",
-    title: "Cancellation changes services, not your site",
-    description: "Your site keeps working with the free, self-hosted version. Only the paid services switch off.",
+    title: "Cancellation leaves you with the source",
+    description:
+      "Your repository and the MIT-licensed engine remain yours. If Cloud hosting ends, you can deploy the site elsewhere.",
   },
 ];
 
@@ -44,11 +45,11 @@ export function NoLockIn() {
               Designed for flexibility
             </p>
             <h2 className="font-display mt-5 max-w-xl text-4xl leading-[1.03] font-semibold tracking-[-0.04em] text-balance sm:text-5xl md:text-6xl">
-              Pay for the service. Keep the site.
+              Pay for the service. Keep the source.
             </h2>
             <p className="text-muted-foreground mt-7 max-w-lg text-lg leading-relaxed text-pretty md:text-xl">
-              Thally earns your business with useful services, not by holding your content, renderer, hosting, or
-              domain.
+              Thally Cloud provides hosting and paid services without taking ownership of your content, repository,
+              publishing engine, or domain.
             </p>
 
             <div
@@ -68,8 +69,8 @@ export function NoLockIn() {
                   <p className="mt-1 text-sm font-semibold">Thally Cloud</p>
                 </div>
                 <div>
-                  <p className="text-muted-foreground text-xs">Or deploy</p>
-                  <p className="mt-1 text-sm font-semibold">Anywhere else</p>
+                  <p className="text-muted-foreground text-xs">Or run</p>
+                  <p className="mt-1 text-sm font-semibold">The open-source engine</p>
                 </div>
               </div>
             </div>

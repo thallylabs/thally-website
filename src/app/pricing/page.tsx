@@ -29,7 +29,7 @@ const pricingJsonLd = {
   operatingSystem: "Web",
   license: "https://opensource.org/license/mit",
   description:
-    "AI-native documentation platform for AI agents and humans. MIT licensed and free to self-host, with Thally Cloud managed services and custom Enterprise plans.",
+    "Documentation platform with a free MIT-licensed engine, Thally Cloud managed hosting and services, and custom Enterprise plans.",
   publisher: { "@id": `${SITE_URL}/#organization` },
   mainEntityOfPage: `${SITE_URL}/pricing`,
   offers: {
@@ -45,7 +45,7 @@ const pricingJsonLd = {
         price: "0",
         priceCurrency: "USD",
         description:
-          "Host Thally yourself for free. Includes unlimited pages and readers, fast documentation search, structured content for AI assistants, and automatic draft updates using your own AI provider.",
+          "Host Thally yourself for free. Includes unlimited pages and readers, documentation search, structured content for AI assistants, quality checks, and review-gated docs agent runs using your own AI provider.",
       },
       {
         "@type": "Offer",
@@ -53,7 +53,7 @@ const pricingJsonLd = {
         price: "60",
         priceCurrency: "USD",
         description:
-          "$60 per workspace each month. Includes managed hosting, cited AI answers, automatic draft updates when product changes affect the documentation, quality checks, and analytics. 14-day trial.",
+          "$60 per workspace each month. Includes managed hosting, cited AI answers, Thally-drafted updates for relevant merged changes, quality checks, and analytics. 14-day trial.",
       },
       {
         "@type": "Offer",
@@ -61,7 +61,7 @@ const pricingJsonLd = {
         price: "50",
         priceCurrency: "USD",
         description:
-          "$50 per workspace per month with an annual subscription, billed monthly. Includes managed hosting, cited AI answers, automatic draft updates when product changes affect the documentation, quality checks, analytics, and a 14-day trial.",
+          "$50 per workspace per month with an annual subscription, billed monthly. Includes managed hosting, cited AI answers, Thally-drafted updates for relevant merged changes, quality checks, analytics, and a 14-day trial.",
       },
     ],
   },

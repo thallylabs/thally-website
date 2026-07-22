@@ -41,12 +41,12 @@ export const blogPosts: BlogPost[] = [
       {
         question: "Can I migrate from Mintlify to Thally?",
         answer:
-          "Yes. Run npx create-thally migrate against your docs repo and the migrator converts pages to clean MDX, rebuilds navigation, carries redirects, and wires up your OpenAPI spec. Most migrations finish in minutes.",
+          "Yes. Run npx create-thally-docs migrate against a supported GitHub docs repository. The migrator converts pages to MDX, rebuilds navigation, carries supported redirects, and detects an OpenAPI spec when available.",
       },
       {
         question: "Is Thally free to self-host?",
         answer:
-          "Yes. The whole engine is MIT licensed, including commercial use, with unlimited pages and readers. Paid plans add managed hosting, Thally AI, Track, and team features, never the core.",
+          "Yes. The whole engine is MIT licensed, including commercial use, with unlimited pages and readers. Paid plans add managed hosting, AI answers, documentation automation, and team features, never the core.",
       },
       {
         question: "Does Mintlify support MCP or llms.txt?",
@@ -77,7 +77,7 @@ export const blogPosts: BlogPost[] = [
       {
         question: "Can I export my content out of GitBook into Thally?",
         answer:
-          "Yes. The Thally migrator imports GitBook spaces, converts pages to MDX, and rebuilds your navigation. Your content lands in a Next.js repo you own.",
+          "Yes. The Thally migrator imports GitBook spaces, converts pages to MDX, and rebuilds your navigation as a Thally project.",
       },
     ],
   },

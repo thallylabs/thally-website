@@ -56,9 +56,9 @@ const plans: PricingPlan[] = [
     annualBillingNote: "$50 billed monthly on an annual subscription",
     features: [
       "Everything in Free",
-      "Managed hosting or use your current host",
+      "Managed hosting for your Thally sites",
       "AI answers with links to the source",
-      "Automatic draft updates when your product changes",
+      "Thally-drafted updates for relevant merged changes",
       "Documentation analytics and quality checks",
     ],
     cta: "Start 14-day trial",
@@ -75,10 +75,10 @@ const plans: PricingPlan[] = [
     annualBillingNote: "Annual contract · invoiced",
     features: [
       "Everything in Thally Cloud",
-      "Single sign-on and automated account access",
-      "Activity history and custom contract terms",
-      "Hands-on migration and priority support",
-      "Dedicated account manager",
+      "Security and identity requirements scoped with your team",
+      "Custom contract and support terms",
+      "Hands-on migration planning",
+      "Dedicated rollout support",
     ],
     cta: "Talk to sales",
     href: DESTINATIONS.sales,
@@ -98,8 +98,8 @@ export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" 
       <div className="relative container">
         <SectionHeader
           eyebrow={headerTag === "h2" ? "Plans" : undefined}
-          title="Start free. Add Thally Cloud when you want it."
-          description="Your documentation stays open source. Upgrade when you want managed hosting, cited AI answers, automatic updates, and a shared workspace for your team."
+          title="Start with the free, open-source engine. Add Thally Cloud when you want managed services."
+          description="The MIT-licensed engine costs $0 and runs on your infrastructure. Thally Cloud adds managed hosting, cited AI answers, Thally-drafted updates, analytics, and a shared workspace."
           align="center"
           layout="stack"
           as={headerTag}

@@ -77,7 +77,7 @@ function AutomationCard() {
     { when: "Spec changes", then: "Regen API docs" },
     { when: "Broken link", then: "Fail CI" },
     { when: "@thally comment", then: "Draft docs PR" },
-    { when: "Product PR merged", then: "Docs PR via Track" },
+    { when: "Product PR merged", then: "Docs PR via Thally" },
   ];
   const reduce = useReducedMotion();
   return (
@@ -197,14 +197,14 @@ const ITEMS: ItemType[] = [
   {
     title: "A readiness score you can gate CI on.",
     description:
-      "Get a deterministic 0 to 100 grade on every build, with the exact pages lowering it. The agent turns failed checks into fix PRs.",
+      "Get a deterministic 0 to 100 grade on every build, with the exact pages lowering it. Thally can turn failed checks into reviewable fix PRs.",
     illustration: <ReadinessScoreCard />,
     className: "md:col-span-3 md:row-span-3",
   },
   {
     title: "Docs maintenance, drafted for review.",
     description:
-      "Builds validate links and resync your spec. Product changes and mentions become docs PRs your team reviews.",
+      "Thally validates links and resyncs your OpenAPI spec on every build. Relevant product changes and @thally mentions can become docs PRs your team reviews.",
     illustration: <AutomationCard />,
     className: "md:col-span-3 md:row-span-3 md:col-start-4",
   },
@@ -236,8 +236,8 @@ export const Feature2 = () => {
 
       <div className="relative container">
         <SectionHeader
-          title="Docs that hold up for both audiences"
-          description="Write once in MDX. Thally structures it for agents, typesets it for readers, and keeps both honest with checks on every build."
+          title="One source for people and AI tools"
+          description="Write once in MDX. Thally publishes polished pages for people, structured formats for AI tools, and checks both on every build."
         />
 
         <div className="mt-8 grid grid-cols-1 gap-4 md:mt-12 md:auto-rows-fr md:grid-cols-6 md:grid-rows-5 lg:mt-20">

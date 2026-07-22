@@ -71,49 +71,49 @@ const heroImageClassName =
   "border-border absolute top-0 left-0 w-full rounded-t-2xl rounded-b-none border border-b-0 object-cover object-left-top";
 
 const defaultProps: HeroFeatureSliderProps = {
-  heading: "AI-native documentation for agents and humans.",
+  heading: "Docs that keep up with the product.",
   description:
-    "One MDX source serves AI agents and human readers from the same URL. When your product changes, Thally drafts the docs PR.",
+    "Start a new docs site or bring your existing docs to Thally. When the site is live, connect product repos so Thally can draft reviewable updates when the docs need to change.",
   buttonPrimary: {
-    text: "Start free",
+    text: "Create your docs site",
     href: DESTINATIONS.signup,
   },
   buttonSecondary: {
-    text: "Read the docs",
-    href: DESTINATIONS.docs,
+    text: "See how Thally updates docs",
+    href: "#automation",
   },
   features: [
     {
-      title: "Structured for machines",
-      description: "Every route returns JSON, JSON-LD, or Markdown on request, so agents can read without scraping.",
-      icon: Structured,
-    },
-    {
-      title: "Typeset for humans",
-      description: "The same source becomes semantic HTML that is clear, fast, and easy to navigate.",
+      title: "Start fresh or bring your docs",
+      description: "Create a new site, connect an existing Thally project, or migrate your current docs.",
       icon: Guide,
     },
     {
-      title: "Scored for agent-readiness",
-      description: "Get a deterministic 0 to 100 grade on every build. Gate CI and let the agent draft the fixes.",
+      title: "One source for every reader",
+      description: "Publish polished HTML for people and structured JSON, JSON-LD, and Markdown for AI tools.",
+      icon: Structured,
+    },
+    {
+      title: "Updates stay reviewable",
+      description: "Connect product repos, then review every docs PR Thally drafts from relevant merged changes.",
       icon: Readiness,
     },
   ],
   images: [
     {
-      src: "/images/hero2.png",
-      alt: "A Thally page served as structured JSON for AI agents",
-      label: "Structured for machines",
+      src: "/images/hero1.png",
+      alt: "A Thally documentation site published from a GitHub repository",
+      label: "Your site",
     },
     {
-      src: "/images/hero1.png",
-      alt: "The same Thally page, typeset for human readers",
-      label: "Typeset for humans",
+      src: "/images/hero2.png",
+      alt: "The same Thally page served as structured JSON for AI tools",
+      label: "Every reader",
     },
     {
       src: "/images/hero3.png",
       alt: "Thally agent-readiness report",
-      label: "Agent-readiness",
+      label: "Review before publishing",
     },
   ],
 };

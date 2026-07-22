@@ -32,7 +32,7 @@ const productJsonLd = {
   operatingSystem: "Web",
   license: "https://opensource.org/license/mit",
   description:
-    "Thally is the AI-native documentation platform for AI agents and humans. One MDX source serves structured JSON, JSON-LD, and Markdown to AI agents and polished HTML to readers, from the same URL. A docs agent turns product changes, GitHub mentions, and readiness findings into reviewed documentation pull requests. Migrate from Mintlify, Docusaurus, or GitBook in one command and deploy anywhere.",
+    "Thally is a documentation platform for publishing one source for people and AI tools. Once the docs site is live, connect product repositories so Thally can draft reviewable updates for relevant merged changes.",
   publisher: { "@id": `${SITE_URL}/#organization` },
   mainEntityOfPage: SITE_URL,
   offers: [
@@ -49,7 +49,7 @@ const productJsonLd = {
       price: "60",
       priceCurrency: "USD",
       description:
-        "Thally Cloud is $60 per workspace per month with three team members included. Additional active members or pending invitations are $20 per month each. Adds managed services, AI answers, Thally Track, readiness gates, documentation analytics, and team roles.",
+        "Thally Cloud is $60 per workspace per month with three team members included. Additional active members or pending invitations are $20 per month each. Adds managed hosting, AI answers, Thally-drafted updates, documentation analytics, and workspace roles.",
     },
     {
       "@type": "Offer",
@@ -61,15 +61,16 @@ const productJsonLd = {
     },
   ],
   featureList: [
-    "AI-native output: JSON, JSON-LD, Markdown, and HTML from the same URL",
+    "MIT-licensed publishing engine",
+    "HTML, JSON, JSON-LD, and Markdown from the same content source",
     "Remote MCP server at /api/mcp on every deployed site",
-    "Agent-readiness score with CI gating and agent-drafted fix PRs",
-    "Docs agent: @thally GitHub mentions become reviewed docs PRs",
-    "Thally Track: merged product PRs become documentation PRs",
-    "One-command migration from Mintlify, Docusaurus, GitBook, Nextra, VitePress, and Starlight",
+    "Agent-readiness score with CI gating and Thally-drafted fix PRs",
+    "Docs agent: @thally GitHub mentions can become reviewed docs PRs",
+    "Thally Track: relevant merged product PRs can become documentation PRs",
+    "Migration from Mintlify, Docusaurus, GitBook, Nextra, VitePress, and Starlight",
     "OpenAPI API reference with interactive Try-It console",
     "Hybrid ⌘K search and retrieval-grounded AI chat with citations",
-    "Admin dashboard: analytics, theming, team roles, docs-task queue",
+    "Cloud dashboard: analytics, theming, workspace roles, docs-task queue",
     "Multi-language docs with one-command AI translation",
     "Deploy anywhere: Vercel, Netlify, Cloudflare, Docker, static export",
   ],

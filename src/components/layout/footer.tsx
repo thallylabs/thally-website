@@ -13,7 +13,7 @@ const navigation = [
       { name: "Automation", href: "/#automation" },
       { name: "Features", href: "/#features" },
       { name: "Migration", href: "/#migrate" },
-      { name: "Admin dashboard", href: "/#dashboard" },
+      { name: "Cloud dashboard", href: "/#dashboard" },
     ],
   },
   {
@@ -60,11 +60,11 @@ export const Footer = () => {
               className="text-primary-foreground dark:text-foreground"
             />
             <h2 className="font-display max-w-md text-3xl leading-tight font-semibold tracking-tight text-balance md:text-4xl">
-              Docs every reader can trust.
+              Docs that keep up with the product.
             </h2>
           </div>
           <Button asChild variant="secondary" size="lg">
-            <Link href={DESTINATIONS.signup}>Start free</Link>
+            <Link href={DESTINATIONS.signup}>Create your docs site</Link>
           </Button>
         </div>
 

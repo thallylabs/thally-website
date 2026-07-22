@@ -1,6 +1,6 @@
 # Pricing: Thally
 
-Thally is the AI-native documentation platform for AI agents and humans. All prices in USD. Last updated: 2026-07-19.
+Thally is a documentation platform with an MIT-licensed engine and optional managed Cloud services. All prices are in USD. Last updated: 2026-07-20.
 
 ## Free
 
@@ -17,15 +17,15 @@ Thally is the AI-native documentation platform for AI agents and humans. All pri
 - Includes 3 team members in any role
 - Additional active members or pending invitations: $20 / month each after the 3 included members
 - Trial: 14 days, no credit card required
-- Everything in Free, plus: Thally AI answers & chat, Thally Track with one-click GitHub App, agent-readiness CI checks, admin dashboard & docs analytics, Owner/Editor/Viewer roles
+- Everything in Free, plus: managed hosting, Thally AI answers and chat, Thally-drafted updates for relevant merged changes, docs analytics, and Owner/Editor/Viewer workspace roles
 - Best for: growing teams who want managed hosting and docs automation
 
 ## Enterprise
 
 - Price: Custom annual contract
-- Everything in Thally Cloud, plus: SAML & SCIM SSO, audit log, 99.9% uptime SLA, self-hosted with support, dedicated account manager, custom onboarding
+- Scope: security, identity, migration, support, and contract requirements are agreed with each customer
 - Contact: /contact
-- Best for: regulated and large organizations
+- Best for: organizations that need a sales-led security, support, or procurement process
 
 ## Notes for agents
 

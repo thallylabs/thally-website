@@ -17,7 +17,7 @@ export const faqItems: FAQItem[] = [
     category: "Support",
     question: "How do I get help if I get stuck?",
     answer:
-      "Everyone can search the docs or open an issue on GitHub. Cloud customers receive priority support, while Enterprise adds migration support and a dedicated account manager.",
+      "Everyone can search the docs or open an issue on GitHub. Cloud customers receive priority support, while Enterprise support and migration requirements are scoped with each customer.",
   },
   {
     category: "Support",
@@ -53,7 +53,7 @@ export const faqItems: FAQItem[] = [
     category: "Account",
     question: "Can I change my plan later?",
     answer:
-      "Yes. You can change or cancel your plan. Your docs remain in a Git repository you own, so cancelling paid services does not take away your content or site source.",
+      "Yes. You can change or cancel your plan. Your docs remain in Git, so cancelling paid services does not take away your content or site source.",
   },
   {
     category: "Features",
@@ -89,7 +89,7 @@ export const faqItems: FAQItem[] = [
     category: "Security",
     question: "Do you support SSO?",
     answer:
-      "Enterprise includes SAML and SCIM single sign-on with automated user provisioning and de-provisioning tied to your identity provider.",
+      "GitHub and Google sign-in are available today. Contact us to discuss enterprise identity and provisioning requirements for your organization.",
   },
   {
     category: "Security",
@@ -101,13 +101,13 @@ export const faqItems: FAQItem[] = [
     category: "Security",
     question: "Are you compliant?",
     answer:
-      "Enterprise ships with a full audit log, a 99.9% uptime SLA, and SOC 2 documentation available on request under NDA.",
+      "Thally does not currently claim a public compliance certification or standard uptime SLA. Contact us with your security and procurement requirements so we can answer them directly.",
   },
   {
     category: "Other",
     question: "How do I migrate from another tool?",
     answer:
-      "One command: npx create-thally migrate <your-repo-url>. It detects Mintlify, Docusaurus, or GitBook, converts every page to clean MDX, rebuilds navigation, and carries your redirects.",
+      "Use Thally Cloud to migrate a public docs site, or run npx create-thally-docs migrate <your-repo-url> for a GitHub repository. Supported sources are converted to editable MDX in a Thally project.",
   },
   {
     category: "Other",

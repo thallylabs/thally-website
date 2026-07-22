@@ -7,6 +7,6 @@ export const alt = "Sign up for Thally";
 
 export default function Image() {
   return renderOgImage({
-    title: "Start free in under two minutes.",
+    title: "Create your docs site.",
   });
 }

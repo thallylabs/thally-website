@@ -1,6 +1,6 @@
 # Thally
 
-The Thally marketing site. Thally (formerly Dox) is the AI-native documentation platform for machines and humans: one MDX source serves structured JSON, JSON-LD, and Markdown to AI agents and polished HTML to readers, from the same URL, and a docs agent turns product changes into reviewed pull requests.
+The Thally marketing site. Thally helps software teams publish one documentation source for people and AI tools, then keep it current through review-gated updates drafted by Thally.
 
 Built with Next.js 16 (App Router), Tailwind CSS v4, shadcn/ui, and Motion.
 

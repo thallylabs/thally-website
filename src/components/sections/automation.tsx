@@ -22,27 +22,27 @@ const TRIGGERS: Trigger[] = [
   {
     id: "mention",
     label: "Tag it",
-    title: "Mention @thally anywhere on GitHub.",
+    title: "Request a docs update from GitHub.",
     description:
-      "Comment on an issue or pull request to draft the docs PR. Add the docs-preview label so reviewers can read the docs beside the code before merge.",
+      "In a connected GitHub repo, mention @thally on an issue or pull request to request a reviewable docs update.",
     icon: AtSign,
     accent: "var(--chart-1)",
   },
   {
     id: "track",
-    label: "Track it",
-    title: "Thally Track watches your product repos.",
+    label: "Thally Track",
+    title: "Thally checks merged product changes against your docs.",
     description:
-      "Connect a repo with the GitHub App. When a product PR merges, Track identifies the relevant changes and drafts a docs PR for review.",
+      "Choose the product repos Thally should watch. When a merged change affects the docs, Thally drafts an update for review.",
     icon: GitMerge,
     accent: "var(--chart-2)",
   },
   {
     id: "score",
     label: "Score it",
-    title: "Low scores become fix pull requests.",
+    title: "Turn quality findings into fix PRs.",
     description:
-      "The readiness report names the pages lowering your score. Drift sweeps flag docs whose source changed. The agent drafts fixes for both.",
+      "The readiness report identifies the pages lowering your score. Ask Thally to prepare reviewable fixes for the findings it can resolve.",
     icon: Radar,
     accent: "var(--chart-5)",
   },
@@ -116,7 +116,7 @@ function TrackFlow() {
       </motion.div>
       <PrCard
         title="docs: document per-project webhook secrets"
-        meta="Drafted by the agent · labeled origin: track"
+        meta="Drafted by Thally · labeled origin: track"
         checks={["Updated 2 pages, added 1", "Registered in navigation"]}
         delay={0.25}
       />
@@ -228,8 +228,8 @@ export const Automation = () => {
 
       <div className="relative container">
         <SectionHeader
-          title="The feature shipped. The docs already know."
-          description="Every trigger produces a documentation pull request in your house style and on your infrastructure. Thally never merges it. A human decides what lands."
+          title="Connect your product repos. Review every docs update."
+          description="Once your docs site is live, connect the product repos you want Thally to watch. It drafts an update only when the docs need one. Your team decides what lands."
         />
 
         <div className="mt-10 grid gap-5 lg:mt-16 lg:grid-cols-[5fr_6fr] lg:gap-10">
@@ -267,7 +267,7 @@ export const Automation = () => {
           <div className="border-border bg-muted/40 flex flex-col justify-center rounded-2xl border p-4 sm:p-6">
             <ActiveFlow key={active} />
             <p className="text-muted-foreground mt-4 text-center text-[11px]">
-              Reviewed pull requests only. The agent never pushes to main.
+              A no-change result is valid. Thally never pushes to main.
             </p>
           </div>
         </div>

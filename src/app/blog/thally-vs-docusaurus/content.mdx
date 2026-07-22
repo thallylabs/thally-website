@@ -42,7 +42,7 @@ The question is not whether Docusaurus can be made agent-ready. It is whether yo
 
 Docusaurus renders what is in the repository, while your team owns the process that keeps those files current. That works well when the team already has a strong documentation practice.
 
-Thally attacks the drift problem directly. Thally Track watches your product repos and turns merged PRs into reviewed documentation PRs. The drift sweep flags pages whose source files changed since last verification. Comment `@thally document this` on any GitHub issue and the agent drafts the page. A human reviews and merges every change.
+Thally attacks the drift problem directly. Thally Track watches your product repos and turns merged PRs into reviewed documentation PRs. The drift sweep flags pages whose source files changed since last verification. Comment `@thally document this` on any GitHub issue and Thally drafts the page. A human reviews and merges every change.
 
 ## Cost of ownership
 
@@ -65,10 +65,10 @@ Both are free to run. The second cost is engineering time. A Docusaurus stack wi
 ## Migration is automated
 
 ```bash
-npx create-thally migrate github.com/acme/docs
+npx create-thally-docs migrate github.com/acme/docs
 ```
 
-The migrator converts Docusaurus pages and sidebars to a Thally project, maps components where equivalents exist, and carries your redirects. Preview locally, then switch DNS. [Start free](https://app.thally.io/register) or see [what the readiness score measures](/faq).
+The migrator converts supported Docusaurus pages and sidebars to a Thally project, maps components where equivalents exist, and carries supported redirects. Preview locally, then switch DNS. [Create your docs site](https://app.thally.io/register) or see [what the readiness score measures](/faq).
 
 ## Sources and verification
 
