@@ -80,8 +80,8 @@ const defaultProps: HeroFeatureSliderProps = {
     href: DESTINATIONS.signup,
   },
   buttonSecondary: {
-    text: "See how Thally updates docs",
-    href: "#automation",
+    text: "See how Thally works",
+    href: "/features/track",
   },
   features: [
     {
