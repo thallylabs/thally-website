@@ -93,14 +93,14 @@ export function PostShell({ post, children }: { post: BlogPost; children: ReactN
               style={{ borderColor: `color-mix(in oklab, ${post.accent} 40%, transparent)` }}
             />
             <h2 className="font-display max-w-md text-2xl leading-snug font-semibold text-balance">
-              See what your docs give an AI agent.
+              Build docs that stay close to the product.
             </h2>
             <p className="text-muted-foreground mt-2 max-w-md text-sm">
-              Self-host free under the MIT license. No credit card required.
+              Create a managed site, or use the open-source engine to run Thally yourself.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <Button asChild size="lg">
-                <Link href={DESTINATIONS.signup}>Start free</Link>
+                <Link href={DESTINATIONS.signup}>Create your docs site</Link>
               </Button>
               <Button asChild variant="outline" size="lg">
                 <Link href={DESTINATIONS.docs}>Read the docs</Link>

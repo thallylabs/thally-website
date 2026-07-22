@@ -6,22 +6,22 @@ const homeQuestions = [
   {
     question: "What is Thally?",
     answer:
-      "Thally is a documentation platform for people and AI assistants. Write your documentation once, then publish a polished website for readers and reliable, structured content for AI tools. Thally can also draft documentation updates when your product changes.",
+      "Thally is a documentation platform for publishing one source for people and AI tools. Start a new site or bring your existing docs, then connect product repositories if you want Track to draft reviewable updates.",
   },
   {
     question: "How is Thally different from other docs tools?",
     answer:
-      "Most documentation tools focus only on the website people read. Thally also publishes versions that AI assistants can understand, checks every update for quality, and drafts documentation changes when your product changes.",
+      "Thally keeps the documentation source and publishing engine under your control. The same content serves people and AI tools, and Track can draft docs PRs from relevant merged product changes after you connect the repositories.",
   },
   {
     question: "How do I migrate from Mintlify, Docusaurus, or GitBook?",
     answer:
-      "Run one migration command with your current documentation repository. Thally detects Mintlify, Docusaurus, GitBook, Nextra, VitePress, Starlight, or plain Markdown, then converts your pages, rebuilds navigation, preserves redirects, and imports your API documentation.",
+      "In Thally Cloud, choose the migration path and provide your public docs site. For a local migration, run the create-thally-docs CLI against a GitHub repository. Thally converts supported pages to MDX and rebuilds the navigation.",
   },
   {
     question: "How does Thally keep my docs up to date?",
     answer:
-      "Connect your product repository and Thally watches for changes that affect your documentation. When a pull request merges, Thally drafts the relevant documentation updates for your team to review. It never publishes changes without your approval.",
+      "First publish or connect a Thally docs site. Then choose the product repositories Track should watch. When a relevant pull request merges, Track can draft a documentation update for review. It can also decide that no docs change is needed, and it never merges by itself.",
   },
   {
     question: "How does Thally check documentation quality?",
@@ -54,17 +54,17 @@ const pricingQuestions = [
   {
     question: "Can I use my own hosting?",
     answer:
-      "Yes. Deploy the open-source engine to Vercel, Netlify, Cloudflare, Docker, or another compatible host. Thally Cloud can also manage hosting without taking ownership of your repository or domain.",
+      "Yes. The open-source engine can run on Vercel, Netlify, Cloudflare, Docker, or another compatible host. Thally Cloud is the managed-hosting path and does not take ownership of your repository or domain.",
   },
   {
     question: "What happens if I cancel Thally Cloud?",
     answer:
-      "Your documentation repository and published site remain yours. Paid services stop at the end of the billing period, while the free self-hosted engine continues to build and serve your documentation.",
+      "Your documentation repository and the MIT-licensed engine remain yours. Paid Cloud services stop at the end of the billing period. If Cloud hosts the site, deploy the repository elsewhere before managed hosting ends.",
   },
   {
     question: "What is included with Enterprise?",
     answer:
-      "Enterprise adds SAML and SCIM single sign-on, audit-log access, custom terms, hands-on migration support, priority support, and a dedicated account manager under a custom annual contract.",
+      "Enterprise is scoped with each customer. Talk to us about security, identity, migration, support, and contract requirements for your organization.",
   },
 ];
 

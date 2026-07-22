@@ -21,7 +21,7 @@ import { ThallyMark } from "@/components/layout/logo";
 import { SectionGrid, SectionHeader } from "@/components/section-decor";
 import { cn } from "@/lib/utils";
 
-const COMMAND = "npx create-thally migrate github.com/acme/docs";
+const COMMAND = "npx create-thally-docs migrate github.com/acme/docs";
 const FINAL_LINE = "cd acme-docs && npm run dev";
 
 const STEPS = [
@@ -320,8 +320,8 @@ export const Migrate = () => {
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           <div>
             <SectionHeader
-              title="Move in with one command. Leave whenever you want."
-              description="The migrator detects your platform, converts each page to clean MDX, rebuilds navigation, carries redirects, and connects your OpenAPI spec. No manual copying or reformatting."
+              title="Bring your existing docs to Thally."
+              description="Use Thally Cloud to migrate a public docs site, or run the CLI against a GitHub repository. Either path creates editable MDX and a Thally project you control."
               layout="stack"
             />
             <MigrationOrbit />
@@ -346,8 +346,8 @@ export const Migrate = () => {
                 <li className="text-sm font-medium">Static export</li>
               </ul>
               <p className="text-muted-foreground mt-5 max-w-md text-sm leading-relaxed">
-                Your docs are a Next.js repo you own, MIT licensed. There is no hosted middleman to outgrow and nothing
-                to export your way out of later.
+                Your migrated docs become an editable Thally project. Self-host the MIT-licensed engine, or let Thally
+                Cloud build and publish it for you.
               </p>
             </div>
           </div>

@@ -1,6 +1,6 @@
 # Thally
 
-> Thally is the AI-native documentation platform for AI agents and humans. One MDX source serves structured JSON, JSON-LD, and Markdown to AI agents and polished HTML to human readers from the same URL. A built-in docs agent turns product changes, GitHub mentions, and readiness findings into documentation pull requests for human review. The engine is open source under the MIT license, and your content stays in Git.
+> Thally helps software teams publish one documentation source as HTML for people and structured formats for AI tools. Once the docs site is live, connect product repositories so Thally Track can draft reviewable updates for relevant merged changes. The publishing engine is open source under the MIT license.
 
 ## What Thally does
 
@@ -8,13 +8,13 @@
 - Remote MCP server: every deployed docs site exposes /api/mcp. Attach it to any agent and the docs become native tools (search_docs, read_page, list_pages, agent_readiness). No key, no account.
 - Agent-readiness score: a deterministic 0-100 grade per build covering structured data, metadata, discovery files, machine readability, and OpenAPI coverage. Gate CI on a threshold, then ask the agent to draft fixes for low-scoring pages.
 - Docs agent: turn an instruction, a diff, or a product PR into a reviewed docs pull request. Comment "@thally document this" on any GitHub issue or PR to trigger it. The agent never merges; a human always does.
-- Thally Track: register product repos and merged PRs there become reviewed documentation PRs automatically. A docs-preview label drafts docs before the feature merges.
+- Thally Track: after a Thally site is live, choose the product repos Track should watch. Relevant merged PRs can become reviewed documentation PRs. Track may decide that no docs change is needed.
 - Provenance and drift: machine-legible lastUpdated / lastVerified dates, plus deterministic drift detection against the source code each page documents.
 - Authoring: MDX with 25+ components, OpenAPI-generated API reference with an interactive Try-It console, hybrid full-text + vector search, retrieval-grounded AI chat with inline citations.
 - Multi-language: one command translates the whole site; locale URLs, hreflang, and graceful fallbacks.
-- Admin dashboard: first-party analytics, live theming with no rebuild, Owner/Editor/Viewer roles from a git-committed roster, and a queue of agent-drafted docs PRs.
-- Migration: one command moves docs from Mintlify, Docusaurus, GitBook, Nextra, VitePress, Starlight, or plain Markdown. Components, navigation, redirects, and OpenAPI specs are converted automatically.
-- Deployment: Vercel, Netlify, Cloudflare, Docker, or static export. The docs are a Next.js repo you own.
+- Thally Cloud workspace: manage sites, deployments, analytics, AI answers, Track, and Owner/Editor/Viewer workspace access from app.thally.io.
+- Migration: use Thally Cloud with a public docs site, or run the CLI against a supported repository. Thally converts supported pages to MDX and rebuilds the navigation for review before publishing.
+- Deployment: Vercel, Netlify, Cloudflare, Docker, or static export. The docs are a deployable Next.js project.
 
 ## Pages
 
@@ -24,7 +24,7 @@
 - [About](/about): team and mission
 - [FAQ](/faq): common questions on migration, automation, agents, self-hosting
 - [Contact](/contact): sales and support
-- [Sign up](https://app.thally.io/register): start free
+- [Create a docs site](https://app.thally.io/register): start a 14-day Thally Cloud trial
 - [Documentation](https://docs.thally.io): quickstarts, guides, and product reference
 - [Thally Editorial Team](/authors/thally-team): author identity and review responsibilities
 - [Editorial policy](/editorial-policy): sourcing, review, AI-assistance, and corrections policy
@@ -44,7 +44,7 @@
 
 - Free: $0. Self-host forever. MIT licensed, commercial use OK. Unlimited pages and readers, all output formats, MCP server, hybrid search, docs agent with your own API key.
 - Thally Cloud: $60/workspace/month on a monthly subscription, or $50/workspace/month on an annual subscription. Both are billed monthly and include a 14-day trial plus 3 team members in any role. Each additional active member or pending invitation adds $20 to the monthly bill. Includes Thally AI answers and chat, Thally Track with one-click GitHub App, agent-readiness CI checks, admin dashboard, analytics, and team roles.
-- Enterprise: Custom annual pricing. Adds SAML and SCIM SSO, audit-log access, custom terms, migration support, and priority support.
+- Enterprise: Custom annual pricing. Security, identity, migration, support, and contract requirements are scoped with each customer.
 - Machine-readable pricing: [/pricing.md](/pricing.md)
 
 ## Trust and reuse

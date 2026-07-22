@@ -204,7 +204,7 @@ const ITEMS: ItemType[] = [
   {
     title: "Docs maintenance, drafted for review.",
     description:
-      "Builds validate links and resync your spec. Product changes and mentions become docs PRs your team reviews.",
+      "Builds validate links and resync your spec. After setup, relevant product changes and mentions can become docs PRs your team reviews.",
     illustration: <AutomationCard />,
     className: "md:col-span-3 md:row-span-3 md:col-start-4",
   },

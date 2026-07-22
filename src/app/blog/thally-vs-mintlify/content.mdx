@@ -10,7 +10,7 @@ The comparison gets interesting one level down.
 
 | | Thally | Mintlify |
 | --- | --- | --- |
-| Source model | Docs-as-code, a Next.js repo you own | Docs-as-code on a hosted platform |
+| Source model | Docs-as-code in a deployable Next.js project | Docs-as-code on a hosted platform |
 | License | MIT, open source | Proprietary platform |
 | Self-hosting | Yes, free forever | No, platform is hosted |
 | Machine output | JSON, JSON-LD, Markdown, and HTML from the same URL | HTML-first; AI features via the hosted platform |
@@ -46,13 +46,13 @@ Mintlify has been adding AI capabilities to its hosted platform as well, includi
 
 Documentation starts drifting when the product changes. The two platforms address that problem differently.
 
-Thally treats drift as a first-class problem. Mention `@thally document this` on any GitHub issue or PR and the docs agent drafts a documentation pull request. Connect a repo with Thally Track and merged product PRs become reviewed docs PRs automatically. The weekly drift sweep flags pages whose source code changed since they were last verified. Nothing merges without a human.
+Thally treats drift as a first-class problem. After a Thally docs repository is connected, mention `@thally document this` on a GitHub issue or PR to request a documentation pull request. Once a site is live and product repositories are mapped, Track evaluates merged product PRs and can draft a docs PR when the documentation needs to change. Nothing merges without a human.
 
 Mintlify's AI helps you write and edit within the platform. It is a strong authoring assistant; it is not a pipeline from your product repo to a reviewed docs PR.
 
 ## Pricing
 
-Thally is free to self-host with unlimited pages and readers. Thally Cloud is $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include three team members. Each additional active member or pending invitation adds $20 to the monthly bill. Thally Cloud adds managed services, Thally AI answers, Track, readiness gates, and the admin dashboard. Enterprise pricing is custom and adds SSO, audit-log access, custom terms, and priority support. Readers are never billed. Full details are on the [pricing page](/pricing) and in the machine-readable [pricing.md](/pricing.md).
+Thally is free to self-host with unlimited pages and readers. Thally Cloud is $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include three team members. Each additional active member or pending invitation adds $20 to the monthly bill. Thally Cloud adds managed services, Thally AI answers, Track, readiness gates, and the Cloud dashboard. Enterprise pricing is custom and scoped to each customer's security, identity, support, and contract requirements. Readers are never billed. Full details are on the [pricing page](/pricing) and in the machine-readable [pricing.md](/pricing.md).
 
 Mintlify prices its hosted tiers separately; their pricing page is the source of truth.
 
@@ -62,7 +62,7 @@ Mintlify prices its hosted tiers separately; their pricing page is the source of
 
 - you want AI agents to read your docs natively, without scraping
 - self-hosting, MIT licensing, or data residency matters to you
-- you want product changes to become reviewed docs PRs automatically
+- you want relevant merged product changes to become reviewable docs PRs after Track is configured
 - you want to gate CI on documentation quality
 
 **Choose Mintlify if:**
@@ -76,10 +76,10 @@ Mintlify prices its hosted tiers separately; their pricing page is the source of
 If you decide to switch, the migrator does the heavy lifting:
 
 ```bash
-npx create-thally migrate github.com/acme/docs
+npx create-thally-docs migrate github.com/acme/docs
 ```
 
-It detects the source platform, converts every page to clean MDX, rebuilds navigation, carries redirects, and wires up your OpenAPI spec. You get a running local preview before you change a single DNS record. [Start free](https://app.thally.io/register) or read more in the [FAQ](/faq).
+It detects supported source platforms, converts the docs to MDX, rebuilds navigation, carries supported redirects, and detects an OpenAPI spec when available. You get a local preview before changing DNS. [Create your docs site](https://app.thally.io/register) or read more in the [FAQ](/faq).
 
 ## Sources and verification
 

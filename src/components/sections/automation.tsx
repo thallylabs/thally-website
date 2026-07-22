@@ -22,27 +22,27 @@ const TRIGGERS: Trigger[] = [
   {
     id: "mention",
     label: "Tag it",
-    title: "Mention @thally anywhere on GitHub.",
+    title: "Ask for a docs update from GitHub.",
     description:
-      "Comment on an issue or pull request to draft the docs PR. Add the docs-preview label so reviewers can read the docs beside the code before merge.",
+      "After your Thally docs repository is connected, mention @thally on an issue or pull request to request a reviewable update.",
     icon: AtSign,
     accent: "var(--chart-1)",
   },
   {
     id: "track",
     label: "Track it",
-    title: "Thally Track watches your product repos.",
+    title: "Track evaluates merged product PRs.",
     description:
-      "Connect a repo with the GitHub App. When a product PR merges, Track identifies the relevant changes and drafts a docs PR for review.",
+      "After your site is live, choose the product repositories Track should watch. Relevant merged changes can become docs PRs for review.",
     icon: GitMerge,
     accent: "var(--chart-2)",
   },
   {
     id: "score",
     label: "Score it",
-    title: "Low scores become fix pull requests.",
+    title: "Quality findings can become fix PRs.",
     description:
-      "The readiness report names the pages lowering your score. Drift sweeps flag docs whose source changed. The agent drafts fixes for both.",
+      "The readiness report names the pages lowering your score. Ask the agent to prepare reviewable fixes for supported findings.",
     icon: Radar,
     accent: "var(--chart-5)",
   },
@@ -228,8 +228,8 @@ export const Automation = () => {
 
       <div className="relative container">
         <SectionHeader
-          title="The feature shipped. The docs already know."
-          description="Every trigger produces a documentation pull request in your house style and on your infrastructure. Thally never merges it. A human decides what lands."
+          title="Connect product repositories. Review the docs changes."
+          description="Once your Thally site is live, Track can evaluate merged changes from the product repositories you choose. It drafts an update only when the docs need one. Your team decides what lands."
         />
 
         <div className="mt-10 grid gap-5 lg:mt-16 lg:grid-cols-[5fr_6fr] lg:gap-10">
@@ -267,7 +267,7 @@ export const Automation = () => {
           <div className="border-border bg-muted/40 flex flex-col justify-center rounded-2xl border p-4 sm:p-6">
             <ActiveFlow key={active} />
             <p className="text-muted-foreground mt-4 text-center text-[11px]">
-              Reviewed pull requests only. The agent never pushes to main.
+              A no-change result is valid. Thally never pushes to main.
             </p>
           </div>
         </div>

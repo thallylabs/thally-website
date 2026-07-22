@@ -44,7 +44,7 @@ const Navbar = () => {
         {
           title: "Automation",
           href: "/#automation",
-          description: "@thally mentions, Track, and drift sweeps become reviewed docs PRs.",
+          description: "Connected workflows can draft reviewed docs PRs when the documentation needs to change.",
           icon: GitPullRequest,
         },
         {
@@ -62,13 +62,13 @@ const Navbar = () => {
         {
           title: "Migration & Hosting",
           href: "/#migrate",
-          description: "Move from Mintlify, Docusaurus, or GitBook in one command. Deploy anywhere.",
+          description: "Start a new site, connect a Thally project, or migrate your existing docs.",
           icon: Cloud,
         },
         {
-          title: "Admin Dashboard",
+          title: "Cloud Dashboard",
           href: "/#dashboard",
-          description: "Analytics, theming, team roles, and the agent's PR queue. Live, no rebuild.",
+          description: "Manage sites, analytics, team roles, AI answers, and Track from Thally Cloud.",
           icon: Overview,
         },
       ],
@@ -147,7 +147,7 @@ const Navbar = () => {
           <div className="flex items-center gap-2.5">
             <Link href={DESTINATIONS.signup} className="hidden lg:block">
               <Button variant="ghost" className="text-muted-foreground">
-                Sign up
+                Create site
               </Button>
             </Link>
             <Link
@@ -198,7 +198,7 @@ const Navbar = () => {
         <div className="mt-8 space-y-2">
           <Link href={DESTINATIONS.signup} className="block" onClick={() => setIsMenuOpen(false)}>
             <Button size="sm" className="w-full">
-              Sign up
+              Create your docs site
             </Button>
           </Link>
           <Link href={DESTINATIONS.login} className="block" onClick={() => setIsMenuOpen(false)}>
