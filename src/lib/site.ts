@@ -9,7 +9,7 @@ export const SITE_NAME = "Thally";
 
 export const LEGAL_ENTITY_NAME = "Fairspleet LLC";
 
-export const SITE_TAGLINE = "Docs That Keep Up With the Product";
+export const SITE_TAGLINE = "Docs That Keep Up With Your Product";
 
 export const SITE_TITLE = `${SITE_NAME} | ${SITE_TAGLINE}`;
 

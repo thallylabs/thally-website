@@ -54,7 +54,7 @@ const heroImageClassName =
   "border-border absolute top-0 left-0 w-full rounded-t-2xl rounded-b-none border border-b-0 object-cover object-left-top";
 
 const defaultProps: HeroFeatureSliderProps = {
-  heading: "Docs that keep up with the product.",
+  heading: "Docs that keep up with your product.",
   description:
     "Start a new docs site or bring your existing docs to Thally. When the site is live, connect product repos so Thally can draft reviewable updates when the docs need to change.",
   buttonPrimary: {

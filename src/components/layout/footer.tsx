@@ -60,7 +60,7 @@ export const Footer = () => {
               className="text-primary-foreground dark:text-foreground"
             />
             <h2 className="font-display max-w-md text-3xl leading-tight font-semibold tracking-tight text-balance md:text-4xl">
-              Docs that keep up with the product.
+              Docs that keep up with your product.
             </h2>
           </div>
           <Button asChild variant="secondary" size="lg">
