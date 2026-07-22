@@ -332,6 +332,20 @@ html.theme-transition::view-transition-new(root) {
   }
 }
 
+@keyframes logos-marquee {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.logos-marquee-track {
+  animation: logos-marquee 28s linear infinite;
+}
+
+.logos-marquee:hover .logos-marquee-track {
+  animation-play-state: paused;
+}
+
 /* Handle reduced motion preference globally */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -344,5 +358,18 @@ html.theme-transition::view-transition-new(root) {
   }
   .motion-safe-only {
     display: none !important;
+  }
+  .logos-marquee {
+    mask-image: none;
+    overflow: visible;
+  }
+  .logos-marquee-track {
+    min-width: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: none !important;
+  }
+  .logos-marquee-track[aria-hidden="true"] {
+    display: none;
   }
 }

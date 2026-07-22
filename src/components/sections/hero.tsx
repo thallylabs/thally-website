@@ -49,6 +49,11 @@ const MAX_FEATURES = 3;
 const SLIDE_INTERVAL_MS = 5000;
 const CROSSFADE_DURATION = 0.9;
 const CROSSFADE_EASE = [0.22, 1, 0.36, 1] as const;
+const OPTIMIZED_HERO_IMAGES: Record<string, string> = {
+  "/images/hero1.png": "/images/hero1-1600.webp",
+  "/images/hero2.png": "/images/hero2-1600.webp",
+  "/images/hero3.png": "/images/hero3-1600.webp",
+};
 
 const heroImageClassName =
   "border-border absolute top-0 left-0 w-full rounded-t-2xl rounded-b-none border border-b-0 object-cover object-left-top";
@@ -226,18 +231,19 @@ const Hero = (props: Partial<HeroFeatureSliderProps>) => {
                   <motion.div
                     key={heroImage.src}
                     className="absolute inset-0"
-                    initial={{ opacity: 0 }}
+                    initial={index === 0 ? false : { opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={crossfadeTransition}
                   >
                     <NextImage
-                      src={heroImage.src}
+                      src={OPTIMIZED_HERO_IMAGES[heroImage.src] ?? heroImage.src}
                       alt={heroImage.alt}
                       className={heroImageClassName}
                       fill
                       sizes="(max-width: 768px) 100vw, 1200px"
                       priority={index === 0}
+                      fetchPriority={index === 0 ? "high" : "auto"}
                       quality={82}
                     />
                   </motion.div>

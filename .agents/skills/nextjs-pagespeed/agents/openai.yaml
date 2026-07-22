@@ -1,0 +1,4 @@
+interface:
+  display_name: "Next.js PageSpeed"
+  short_description: "Audit and optimize Next.js PageSpeed performance"
+  default_prompt: "Use $nextjs-pagespeed to audit and optimize this Next.js route for PageSpeed and Core Web Vitals."
