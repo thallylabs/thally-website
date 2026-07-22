@@ -102,12 +102,12 @@ const defaultProps: HeroFeatureSliderProps = {
   images: [
     {
       src: "/images/hero1.png",
-      alt: "A Thally documentation site published from a GitHub repository",
+      alt: "A Thally documentation site for people and AI tools",
       label: "Your site",
     },
     {
       src: "/images/hero2.png",
-      alt: "The same Thally page served as structured JSON for AI tools",
+      alt: "Thally analytics comparing documentation traffic from people and AI tools",
       label: "Every reader",
     },
     {
