@@ -53,19 +53,20 @@ const OPTIMIZED_HERO_IMAGES: Record<string, { src: string; srcSet: string }> = {
   "/images/hero1.png": {
     src: "/images/hero1-1600.webp",
     srcSet:
-      "/images/hero1-600.webp 600w, /images/hero1-800.webp 800w, /images/hero1-1200.webp 1200w, /images/hero1-1600.webp 1600w",
+      "/images/hero1-600.webp 600w, /images/hero1-800.webp 800w, /images/hero1-1200.webp 1200w, /images/hero1-1600.webp 1600w, /images/hero1-2400.webp 2400w, /images/hero1-3200.webp 3200w",
   },
   "/images/hero2.png": {
     src: "/images/hero2-1600.webp",
     srcSet:
-      "/images/hero2-600.webp 600w, /images/hero2-800.webp 800w, /images/hero2-1200.webp 1200w, /images/hero2-1600.webp 1600w",
+      "/images/hero2-600.webp 600w, /images/hero2-800.webp 800w, /images/hero2-1200.webp 1200w, /images/hero2-1600.webp 1600w, /images/hero2-2400.webp 2400w, /images/hero2-3200.webp 3200w",
   },
   "/images/hero3.png": {
     src: "/images/hero3-1600.webp",
     srcSet:
-      "/images/hero3-600.webp 600w, /images/hero3-800.webp 800w, /images/hero3-1200.webp 1200w, /images/hero3-1600.webp 1600w",
+      "/images/hero3-600.webp 600w, /images/hero3-800.webp 800w, /images/hero3-1200.webp 1200w, /images/hero3-1600.webp 1600w, /images/hero3-2400.webp 2400w, /images/hero3-3200.webp 3200w",
   },
 };
+const HERO_IMAGE_SIZES = "(max-width: 1399px) calc(100vw - 3rem), 1232px";
 
 const heroImageClassName =
   "border-border absolute top-0 left-0 w-full rounded-t-2xl rounded-b-none border border-b-0 object-cover object-left-top";
@@ -102,12 +103,12 @@ const defaultProps: HeroFeatureSliderProps = {
   images: [
     {
       src: "/images/hero1.png",
-      alt: "A Thally documentation site published from a GitHub repository",
+      alt: "Thally Quickstart documentation rendered as HTML for people",
       label: "Your site",
     },
     {
       src: "/images/hero2.png",
-      alt: "The same Thally page served as structured JSON for AI tools",
+      alt: "The same Thally Quickstart page served as structured JSON for AI tools",
       label: "Every reader",
     },
     {
@@ -253,7 +254,7 @@ const Hero = (props: Partial<HeroFeatureSliderProps>) => {
                       {optimizedImage && (
                         <source
                           srcSet={optimizedImage.srcSet}
-                          sizes="(max-width: 768px) 100vw, 1200px"
+                          sizes={HERO_IMAGE_SIZES}
                           type="image/webp"
                         />
                       )}
@@ -262,7 +263,7 @@ const Hero = (props: Partial<HeroFeatureSliderProps>) => {
                         alt={heroImage.alt}
                         className={heroImageClassName}
                         fill
-                        sizes="(max-width: 768px) 100vw, 1200px"
+                        sizes={HERO_IMAGE_SIZES}
                         loading={index === 0 ? "eager" : "lazy"}
                       />
                     </picture>
