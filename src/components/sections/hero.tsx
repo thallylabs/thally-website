@@ -49,6 +49,23 @@ const MAX_FEATURES = 3;
 const SLIDE_INTERVAL_MS = 5000;
 const CROSSFADE_DURATION = 0.9;
 const CROSSFADE_EASE = [0.22, 1, 0.36, 1] as const;
+const OPTIMIZED_HERO_IMAGES: Record<string, { src: string; srcSet: string }> = {
+  "/images/hero1.png": {
+    src: "/images/hero1-1600.webp",
+    srcSet:
+      "/images/hero1-600.webp 600w, /images/hero1-800.webp 800w, /images/hero1-1200.webp 1200w, /images/hero1-1600.webp 1600w",
+  },
+  "/images/hero2.png": {
+    src: "/images/hero2-1600.webp",
+    srcSet:
+      "/images/hero2-600.webp 600w, /images/hero2-800.webp 800w, /images/hero2-1200.webp 1200w, /images/hero2-1600.webp 1600w",
+  },
+  "/images/hero3.png": {
+    src: "/images/hero3-1600.webp",
+    srcSet:
+      "/images/hero3-600.webp 600w, /images/hero3-800.webp 800w, /images/hero3-1200.webp 1200w, /images/hero3-1600.webp 1600w",
+  },
+};
 
 const heroImageClassName =
   "border-border absolute top-0 left-0 w-full rounded-t-2xl rounded-b-none border border-b-0 object-cover object-left-top";
@@ -222,24 +239,33 @@ const Hero = (props: Partial<HeroFeatureSliderProps>) => {
             <AnimatePresence initial={false} mode="sync">
               {heroImages.map((heroImage, index) => {
                 if (activeImageIndex !== index) return null;
+                const optimizedImage = OPTIMIZED_HERO_IMAGES[heroImage.src];
                 return (
                   <motion.div
                     key={heroImage.src}
                     className="absolute inset-0"
-                    initial={{ opacity: 0 }}
+                    initial={index === 0 ? false : { opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={crossfadeTransition}
                   >
-                    <NextImage
-                      src={heroImage.src}
-                      alt={heroImage.alt}
-                      className={heroImageClassName}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 1200px"
-                      priority={index === 0}
-                      quality={82}
-                    />
+                    <picture className="absolute inset-0 block">
+                      {optimizedImage && (
+                        <source
+                          srcSet={optimizedImage.srcSet}
+                          sizes="(max-width: 768px) 100vw, 1200px"
+                          type="image/webp"
+                        />
+                      )}
+                      <NextImage
+                        src={optimizedImage?.src ?? heroImage.src}
+                        alt={heroImage.alt}
+                        className={heroImageClassName}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 1200px"
+                        loading={index === 0 ? "eager" : "lazy"}
+                      />
+                    </picture>
                   </motion.div>
                 );
               })}

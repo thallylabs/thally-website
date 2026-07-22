@@ -1,8 +1,19 @@
-"use client";
-
-import { Marquee, MarqueeContent, MarqueeItem } from "@/components/kibo-ui/marquee";
-
 const AGENTS = ["Claude", "Cursor", "ChatGPT", "Copilot", "Perplexity", "Gemini", "v0", "Windsurf"];
+
+function AgentNames({ hidden = false }: { hidden?: boolean }) {
+  return (
+    <div className="logos-marquee-track flex min-w-max shrink-0 items-center" aria-hidden={hidden || undefined}>
+      {AGENTS.map((agent) => (
+        <span
+          key={agent}
+          className="font-display text-muted-foreground/70 px-8 text-2xl font-semibold tracking-tight whitespace-nowrap md:px-12"
+        >
+          {agent}
+        </span>
+      ))}
+    </div>
+  );
+}
 
 export default function Logos() {
   return (
@@ -10,17 +21,10 @@ export default function Logos() {
       <p className="text-muted-foreground container mb-8 text-center text-sm font-medium tracking-wide">
         Read natively by the agents your readers already use
       </p>
-      <Marquee className="mask-[linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] py-2">
-        <MarqueeContent speed={35}>
-          {AGENTS.map((agent) => (
-            <MarqueeItem key={agent} className="mx-8 md:mx-12">
-              <span className="font-display text-muted-foreground/70 text-2xl font-semibold tracking-tight whitespace-nowrap">
-                {agent}
-              </span>
-            </MarqueeItem>
-          ))}
-        </MarqueeContent>
-      </Marquee>
+      <div className="logos-marquee mask-[linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] flex overflow-hidden py-2">
+        <AgentNames />
+        <AgentNames hidden />
+      </div>
     </section>
   );
 }
