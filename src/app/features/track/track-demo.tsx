@@ -114,9 +114,11 @@ export function TrackDemo() {
   const [productRepositories, setProductRepositories] = useState<string[]>([]);
   const [isRunning, setIsRunning] = useState(false);
   const [result, setResult] = useState<TrackResult | null>(null);
+  const [activeFindingIndex, setActiveFindingIndex] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [visibleLogLines, setVisibleLogLines] = useState(0);
   const stageRef = useRef<HTMLDivElement>(null);
+  const findingDetailRef = useRef<HTMLElement>(null);
 
   const loadSession = useCallback(async () => {
     const githubStatus = new URLSearchParams(window.location.search).get("github");
@@ -170,6 +172,7 @@ export function TrackDemo() {
     ],
     [docsRepository, productRepositories.length],
   );
+  const activeFinding = result?.analysis.findings[activeFindingIndex] ?? null;
 
   const goToStep = (nextStep: number) => {
     setStep(nextStep);
@@ -220,6 +223,7 @@ export function TrackDemo() {
       });
       if (!response.ok) throw new Error(await responseError(response, "Track could not complete this analysis."));
       setResult((await response.json()) as TrackResult);
+      setActiveFindingIndex(0);
       setVisibleLogLines(runLogLines.length);
       goToStep(4);
     } catch (analysisError) {
@@ -230,8 +234,21 @@ export function TrackDemo() {
     }
   };
 
+  const restartAnalysis = () => {
+    setResult(null);
+    setError(null);
+    setVisibleLogLines(0);
+    setActiveFindingIndex(0);
+    goToStep(1);
+  };
+
+  const selectFinding = (index: number) => {
+    setActiveFindingIndex(index);
+    findingDetailRef.current?.scrollTo({ top: 0 });
+  };
+
   return (
-    <div className={styles.stage} ref={stageRef}>
+    <div className={`${styles.stage} ${step === 4 ? styles.stageWide : ""}`} ref={stageRef}>
       <div className={styles.progressHeader}>
         <p className={styles.progressLabel}>
           Step {step + 1} of 5 <span>· {STEP_NAMES[step]}</span>
@@ -441,18 +458,17 @@ export function TrackDemo() {
 
       {step === 4 && result ? (
         <div className={`${styles.pane} ${styles.findingsPane}`}>
-          <h3>Track findings</h3>
+          <h3>Findings</h3>
           <p className={styles.paneDescription}>
-            Real analysis of{" "}
+            Analyzed the most recent merged change in{" "}
             <a href={result.pullRequest.url} rel="noreferrer" target="_blank">
               {result.pullRequest.repository} #{result.pullRequest.number}
             </a>{" "}
             against {docsRepository}.
           </p>
           <p className={styles.verdict}>
-            <span /> {result.analysis.findings.length}{" "}
-            {result.analysis.findings.length === 1 ? "finding" : "findings"}{" "}
-            <em>· {result.analysis.summary}</em>
+            <span /> {result.analysis.findings.length} {result.analysis.findings.length === 1 ? "finding" : "findings"}{" "}
+            detected <em>· candidates, not verified corrections</em>
           </p>
 
           {result.analysis.findings.length === 0 ? (
@@ -465,57 +481,105 @@ export function TrackDemo() {
             </div>
           ) : null}
 
-          {result.analysis.findings.map((finding) => (
-            <article className={styles.findingCard} key={`${finding.affectedPage}:${finding.title}`}>
-              <header className={styles.findingHeader}>
-                <span className={styles.findingIcon}>
-                  <GitPullRequest />
-                </span>
-                <div>
-                  <h4>
-                    {finding.title}
-                    <span>
-                      {result.pullRequest.repository} #{result.pullRequest.number} → {result.pullRequest.baseBranch}
-                    </span>
-                  </h4>
-                  <p>{finding.affectedPage}</p>
+          {activeFinding ? (
+            <div className={styles.findingsLayout}>
+              <div className={styles.findingsList}>
+                <div className={styles.findingsListLabel}>
+                  {result.analysis.findings.length} {result.analysis.findings.length === 1 ? "finding" : "findings"}
                 </div>
-                <span className={styles.confidence}>{finding.confidence} confidence</span>
-              </header>
-              <div className={styles.findingBody}>
+                {result.analysis.findings.map((finding, index) => (
+                  <button
+                    aria-current={index === activeFindingIndex ? "true" : undefined}
+                    className={`${styles.findingsListItem} ${
+                      index === activeFindingIndex ? styles.findingsListItemActive : ""
+                    }`}
+                    key={`${finding.affectedPage}:${finding.title}`}
+                    onClick={() => selectFinding(index)}
+                    type="button"
+                  >
+                    <span
+                      aria-hidden="true"
+                      className={`${styles.findingDot} ${
+                        finding.confidence === "medium"
+                          ? styles.findingDotMedium
+                          : finding.confidence === "low"
+                            ? styles.findingDotLow
+                            : styles.findingDotHigh
+                      }`}
+                    />
+                    <span className={styles.findingsListText}>
+                      <span className={styles.findingsListTitle}>{finding.title}</span>
+                      <span className={styles.findingsListMeta}>
+                        {finding.affectedPage} · {finding.confidence}
+                      </span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+
+              <article className={styles.findingDetail} ref={findingDetailRef}>
+                <header className={styles.findingHeader}>
+                  <span className={styles.findingIcon}>
+                    <GitPullRequest />
+                  </span>
+                  <div>
+                    <h4>
+                      {activeFinding.title}
+                      <span>
+                        {result.pullRequest.repository} #{result.pullRequest.number} → {result.pullRequest.baseBranch}
+                      </span>
+                    </h4>
+                    <p>{activeFinding.affectedPage} may be affected</p>
+                  </div>
+                  <span
+                    className={`${styles.confidence} ${
+                      activeFinding.confidence === "medium"
+                        ? styles.confidenceMedium
+                        : activeFinding.confidence === "low"
+                          ? styles.confidenceLow
+                          : styles.confidenceHigh
+                    }`}
+                  >
+                    {activeFinding.confidence} confidence
+                  </span>
+                </header>
                 <dl className={styles.evidenceGrid}>
+                  <dt>Change detected</dt>
+                  <dd>{activeFinding.evidence.join(" ")}</dd>
+                  <dt>Docs searched</dt>
+                  <dd>
+                    {result.pagesInspected.length} likely Markdown{" "}
+                    {result.pagesInspected.length === 1 ? "page" : "pages"} inspected. Track matched{" "}
+                    {activeFinding.affectedPage}.
+                  </dd>
                   <dt>Why this matters</dt>
-                  <dd>{finding.impact}</dd>
-                  <dt>Evidence</dt>
-                  <dd>{finding.evidence.join(" ")}</dd>
-                  <dt>Docs inspected</dt>
-                  <dd>{result.pagesInspected.length} likely Markdown pages from the selected docs repository.</dd>
+                  <dd>{activeFinding.impact}</dd>
                 </dl>
                 <div className={styles.diff}>
                   <div className={styles.diffHeader}>
-                    <Docs /> {finding.affectedPage} <span>Drafted update · for your review</span>
+                    <Docs /> {activeFinding.affectedPage} <span>Drafted update · for your review</span>
                   </div>
-                  <div className={styles.diffDelete}>- {finding.draft.before}</div>
-                  <div className={styles.diffAdd}>+ {finding.draft.after}</div>
+                  <div className={styles.diffDelete}>- {activeFinding.draft.before}</div>
+                  <div className={styles.diffAdd}>+ {activeFinding.draft.after}</div>
                 </div>
                 <p className={styles.findingFootnote}>
-                  This run is read-only. Create an account to send the draft as a reviewable pull request and let Track
-                  watch future merges.
+                  Evidence comes from the bounded pull request and the connected docs. In Thally, Track opens this as a
+                  draft pull request. Nothing publishes without review.
                 </p>
-              </div>
-            </article>
-          ))}
+              </article>
+            </div>
+          ) : null}
 
           <div className={styles.conversionCard}>
             <div>
               <h4>
                 {result.analysis.findings.length > 0
-                  ? "Turn this draft into a pull request"
+                  ? "Turn these into pull requests"
                   : "Keep your docs checked on every merge"}
               </h4>
               <p>
-                Create your Thally workspace to send this update for review, keep the repository connection, and run
-                Track automatically on future merges.
+                Create a Thally workspace to send these drafts to your docs repository for review, and let Track watch
+                every merge from now on.
               </p>
             </div>
             <a className={`${styles.button} ${styles.primaryButton}`} href={`${DESTINATIONS.signup}?intent=track`}>
@@ -524,9 +588,9 @@ export function TrackDemo() {
           </div>
           <div className={styles.paneFooter}>
             <span />
-            <a className={`${styles.button} ${styles.ghostButton}`} href={result.pullRequest.url}>
-              <RefreshCw /> View analyzed pull request
-            </a>
+            <button className={`${styles.button} ${styles.ghostButton}`} onClick={restartAnalysis} type="button">
+              <RefreshCw /> Run another analysis
+            </button>
           </div>
         </div>
       ) : null}

@@ -7,7 +7,7 @@
 
 import type { Metadata } from "next";
 
-import { Docs, GitBranch, GitPullRequest, Leaf } from "@/components/icons";
+import { ArrowRight, Docs, GitBranch, GitPullRequest, Leaf } from "@/components/icons";
 import { SITE_URL } from "@/lib/site";
 
 import { TrackDemo } from "./track-demo";
@@ -72,21 +72,21 @@ export default function TrackFeaturePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }} />
 
       <header className={styles.hero}>
+        <div aria-hidden="true" className={styles.heroGrid} />
         <p className={styles.eyebrow}>Thally Track</p>
         <h1>
-          Your product changed. <em>Did your docs?</em>
+          Your product changed. <span>Did your docs?</span>
         </h1>
         <p className={styles.heroDescription}>
           Track connects your documentation to the repositories that change it. When a pull request merges, Thally
-          analyzes the bounded change, finds the pages connected to it, and drafts evidence-backed updates for human
-          review.
+          analyzes the bounded change, finds the connected pages, and drafts evidence-backed updates for review.
         </p>
         <div className={styles.heroActions}>
           <a className={`${styles.button} ${styles.primaryButton}`} href="#demo">
-            Run Track on your repos
+            Try it on your repos <ArrowRight />
           </a>
-          <a className={`${styles.button} ${styles.outlineButton}`} href="#how-track-works">
-            How it works
+          <a className={styles.textLink} href="#how-track-works">
+            See how it works <ArrowRight />
           </a>
         </div>
         <p className={styles.heroFinePrint}>
@@ -96,7 +96,8 @@ export default function TrackFeaturePage() {
 
       <section className={styles.howSection} id="how-track-works">
         <div className={styles.sectionHeading}>
-          <h2>Evidence in, drafts out</h2>
+          <p className={styles.eyebrow}>How it works</p>
+          <h2>Evidence in, drafts out.</h2>
           <p>
             Track never audits your whole product. It analyzes one bounded change at a time, such as a merged pull
             request, release, or schema diff, and shows its reasoning.
@@ -109,7 +110,7 @@ export default function TrackFeaturePage() {
             return (
               <article className={styles.workflowCard} key={step.label}>
                 <div className={styles.stepLabel}>{step.label}</div>
-                <span className={styles.iconTile}>
+                <span className={styles.workflowIcon}>
                   <StepIcon className={styles.sectionIcon} />
                 </span>
                 <h3>{step.title}</h3>
@@ -122,20 +123,20 @@ export default function TrackFeaturePage() {
         <aside className={styles.honestyPanel}>
           <Leaf className={styles.honestyIcon} />
           <p>
-            <strong>What Track will not do:</strong> claim certainty. A repository is evidence about implementation;
-            documentation is evidence about communicated behaviour. Track surfaces <em>candidates</em> backed by
-            specific diffs. Every draft is reviewed by a human before it ships.
+            <strong>What Track won&apos;t do: claim certainty.</strong> A repository is evidence about implementation;
+            documentation is evidence about communicated behaviour. Track surfaces candidates backed by specific diffs.
+            Every draft is reviewed by a human before it ships.
           </p>
         </aside>
       </section>
 
       <section className={styles.demoSection} id="demo">
         <div className={styles.sectionHeading}>
-          <p className={styles.eyebrow}>Live Track analysis</p>
-          <h2>Try Track right now</h2>
+          <p className={styles.eyebrow}>Live demo</p>
+          <h2>Try Track right now.</h2>
           <p>
-            Connect real repositories, choose where your docs and product live, and let Track analyze your latest
-            merged pull request before you create an account.
+            Connect a documentation repository and at least one product repository, then let Thally analyze the most
+            recent merged change.
           </p>
         </div>
         <TrackDemo />
