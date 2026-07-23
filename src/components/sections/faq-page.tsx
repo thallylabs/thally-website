@@ -129,10 +129,10 @@ export const FAQPage = () => {
 
         <div className="relative container text-center">
           <h1 className="font-display text-[clamp(2.25rem,5vw,3.5rem)] leading-[1.05] font-bold tracking-[-0.03em] text-balance">
-            How can we help?
+            Find the answer you need
           </h1>
           <p className="text-muted-foreground mx-auto mt-[1.125rem] max-w-xl text-lg leading-[1.55] text-pretty">
-            Search the knowledge base or browse plans, security, product features, and team setup by topic.
+            Search Thally questions or browse plans, security, product features, and team setup by topic.
           </p>
 
           <div className="relative mx-auto mt-8 max-w-xl">
@@ -251,10 +251,10 @@ export const FAQPage = () => {
           <div className="border-border bg-card relative overflow-hidden rounded-xl border px-6 py-12 text-center shadow-sm sm:px-12 sm:py-14">
             <SectionGrid className="[mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)] opacity-40" />
             <div className="relative mx-auto flex max-w-xl flex-col items-center gap-4">
-              <h2 className="font-display text-3xl font-semibold tracking-[-0.02em]">Still have a question?</h2>
+              <h2 className="font-display text-3xl font-semibold tracking-[-0.02em]">Need a hand?</h2>
               <p className="text-muted-foreground text-[1.0625rem] leading-[1.55]">
-                Can&apos;t find what you&apos;re looking for? Our team usually replies within one business day. You can
-                also ask the grounded AI assistant inside the docs.
+                If you can&apos;t find what you need, contact our team or ask the grounded AI assistant in the docs. We
+                usually reply within one business day.
               </p>
               <div className="mt-1 flex flex-wrap justify-center gap-3">
                 <Button asChild>

@@ -9,12 +9,12 @@ export const SITE_NAME = "Thally";
 
 export const LEGAL_ENTITY_NAME = "Fairspleet LLC";
 
-export const SITE_TAGLINE = "Docs That Keep Up With the Product";
+export const SITE_TAGLINE = "Docs That Keep Up With Your Product";
 
 export const SITE_TITLE = `${SITE_NAME} | ${SITE_TAGLINE}`;
 
 export const SITE_DESCRIPTION =
-  "Thally helps software teams publish one documentation source for people and AI tools, then keep it current through review-gated updates drafted by Thally.";
+  "Publish one documentation source for people and AI tools, then let Thally draft reviewable updates when your product changes.";
 
 export const OG_DESCRIPTION =
   "Start a new docs site or bring your existing docs to Thally. Then connect product repos so Thally can draft reviewable updates when the docs need to change.";

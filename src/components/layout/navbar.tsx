@@ -50,19 +50,19 @@ const Navbar = () => {
         {
           title: "Automation",
           href: "/#automation",
-          description: "Connected workflows can draft reviewed docs PRs when the documentation needs to change.",
+          description: "Connect repos so Thally can draft reviewable docs updates when they are needed.",
           icon: GitPullRequest,
         },
         {
           title: "Content Graph",
           href: "/#features",
-          description: "One MDX source, projected as HTML, JSON, JSON-LD, and Markdown.",
+          description: "Write once in MDX and publish HTML, JSON, JSON-LD, and Markdown.",
           icon: Negotiation,
         },
         {
           title: "Agent Layer",
           href: "/#workflows",
-          description: "Grounded AI answers, llms.txt, MCP, and a readiness score for CI.",
+          description: "Make your docs easier for AI tools to find and use with llms.txt, MCP, and grounded answers.",
           icon: Mcp,
         },
         {
@@ -74,7 +74,7 @@ const Navbar = () => {
         {
           title: "Cloud Dashboard",
           href: "/#dashboard",
-          description: "Manage sites, analytics, team roles, AI answers, and Thally Track from Thally Cloud.",
+          description: "Manage your sites, analytics, team, AI answers, and updates drafted by Thally.",
           icon: Overview,
         },
       ],

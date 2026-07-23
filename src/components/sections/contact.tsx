@@ -9,7 +9,9 @@ export default function Contact() {
   return (
     <section className="py-16 md:py-28 lg:py-32">
       <div className="container max-w-4xl">
-        <h1 className="font-display text-center text-4xl font-semibold tracking-tight sm:text-5xl">Contact us</h1>
+        <h1 className="font-display text-center text-4xl font-semibold tracking-tight sm:text-5xl">
+          Talk to the Thally team
+        </h1>
         <p className="text-muted-foreground mt-4 text-center">
           Tell us what you&apos;re building. We usually reply within one business day.
         </p>
@@ -56,8 +58,8 @@ export default function Contact() {
             <Mail className="text-primary size-8" />
             <h2 className="mt-5 text-2xl font-semibold">Sales and support</h2>
             <p className="text-muted-foreground mt-3 max-w-md leading-relaxed">
-              Ask about migration, self-hosting, Enterprise SSO, or anything else. We usually reply within one business
-              day.
+              Tell us whether you&apos;re migrating, planning to self-host, evaluating Enterprise SSO, or working through
+              something else. We usually reply within one business day.
             </p>
             <Button asChild size="lg" className="mt-7 w-fit">
               <a href={DESTINATIONS.email}>Email the Thally team</a>

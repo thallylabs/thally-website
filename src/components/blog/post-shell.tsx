@@ -93,7 +93,7 @@ export function PostShell({ post, children }: { post: BlogPost; children: ReactN
               style={{ borderColor: `color-mix(in oklab, ${post.accent} 40%, transparent)` }}
             />
             <h2 className="font-display max-w-md text-2xl leading-snug font-semibold text-balance">
-              Build docs that stay close to the product.
+              Build docs that stay close to your product.
             </h2>
             <p className="text-muted-foreground mt-2 max-w-md text-sm">
               Create a managed site, or use the open-source engine to run Thally yourself.
