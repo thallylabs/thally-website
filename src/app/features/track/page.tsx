@@ -1,9 +1,8 @@
 /**
- * Public Thally Track product page and pre-signup guided experience.
+ * Public Thally Track product page and live pre-signup experience.
  *
- * The interactive tour intentionally uses representative repository data. The
- * marketing site is statically exported, so live GitHub App credentials and
- * installation tokens remain inside Thally Cloud's authenticated boundary.
+ * The statically exported client talks to Thally Cloud's installation-bound
+ * API. GitHub App credentials and installation tokens never enter this build.
  */
 
 import type { Metadata } from "next";
@@ -84,14 +83,14 @@ export default function TrackFeaturePage() {
         </p>
         <div className={styles.heroActions}>
           <a className={`${styles.button} ${styles.primaryButton}`} href="#demo">
-            Try the guided demo
+            Run Track on your repos
           </a>
           <a className={`${styles.button} ${styles.outlineButton}`} href="#how-track-works">
             How it works
           </a>
         </div>
         <p className={styles.heroFinePrint}>
-          No account or GitHub permissions needed. The guided demo uses representative repository data.
+          No Thally account needed. You choose exactly which GitHub repositories Thally can read.
         </p>
       </header>
 
@@ -132,11 +131,11 @@ export default function TrackFeaturePage() {
 
       <section className={styles.demoSection} id="demo">
         <div className={styles.sectionHeading}>
-          <p className={styles.eyebrow}>Interactive product tour</p>
+          <p className={styles.eyebrow}>Live Track analysis</p>
           <h2>Try Track right now</h2>
           <p>
-            Walk through the same GitHub connection and repository setup used in Thally Cloud, then see how Track
-            explains one representative finding.
+            Connect real repositories, choose where your docs and product live, and let Track analyze your latest
+            merged pull request before you create an account.
           </p>
         </div>
         <TrackDemo />

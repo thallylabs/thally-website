@@ -1,13 +1,12 @@
 "use client";
 
 /**
- * Guided Track tour for anonymous visitors.
+ * Live pre-signup Track client.
  *
- * This component mirrors the production GitHub setup flow without requesting
- * repository access or implying that its representative finding is live.
+ * The static website holds no GitHub or model credential. It uses the
+ * credentialed, installation-bound API exposed by Thally Cloud.
  */
 
-import { useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { ArrowRight, Check, Docs, GitBranch, GitPullRequest, RefreshCw, Track } from "@/components/icons";
@@ -15,88 +14,49 @@ import { DESTINATIONS } from "@/lib/site";
 
 import styles from "./track-page.module.css";
 
+const CLOUD_API = (process.env.NEXT_PUBLIC_THALLY_CLOUD_API_URL || "https://app.thally.io").replace(/\/$/, "");
 const STEP_NAMES = ["Connect GitHub", "Docs repository", "Product repositories", "Run analysis", "Findings"];
 
 interface RepositoryOption {
-  description: string;
-  name: string;
+  defaultBranch: string;
+  fullName: string;
+  htmlUrl: string;
+  isPrivate: boolean;
 }
 
-const DOC_REPOSITORIES: RepositoryOption[] = [
-  { name: "thally-demo/platform-docs", description: "Docs site · 128 pages · Thally platform" },
-  { name: "thally-demo/sdk-docs", description: "Docs site · 54 pages · Markdown" },
-];
+interface TrackSession {
+  accountLogin: string;
+  canAnalyze: boolean;
+  repositories: RepositoryOption[];
+  status: "connected" | "analyzing" | "completed" | "failed";
+}
 
-const PRODUCT_REPOSITORIES: RepositoryOption[] = [
-  { name: "thally-demo/typescript-sdk", description: "TypeScript SDK · exports public client API" },
-  { name: "thally-demo/payments-api", description: "API service · OpenAPI description + webhooks" },
-  { name: "thally-demo/cli", description: "CLI · commands and flags" },
-];
-
-interface SampleFinding {
-  afterLine: string;
-  beforeLine: string;
-  changeDetected: string;
-  contextAfter: string;
-  contextBefore: string;
-  docsPages: [string, string];
-  evidence: string;
-  filePath: string;
-  logChange: string;
-  symbol: string;
+interface TrackFinding {
+  affectedPage: string;
+  confidence: "high" | "medium" | "low";
+  draft: { after: string; before: string };
+  evidence: string[];
+  impact: string;
   title: string;
-  whyItMatters: string;
 }
 
-const SAMPLE_FINDINGS: Record<string, SampleFinding> = {
-  "thally-demo/typescript-sdk": {
-    title: "Default request timeout changed from 30s to 60s",
-    symbol: "DEFAULT_TIMEOUT_MS",
-    logChange: "exported constant DEFAULT_TIMEOUT_MS changed from 30000 to 60000",
-    changeDetected: "Changed from 30000 to 60000 and is exported through the public TypeScript client.",
-    docsPages: ["/sdk/configuration", "/guides/long-running-jobs"],
-    whyItMatters:
-      "Both pages state the old default. Readers copying the example will describe behaviour the SDK no longer has.",
-    filePath: "sdk/configuration.mdx",
-    contextBefore: "Every request made through the client is subject to a timeout.",
-    beforeLine: "By default the client waits **30 seconds** before aborting.",
-    afterLine: "By default the client waits **60 seconds** before aborting.",
-    contextAfter: "Override it per request with the `timeout` option.",
-    evidence: "exported SDK default and configuration schema",
-  },
-  "thally-demo/payments-api": {
-    title: "Webhook retry window increased from 24h to 48h",
-    symbol: "webhookRetryWindowHours",
-    logChange: "OpenAPI field webhookRetryWindowHours changed from 24 to 48",
-    changeDetected: "Changed from 24 to 48 in the published webhook configuration schema.",
-    docsPages: ["/api/webhooks", "/guides/retries"],
-    whyItMatters:
-      "Both pages promise retries stop after 24 hours, which no longer matches the public webhook contract.",
-    filePath: "api/webhooks.mdx",
-    contextBefore: "Failed webhook deliveries are retried with exponential backoff.",
-    beforeLine: "Retries continue for up to **24 hours** after the first attempt.",
-    afterLine: "Retries continue for up to **48 hours** after the first attempt.",
-    contextAfter: "Return a 2xx response to stop the retry schedule.",
-    evidence: "published OpenAPI field and webhook configuration schema",
-  },
-  "thally-demo/cli": {
-    title: "Deploy command timeout changed from 30s to 60s",
-    symbol: "DEFAULT_DEPLOY_TIMEOUT_MS",
-    logChange: "public CLI default DEFAULT_DEPLOY_TIMEOUT_MS changed from 30000 to 60000",
-    changeDetected: "Changed from 30000 to 60000 in the exported deploy command configuration.",
-    docsPages: ["/cli/deploy", "/reference/flags"],
-    whyItMatters:
-      "The command guide and flag reference describe the previous default, so operators may plan for the wrong wait time.",
-    filePath: "cli/deploy.mdx",
-    contextBefore: "The deploy command waits for the remote build to finish.",
-    beforeLine: "The default timeout is **30 seconds**.",
-    afterLine: "The default timeout is **60 seconds**.",
-    contextAfter: "Use `--timeout` to choose a different limit.",
-    evidence: "exported CLI default and command option schema",
-  },
-};
+interface TrackResult {
+  analysis: {
+    findings: TrackFinding[];
+    summary: string;
+  };
+  pagesInspected: string[];
+  pullRequest: {
+    baseBranch: string;
+    mergedAt: string;
+    number: number;
+    repository: string;
+    title: string;
+    url: string;
+  };
+}
 
-type ConnectionState = "idle" | "waiting" | "connected";
+type SessionState = "loading" | "disconnected" | "connected" | "error";
 
 function GitHubMark() {
   return (
@@ -129,8 +89,10 @@ function RepoOption({
         <RepoIcon />
       </span>
       <span className={styles.repoText}>
-        <span className={styles.repoName}>{repository.name}</span>
-        <span className={styles.repoDescription}>{repository.description}</span>
+        <span className={styles.repoName}>{repository.fullName}</span>
+        <span className={styles.repoDescription}>
+          {repository.isPrivate ? "Private" : "Public"} repository · default branch {repository.defaultBranch}
+        </span>
       </span>
       <span aria-hidden="true" className={styles.selectionIcon}>
         {isSelected ? <Check /> : null}
@@ -139,106 +101,133 @@ function RepoOption({
   );
 }
 
+async function responseError(response: Response, fallback: string): Promise<string> {
+  const body = (await response.json().catch(() => null)) as { error?: string } | null;
+  return body?.error || fallback;
+}
+
 export function TrackDemo() {
   const [step, setStep] = useState(0);
-  const [connectionState, setConnectionState] = useState<ConnectionState>("idle");
+  const [sessionState, setSessionState] = useState<SessionState>("loading");
+  const [session, setSession] = useState<TrackSession | null>(null);
   const [docsRepository, setDocsRepository] = useState<string | null>(null);
   const [productRepositories, setProductRepositories] = useState<string[]>([]);
   const [isRunning, setIsRunning] = useState(false);
+  const [result, setResult] = useState<TrackResult | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [visibleLogLines, setVisibleLogLines] = useState(0);
   const stageRef = useRef<HTMLDivElement>(null);
-  const timeoutIds = useRef<number[]>([]);
-  const shouldReduceMotion = useReducedMotion();
 
-  const firstProductRepository = productRepositories[0] ?? PRODUCT_REPOSITORIES[0].name;
-  const finding = SAMPLE_FINDINGS[firstProductRepository] ?? SAMPLE_FINDINGS[PRODUCT_REPOSITORIES[0].name];
-  const logLines = useMemo(
-    () => [
-      `Indexing ${docsRepository ?? DOC_REPOSITORIES[0].name} · 128 pages, 42 code samples, llms.txt found`,
-      `Reading the latest merged pull request from ${productRepositories.join(", ")}`,
-      `${firstProductRepository} #482 · extracting public-surface changes`,
-      `Detected: ${finding.logChange}`,
-      "Searching indexed docs for connected concepts · 3 candidate pages",
-      "Drafting evidence-backed updates for review",
-      `Done · 3 findings across ${productRepositories.length} ${productRepositories.length === 1 ? "repository" : "repositories"}`,
-    ],
-    [docsRepository, finding.logChange, firstProductRepository, productRepositories],
-  );
-
-  const clearTimers = useCallback(() => {
-    timeoutIds.current.forEach((timeoutId) => window.clearTimeout(timeoutId));
-    timeoutIds.current = [];
+  const loadSession = useCallback(async () => {
+    const githubStatus = new URLSearchParams(window.location.search).get("github");
+    setSessionState("loading");
+    setError(
+      githubStatus === "failed"
+        ? "GitHub could not finish the connection. Please try again."
+        : githubStatus === "cancelled"
+          ? "GitHub connection was cancelled. No repository access was granted."
+          : null,
+    );
+    try {
+      const response = await fetch(`${CLOUD_API}/api/track/demo/session`, {
+        credentials: "include",
+        headers: { Accept: "application/json" },
+      });
+      if (response.status === 401) {
+        setSession(null);
+        setSessionState("disconnected");
+        return;
+      }
+      if (!response.ok) throw new Error(await responseError(response, "GitHub repositories are unavailable."));
+      const nextSession = (await response.json()) as TrackSession;
+      setSession(nextSession);
+      setSessionState("connected");
+      if (new URLSearchParams(window.location.search).has("github")) {
+        window.history.replaceState({}, "", `${window.location.pathname}#demo`);
+      }
+    } catch {
+      setError("Could not reach the Track service. Please try again.");
+      setSessionState("error");
+    }
   }, []);
 
-  useEffect(() => clearTimers, [clearTimers]);
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => void loadSession(), 0);
+    return () => window.clearTimeout(timeoutId);
+  }, [loadSession]);
 
-  const goToStep = useCallback(
-    (nextStep: number) => {
-      setStep(nextStep);
-      window.requestAnimationFrame(() => {
-        const stage = stageRef.current;
-        if (!stage) return;
-        const targetY = stage.getBoundingClientRect().top + window.scrollY - 88;
-        if (Math.abs(window.scrollY - targetY) > 120) {
-          window.scrollTo({ top: targetY, behavior: shouldReduceMotion ? "auto" : "smooth" });
-        }
-      });
-    },
-    [shouldReduceMotion],
+  const productOptions = useMemo(
+    () => session?.repositories.filter((repository) => repository.fullName !== docsRepository) ?? [],
+    [docsRepository, session],
+  );
+  const runLogLines = useMemo(
+    () => [
+      `Verifying access to ${docsRepository || "your docs repository"}`,
+      `Finding the latest merged pull request across ${productRepositories.length || 1} product ${productRepositories.length === 1 ? "repository" : "repositories"}`,
+      "Reading the bounded pull request patch and changed public surfaces",
+      "Ranking Markdown pages connected to the change",
+      "Drafting evidence-backed documentation updates",
+    ],
+    [docsRepository, productRepositories.length],
   );
 
-  const connectSampleWorkspace = () => {
-    setConnectionState("waiting");
-    const delay = shouldReduceMotion ? 0 : 900;
-    timeoutIds.current.push(
-      window.setTimeout(() => {
-        setConnectionState("connected");
-      }, delay),
-    );
+  const goToStep = (nextStep: number) => {
+    setStep(nextStep);
+    window.requestAnimationFrame(() => {
+      const top = stageRef.current?.getBoundingClientRect().top;
+      if (typeof top === "number" && Math.abs(top) > 120) {
+        window.scrollTo({ top: top + window.scrollY - 88, behavior: "smooth" });
+      }
+    });
+  };
+
+  const connectGitHub = () => {
+    window.location.assign(`${CLOUD_API}/api/track/demo/github/connect`);
+  };
+
+  const chooseDocsRepository = (name: string) => {
+    setDocsRepository(name);
+    setProductRepositories((current) => current.filter((repository) => repository !== name));
   };
 
   const toggleProductRepository = (name: string) => {
     setProductRepositories((current) =>
-      current.includes(name) ? current.filter((repository) => repository !== name) : [...current, name],
+      current.includes(name)
+        ? current.filter((repository) => repository !== name)
+        : current.length < 3
+          ? [...current, name]
+          : current,
     );
   };
 
-  const runAnalysis = () => {
-    clearTimers();
+  const runAnalysis = async () => {
+    if (!docsRepository || productRepositories.length === 0) return;
     setIsRunning(true);
-    setVisibleLogLines(shouldReduceMotion ? logLines.length : 0);
-
-    if (shouldReduceMotion) {
-      timeoutIds.current.push(
-        window.setTimeout(() => {
-          setIsRunning(false);
-          goToStep(4);
-        }, 150),
-      );
-      return;
-    }
-
-    logLines.forEach((_, index) => {
-      timeoutIds.current.push(window.setTimeout(() => setVisibleLogLines(index + 1), 360 * index + 120));
-    });
-    timeoutIds.current.push(
-      window.setTimeout(
-        () => {
-          setIsRunning(false);
-          goToStep(4);
+    setError(null);
+    setVisibleLogLines(1);
+    const logTimer = window.setInterval(() => {
+      setVisibleLogLines((current) => Math.min(current + 1, runLogLines.length));
+    }, 1_300);
+    try {
+      const response = await fetch(`${CLOUD_API}/api/track/demo/analyze`, {
+        body: JSON.stringify({ docsRepository, productRepositories }),
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Thally-Track-Demo": "track-v1",
         },
-        360 * logLines.length + 650,
-      ),
-    );
-  };
-
-  const restartDemo = () => {
-    clearTimers();
-    setDocsRepository(null);
-    setProductRepositories([]);
-    setIsRunning(false);
-    setVisibleLogLines(0);
-    goToStep(1);
+        method: "POST",
+      });
+      if (!response.ok) throw new Error(await responseError(response, "Track could not complete this analysis."));
+      setResult((await response.json()) as TrackResult);
+      setVisibleLogLines(runLogLines.length);
+      goToStep(4);
+    } catch (analysisError) {
+      setError(analysisError instanceof Error ? analysisError.message : "Track could not complete this analysis.");
+    } finally {
+      window.clearInterval(logTimer);
+      setIsRunning(false);
+    }
   };
 
   return (
@@ -263,19 +252,19 @@ export function TrackDemo() {
 
       {step === 0 ? (
         <div className={styles.pane}>
-          <h3>Connect a GitHub workspace</h3>
+          <h3>Connect your GitHub repositories</h3>
           <p className={styles.paneDescription}>
-            The live product uses the Thally Labs GitHub App and only sees repositories you grant it. This tour mirrors
-            that flow with a representative read-only workspace, so it never requests access to your account.
+            Install the Thally Labs GitHub App on the repositories you want to test. Thally reads only the repository
+            contents, metadata, and pull requests you grant.
           </p>
 
-          {connectionState !== "connected" ? (
+          {sessionState !== "connected" ? (
             <div className={styles.githubBox}>
               <div className={styles.githubTitle}>
                 <GitHubMark />
                 <div>
                   <strong>Thally Labs</strong>
-                  <span>GitHub App · read-only</span>
+                  <span>GitHub App · read-only analysis</span>
                 </div>
               </div>
               {["Repository contents", "Pull requests and merge events", "Repository metadata"].map((permission) => (
@@ -287,26 +276,29 @@ export function TrackDemo() {
               ))}
               <button
                 className={`${styles.button} ${styles.primaryButton}`}
-                disabled={connectionState === "waiting"}
-                onClick={connectSampleWorkspace}
+                disabled={sessionState === "loading"}
+                onClick={connectGitHub}
                 type="button"
               >
-                {connectionState === "waiting" ? "Connecting sample workspace" : "Connect sample GitHub workspace"}
+                {sessionState === "loading" ? "Checking GitHub connection" : "Connect GitHub and choose repos"}
               </button>
-              {connectionState === "waiting" ? (
-                <p aria-live="polite" className={styles.githubWaiting}>
-                  <span /> Loading the same repository grants used by the live setup flow.
+              {error ? (
+                <p aria-live="polite" className={styles.errorMessage}>
+                  {error}
                 </p>
               ) : null}
             </div>
           ) : (
             <div className={styles.githubConnected}>
-              <span className={styles.avatar}>TD</span>
+              <span className={styles.avatar}>{session?.accountLogin.slice(0, 2).toUpperCase()}</span>
               <span className={styles.connectionText}>
-                <strong>Connected to the Thally demo workspace</strong>
-                <span>Representative read-only access to 5 repositories</span>
+                <strong>Connected to {session?.accountLogin}</strong>
+                <span>
+                  Read-only access to {session?.repositories.length}{" "}
+                  {session?.repositories.length === 1 ? "repository" : "repositories"}
+                </span>
               </span>
-              <span className={styles.sampleLabel}>Guided sample</span>
+              <span className={styles.liveLabel}>Live</span>
             </div>
           )}
 
@@ -314,13 +306,23 @@ export function TrackDemo() {
             <span />
             <button
               className={`${styles.button} ${styles.primaryButton}`}
-              disabled={connectionState !== "connected"}
+              disabled={sessionState !== "connected" || !session?.canAnalyze || session.repositories.length < 2}
               onClick={() => goToStep(1)}
               type="button"
             >
               Continue <ArrowRight />
             </button>
           </div>
+          {session && !session.canAnalyze ? (
+            <p className={styles.limitMessage}>
+              This GitHub installation has already used its free Track analysis in the last 24 hours.
+            </p>
+          ) : null}
+          {session && session.repositories.length < 2 ? (
+            <p className={styles.limitMessage}>
+              Grant at least two repositories: one for docs and one where your product changes.
+            </p>
+          ) : null}
         </div>
       ) : null}
 
@@ -328,21 +330,18 @@ export function TrackDemo() {
         <div className={styles.pane}>
           <h3>Where do your docs live?</h3>
           <p className={styles.paneDescription}>
-            In Thally Cloud, these choices come from the GitHub App installation attached to your workspace. Pick the
-            sample repository that Track should index when analysis runs.
+            Choose the repository containing your Markdown or MDX documentation. Track will inspect a bounded set of
+            pages relevant to the product change.
           </p>
-          {DOC_REPOSITORIES.map((repository) => (
+          {session?.repositories.map((repository) => (
             <RepoOption
               icon="docs"
-              isSelected={docsRepository === repository.name}
-              key={repository.name}
-              onSelect={() => setDocsRepository(repository.name)}
+              isSelected={docsRepository === repository.fullName}
+              key={repository.fullName}
+              onSelect={() => chooseDocsRepository(repository.fullName)}
               repository={repository}
             />
           ))}
-          <p className={styles.githubHint}>
-            <GitBranch /> Live workspaces can update GitHub App access whenever a repository is missing.
-          </p>
           <div className={styles.paneFooter}>
             <button className={`${styles.button} ${styles.ghostButton}`} onClick={() => goToStep(0)} type="button">
               Back
@@ -354,7 +353,7 @@ export function TrackDemo() {
               onClick={() => goToStep(2)}
               type="button"
             >
-              Next: connect product repos <ArrowRight />
+              Next: choose product repos <ArrowRight />
             </button>
           </div>
         </div>
@@ -364,23 +363,20 @@ export function TrackDemo() {
         <div className={styles.pane}>
           <h3>Where does your product change?</h3>
           <p className={styles.paneDescription}>
-            Select one or more repositories that define public behaviour. Track watches merged pull requests on their
-            default branches.
+            Select up to three repositories. Track will analyze the most recently merged pull request across them.
           </p>
-          {PRODUCT_REPOSITORIES.map((repository) => (
+          {productOptions.map((repository) => (
             <RepoOption
               icon="product"
-              isSelected={productRepositories.includes(repository.name)}
-              key={repository.name}
-              onSelect={() => toggleProductRepository(repository.name)}
+              isSelected={productRepositories.includes(repository.fullName)}
+              key={repository.fullName}
+              onSelect={() => toggleProductRepository(repository.fullName)}
               repository={repository}
             />
           ))}
           <div className={styles.paneFooter}>
             <p aria-live="polite" className={styles.selectionCount}>
-              {productRepositories.length > 0
-                ? `${productRepositories.length} selected`
-                : "0 selected · pick at least one"}
+              {productRepositories.length} of 3 selected
             </p>
             <span />
             <button className={`${styles.button} ${styles.ghostButton}`} onClick={() => goToStep(1)} type="button">
@@ -400,22 +396,27 @@ export function TrackDemo() {
 
       {step === 3 ? (
         <div className={styles.pane}>
-          <h3>Analyze a representative merged change</h3>
+          <h3>Analyze your latest merged change</h3>
           <p className={styles.paneDescription}>
-            The tour now shows the reasoning chain for a prepared, evidence-backed example. The live product performs
-            these steps against your selected repositories after signup.
+            This is a real read-only run against your selected repositories. It can take up to a minute while Track
+            reads the pull request, finds connected docs, and validates a draft.
           </p>
           <div aria-live="polite" className={styles.progressLog} role="log">
             {visibleLogLines === 0 ? (
-              <p className={styles.logPlaceholder}>Ready to analyze the bounded change.</p>
+              <p className={styles.logPlaceholder}>Ready to analyze your repositories.</p>
             ) : null}
-            {logLines.slice(0, visibleLogLines).map((line, index) => (
-              <p className={index === 0 || index === 3 || index === 6 ? styles.logSuccess : ""} key={line}>
-                <span>{index === 0 || index === 3 || index === 6 ? "✓" : "·"}</span>
+            {runLogLines.slice(0, visibleLogLines).map((line, index) => (
+              <p className={index < visibleLogLines - 1 || !isRunning ? styles.logSuccess : ""} key={line}>
+                <span>{index < visibleLogLines - 1 || !isRunning ? "✓" : "·"}</span>
                 {line}
               </p>
             ))}
           </div>
+          {error ? (
+            <p aria-live="polite" className={styles.errorMessage}>
+              {error}
+            </p>
+          ) : null}
           <div className={styles.paneFooter}>
             <span />
             <button
@@ -429,88 +430,103 @@ export function TrackDemo() {
             <button
               className={`${styles.button} ${styles.primaryButton}`}
               disabled={isRunning}
-              onClick={runAnalysis}
+              onClick={() => void runAnalysis()}
               type="button"
             >
-              <Track /> {isRunning ? "Analyzing change" : "Run Thally Track"}
+              <Track /> {isRunning ? "Analyzing your repositories" : "Run Thally Track"}
             </button>
           </div>
         </div>
       ) : null}
 
-      {step === 4 ? (
+      {step === 4 && result ? (
         <div className={`${styles.pane} ${styles.findingsPane}`}>
-          <h3>Findings</h3>
+          <h3>Track findings</h3>
           <p className={styles.paneDescription}>
-            Representative analysis of a merged change from {firstProductRepository} against {docsRepository}.
+            Real analysis of{" "}
+            <a href={result.pullRequest.url} rel="noreferrer" target="_blank">
+              {result.pullRequest.repository} #{result.pullRequest.number}
+            </a>{" "}
+            against {docsRepository}.
           </p>
           <p className={styles.verdict}>
-            <span /> 3 findings, 1 shown below <em>· candidates, not verified corrections</em>
+            <span /> {result.analysis.findings.length}{" "}
+            {result.analysis.findings.length === 1 ? "finding" : "findings"}{" "}
+            <em>· {result.analysis.summary}</em>
           </p>
 
-          <article className={styles.findingCard}>
-            <header className={styles.findingHeader}>
-              <span className={styles.findingIcon}>
-                <GitPullRequest />
-              </span>
+          {result.analysis.findings.length === 0 ? (
+            <div className={styles.noFindings}>
+              <Check />
               <div>
-                <h4>
-                  {finding.title}
-                  <span>{firstProductRepository} #482 → main</span>
-                </h4>
-                <p>2 documentation pages may be affected</p>
+                <strong>No grounded documentation update was found.</strong>
+                <p>Track inspected {result.pagesInspected.length} likely pages and chose not to invent a change.</p>
               </div>
-              <span className={styles.confidence}>High confidence</span>
-            </header>
-
-            <div className={styles.findingBody}>
-              <dl className={styles.evidenceGrid}>
-                <dt>Change detected</dt>
-                <dd>
-                  <code>{finding.symbol}</code> {finding.changeDetected}
-                </dd>
-                <dt>Docs searched</dt>
-                <dd>
-                  128 indexed pages, with matches in <code>{finding.docsPages[0]}</code> and{" "}
-                  <code>{finding.docsPages[1]}</code>.
-                </dd>
-                <dt>Why this matters</dt>
-                <dd>{finding.whyItMatters}</dd>
-              </dl>
-
-              <div className={styles.diff}>
-                <div className={styles.diffHeader}>
-                  <Docs /> {finding.filePath} <span>Drafted update · for your review</span>
-                </div>
-                <div className={styles.diffContext}> {finding.contextBefore}</div>
-                <div className={styles.diffDelete}>- {finding.beforeLine}</div>
-                <div className={styles.diffAdd}>+ {finding.afterLine}</div>
-                <div className={styles.diffContext}> {finding.contextAfter}</div>
-              </div>
-              <p className={styles.findingFootnote}>
-                Evidence: {finding.evidence}. Track opens the update as a draft pull request against your docs
-                repository. Nothing publishes without review.
-              </p>
             </div>
-          </article>
+          ) : null}
+
+          {result.analysis.findings.map((finding) => (
+            <article className={styles.findingCard} key={`${finding.affectedPage}:${finding.title}`}>
+              <header className={styles.findingHeader}>
+                <span className={styles.findingIcon}>
+                  <GitPullRequest />
+                </span>
+                <div>
+                  <h4>
+                    {finding.title}
+                    <span>
+                      {result.pullRequest.repository} #{result.pullRequest.number} → {result.pullRequest.baseBranch}
+                    </span>
+                  </h4>
+                  <p>{finding.affectedPage}</p>
+                </div>
+                <span className={styles.confidence}>{finding.confidence} confidence</span>
+              </header>
+              <div className={styles.findingBody}>
+                <dl className={styles.evidenceGrid}>
+                  <dt>Why this matters</dt>
+                  <dd>{finding.impact}</dd>
+                  <dt>Evidence</dt>
+                  <dd>{finding.evidence.join(" ")}</dd>
+                  <dt>Docs inspected</dt>
+                  <dd>{result.pagesInspected.length} likely Markdown pages from the selected docs repository.</dd>
+                </dl>
+                <div className={styles.diff}>
+                  <div className={styles.diffHeader}>
+                    <Docs /> {finding.affectedPage} <span>Drafted update · for your review</span>
+                  </div>
+                  <div className={styles.diffDelete}>- {finding.draft.before}</div>
+                  <div className={styles.diffAdd}>+ {finding.draft.after}</div>
+                </div>
+                <p className={styles.findingFootnote}>
+                  This run is read-only. Create an account to send the draft as a reviewable pull request and let Track
+                  watch future merges.
+                </p>
+              </div>
+            </article>
+          ))}
 
           <div className={styles.conversionCard}>
             <div>
-              <h4>2 more findings are waiting</h4>
+              <h4>
+                {result.analysis.findings.length > 0
+                  ? "Turn this draft into a pull request"
+                  : "Keep your docs checked on every merge"}
+              </h4>
               <p>
-                Create a free account to connect your own GitHub repositories, send drafts as pull requests, and let
-                Track watch every merge from then on.
+                Create your Thally workspace to send this update for review, keep the repository connection, and run
+                Track automatically on future merges.
               </p>
             </div>
             <a className={`${styles.button} ${styles.primaryButton}`} href={`${DESTINATIONS.signup}?intent=track`}>
-              Connect your repos <ArrowRight />
+              Continue with Thally <ArrowRight />
             </a>
           </div>
           <div className={styles.paneFooter}>
             <span />
-            <button className={`${styles.button} ${styles.ghostButton}`} onClick={restartDemo} type="button">
-              <RefreshCw /> Run the demo again
-            </button>
+            <a className={`${styles.button} ${styles.ghostButton}`} href={result.pullRequest.url}>
+              <RefreshCw /> View analyzed pull request
+            </a>
           </div>
         </div>
       ) : null}

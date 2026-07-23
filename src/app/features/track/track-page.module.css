@@ -476,11 +476,31 @@
   margin-top: 0.15rem;
 }
 
-.sampleLabel {
+.liveLabel {
   color: var(--muted-foreground);
   flex: 0 0 auto;
   font-family: var(--font-mono);
   font-size: 0.68rem;
+}
+
+.liveLabel {
+  color: var(--track-forest-ink);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.errorMessage,
+.limitMessage {
+  color: oklch(0.48 0.16 25);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin: 0.875rem 0 0;
+}
+
+.limitMessage {
+  margin-left: auto;
+  max-width: 35rem;
+  text-align: right;
 }
 
 .repoOption {
@@ -660,6 +680,39 @@
   border: 1px solid var(--border);
   border-radius: 0.9rem;
   overflow: hidden;
+}
+
+.findingCard + .findingCard {
+  margin-top: 1rem;
+}
+
+.noFindings {
+  align-items: flex-start;
+  background: color-mix(in oklab, var(--track-forest) 7%, var(--card));
+  border: 1px solid color-mix(in oklab, var(--track-forest) 25%, transparent);
+  border-radius: 0.875rem;
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem 1.125rem;
+}
+
+.noFindings > svg {
+  color: var(--track-forest-ink);
+  flex: 0 0 auto;
+  height: 1rem;
+  margin-top: 0.15rem;
+  width: 1rem;
+}
+
+.noFindings strong {
+  font-size: 0.9rem;
+}
+
+.noFindings p {
+  color: var(--muted-foreground);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  margin: 0.2rem 0 0;
 }
 
 .findingHeader {
@@ -902,7 +955,7 @@
     flex-wrap: wrap;
   }
 
-  .sampleLabel,
+  .liveLabel,
   .confidence {
     margin-left: 3.2rem;
   }
