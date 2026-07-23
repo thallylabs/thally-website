@@ -38,6 +38,12 @@ const routes: SitemapRoute[] = [
     ],
   },
   {
+    path: "/features/track",
+    priority: 0.9,
+    changeFrequency: "monthly",
+    sources: ["src/app/features/track", "src/components/icons/index.tsx"],
+  },
+  {
     path: "/blog",
     priority: 0.8,
     changeFrequency: "weekly",

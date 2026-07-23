@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-import { Cloud, GitPullRequest, Mcp, Negotiation, Overview } from "@/components/icons";
+import { Cloud, GitPullRequest, Mcp, Negotiation, Overview, Track } from "@/components/icons";
 import { Logo } from "@/components/layout/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -41,6 +41,12 @@ const Navbar = () => {
       label: "Features",
       href: "/#features",
       dropdownItems: [
+        {
+          title: "Thally Track",
+          href: "/features/track",
+          description: "See which documentation may be affected by a merged product change.",
+          icon: Track,
+        },
         {
           title: "Automation",
           href: "/#automation",

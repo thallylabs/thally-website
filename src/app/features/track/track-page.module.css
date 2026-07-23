@@ -1,0 +1,1005 @@
+.page {
+  --track-panel: oklch(0.975 0.008 120);
+  --track-secondary: oklch(0.32 0.015 138);
+  --track-border-strong: oklch(0.235 0.017 138 / 0.16);
+  --track-forest: oklch(0.52 0.1 152);
+  --track-forest-ink: oklch(0.42 0.09 152);
+  --track-warn: oklch(0.62 0.12 66);
+  --track-log: oklch(0.2 0.02 145);
+  background: var(--background);
+  color: var(--foreground);
+  overflow: hidden;
+}
+
+.page :global([hidden]) {
+  display: none !important;
+}
+
+.page svg {
+  display: block;
+}
+
+.hero {
+  background: radial-gradient(
+    ellipse 80% 65% at 50% -10%,
+    color-mix(in oklab, var(--chart-1) 13%, transparent),
+    transparent
+  );
+  padding: 6.75rem max(1.5rem, calc(50vw - 570px)) 5rem;
+  text-align: center;
+}
+
+.eyebrow {
+  color: var(--track-forest-ink);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  margin: 0 0 1rem;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 5vw, 4.25rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+  margin: 0 auto 1.25rem;
+  max-width: 18ch;
+  text-wrap: balance;
+}
+
+.hero h1 em {
+  color: var(--track-forest-ink);
+  font-style: normal;
+}
+
+.heroDescription {
+  color: var(--muted-foreground);
+  font-size: clamp(1rem, 1.7vw, 1.15rem);
+  line-height: 1.7;
+  margin: 0 auto 2rem;
+  max-width: 59ch;
+  text-wrap: pretty;
+}
+
+.heroActions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.heroFinePrint {
+  color: var(--muted-foreground);
+  font-size: 0.8rem;
+  margin: 1rem auto 0;
+}
+
+.button {
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 0.625rem;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  gap: 0.5rem;
+  justify-content: center;
+  min-height: 2.625rem;
+  padding: 0.625rem 1.125rem;
+  text-decoration: none;
+  transition:
+    background-color 150ms ease,
+    filter 150ms ease,
+    opacity 150ms ease,
+    transform 100ms ease;
+  white-space: nowrap;
+}
+
+.button svg {
+  height: 0.95rem;
+  width: 0.95rem;
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.42;
+}
+
+.primaryButton {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.primaryButton:hover:not(:disabled) {
+  filter: brightness(1.18);
+}
+
+.outlineButton {
+  background: var(--card);
+  border-color: var(--track-border-strong);
+  color: var(--track-secondary);
+}
+
+.outlineButton:hover {
+  background: var(--accent);
+}
+
+.ghostButton {
+  background: transparent;
+  color: var(--track-secondary);
+}
+
+.ghostButton:hover:not(:disabled) {
+  background: var(--accent);
+}
+
+.howSection,
+.demoSection {
+  padding-inline: max(1.5rem, calc(50vw - 570px));
+}
+
+.howSection {
+  padding-bottom: 6rem;
+  padding-top: 1.5rem;
+}
+
+.demoSection {
+  padding-bottom: 7.5rem;
+  scroll-margin-top: 5rem;
+}
+
+.sectionHeading {
+  margin: 0 auto 2.25rem;
+  max-width: 63ch;
+  text-align: center;
+}
+
+.sectionHeading h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin: 0 0 0.7rem;
+}
+
+.sectionHeading p:not(.eyebrow) {
+  color: var(--muted-foreground);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  margin: 0 auto;
+}
+
+.workflowGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.workflowCard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.4rem;
+}
+
+.stepLabel {
+  align-items: center;
+  color: var(--track-forest-ink);
+  display: flex;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  gap: 0.65rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.9rem;
+  text-transform: uppercase;
+}
+
+.stepLabel::after {
+  background: var(--border);
+  content: "";
+  flex: 1;
+  height: 1px;
+}
+
+.iconTile,
+.repoIcon,
+.findingIcon {
+  align-items: center;
+  background: color-mix(in oklab, var(--chart-1) 16%, transparent);
+  color: var(--track-forest-ink);
+  display: flex;
+  justify-content: center;
+}
+
+.iconTile {
+  border-radius: 0.75rem;
+  height: 2.5rem;
+  margin-bottom: 0.9rem;
+  width: 2.5rem;
+}
+
+.sectionIcon {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.workflowCard h3 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.45rem;
+}
+
+.workflowCard p {
+  color: var(--muted-foreground);
+  font-size: 0.87rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.honestyPanel {
+  align-items: flex-start;
+  background: var(--track-panel);
+  border: 1px solid var(--border);
+  border-radius: 0.875rem;
+  display: flex;
+  gap: 0.75rem;
+  margin: 2.5rem auto 0;
+  max-width: 46rem;
+  padding: 1rem 1.125rem;
+}
+
+.honestyPanel p {
+  color: var(--track-secondary);
+  font-size: 0.87rem;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.honestyIcon {
+  color: var(--track-forest-ink);
+  flex: 0 0 auto;
+  height: 1rem;
+  margin-top: 0.2rem;
+  width: 1rem;
+}
+
+.stage {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+  box-shadow: 0 1.25rem 3.125rem oklch(0.235 0.05 138 / 0.08);
+  margin: 0 auto;
+  max-width: 53.75rem;
+  overflow: hidden;
+}
+
+.progressHeader {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 1.5rem 2.125rem 0;
+}
+
+.progressLabel {
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.progressLabel span {
+  color: var(--track-forest-ink);
+  font-weight: 600;
+}
+
+.progressSegments {
+  display: flex;
+  gap: 0.375rem;
+}
+
+.progressSegments > span {
+  background: var(--muted);
+  border-radius: 99px;
+  height: 0.25rem;
+  transition: background-color 250ms ease;
+  width: 2rem;
+}
+
+.progressSegments > .progressSegmentActive {
+  background: var(--track-forest);
+}
+
+.pane {
+  min-height: 21.25rem;
+  padding: 1.125rem 2.125rem 2.125rem;
+}
+
+.findingsPane {
+  min-height: auto;
+}
+
+.pane h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.4rem;
+}
+
+.paneDescription {
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0 0 1.375rem;
+  max-width: 66ch;
+}
+
+.githubBox {
+  background: var(--track-panel);
+  border: 1px solid var(--border);
+  border-radius: 0.875rem;
+  max-width: 35rem;
+  padding: 1.25rem 1.375rem;
+}
+
+.githubTitle {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.875rem;
+}
+
+.githubMark {
+  flex: 0 0 auto;
+  height: 1.625rem;
+  width: 1.625rem;
+}
+
+.githubTitle strong {
+  display: block;
+  font-size: 0.94rem;
+}
+
+.githubTitle span {
+  color: var(--muted-foreground);
+  display: block;
+  font-size: 0.79rem;
+  margin-top: 0.1rem;
+}
+
+.githubPermission {
+  align-items: center;
+  color: var(--track-secondary);
+  display: flex;
+  font-size: 0.84rem;
+  gap: 0.55rem;
+  padding: 0.3rem 0;
+}
+
+.githubPermission svg {
+  color: var(--track-forest-ink);
+  height: 0.875rem;
+  width: 0.875rem;
+}
+
+.githubPermission span {
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  margin-left: auto;
+}
+
+.githubBox > .button {
+  margin-top: 1rem;
+}
+
+.githubWaiting {
+  align-items: center;
+  color: var(--muted-foreground);
+  display: flex;
+  font-size: 0.82rem;
+  gap: 0.55rem;
+  margin: 0.875rem 0 0;
+}
+
+.githubWaiting > span {
+  animation: track-pulse 1s ease-in-out infinite;
+  background: var(--track-warn);
+  border-radius: 50%;
+  height: 0.5rem;
+  width: 0.5rem;
+}
+
+.githubConnected {
+  align-items: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.875rem;
+  display: flex;
+  gap: 0.8rem;
+  max-width: 35rem;
+  padding: 1rem 1.125rem;
+}
+
+.avatar {
+  align-items: center;
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--track-secondary);
+  display: flex;
+  flex: 0 0 auto;
+  font-size: 0.8rem;
+  font-weight: 700;
+  height: 2.375rem;
+  justify-content: center;
+  width: 2.375rem;
+}
+
+.connectionText {
+  flex: 1;
+  min-width: 0;
+}
+
+.connectionText strong {
+  align-items: center;
+  display: flex;
+  font-size: 0.9rem;
+  gap: 0.45rem;
+}
+
+.connectionText strong::before {
+  background: var(--track-forest);
+  border-radius: 50%;
+  content: "";
+  height: 0.45rem;
+  width: 0.45rem;
+}
+
+.connectionText > span {
+  color: var(--muted-foreground);
+  display: block;
+  font-size: 0.78rem;
+  margin-top: 0.15rem;
+}
+
+.liveLabel {
+  color: var(--muted-foreground);
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+
+.liveLabel {
+  color: var(--track-forest-ink);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.errorMessage,
+.limitMessage {
+  color: oklch(0.48 0.16 25);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin: 0.875rem 0 0;
+}
+
+.limitMessage {
+  margin-left: auto;
+  max-width: 35rem;
+  text-align: right;
+}
+
+.repoOption {
+  align-items: center;
+  background: var(--card);
+  border: 1.5px solid var(--track-border-strong);
+  border-radius: 0.8rem;
+  color: var(--foreground);
+  display: flex;
+  font-family: var(--font-sans);
+  gap: 0.8rem;
+  margin-bottom: 0.625rem;
+  padding: 0.8rem 1rem;
+  text-align: left;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
+  width: 100%;
+}
+
+.repoOption:hover {
+  background: var(--accent);
+}
+
+.repoOptionSelected {
+  background: color-mix(in oklab, var(--track-forest) 6%, var(--card));
+  border-color: var(--track-forest);
+}
+
+.repoIcon,
+.findingIcon {
+  border-radius: 0.625rem;
+  flex: 0 0 auto;
+  height: 2.125rem;
+  width: 2.125rem;
+}
+
+.repoIcon svg,
+.findingIcon svg {
+  height: 1.05rem;
+  width: 1.05rem;
+}
+
+.repoText {
+  flex: 1;
+  min-width: 0;
+}
+
+.repoName {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.87rem;
+  font-weight: 600;
+}
+
+.repoDescription {
+  color: var(--muted-foreground);
+  display: block;
+  font-size: 0.78rem;
+  margin-top: 0.12rem;
+}
+
+.selectionIcon {
+  align-items: center;
+  border: 1.5px solid var(--track-border-strong);
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  flex: 0 0 auto;
+  height: 1.25rem;
+  justify-content: center;
+  width: 1.25rem;
+}
+
+.repoOptionSelected .selectionIcon {
+  background: var(--track-forest);
+  border-color: var(--track-forest);
+}
+
+.selectionIcon svg {
+  height: 0.7rem;
+  width: 0.7rem;
+}
+
+.githubHint {
+  align-items: center;
+  color: var(--muted-foreground);
+  display: flex;
+  font-size: 0.8rem;
+  gap: 0.5rem;
+  margin: 0.25rem 0.15rem 0;
+}
+
+.githubHint svg {
+  height: 0.875rem;
+  width: 0.875rem;
+}
+
+.paneFooter {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.paneFooter > span {
+  flex: 1;
+}
+
+.selectionCount {
+  color: var(--muted-foreground);
+  font-size: 0.82rem;
+  margin: 0;
+}
+
+.progressLog {
+  background: var(--track-log);
+  border: 1px solid var(--border);
+  border-radius: 0.8rem;
+  color: oklch(0.62 0.02 130);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.75;
+  min-height: 10.5rem;
+  overflow-x: auto;
+  padding: 1.125rem 1.25rem;
+}
+
+.progressLog p {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.625rem;
+  margin: 0;
+  min-width: max-content;
+}
+
+.progressLog p > span {
+  display: inline-block;
+  text-align: center;
+  width: 0.625rem;
+}
+
+.progressLog .logSuccess {
+  color: oklch(0.8 0.16 135);
+}
+
+.progressLog .logPlaceholder {
+  color: oklch(0.62 0.02 130);
+  min-width: 0;
+}
+
+.verdict {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.93rem;
+  font-weight: 600;
+  gap: 0.6rem;
+  margin: 0 0 1.125rem;
+}
+
+.verdict > span {
+  background: var(--track-warn);
+  border-radius: 50%;
+  height: 0.5rem;
+  width: 0.5rem;
+}
+
+.verdict em {
+  color: var(--muted-foreground);
+  font-style: normal;
+  font-weight: 400;
+}
+
+.findingCard {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  overflow: hidden;
+}
+
+.findingCard + .findingCard {
+  margin-top: 1rem;
+}
+
+.noFindings {
+  align-items: flex-start;
+  background: color-mix(in oklab, var(--track-forest) 7%, var(--card));
+  border: 1px solid color-mix(in oklab, var(--track-forest) 25%, transparent);
+  border-radius: 0.875rem;
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem 1.125rem;
+}
+
+.noFindings > svg {
+  color: var(--track-forest-ink);
+  flex: 0 0 auto;
+  height: 1rem;
+  margin-top: 0.15rem;
+  width: 1rem;
+}
+
+.noFindings strong {
+  font-size: 0.9rem;
+}
+
+.noFindings p {
+  color: var(--muted-foreground);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  margin: 0.2rem 0 0;
+}
+
+.findingHeader {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.8rem;
+  padding: 1rem 1.125rem;
+}
+
+.findingHeader > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.findingHeader h4 {
+  font-family: var(--font-sans);
+  font-size: 0.91rem;
+  font-weight: 600;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.findingHeader h4 span {
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  margin-left: 0.5rem;
+}
+
+.findingHeader p {
+  color: var(--muted-foreground);
+  font-size: 0.79rem;
+  margin: 0.2rem 0 0;
+}
+
+.confidence {
+  align-items: center;
+  color: var(--track-forest);
+  display: inline-flex;
+  flex: 0 0 auto;
+  font-size: 0.76rem;
+  font-weight: 600;
+  gap: 0.4rem;
+  padding-top: 0.2rem;
+}
+
+.confidence::before,
+.diffHeader > span::before {
+  background: currentColor;
+  border-radius: 50%;
+  content: "";
+  height: 0.4rem;
+  width: 0.4rem;
+}
+
+.findingBody {
+  border-top: 1px solid var(--border);
+  padding: 1rem 1.125rem 1.125rem;
+}
+
+.evidenceGrid {
+  display: grid;
+  font-size: 0.82rem;
+  gap: 0.45rem 1rem;
+  grid-template-columns: 9.375rem 1fr;
+  margin: 0 0 1rem;
+}
+
+.evidenceGrid dt {
+  color: var(--muted-foreground);
+  font-weight: 500;
+}
+
+.evidenceGrid dd {
+  color: var(--track-secondary);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.evidenceGrid code {
+  background: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 0.3rem;
+  color: var(--track-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  padding: 0.05rem 0.35rem;
+}
+
+.diff {
+  border: 1px solid var(--border);
+  border-radius: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  line-height: 1.75;
+  overflow: hidden;
+}
+
+.diffHeader {
+  align-items: center;
+  background: var(--track-panel);
+  border-bottom: 1px solid var(--border);
+  color: var(--muted-foreground);
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0.8rem;
+}
+
+.diffHeader > svg {
+  height: 0.8rem;
+  width: 0.8rem;
+}
+
+.diffHeader > span {
+  align-items: center;
+  color: var(--track-forest-ink);
+  display: inline-flex;
+  font-weight: 600;
+  gap: 0.4rem;
+  margin-left: auto;
+}
+
+.diffContext,
+.diffDelete,
+.diffAdd {
+  padding: 0.08rem 0.8rem;
+  white-space: pre-wrap;
+}
+
+.diffContext {
+  color: var(--muted-foreground);
+}
+
+.diffDelete {
+  background: color-mix(in oklab, oklch(0.6 0.19 25) 9%, var(--card));
+  color: oklch(0.45 0.16 25);
+}
+
+.diffAdd {
+  background: color-mix(in oklab, var(--track-forest) 10%, var(--card));
+  color: var(--track-forest-ink);
+}
+
+.findingFootnote {
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  margin: 0.875rem 0 0;
+}
+
+.conversionCard {
+  align-items: center;
+  background: color-mix(in oklab, var(--track-forest) 5%, var(--card));
+  border: 1px solid color-mix(in oklab, var(--track-forest) 25%, transparent);
+  border-radius: 0.9rem;
+  display: flex;
+  gap: 1.125rem;
+  margin-top: 1.375rem;
+  padding: 1.375rem 1.5rem;
+}
+
+.conversionCard > div {
+  flex: 1;
+}
+
+.conversionCard h4 {
+  font-family: var(--font-display);
+  font-size: 1.03rem;
+  font-weight: 700;
+  margin: 0 0 0.3rem;
+}
+
+.conversionCard p {
+  color: var(--muted-foreground);
+  font-size: 0.84rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+@keyframes track-pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (max-width: 860px) {
+  .hero {
+    padding-block: 5.25rem 4rem;
+  }
+
+  .workflowGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .progressHeader {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 1.25rem 1.25rem 0;
+  }
+
+  .pane {
+    padding: 0.9rem 1.25rem 1.625rem;
+  }
+
+  .evidenceGrid {
+    gap: 0.15rem;
+    grid-template-columns: 1fr;
+  }
+
+  .evidenceGrid dt:not(:first-child) {
+    margin-top: 0.55rem;
+  }
+
+  .conversionCard {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 620px) {
+  .heroActions,
+  .heroActions .button,
+  .conversionCard .button {
+    width: 100%;
+  }
+
+  .progressSegments,
+  .progressSegments > span {
+    width: 100%;
+  }
+
+  .progressSegments > span {
+    min-width: 0;
+  }
+
+  .githubConnected,
+  .findingHeader {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .liveLabel,
+  .confidence {
+    margin-left: 3.2rem;
+  }
+
+  .repoOption {
+    align-items: flex-start;
+  }
+
+  .paneFooter {
+    align-items: stretch;
+    flex-wrap: wrap;
+  }
+
+  .paneFooter > .button {
+    flex: 1;
+  }
+
+  .selectionCount {
+    flex-basis: 100%;
+  }
+
+  .findingHeader h4 span {
+    display: block;
+    margin: 0.25rem 0 0;
+  }
+
+  .diff {
+    font-size: 0.67rem;
+    overflow-x: auto;
+  }
+
+  .diff > div {
+    min-width: 38rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .githubWaiting > span {
+    animation: none;
+  }
+
+  .button,
+  .progressSegments > span,
+  .repoOption {
+    transition: none;
+  }
+}
