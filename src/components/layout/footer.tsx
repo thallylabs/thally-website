@@ -10,7 +10,7 @@ const navigation = [
   {
     title: "Product",
     links: [
-      { name: "Automation", href: "/#automation" },
+      { name: "Change intelligence", href: "/#automation" },
       { name: "Features", href: "/#features" },
       { name: "Migration", href: "/#migrate" },
       { name: "Cloud dashboard", href: "/#dashboard" },
@@ -60,7 +60,7 @@ export const Footer = () => {
               className="text-primary-foreground dark:text-foreground"
             />
             <h2 className="font-display max-w-md text-3xl leading-tight font-semibold tracking-tight text-balance md:text-4xl">
-              Docs that keep up with your product.
+              Every product change. Every knowledge surface. Automatically in sync.
             </h2>
           </div>
           <Button asChild variant="secondary" size="lg">

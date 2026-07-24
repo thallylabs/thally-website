@@ -31,9 +31,9 @@ const TRIGGERS: Trigger[] = [
   {
     id: "track",
     label: "Thally Track",
-    title: "Thally checks merged product changes against your docs.",
+    title: "Thally maps merged product changes to affected knowledge.",
     description:
-      "Choose the product repos Thally should watch. When a merged change affects the docs, Thally drafts an update for review.",
+      "Choose the product repos Thally should watch. Track gathers evidence, finds affected docs, and drafts an update only when one is needed.",
     icon: GitMerge,
     accent: "var(--chart-2)",
   },
@@ -228,8 +228,9 @@ export const Automation = () => {
 
       <div className="relative container">
         <SectionHeader
-          title="Connect your product repos. Review every docs update."
-          description="Once your docs site is live, connect the product repos you want Thally to watch. It drafts an update only when the docs need one. Your team decides what lands."
+          eyebrow="Product change intelligence"
+          title="One product change. The right knowledge updates."
+          description="Track evaluates merged changes from the product repositories you choose, finds the documentation affected, and drafts an update only when the evidence says one is needed. Your team decides what lands."
         />
 
         <div className="mt-10 grid gap-5 lg:mt-16 lg:grid-cols-[5fr_6fr] lg:gap-10">

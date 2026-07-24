@@ -6,12 +6,12 @@ const homeQuestions = [
   {
     question: "What is Thally?",
     answer:
-      "Thally is a documentation platform that publishes one source for people and AI tools. Start a new site or bring your existing docs, then connect product repos if you want Thally to draft reviewable updates.",
+      "Thally is a product knowledge synchronization pipeline. It connects product changes to customer-facing knowledge, identifies what needs to change, and prepares reviewable updates. Documentation is the first surface.",
   },
   {
     question: "How is Thally different from other docs tools?",
     answer:
-      "Thally keeps the documentation source and publishing engine under your control. The same content serves people and AI tools, and Thally can draft docs PRs from relevant merged product changes after you connect the repositories.",
+      "Most docs tools are destinations where teams write and store knowledge. Thally adds the pipeline between the product and those destinations. It understands what changed, finds the affected documentation, and drafts only the updates that evidence supports.",
   },
   {
     question: "How do I migrate from Mintlify, Docusaurus, or GitBook?",
@@ -21,7 +21,7 @@ const homeQuestions = [
   {
     question: "How does Thally keep my docs up to date?",
     answer:
-      "First publish or connect a Thally docs site. Then choose the product repos Thally should watch. When a merged pull request affects the docs, Thally can draft an update for review or report that no change is needed. Nothing merges without your approval.",
+      "First publish or connect a Thally docs site. Then choose the product repositories Track should watch. When a relevant pull request merges, Track evaluates the change, identifies affected pages, and can draft an update for review. No change is a valid result, and Thally never merges by itself.",
   },
   {
     question: "How does Thally check documentation quality?",
@@ -32,6 +32,11 @@ const homeQuestions = [
     question: "How can AI assistants read my docs?",
     answer:
       "Every Thally page can return HTML, JSON, JSON-LD, or Markdown from the same source. AI assistants can search your docs, open pages, and follow your navigation without scraping the visual website.",
+  },
+  {
+    question: "Does Thally update every knowledge surface today?",
+    answer:
+      "Not yet. Documentation is the first surface, including the guides, API references, examples, and release notes maintained in your docs repository. The product is designed to expand from that wedge into the wider knowledge ecosystem around your product.",
   },
 ];
 
@@ -96,7 +101,7 @@ export const FAQ = ({ context = "home" }: { context?: "home" | "pricing" }) => {
           description={
             context === "pricing"
               ? "Find answers about plans, billing, hosting, cancellation, and Enterprise support."
-              : "Find answers about migration, automation, AI tools, self-hosting, and how Thally fits your stack."
+              : "Find answers about product change intelligence, documentation automation, migration, AI tools, and how Thally fits your stack."
           }
           align="center"
           layout="stack"

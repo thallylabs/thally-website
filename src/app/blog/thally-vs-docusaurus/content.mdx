@@ -1,10 +1,10 @@
-**The short answer:** both are MIT-licensed and free to self-host. Docusaurus is a mature React static-site framework you assemble yourself; Thally is a complete documentation platform with the AI layer built in: structured per-page output, an MCP server, hybrid search, and a docs agent that opens reviewed PRs. If you enjoy assembling your stack, Docusaurus is a great kit. If you want agent-ready docs out of the box, Thally saves you the assembly.
+**The short answer:** both are MIT-licensed and free to self-host. Docusaurus is a mature React static-site framework you assemble yourself. Thally combines a complete documentation engine with a synchronization pipeline that maps product changes to reviewable knowledge updates. It also includes structured per-page output, an MCP server, hybrid search, and a docs agent. If you enjoy assembling your stack, Docusaurus is a great kit. If you want the publishing and product-change pipeline together, Thally saves you the assembly.
 
 ## Two open-source philosophies
 
 Docusaurus, maintained by Meta, is a widely adopted docs framework. It gives you a React site generator with versioning, i18n, MDX, and a broad plugin ecosystem. What you build on top is up to you.
 
-Thally is also open source (MIT), but it is a platform rather than a kit: search, AI chat, API reference, analytics, theming, and the machine-readability layer are part of the product, not plugins you select and maintain.
+Thally is also open source (MIT), but it is a product rather than a kit: search, AI chat, API reference, analytics, theming, and the machine-readability layer are built in. Track adds a second layer that evaluates product changes against the documentation and prepares evidence-backed updates for review.
 
 The right choice depends on how much of the documentation stack your team wants to assemble and maintain.
 
@@ -42,7 +42,7 @@ The question is not whether Docusaurus can be made agent-ready. It is whether yo
 
 Docusaurus renders what is in the repository, while your team owns the process that keeps those files current. That works well when the team already has a strong documentation practice.
 
-Thally attacks the drift problem directly. Thally Track watches your product repos and turns merged PRs into reviewed documentation PRs. The drift sweep flags pages whose source files changed since last verification. Comment `@thally document this` on any GitHub issue and Thally drafts the page. A human reviews and merges every change.
+Thally attacks the drift problem directly. Track watches the product repositories you choose, evaluates merged PRs, and maps the change to affected documentation before preparing an update. The drift sweep flags pages whose source files changed since last verification. Comment `@thally document this` on any GitHub issue to request a reviewable change. No change is a valid result, and a human reviews and merges every update.
 
 ## Cost of ownership
 
@@ -72,4 +72,4 @@ The migrator converts supported Docusaurus pages and sidebars to a Thally projec
 
 ## Sources and verification
 
-Docusaurus capabilities were checked against its [official documentation](https://docusaurus.io/docs) and [deployment guide](https://docusaurus.io/docs/deployment). Thally capabilities and prices were checked against the current product repository, [documentation](https://docs.thally.io), and [machine-readable pricing](/pricing.md). Sources were last verified July 19, 2026. Read our [editorial policy](/editorial-policy) for the comparison process.
+Docusaurus capabilities were checked against its [official documentation](https://docusaurus.io/docs) and [deployment guide](https://docusaurus.io/docs/deployment). Thally capabilities and prices were checked against the current product repository, [documentation](https://docs.thally.io), and [machine-readable pricing](/pricing.md). Sources were last verified July 24, 2026. Read our [editorial policy](/editorial-policy) for the comparison process.

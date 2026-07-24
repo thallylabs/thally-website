@@ -1,6 +1,6 @@
 # Pricing: Thally
 
-Thally is a documentation platform with an MIT-licensed engine and optional managed Cloud services. All prices are in USD. Last updated: 2026-07-20.
+Thally is a product knowledge synchronization pipeline, starting with documentation. The MIT-licensed publishing engine can be self-hosted, while Thally Cloud adds managed services and product change intelligence. All prices are in USD. Last updated: 2026-07-24.
 
 ## Free
 

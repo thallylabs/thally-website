@@ -57,6 +57,30 @@ export const faqItems: FAQItem[] = [
   },
   {
     category: "Features",
+    question: "What is Thally?",
+    answer:
+      "Thally is a product knowledge synchronization pipeline. It connects product changes to customer-facing knowledge, identifies what needs to change, and prepares reviewable updates. Documentation is the first surface.",
+  },
+  {
+    category: "Features",
+    question: "How is Thally different from a documentation platform?",
+    answer:
+      "A documentation platform is a destination where knowledge is written and stored. Thally adds the synchronization pipeline around it. Track evaluates product changes, maps them to affected documentation, and prepares evidence-backed updates for human review.",
+  },
+  {
+    category: "Features",
+    question: "What knowledge surfaces can Thally update today?",
+    answer:
+      "Thally currently focuses automated updates on documentation repositories, including the guides, API references, examples, and release notes maintained there. The long-term direction is to keep the broader customer-facing knowledge ecosystem synchronized.",
+  },
+  {
+    category: "Features",
+    question: "Can Thally decide that a product change needs no documentation update?",
+    answer:
+      "Yes. Thally optimizes for understanding before generation. If the available evidence does not show that a customer-facing page needs to change, Track can return a no-change result instead of producing unnecessary content.",
+  },
+  {
+    category: "Features",
     question: "What output formats does Thally produce?",
     answer:
       "Every page serves polished HTML for people plus JSON, JSON-LD, and Markdown for machines. All four formats come from one MDX source and the same URL.",
@@ -125,6 +149,6 @@ export const faqItems: FAQItem[] = [
     category: "Other",
     question: "Where can I request a feature?",
     answer:
-      "Open a discussion on GitHub or send a note to our team. Roadmap items ship continuously, and the docs agent often turns requests into reviewed PRs.",
+      "Open a discussion on GitHub or send a note to our team. We prioritize work that improves Thally's understanding of product changes, strengthens product-specific knowledge, reduces communication work, or keeps customer-facing knowledge synchronized.",
   },
 ];

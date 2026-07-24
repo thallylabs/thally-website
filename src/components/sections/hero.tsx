@@ -72,9 +72,9 @@ const heroImageClassName =
   "border-border absolute top-0 left-0 w-full rounded-t-2xl rounded-b-none border border-b-0 object-cover object-left-top";
 
 const defaultProps: HeroFeatureSliderProps = {
-  heading: "Docs that keep up with your product.",
+  heading: "Every product change. Every knowledge surface. Automatically in sync.",
   description:
-    "Start a new docs site or bring your existing docs to Thally. When the site is live, connect product repos so Thally can draft reviewable updates when the docs need to change.",
+    "Thally is the pipeline that keeps customer-facing knowledge aligned as your product evolves. It understands what changed, finds the documentation affected, and prepares updates for human review.",
   buttonPrimary: {
     text: "Create your docs site",
     href: DESTINATIONS.signup,
@@ -85,18 +85,18 @@ const defaultProps: HeroFeatureSliderProps = {
   },
   features: [
     {
-      title: "Start fresh or bring your docs",
-      description: "Create a new site, connect an existing Thally project, or migrate your current docs.",
+      title: "The product is the source of truth",
+      description: "Connect the repositories where product changes happen and the documentation those changes affect.",
       icon: Guide,
     },
     {
-      title: "One source for every reader",
-      description: "Publish polished HTML for people and structured JSON, JSON-LD, and Markdown for AI tools.",
+      title: "Understand before generating",
+      description: "Thally looks for evidence, maps affected pages, and treats no change as a valid result.",
       icon: Structured,
     },
     {
-      title: "Updates stay reviewable",
-      description: "Connect product repos, then review every docs PR Thally drafts from relevant merged changes.",
+      title: "Humans approve what ships",
+      description: "Thally prepares the pull request, and your team decides what important communication lands.",
       icon: Readiness,
     },
   ],
@@ -104,17 +104,17 @@ const defaultProps: HeroFeatureSliderProps = {
     {
       src: "/images/hero1.png",
       alt: "Thally Quickstart documentation rendered as HTML for people",
-      label: "Your site",
+      label: "Knowledge surface",
     },
     {
       src: "/images/hero2.png",
       alt: "The same Thally Quickstart page served as structured JSON for AI tools",
-      label: "Every reader",
+      label: "Source evidence",
     },
     {
       src: "/images/hero3.png",
       alt: "Thally agent-readiness report",
-      label: "Review before publishing",
+      label: "Human review",
     },
   ],
 };
@@ -252,11 +252,7 @@ const Hero = (props: Partial<HeroFeatureSliderProps>) => {
                   >
                     <picture className="absolute inset-0 block">
                       {optimizedImage && (
-                        <source
-                          srcSet={optimizedImage.srcSet}
-                          sizes={HERO_IMAGE_SIZES}
-                          type="image/webp"
-                        />
+                        <source srcSet={optimizedImage.srcSet} sizes={HERO_IMAGE_SIZES} type="image/webp" />
                       )}
                       <NextImage
                         src={optimizedImage?.src ?? heroImage.src}

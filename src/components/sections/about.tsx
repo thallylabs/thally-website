@@ -9,20 +9,21 @@ import { Button } from "@/components/ui/button";
 
 const principles = [
   {
-    title: "Maintain one source",
-    description: "Write in MDX and publish HTML, Markdown, JSON, and JSON-LD without maintaining separate copies.",
+    title: "The product is the source of truth",
+    description: "Customer-facing knowledge should follow what the product does, not drift into a separate reality.",
   },
   {
-    title: "Keep Git in charge",
-    description: "Keep your docs beside your product and review changes through the pull-request workflow.",
+    title: "Understand before generating",
+    description: "Find what changed, gather evidence, and map the affected knowledge before drafting new words.",
   },
   {
-    title: "Serve every reader",
-    description: "Give people a polished site and give search tools, assistants, and agents structured content.",
+    title: "Evidence before confidence",
+    description:
+      "Show why an update is needed, which sources support it, and when no communication change is required.",
   },
   {
-    title: "Choose where you host",
-    description: "Self-host the open-source core or use Thally Cloud when you want the infrastructure managed for you.",
+    title: "Humans approve important communication",
+    description: "Thally prepares reviewable work. Your team keeps judgment and publishing authority.",
   },
 ];
 
@@ -60,7 +61,7 @@ const About = () => {
         <Reveal className="max-w-3xl lg:translate-x-24">
           <p className="text-primary mb-4 text-sm font-semibold tracking-widest uppercase">About Thally</p>
           <h1 className="font-display max-w-[760px] text-3xl leading-tight font-semibold tracking-tight text-balance md:text-4xl lg:text-5xl">
-            Your docs should work for people and AI agents without becoming two separate products.
+            Software ships faster than customer-facing knowledge can follow.
           </h1>
         </Reveal>
 
@@ -92,7 +93,7 @@ const About = () => {
           >
             <p className="text-muted-foreground text-sm font-medium tracking-widest uppercase">The premise</p>
             <p className="font-display mt-10 text-2xl leading-8 font-semibold text-balance">
-              Keep one source of truth. Give every reader the format it can use.
+              Every product change. Every knowledge surface. Automatically in sync.
             </p>
           </motion.div>
         </div>
@@ -100,12 +101,23 @@ const About = () => {
         <div className="mt-24 space-y-16 md:mt-32 md:space-y-24">
           <Reveal className="max-w-2xl lg:translate-x-24">
             <h2 className="font-display text-2xl leading-8 font-semibold md:text-3xl">
-              Your docs are read in more places than a browser.
+              Every product change creates communication work.
             </h2>
             <p className="mt-6 text-lg leading-8">
-              People still visit your documentation site, but they also ask coding assistants, use search, and send
-              agents to find answers. Thally gives every reader the same source instead of making you maintain a second
-              knowledge base.
+              Documentation, SDK references, release notes, examples, tutorials, and AI context are usually maintained
+              separately. Teams have to rediscover what changed, decide which surfaces are affected, and repeat the same
+              update across each one. No system owns that understanding.
+            </p>
+          </Reveal>
+
+          <Reveal className="ml-auto max-w-2xl lg:-translate-x-24">
+            <h2 className="font-display text-2xl leading-8 font-semibold md:text-3xl">
+              Thally is the pipeline, not another destination.
+            </h2>
+            <p className="mt-6 text-lg leading-8">
+              Documentation platforms, wikis, content management systems, and knowledge bases store what a team already
+              knows. Thally connects product evolution to customer-facing knowledge. It discovers the communication work
+              a change creates, prioritizes it, and prepares the right updates for review.
             </p>
           </Reveal>
 
@@ -125,14 +137,26 @@ const About = () => {
             ))}
           </div>
 
-          <Reveal className="ml-auto max-w-2xl lg:-translate-x-24">
+          <Reveal className="max-w-2xl lg:translate-x-24">
             <h2 className="font-display text-2xl leading-8 font-semibold md:text-3xl">
-              Own the core. Add managed services when they help.
+              Documentation is the first surface.
             </h2>
             <p className="mt-6 text-lg leading-8">
-              Thally&apos;s core is available under the MIT license. You can self-host it, keep your content in Git, and
-              move the site to the infrastructure you choose. Thally Cloud is the optional managed service for teams
-              that want hosted infrastructure, AI answers, analytics, and workspace controls.
+              Thally&apos;s first job is narrow: understand how a product change affects documentation and help teams
+              keep those pages synchronized. The publishing engine is available under the MIT license, content stays in
+              Git, and humans review the updates. Each accepted review and correction improves the product-specific
+              understanding behind future changes.
+            </p>
+          </Reveal>
+
+          <Reveal className="ml-auto max-w-2xl lg:-translate-x-24">
+            <h2 className="font-display text-2xl leading-8 font-semibold md:text-3xl">
+              The long-term goal is a synchronized knowledge ecosystem.
+            </h2>
+            <p className="mt-6 text-lg leading-8">
+              Teams should not have to remember every place a product change needs to be explained. As Thally expands,
+              shipping the product should surface the work across documentation, SDK references, examples, tutorials,
+              release notes, AI context, and the knowledge surfaces still to come.
             </p>
           </Reveal>
 
@@ -143,8 +167,8 @@ const About = () => {
                 Thally is built and operated by Fairspleet LLC.
               </h2>
               <p className="text-muted-foreground mt-5 text-lg leading-8">
-                We build Thally so you can own and publish one documentation source for people and AI tools. Contact us
-                directly with questions about the product, support, or company.
+                We build Thally so product evolution is continuously reflected everywhere customers learn about it.
+                Contact us directly with questions about the product, support, or company.
               </p>
               <Button asChild variant="outline" size="lg" className="mt-8">
                 <Link href="/contact">

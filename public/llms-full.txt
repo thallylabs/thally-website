@@ -2,13 +2,17 @@
 
 > Expanded first-party content for retrieval and citation. Canonical HTML pages remain the source of truth.
 
-Generated from the same repository as thally.io. Last generated: 2026-07-19.
+Generated from the same repository as thally.io. Last generated: 2026-07-24.
 # Thally
 
-> Thally helps software teams publish one documentation source as HTML for people and structured formats for AI tools. Once the docs site is live, connect product repositories so Thally can draft reviewable updates for relevant merged changes. The publishing engine is open source under the MIT license.
+> Thally is the product knowledge synchronization pipeline. It understands what changed, finds the customer-facing knowledge affected, and prepares evidence-backed updates for human review. Documentation is the first surface, and the publishing engine is open source under the MIT license.
 
 ## What Thally does
 
+- Product change intelligence: Track evaluates merged changes from connected product repositories and maps them to affected customer-facing documentation.
+- Understanding before generation: Thally gathers evidence and treats no documentation change as a valid result instead of generating content by default.
+- Human review: important communication stays reviewable. Thally prepares pull requests, and the customer's team decides what lands.
+- Product-specific knowledge: accepted reviews, corrections, and releases strengthen Thally's understanding of how each customer's product changes affect its documentation.
 - AI-native output: every docs page supports content negotiation (?format=json, ?format=md, Accept headers). Agents get structured data; humans get the same pre-rendered UI.
 - Remote MCP server: every deployed docs site exposes /api/mcp. Attach it to any agent and the docs become native tools (search_docs, read_page, list_pages, agent_readiness). No key, no account.
 - Agent-readiness score: a deterministic 0-100 grade per build covering structured data, metadata, discovery files, machine readability, and OpenAPI coverage. Gate CI on a threshold, then ask Thally to draft fixes for low-scoring pages.
@@ -24,9 +28,10 @@ Generated from the same repository as thally.io. Last generated: 2026-07-19.
 ## Pages
 
 - [Home](/): product overview, features, pricing, FAQ
+- [Thally Track](/features/track): product-change impact analysis, evidence, findings, and reviewable drafts
 - [Pricing](/pricing): Free (self-host, MIT), Cloud (workspace platform fee), Enterprise (SSO, SLA)
 - [Blog](/blog): comparisons, guides, and product deep dives (RSS at /rss.xml)
-- [About](/about): team and mission
+- [About](/about): the problem, position, product principles, and long-term mission
 - [FAQ](/faq): common questions on migration, automation, agents, self-hosting
 - [Contact](/contact): sales and support
 - [Create a docs site](https://app.thally.io/register): start a 14-day Thally Cloud trial
@@ -66,7 +71,7 @@ Generated from the same repository as thally.io. Last generated: 2026-07-19.
 
 # Pricing: Thally
 
-Thally is a documentation platform with an MIT-licensed engine and optional managed Cloud services. All prices are in USD. Last updated: 2026-07-20.
+Thally is a product knowledge synchronization pipeline, starting with documentation. The MIT-licensed publishing engine can be self-hosted, while Thally Cloud adds managed services and product change intelligence. All prices are in USD. Last updated: 2026-07-24.
 
 ## Free
 
@@ -106,11 +111,11 @@ Thally is a documentation platform with an MIT-licensed engine and optional mana
 
 Canonical URL: https://thally.io/blog/thally-vs-mintlify
 
-**The short answer:** choose Thally if you want to own your docs infrastructure and serve AI agents natively; choose Mintlify if you want a fully managed, hosted platform and never want to think about deployment. Both render polished MDX documentation. The differences are ownership, machine readability, and what happens when your product changes.
+**The short answer:** choose Thally if you want a product-change pipeline that connects your repositories to reviewable knowledge updates while keeping the docs infrastructure under your control. Choose Mintlify if you want a fully managed, hosted documentation platform and never want to think about deployment. Both render polished MDX documentation. The deeper differences are ownership, machine readability, and what happens when your product changes.
 
 ## What both platforms do well
 
-Mintlify and Thally solve the same surface problem: beautiful developer documentation written in MDX, with API references generated from OpenAPI specs, full-text search, and AI chat over your content. If your only requirement is "good-looking docs, fast," either will get you there.
+Mintlify and Thally both solve the surface problem of publishing developer documentation in MDX, with API references generated from OpenAPI specs, full-text search, and AI chat over your content. If your only requirement is "good-looking docs, fast," either can get you there. Thally's distinct position begins one level deeper: it is building the synchronization pipeline between product changes and customer-facing knowledge.
 
 The comparison gets interesting one level down.
 
@@ -154,7 +159,7 @@ Mintlify has been adding AI capabilities to its hosted platform as well, includi
 
 Documentation starts drifting when the product changes. The two platforms address that problem differently.
 
-Thally treats drift as a first-class problem. After a Thally docs repository is connected, mention `@thally document this` on a GitHub issue or PR to request a documentation pull request. Once a site is live and product repositories are mapped, Thally evaluates merged product PRs and can draft a docs PR when the documentation needs to change. Nothing merges without a human.
+Thally treats drift as a product-understanding problem, not a writing prompt. After a Thally docs repository is connected, mention `@thally document this` on a GitHub issue or PR to request a documentation pull request. Once a site is live and product repositories are mapped, Track evaluates merged product PRs, gathers evidence, and can draft a docs PR when the documentation needs to change. No change is a valid result, and nothing merges without a human.
 
 Mintlify's AI helps you write and edit within the platform. It is a strong authoring assistant; it is not a pipeline from your product repo to a reviewed docs PR.
 
@@ -170,7 +175,7 @@ Mintlify prices its hosted tiers separately; their pricing page is the source of
 
 - you want AI agents to read your docs natively, without scraping
 - self-hosting, MIT licensing, or data residency matters to you
-- you want relevant merged product changes to become reviewable docs PRs after product repositories are connected to Thally
+- you want product changes evaluated against customer-facing knowledge, with reviewable docs PRs when an update is supported
 - you want to gate CI on documentation quality
 
 **Choose Mintlify if:**
@@ -191,7 +196,7 @@ It detects supported source platforms, converts the docs to MDX, rebuilds naviga
 
 ## Sources and verification
 
-Mintlify capabilities were checked against its [AI-native documentation](https://www.mintlify.com/docs/ai-native) and [official documentation](https://www.mintlify.com/docs). Thally capabilities and prices were checked against the current product repository, [documentation](https://docs.thally.io), and [machine-readable pricing](/pricing.md). Sources were last verified July 19, 2026. Read our [editorial policy](/editorial-policy) for the comparison process.
+Mintlify capabilities were checked against its [AI-native documentation](https://www.mintlify.com/docs/ai-native) and [official documentation](https://www.mintlify.com/docs). Thally capabilities and prices were checked against the current product repository, [documentation](https://docs.thally.io), and [machine-readable pricing](/pricing.md). Sources were last verified July 24, 2026. Read our [editorial policy](/editorial-policy) for the comparison process.
 
 ---
 
@@ -199,11 +204,11 @@ Mintlify capabilities were checked against its [AI-native documentation](https:/
 
 Canonical URL: https://thally.io/blog/thally-vs-gitbook
 
-**The short answer:** GitBook is a hosted knowledge base with a polished WYSIWYG editor, ideal when most authors are not developers. Thally is a docs-as-code platform that serves structured output to AI agents and ships a docs automation pipeline. If your docs live next to your code and your readers include machines, Thally is the better fit. If your priority is a friendly editor for a mixed team, GitBook is a fine choice.
+**The short answer:** GitBook is a hosted knowledge base with a polished WYSIWYG editor, ideal when most authors are not developers. Thally is a product knowledge synchronization pipeline that starts with a docs-as-code engine, structured output for AI agents, and reviewable updates from product changes. If your customer-facing knowledge should follow the product from Git, Thally is the better fit. If your priority is a friendly destination for a mixed writing team, GitBook is a fine choice.
 
 ## Two different center-of-gravity decisions
 
-Every documentation tool optimizes for someone. GitBook optimizes for the writer in the browser: block-based editing, comments, change requests, and a git sync feature for teams that want both worlds. Thally optimizes for the repository and the reader, human or machine: MDX in git, pull-request review, and every page published as data as well as HTML.
+Every documentation tool optimizes for someone. GitBook optimizes for the writer in the browser: block-based editing, comments, change requests, and a git sync feature for teams that want both worlds. Thally optimizes for the connection between the product, its knowledge, and each reader: MDX in Git, product-change evidence, pull-request review, and every page published as data as well as HTML.
 
 Neither is wrong. They are different bets about where documentation should live.
 
@@ -253,7 +258,7 @@ GitBook is a hosted product with per-user pricing, so check its pricing page for
 
 - documentation belongs in git next to the code it documents
 - AI agents are part of your audience today or will be soon
-- you want reviewed docs PRs generated from product changes
+- you want product changes mapped to affected documentation before a reviewed docs PR is generated
 - you need self-hosting or an open-source license
 
 **Choose GitBook if:**
@@ -274,7 +279,7 @@ You review the converted site locally before switching DNS. [Create your docs si
 
 ## Sources and verification
 
-GitBook capabilities were checked against its [AI documentation overview](https://gitbook.com/docs/getting-started/ai-documentation) and [official documentation](https://gitbook.com/docs). Thally capabilities and prices were checked against the current product repository, [documentation](https://docs.thally.io), and [machine-readable pricing](/pricing.md). Sources were last verified July 19, 2026. Read our [editorial policy](/editorial-policy) for the comparison process.
+GitBook capabilities were checked against its [AI documentation overview](https://gitbook.com/docs/getting-started/ai-documentation) and [official documentation](https://gitbook.com/docs). Thally capabilities and prices were checked against the current product repository, [documentation](https://docs.thally.io), and [machine-readable pricing](/pricing.md). Sources were last verified July 24, 2026. Read our [editorial policy](/editorial-policy) for the comparison process.
 
 ---
 
@@ -282,13 +287,13 @@ GitBook capabilities were checked against its [AI documentation overview](https:
 
 Canonical URL: https://thally.io/blog/thally-vs-docusaurus
 
-**The short answer:** both are MIT-licensed and free to self-host. Docusaurus is a mature React static-site framework you assemble yourself; Thally is a complete documentation platform with the AI layer built in: structured per-page output, an MCP server, hybrid search, and a docs agent that opens reviewed PRs. If you enjoy assembling your stack, Docusaurus is a great kit. If you want agent-ready docs out of the box, Thally saves you the assembly.
+**The short answer:** both are MIT-licensed and free to self-host. Docusaurus is a mature React static-site framework you assemble yourself. Thally combines a complete documentation engine with a synchronization pipeline that maps product changes to reviewable knowledge updates. It also includes structured per-page output, an MCP server, hybrid search, and a docs agent. If you enjoy assembling your stack, Docusaurus is a great kit. If you want the publishing and product-change pipeline together, Thally saves you the assembly.
 
 ## Two open-source philosophies
 
 Docusaurus, maintained by Meta, is a widely adopted docs framework. It gives you a React site generator with versioning, i18n, MDX, and a broad plugin ecosystem. What you build on top is up to you.
 
-Thally is also open source (MIT), but it is a platform rather than a kit: search, AI chat, API reference, analytics, theming, and the machine-readability layer are part of the product, not plugins you select and maintain.
+Thally is also open source (MIT), but it is a product rather than a kit: search, AI chat, API reference, analytics, theming, and the machine-readability layer are built in. Track adds a second layer that evaluates product changes against the documentation and prepares evidence-backed updates for review.
 
 The right choice depends on how much of the documentation stack your team wants to assemble and maintain.
 
@@ -326,7 +331,7 @@ The question is not whether Docusaurus can be made agent-ready. It is whether yo
 
 Docusaurus renders what is in the repository, while your team owns the process that keeps those files current. That works well when the team already has a strong documentation practice.
 
-Thally attacks the drift problem directly. Thally Track watches your product repos and turns merged PRs into reviewed documentation PRs. The drift sweep flags pages whose source files changed since last verification. Comment `@thally document this` on any GitHub issue and Thally drafts the page. A human reviews and merges every change.
+Thally attacks the drift problem directly. Track watches the product repositories you choose, evaluates merged PRs, and maps the change to affected documentation before preparing an update. The drift sweep flags pages whose source files changed since last verification. Comment `@thally document this` on any GitHub issue to request a reviewable change. No change is a valid result, and a human reviews and merges every update.
 
 ## Cost of ownership
 
@@ -356,7 +361,7 @@ The migrator converts supported Docusaurus pages and sidebars to a Thally projec
 
 ## Sources and verification
 
-Docusaurus capabilities were checked against its [official documentation](https://docusaurus.io/docs) and [deployment guide](https://docusaurus.io/docs/deployment). Thally capabilities and prices were checked against the current product repository, [documentation](https://docs.thally.io), and [machine-readable pricing](/pricing.md). Sources were last verified July 19, 2026. Read our [editorial policy](/editorial-policy) for the comparison process.
+Docusaurus capabilities were checked against its [official documentation](https://docusaurus.io/docs) and [deployment guide](https://docusaurus.io/docs/deployment). Thally capabilities and prices were checked against the current product repository, [documentation](https://docs.thally.io), and [machine-readable pricing](/pricing.md). Sources were last verified July 24, 2026. Read our [editorial policy](/editorial-policy) for the comparison process.
 
 ---
 

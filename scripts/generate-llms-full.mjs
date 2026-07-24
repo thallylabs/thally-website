@@ -25,7 +25,7 @@ const header = [
   "",
   "> Expanded first-party content for retrieval and citation. Canonical HTML pages remain the source of truth.",
   "",
-  "Generated from the same repository as thally.io. Last generated: 2026-07-19.",
+  "Generated from the same repository as thally.io. Last generated: 2026-07-24.",
   "",
 ].join("\n");
 

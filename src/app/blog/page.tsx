@@ -5,9 +5,9 @@ import { blogPosts } from "@/lib/blog";
 import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "AI Documentation Guides and Comparisons",
+  title: "Product Knowledge and Documentation Guides",
   description:
-    "Evidence-led guides and comparisons about AI-native documentation, agent-readable docs, MCP, llms.txt, migration, and docs automation.",
+    "Evidence-led guides on product knowledge synchronization, documentation automation, agent-readable docs, MCP, llms.txt, migration, and platform comparisons.",
   alternates: {
     canonical: "/blog",
     types: {
@@ -23,7 +23,7 @@ const blogJsonLd = {
   name: "The Thally blog",
   url: `${SITE_URL}/blog`,
   description:
-    "Comparisons, guides, and product deep dives on documentation that serves AI agents and humans from one source.",
+    "Comparisons, guides, and product deep dives on keeping customer-facing knowledge synchronized as products evolve.",
   publisher: { "@id": `${SITE_URL}/#organization` },
   blogPost: blogPosts.map((post) => ({
     "@type": "BlogPosting",

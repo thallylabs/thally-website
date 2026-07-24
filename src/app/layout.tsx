@@ -34,6 +34,11 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   keywords: [
+    "product knowledge synchronization",
+    "product change intelligence",
+    "product knowledge graph",
+    "customer-facing knowledge",
+    "knowledge synchronization pipeline",
     "AI-native documentation",
     "documentation platform",
     "documentation for AI agents",
@@ -93,9 +98,7 @@ export const metadata: Metadata = {
   verification: {
     ...(process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : {}),
     other: {
-      ...(process.env.BING_SITE_VERIFICATION
-        ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION }
-        : {}),
+      ...(process.env.BING_SITE_VERIFICATION ? { "msvalidate.01": process.env.BING_SITE_VERIFICATION } : {}),
     },
   },
 };
