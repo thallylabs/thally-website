@@ -7,6 +7,8 @@ export const alt = "Contact Thally";
 
 export default function Image() {
   return renderOgImage({
-    title: "Talk to the Thally team.",
+    title: "Talk to the Thally team",
+    description: "Get help with migration, self-hosting, Thally Cloud, or Enterprise.",
+    url: "thally.io/contact",
   });
 }

@@ -7,7 +7,8 @@ export const alt = "Thally FAQ";
 
 export default function Image() {
   return renderOgImage({
-    title: "Answers for every part of Thally.",
-    pills: ["Support", "Account", "Features", "Security", "Other"],
+    title: "Answers for every part of Thally",
+    description: "Product, migration, AI-readable output, self-hosting, security, and support.",
+    url: "thally.io/faq",
   });
 }

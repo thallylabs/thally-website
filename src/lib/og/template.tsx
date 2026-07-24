@@ -5,30 +5,80 @@ import { ImageResponse } from "next/og";
 
 import { LEAF_PATH } from "@/lib/og/leaf";
 
-/** Brand values from the design system tokens (oklch converted to hex for satori). */
-const COLORS = {
-  background: "#edf2ec",
-  foreground: "#1a2018",
-  leaf: "#737938",
-  pillBorder: "rgba(26, 32, 24, 0.28)",
+const PALETTES = {
+  light: {
+    background: "#fbfbf3",
+    foreground: "#252b22",
+    muted: "#6c7268",
+    faint: "#8b9188",
+    leaf: "#41794f",
+  },
+  dark: {
+    background: "#131a14",
+    foreground: "#f5f6ec",
+    muted: "#abb2a2",
+    faint: "#7c8375",
+    leaf: "#ffffff",
+  },
 };
 
 export const OG_SIZE = { width: 1200, height: 630 };
 
-export const DEFAULT_PILLS = ["HTML", "JSON", "JSON-LD", "Markdown", "one URL"];
+export type OgTheme = keyof typeof PALETTES;
 
 function loadFont(file: string) {
   return readFile(join(process.cwd(), "src/lib/og/fonts", file));
 }
 
-export async function renderOgImage({ title, pills = DEFAULT_PILLS }: { title: string; pills?: string[] }) {
-  const [jakartaBold, jakartaExtraBold, mono] = await Promise.all([
-    loadFont("PlusJakartaSans-700.ttf"),
-    loadFont("PlusJakartaSans-800.ttf"),
-    loadFont("JetBrainsMono-600.ttf"),
-  ]);
+function truncateAtWord(value: string, maxLength: number) {
+  if (value.length <= maxLength) return value;
 
-  const titleSize = title.length > 44 ? 76 : title.length > 30 ? 84 : 92;
+  const slice = value.slice(0, maxLength - 1);
+  const lastSpace = slice.lastIndexOf(" ");
+  const cutoff = lastSpace > maxLength * 0.6 ? lastSpace : slice.length;
+  return `${slice.slice(0, cutoff).trim()}…`;
+}
+
+function balancedTitleLines(value: string) {
+  const title = truncateAtWord(value, 56);
+  if (title.length < 32) return [title];
+
+  const words = title.split(" ");
+  let bestIndex = 1;
+  let smallestDifference = title.length;
+
+  for (let index = 1; index < words.length; index += 1) {
+    const first = words.slice(0, index).join(" ");
+    const second = words.slice(index).join(" ");
+    const difference = Math.abs(first.length - second.length);
+    if (difference < smallestDifference) {
+      bestIndex = index;
+      smallestDifference = difference;
+    }
+  }
+
+  return [words.slice(0, bestIndex).join(" "), words.slice(bestIndex).join(" ")];
+}
+
+export async function renderOgImage({
+  title,
+  description,
+  url,
+  theme = "light",
+}: {
+  title: string;
+  description: string;
+  url: string;
+  theme?: OgTheme;
+}) {
+  const [jakartaBold, inter, mono] = await Promise.all([
+    loadFont("PlusJakartaSans-700.ttf"),
+    loadFont("Inter-400.woff"),
+    loadFont("JetBrainsMono-400.woff"),
+  ]);
+  const palette = PALETTES[theme];
+  const titleLines = balancedTitleLines(title);
+  const shortDescription = truncateAtWord(description, 94);
 
   return new ImageResponse(
     <div
@@ -36,75 +86,82 @@ export async function renderOgImage({ title, pills = DEFAULT_PILLS }: { title: s
         width: "100%",
         height: "100%",
         display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        padding: 64,
-        backgroundColor: COLORS.background,
-        backgroundImage: `linear-gradient(rgba(26, 32, 24, 0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(26, 32, 24, 0.035) 1px, transparent 1px)`,
-        backgroundSize: "72px 72px",
-        fontFamily: "Jakarta",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "relative",
+        backgroundColor: palette.background,
+        color: palette.foreground,
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-        <svg width="56" height="56" viewBox="0 0 32 32">
-          <path fill={COLORS.leaf} d={LEAF_PATH} />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          maxWidth: 880,
+          padding: "0 60px",
+          textAlign: "center",
+        }}
+      >
+        <svg width="46" height="46" viewBox="0 0 32 32" style={{ marginBottom: 34 }}>
+          <path fill={palette.leaf} d={LEAF_PATH} />
         </svg>
+
         <div
           style={{
-            fontSize: 44,
+            display: "flex",
+            flexDirection: "column",
+            fontFamily: "Jakarta",
+            fontSize: 58,
             fontWeight: 700,
-            color: COLORS.foreground,
-            letterSpacing: "-0.02em",
+            color: palette.foreground,
+            letterSpacing: "-0.03em",
+            lineHeight: 1.12,
           }}
         >
-          Thally
+          {titleLines.map((line) => (
+            <span key={line}>{line}</span>
+          ))}
+        </div>
+
+        <div
+          style={{
+            marginTop: 22,
+            maxWidth: 630,
+            fontFamily: "Inter",
+            fontSize: 23,
+            fontWeight: 400,
+            color: palette.muted,
+            lineHeight: 1.55,
+          }}
+        >
+          {shortDescription}
         </div>
       </div>
 
       <div
         style={{
-          fontSize: titleSize,
-          fontWeight: 800,
-          color: COLORS.foreground,
-          letterSpacing: "-0.03em",
-          lineHeight: 1.08,
-          maxWidth: 1000,
+          position: "absolute",
+          right: 0,
+          bottom: 52,
+          left: 0,
+          display: "flex",
+          justifyContent: "center",
+          fontFamily: "Mono",
+          fontSize: 15,
+          fontWeight: 400,
+          color: palette.faint,
         }}
       >
-        {title}
-      </div>
-
-      <div style={{ display: "flex", alignItems: "center", gap: 16, fontFamily: "Mono" }}>
-        {pills.map((pill, i) => {
-          const solid = i === 0;
-          const dashed = i === pills.length - 1 && pills.length > 2;
-          return (
-            <div
-              key={pill}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                padding: "12px 28px",
-                borderRadius: 999,
-                fontSize: 27,
-                fontWeight: 600,
-                backgroundColor: solid ? COLORS.foreground : "transparent",
-                color: solid ? COLORS.background : COLORS.foreground,
-                border: solid ? "2px solid transparent" : `2px ${dashed ? "dashed" : "solid"} ${COLORS.pillBorder}`,
-              }}
-            >
-              {pill}
-            </div>
-          );
-        })}
+        {url}
       </div>
     </div>,
     {
       ...OG_SIZE,
       fonts: [
         { name: "Jakarta", data: jakartaBold, weight: 700, style: "normal" },
-        { name: "Jakarta", data: jakartaExtraBold, weight: 800, style: "normal" },
-        { name: "Mono", data: mono, weight: 600, style: "normal" },
+        { name: "Inter", data: inter, weight: 400, style: "normal" },
+        { name: "Mono", data: mono, weight: 400, style: "normal" },
       ],
     },
   );

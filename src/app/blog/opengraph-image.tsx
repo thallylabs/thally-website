@@ -7,7 +7,8 @@ export const alt = "The Thally blog";
 
 export default function Image() {
   return renderOgImage({
-    title: "The Thally blog.",
-    pills: ["Comparisons", "Guides", "Product"],
+    title: "The Thally blog",
+    description: "Evidence-led guides on product knowledge, documentation automation, and agent-ready docs.",
+    url: "thally.io/blog",
   });
 }

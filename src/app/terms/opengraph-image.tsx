@@ -7,6 +7,8 @@ export const alt = "Thally terms of service";
 
 export default function Image() {
   return renderOgImage({
-    title: "Terms of service.",
+    title: "Terms of service",
+    description: "The terms governing Thally Cloud and other hosted Thally services.",
+    url: "thally.io/terms",
   });
 }

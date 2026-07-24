@@ -8,6 +8,7 @@ export const alt = "About Thally and the product knowledge synchronization missi
 export default function Image() {
   return renderOgImage({
     title: "The product changes. The knowledge should follow.",
-    pills: ["Product", "Evidence", "Knowledge", "Review"],
+    description: "Why Thally keeps customer-facing knowledge synchronized as products change.",
+    url: "thally.io/about",
   });
 }
