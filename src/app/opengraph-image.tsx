@@ -7,8 +7,8 @@ export const alt = "Thally: every product change, every knowledge surface, autom
 
 export default function Image() {
   return renderOgImage({
-    title: "Thally",
-    description: "Every product change, propagated everywhere.",
+    title: "Every product change. Every knowledge surface.",
+    description: "Thally finds the docs each change affects and drafts evidence-backed updates for your review.",
     url: "thally.io",
   });
 }

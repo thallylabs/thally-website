@@ -14,10 +14,10 @@ export const SITE_TAGLINE = "Every Product Change. Every Knowledge Surface. Auto
 export const SITE_TITLE = `${SITE_NAME} | Product Knowledge, Automatically in Sync`;
 
 export const SITE_DESCRIPTION =
-  "Thally is the product knowledge synchronization pipeline. It understands what changed, finds the customer-facing knowledge affected, and prepares reviewable updates, starting with documentation.";
+  "Thally traces product changes to the docs they affect and drafts evidence-backed updates for your team to review, so customer-facing knowledge stays in sync.";
 
 export const OG_DESCRIPTION =
-  "The product is the source of truth. Thally turns product changes into evidence-backed, reviewable knowledge updates, starting with documentation.";
+  "Every product change creates communication work. Thally finds the affected docs and drafts evidence-backed updates for your team to review.";
 
 export const DESTINATIONS = {
   app: "https://app.thally.io",
