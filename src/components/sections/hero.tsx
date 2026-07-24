@@ -74,7 +74,7 @@ const heroImageClassName =
 const defaultProps: HeroFeatureSliderProps = {
   heading: "Every product change. Every knowledge surface. Automatically in sync.",
   description:
-    "Thally is the pipeline that keeps customer-facing knowledge aligned as your product evolves. It understands what changed, finds the documentation affected, and prepares updates for human review.",
+    "Keep shipping without letting your docs fall behind. Thally finds the pages each change affects and drafts evidence-backed updates for your team to review.",
   buttonPrimary: {
     text: "Create your docs site",
     href: DESTINATIONS.signup,
@@ -86,17 +86,18 @@ const defaultProps: HeroFeatureSliderProps = {
   features: [
     {
       title: "The product is the source of truth",
-      description: "Connect the repositories where product changes happen and the documentation those changes affect.",
+      description: "Connect your repositories and docs so Thally can trace each product change to the pages it affects.",
       icon: Guide,
     },
     {
       title: "Understand before generating",
-      description: "Thally looks for evidence, maps affected pages, and treats no change as a valid result.",
+      description:
+        "Thally follows the evidence, maps affected pages, and reports when no documentation update is needed.",
       icon: Structured,
     },
     {
       title: "Humans approve what ships",
-      description: "Thally prepares the pull request, and your team decides what important communication lands.",
+      description: "Thally drafts the pull request. Your team reviews, edits, and decides what ships.",
       icon: Readiness,
     },
   ],
