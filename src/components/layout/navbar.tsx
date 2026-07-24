@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 
 import { Cloud, GitPullRequest, Mcp, Negotiation, Overview, Track } from "@/components/icons";
 import { Logo } from "@/components/layout/logo";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -162,11 +161,6 @@ const Navbar = () => {
             >
               <Button variant="outline">Log in</Button>
             </Link>
-            <div
-              className={`transition-opacity duration-300 ${isMenuOpen ? "max-lg:pointer-events-none max-lg:opacity-0" : "opacity-100"}`}
-            >
-              <ThemeToggle />
-            </div>
 
             {/* Hamburger Menu Button (Mobile Only) */}
             <button
