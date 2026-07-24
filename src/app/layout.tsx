@@ -151,7 +151,13 @@ export default function RootLayout({
       <body className="flex min-h-svh flex-col antialiased">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          storageKey="thally-theme"
+          disableTransitionOnChange
+        >
           <Navbar />
           <main className="flex flex-1 flex-col">{children}</main>
           <ConditionalFooter />
