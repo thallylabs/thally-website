@@ -7,6 +7,8 @@ export const alt = "Sign up for Thally";
 
 export default function Image() {
   return renderOgImage({
-    title: "Create your docs site.",
+    title: "Create your docs site",
+    description: "Start a Thally Cloud workspace with a 14-day trial.",
+    url: "thally.io/signup",
   });
 }
