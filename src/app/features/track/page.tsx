@@ -73,7 +73,6 @@ export default function TrackFeaturePage() {
 
       <header className={styles.hero}>
         <div aria-hidden="true" className={styles.heroGrid} />
-        <p className={styles.eyebrow}>Thally Track</p>
         <h1>
           Your product changed. <span>Did your docs?</span>
         </h1>
