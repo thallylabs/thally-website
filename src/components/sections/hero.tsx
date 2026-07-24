@@ -1,19 +1,13 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import NextImage from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 import { ArrowRight, Guide, type IconComponent, Readiness, Structured } from "@/components/icons";
 import { sectionTitleClassName } from "@/components/section-decor";
+import KnowledgeFlowGraph from "@/components/sections/knowledge-flow-graph";
 import { Button } from "@/components/ui/button";
 import { DESTINATIONS } from "@/lib/site";
 import { cn } from "@/lib/utils";
-
-type HeroFeatureSliderImage = Image & {
-  label?: string;
-};
 
 interface HeroFeatureSliderFeature {
   title: string;
@@ -21,12 +15,6 @@ interface HeroFeatureSliderFeature {
   icon: IconComponent;
   color?: string;
   href?: string;
-}
-
-interface Image {
-  src: string;
-  alt: string;
-  srcDark?: string;
 }
 
 interface HeroFeatureSliderProps {
@@ -41,35 +29,10 @@ interface HeroFeatureSliderProps {
     href: string;
   };
   features?: HeroFeatureSliderFeature[];
-  images: [HeroFeatureSliderImage, ...HeroFeatureSliderImage[]];
   className?: string;
 }
 
 const MAX_FEATURES = 3;
-const SLIDE_INTERVAL_MS = 5000;
-const CROSSFADE_DURATION = 0.9;
-const CROSSFADE_EASE = [0.22, 1, 0.36, 1] as const;
-const OPTIMIZED_HERO_IMAGES: Record<string, { src: string; srcSet: string }> = {
-  "/images/hero1.png": {
-    src: "/images/hero1-1600.webp",
-    srcSet:
-      "/images/hero1-600.webp 600w, /images/hero1-800.webp 800w, /images/hero1-1200.webp 1200w, /images/hero1-1600.webp 1600w, /images/hero1-2400.webp 2400w, /images/hero1-3200.webp 3200w",
-  },
-  "/images/hero2.png": {
-    src: "/images/hero2-1600.webp",
-    srcSet:
-      "/images/hero2-600.webp 600w, /images/hero2-800.webp 800w, /images/hero2-1200.webp 1200w, /images/hero2-1600.webp 1600w, /images/hero2-2400.webp 2400w, /images/hero2-3200.webp 3200w",
-  },
-  "/images/hero3.png": {
-    src: "/images/hero3-1600.webp",
-    srcSet:
-      "/images/hero3-600.webp 600w, /images/hero3-800.webp 800w, /images/hero3-1200.webp 1200w, /images/hero3-1600.webp 1600w, /images/hero3-2400.webp 2400w, /images/hero3-3200.webp 3200w",
-  },
-};
-const HERO_IMAGE_SIZES = "(max-width: 1399px) calc(100vw - 3rem), 1232px";
-
-const heroImageClassName =
-  "border-border absolute top-0 left-0 w-full rounded-t-2xl rounded-b-none border border-b-0 object-cover object-left-top";
 
 const defaultProps: HeroFeatureSliderProps = {
   heading: "Every product change. Every knowledge surface. Automatically in sync.",
@@ -100,23 +63,6 @@ const defaultProps: HeroFeatureSliderProps = {
       icon: Readiness,
     },
   ],
-  images: [
-    {
-      src: "/images/hero1.png",
-      alt: "Thally Quickstart documentation rendered as HTML for people",
-      label: "Knowledge surface",
-    },
-    {
-      src: "/images/hero2.png",
-      alt: "The same Thally Quickstart page served as structured JSON for AI tools",
-      label: "Source evidence",
-    },
-    {
-      src: "/images/hero3.png",
-      alt: "Thally agent-readiness report",
-      label: "Human review",
-    },
-  ],
 };
 
 function isExternalHref(href: string) {
@@ -124,28 +70,12 @@ function isExternalHref(href: string) {
 }
 
 const Hero = (props: Partial<HeroFeatureSliderProps>) => {
-  const { heading, description, buttonPrimary, buttonSecondary, features, images, className } = {
+  const { heading, description, buttonPrimary, buttonSecondary, features, className } = {
     ...defaultProps,
     ...props,
   };
 
   const visibleFeatures = (features ?? []).slice(0, MAX_FEATURES);
-  const heroImages = images.slice(0, MAX_FEATURES);
-  const slideCount = heroImages.length;
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const reduceMotion = useReducedMotion();
-  const crossfadeTransition = reduceMotion ? { duration: 0 } : { duration: CROSSFADE_DURATION, ease: CROSSFADE_EASE };
-
-  useEffect(() => {
-    if (isHovered || slideCount <= 1) return;
-
-    const interval = window.setInterval(() => {
-      setActiveImageIndex((current) => (current + 1) % slideCount);
-    }, SLIDE_INTERVAL_MS);
-
-    return () => window.clearInterval(interval);
-  }, [isHovered, slideCount]);
 
   return (
     <section className={cn("bg-accent relative mx-2.5 mt-2.5 rounded-t-2xl rounded-b-4xl lg:mx-4", className)}>
@@ -193,29 +123,13 @@ const Hero = (props: Partial<HeroFeatureSliderProps>) => {
               </div>
             </div>
 
-            <div
-              className="flex flex-1 flex-col justify-center gap-1 max-lg:pt-4"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => {
-                setIsHovered(false);
-                setActiveImageIndex(0);
-              }}
-            >
-              {visibleFeatures.map((feature, index) => {
+            <div className="flex flex-1 flex-col justify-center gap-1 max-lg:pt-4">
+              {visibleFeatures.map((feature) => {
                 const Icon = feature.icon;
-                const isActive = activeImageIndex === index;
                 return (
-                  <button
+                  <div
                     key={feature.title}
-                    type="button"
-                    className={cn(
-                      "hover:bg-background/50 flex w-full cursor-default items-start gap-3 rounded-xl px-4 py-3.5 text-left transition-colors lg:gap-4",
-                      isActive && "bg-background/50",
-                    )}
-                    onMouseEnter={() => setActiveImageIndex(index)}
-                    onFocus={() => setActiveImageIndex(index)}
-                    onClick={() => setActiveImageIndex(index)}
-                    aria-pressed={isActive}
+                    className="flex w-full items-start gap-3 rounded-xl px-4 py-3.5 text-left lg:gap-4"
                   >
                     <span className="text-primary flex h-6 w-5 shrink-0 items-center justify-center lg:h-7 lg:w-6">
                       <Icon className="size-3.5 lg:size-4" strokeWidth={2.25} />
@@ -228,7 +142,7 @@ const Hero = (props: Partial<HeroFeatureSliderProps>) => {
                         {feature.description}
                       </p>
                     </div>
-                  </button>
+                  </div>
                 );
               })}
             </div>
@@ -236,38 +150,7 @@ const Hero = (props: Partial<HeroFeatureSliderProps>) => {
         </div>
 
         <div className="container mx-auto mt-12 md:mt-20 lg:mt-24">
-          <div className="relative aspect-video w-full overflow-hidden rounded-t-2xl">
-            <AnimatePresence initial={false} mode="sync">
-              {heroImages.map((heroImage, index) => {
-                if (activeImageIndex !== index) return null;
-                const optimizedImage = OPTIMIZED_HERO_IMAGES[heroImage.src];
-                return (
-                  <motion.div
-                    key={heroImage.src}
-                    className="absolute inset-0"
-                    initial={index === 0 ? false : { opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={crossfadeTransition}
-                  >
-                    <picture className="absolute inset-0 block">
-                      {optimizedImage && (
-                        <source srcSet={optimizedImage.srcSet} sizes={HERO_IMAGE_SIZES} type="image/webp" />
-                      )}
-                      <NextImage
-                        src={optimizedImage?.src ?? heroImage.src}
-                        alt={heroImage.alt}
-                        className={heroImageClassName}
-                        fill
-                        sizes={HERO_IMAGE_SIZES}
-                        loading={index === 0 ? "eager" : "lazy"}
-                      />
-                    </picture>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
-          </div>
+          <KnowledgeFlowGraph className="rounded-t-2xl" />
         </div>
       </div>
     </section>
