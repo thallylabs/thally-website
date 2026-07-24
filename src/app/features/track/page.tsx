@@ -14,16 +14,16 @@ import { TrackDemo } from "./track-demo";
 import styles from "./track-page.module.css";
 
 export const metadata: Metadata = {
-  title: "Thally Track: Documentation Impact Analysis",
+  title: "Thally Track: Product Knowledge Impact Analysis",
   description:
-    "See how Thally Track analyzes a bounded product change, finds documentation that may be affected, and drafts evidence-backed updates for human review.",
+    "See how Thally Track understands a bounded product change, finds affected customer-facing knowledge, and drafts evidence-backed documentation updates for human review.",
   alternates: {
     canonical: "/features/track",
   },
   openGraph: {
-    title: "Your product changed. Did your docs?",
+    title: "The product changed. The knowledge should follow.",
     description:
-      "Experience how Thally Track turns specific product changes into evidence-backed documentation drafts for human review.",
+      "Experience how Thally Track maps specific product changes to evidence-backed documentation drafts for human review.",
     url: `${SITE_URL}/features/track`,
   },
 };
@@ -61,7 +61,7 @@ const softwareJsonLd = {
   operatingSystem: "Web",
   url: `${SITE_URL}/features/track`,
   description:
-    "Documentation impact analysis for explicit API, SDK, configuration, and CLI changes, with evidence-backed drafts for human review.",
+    "Product knowledge impact analysis for explicit API, SDK, configuration, and CLI changes, starting with evidence-backed documentation drafts for human review.",
   isPartOf: { "@id": `${SITE_URL}/#software` },
   publisher: { "@id": `${SITE_URL}/#organization` },
 };
@@ -96,7 +96,7 @@ export default function TrackFeaturePage() {
       <section className={styles.howSection} id="how-track-works">
         <div className={styles.sectionHeading}>
           <p className={styles.eyebrow}>How it works</p>
-          <h2>Evidence in, drafts out.</h2>
+          <h2>Understand the change before drafting the update.</h2>
           <p>
             Track never audits your whole product. It analyzes one bounded change at a time, such as a merged pull
             request, release, or schema diff, and shows its reasoning.

@@ -3,10 +3,12 @@ import { OG_SIZE, renderOgImage } from "@/lib/og/template";
 export const dynamic = "force-static";
 export const size = OG_SIZE;
 export const contentType = "image/png";
-export const alt = "Thally: AI-Native Documentation for Agents and Humans";
+export const alt = "Thally: every product change, every knowledge surface, automatically in sync";
 
 export default function Image() {
   return renderOgImage({
-    title: "AI-Native Documentation for Agents and Humans.",
+    title: "Thally",
+    description: "Every product change, propagated everywhere.",
+    url: "thally.io",
   });
 }

@@ -47,9 +47,9 @@ const Navbar = () => {
           icon: Track,
         },
         {
-          title: "Automation",
+          title: "Change Intelligence",
           href: "/#automation",
-          description: "Connect repos so Thally can draft reviewable docs updates when they are needed.",
+          description: "Understand product changes, find affected documentation, and prepare evidence-backed updates.",
           icon: GitPullRequest,
         },
         {

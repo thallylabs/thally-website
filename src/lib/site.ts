@@ -9,15 +9,15 @@ export const SITE_NAME = "Thally";
 
 export const LEGAL_ENTITY_NAME = "Fairspleet LLC";
 
-export const SITE_TAGLINE = "Docs That Keep Up With Your Product";
+export const SITE_TAGLINE = "Every Product Change. Every Knowledge Surface. Automatically in Sync.";
 
-export const SITE_TITLE = `${SITE_NAME} | ${SITE_TAGLINE}`;
+export const SITE_TITLE = `${SITE_NAME} | Product Knowledge, Automatically in Sync`;
 
 export const SITE_DESCRIPTION =
-  "Publish one documentation source for people and AI tools, then let Thally draft reviewable updates when your product changes.";
+  "Thally traces product changes to the docs they affect and drafts evidence-backed updates for your team to review, so customer-facing knowledge stays in sync.";
 
 export const OG_DESCRIPTION =
-  "Start a new docs site or bring your existing docs to Thally. Then connect product repos so Thally can draft reviewable updates when the docs need to change.";
+  "Every product change creates communication work. Thally finds the affected docs and drafts evidence-backed updates for your team to review.";
 
 export const DESTINATIONS = {
   app: "https://app.thally.io",

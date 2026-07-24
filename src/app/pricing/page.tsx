@@ -29,7 +29,7 @@ const pricingJsonLd = {
   operatingSystem: "Web",
   license: "https://opensource.org/license/mit",
   description:
-    "Documentation platform with a free MIT-licensed engine, Thally Cloud managed hosting and services, and custom Enterprise plans.",
+    "Product knowledge synchronization pipeline with a free MIT-licensed documentation engine, managed Thally Cloud services, and custom Enterprise plans.",
   publisher: { "@id": `${SITE_URL}/#organization` },
   mainEntityOfPage: `${SITE_URL}/pricing`,
   offers: {

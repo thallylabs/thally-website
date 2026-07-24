@@ -11,7 +11,8 @@ export const alt = post.title;
 
 export default function Image() {
   return renderOgImage({
-    title: post.cardTitle + ".",
-    pills: [post.category, "Thally Blog"],
+    title: post.cardTitle,
+    description: post.description,
+    url: `thally.io/blog/${post.slug}`,
   });
 }

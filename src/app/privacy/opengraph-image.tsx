@@ -7,6 +7,8 @@ export const alt = "Thally privacy policy";
 
 export default function Image() {
   return renderOgImage({
-    title: "Privacy policy.",
+    title: "Privacy policy",
+    description: "How Thally handles personal data across thally.io and Thally Cloud.",
+    url: "thally.io/privacy",
   });
 }

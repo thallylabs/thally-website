@@ -236,8 +236,9 @@ export const Feature2 = () => {
 
       <div className="relative container">
         <SectionHeader
-          title="Give people and AI tools one source of truth"
-          description="Write once in MDX. Thally publishes polished pages for people, structured formats for AI tools, and checks your docs on every build."
+          eyebrow="Evidence before confidence"
+          title="Know why the knowledge needs to change"
+          description="Thally ties product changes, source evidence, quality checks, and reviewable updates together. People and AI tools still get the same verified documentation."
         />
 
         <div className="mt-8 grid grid-cols-1 gap-4 md:mt-12 md:auto-rows-fr md:grid-cols-6 md:grid-rows-5 lg:mt-20">

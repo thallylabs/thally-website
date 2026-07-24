@@ -1,8 +1,8 @@
-**The short answer:** choose Thally if you want to own your docs infrastructure and serve AI agents natively; choose Mintlify if you want a fully managed, hosted platform and never want to think about deployment. Both render polished MDX documentation. The differences are ownership, machine readability, and what happens when your product changes.
+**The short answer:** choose Thally if you want a product-change pipeline that connects your repositories to reviewable knowledge updates while keeping the docs infrastructure under your control. Choose Mintlify if you want a fully managed, hosted documentation platform and never want to think about deployment. Both render polished MDX documentation. The deeper differences are ownership, machine readability, and what happens when your product changes.
 
 ## What both platforms do well
 
-Mintlify and Thally solve the same surface problem: beautiful developer documentation written in MDX, with API references generated from OpenAPI specs, full-text search, and AI chat over your content. If your only requirement is "good-looking docs, fast," either will get you there.
+Mintlify and Thally both solve the surface problem of publishing developer documentation in MDX, with API references generated from OpenAPI specs, full-text search, and AI chat over your content. If your only requirement is "good-looking docs, fast," either can get you there. Thally's distinct position begins one level deeper: it is building the synchronization pipeline between product changes and customer-facing knowledge.
 
 The comparison gets interesting one level down.
 
@@ -46,7 +46,7 @@ Mintlify has been adding AI capabilities to its hosted platform as well, includi
 
 Documentation starts drifting when the product changes. The two platforms address that problem differently.
 
-Thally treats drift as a first-class problem. After a Thally docs repository is connected, mention `@thally document this` on a GitHub issue or PR to request a documentation pull request. Once a site is live and product repositories are mapped, Thally evaluates merged product PRs and can draft a docs PR when the documentation needs to change. Nothing merges without a human.
+Thally treats drift as a product-understanding problem, not a writing prompt. After a Thally docs repository is connected, mention `@thally document this` on a GitHub issue or PR to request a documentation pull request. Once a site is live and product repositories are mapped, Track evaluates merged product PRs, gathers evidence, and can draft a docs PR when the documentation needs to change. No change is a valid result, and nothing merges without a human.
 
 Mintlify's AI helps you write and edit within the platform. It is a strong authoring assistant; it is not a pipeline from your product repo to a reviewed docs PR.
 
@@ -62,7 +62,7 @@ Mintlify prices its hosted tiers separately; their pricing page is the source of
 
 - you want AI agents to read your docs natively, without scraping
 - self-hosting, MIT licensing, or data residency matters to you
-- you want relevant merged product changes to become reviewable docs PRs after product repositories are connected to Thally
+- you want product changes evaluated against customer-facing knowledge, with reviewable docs PRs when an update is supported
 - you want to gate CI on documentation quality
 
 **Choose Mintlify if:**
@@ -83,4 +83,4 @@ It detects supported source platforms, converts the docs to MDX, rebuilds naviga
 
 ## Sources and verification
 
-Mintlify capabilities were checked against its [AI-native documentation](https://www.mintlify.com/docs/ai-native) and [official documentation](https://www.mintlify.com/docs). Thally capabilities and prices were checked against the current product repository, [documentation](https://docs.thally.io), and [machine-readable pricing](/pricing.md). Sources were last verified July 19, 2026. Read our [editorial policy](/editorial-policy) for the comparison process.
+Mintlify capabilities were checked against its [AI-native documentation](https://www.mintlify.com/docs/ai-native) and [official documentation](https://www.mintlify.com/docs). Thally capabilities and prices were checked against the current product repository, [documentation](https://docs.thally.io), and [machine-readable pricing](/pricing.md). Sources were last verified July 24, 2026. Read our [editorial policy](/editorial-policy) for the comparison process.

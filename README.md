@@ -1,6 +1,6 @@
 # Thally
 
-The Thally marketing site. Thally helps software teams publish one documentation source for people and AI tools, then keep it current through review-gated updates drafted by Thally.
+The Thally marketing site. Thally is the product knowledge synchronization pipeline. It understands what changed, finds the customer-facing knowledge affected, and prepares reviewable updates, starting with documentation.
 
 Built with Next.js 16 (App Router), Tailwind CSS v4, shadcn/ui, and Motion.
 
