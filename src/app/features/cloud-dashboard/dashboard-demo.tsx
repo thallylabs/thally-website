@@ -75,7 +75,7 @@ const TOP_PAGES = [
 ];
 
 const AGENT_CONTEXT = [
-  { icon: Mcp, mono: "mcp.thally.dev/jahce/dabs", status: "live", statusLabel: "Live", title: "MCP endpoint" },
+  { icon: Mcp, mono: "jahce.thally.site/api/mcp", status: "live", statusLabel: "Live", title: "MCP endpoint" },
   { icon: Mcp, mono: "jahce.thally.site/llms.txt · 128 pages", status: "live", statusLabel: "Live", title: "llms.txt" },
   {
     icon: Json,
@@ -94,9 +94,9 @@ const AGENT_CONTEXT = [
 ] as const;
 
 const TEAM_MEMBERS = [
-  { dotClass: styles.rowDotOk, meta: "kenny@thally.dev", name: "Kenny Ihenacho", role: "Owner" },
-  { dotClass: styles.rowDotOk, meta: "ada@thally.dev", name: "Ada Nwosu", role: "Maintainer · approves drafts" },
-  { dotClass: styles.rowDotOk, meta: "diego@thally.dev", name: "Diego Martín", role: "Editor" },
+  { dotClass: styles.rowDotOk, meta: "kenny@jahce.dev", name: "Kenny Ihenacho", role: "Owner" },
+  { dotClass: styles.rowDotOk, meta: "ada@jahce.dev", name: "Ada Nwosu", role: "Maintainer · approves drafts" },
+  { dotClass: styles.rowDotOk, meta: "diego@jahce.dev", name: "Diego Martín", role: "Editor" },
   { dotClass: styles.rowDotNeutral, meta: "automation · opens drafts", name: "thally-bot", role: "Service account" },
 ];
 
@@ -145,7 +145,7 @@ export function DashboardDemo() {
           <i />
           <i />
         </span>
-        <span className={styles.frameUrl}>cloud.thally.dev/jahce</span>
+        <span className={styles.frameUrl}>app.thally.io/jahce</span>
       </div>
       <div className={styles.dash}>
         <div className={styles.sidebar}>

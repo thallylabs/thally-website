@@ -193,7 +193,7 @@ export function AgentLayerDemo() {
     <div className={styles.agentChat}>
       <div className={styles.chatBar}>
         <Mcp aria-hidden="true" />
-        <span className={styles.chatEndpoint}>mcp.thally.dev/jahce/dabs</span>
+        <span className={styles.chatEndpoint}>jahce.thally.site/api/mcp</span>
         <span className={styles.chatStatus}>Connected</span>
       </div>
       <div aria-live="polite" className={styles.thread}>
