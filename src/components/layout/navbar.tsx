@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-import { Cloud, GitPullRequest, Mcp, Negotiation, Overview, Track } from "@/components/icons";
+import { Cloud, GitPullRequest, Mcp, Overview, Structured, Track } from "@/components/icons";
 import { Logo } from "@/components/layout/logo";
 import { Button } from "@/components/ui/button";
 import {
@@ -43,37 +43,37 @@ const Navbar = () => {
         {
           title: "Thally Track",
           href: "/features/track",
-          description: "See which documentation may be affected by a merged product change.",
+          description: "See which documentation may be affected when your product changes.",
           icon: Track,
         },
         {
-          title: "Change Intelligence",
-          href: "/#automation",
-          description: "Understand product changes, find affected documentation, and prepare evidence-backed updates.",
+          title: "Automation",
+          href: "/features/automation",
+          description: "Connect repos so Thally can draft updates on every merge.",
           icon: GitPullRequest,
         },
         {
           title: "Content Graph",
-          href: "/#features",
-          description: "Write once in MDX and publish HTML, JSON, JSON-LD, and Markdown.",
-          icon: Negotiation,
+          href: "/features/content-graph",
+          description: "Write once in MDX and publish HTML, JSON, and machine formats.",
+          icon: Structured,
         },
         {
           title: "Agent Layer",
-          href: "/#workflows",
-          description: "Make your docs easier for AI tools to find and use with llms.txt, MCP, and grounded answers.",
+          href: "/features/agent-layer",
+          description: "Make your docs easier for AI tools to read and reason about.",
           icon: Mcp,
         },
         {
           title: "Migration & Hosting",
-          href: "/#migrate",
-          description: "Start a new site, connect a Thally project, or migrate your existing docs.",
+          href: "/features/migration-hosting",
+          description: "Start a new site, connect a repo, and let Thally host it.",
           icon: Cloud,
         },
         {
           title: "Cloud Dashboard",
-          href: "/#dashboard",
-          description: "Manage your sites, analytics, team, AI answers, and updates drafted by Thally.",
+          href: "/features/cloud-dashboard",
+          description: "Manage your sites, analytics, team, and AI context in one place.",
           icon: Overview,
         },
       ],
