@@ -35,7 +35,7 @@ import styles from "./content-graph-page.module.css";
 export const metadata: Metadata = {
   title: "Thally Content Graph: Write Once, Speak Every Format",
   description:
-    "Author documentation once in MDX. Thally builds a connected graph of pages, concepts, and code, then publishes polished HTML for people and clean, structured formats for machines.",
+    "Author your documentation once in MDX. Thally builds it into a graph of pages, concepts, and code, then publishes every page as polished HTML for people and as Markdown, JSON, and llms.txt for machines.",
   alternates: {
     canonical: "/features/content-graph",
   },
@@ -51,21 +51,21 @@ const contentSteps = [
     label: "Step 01",
     title: "Author in MDX",
     description:
-      "Write prose, code samples, and components in one MDX file per page. Frontmatter declares the concepts and product surfaces each page describes.",
+      "Write prose, code samples, and components in one MDX file per page. Frontmatter names the concepts and product surfaces the page covers.",
     icon: Structured,
   },
   {
     label: "Step 02",
     title: "Thally builds the graph",
     description:
-      "Every page becomes a node. Thally links pages to the concepts they define, the code they reference, and the product repositories that back them.",
+      "Every page becomes a node, linked to the concepts it defines, the code it references, and the product repositories that back it.",
     icon: Negotiation,
   },
   {
     label: "Step 03",
     title: "Publish to every reader",
     description:
-      "One URL negotiates its format: rich HTML for people, Markdown and JSON for tools, llms.txt for agents. Same source, no divergence.",
+      "One URL serves each reader the right format: rich HTML for people, Markdown and JSON for tools, llms.txt for agents. Same source, never out of step.",
     icon: DualReader,
   },
 ] as const;
@@ -167,8 +167,8 @@ export default function ContentGraphFeaturePage() {
           Write once. <span>Speak every format.</span>
         </h1>
         <p className={styles.heroDescription}>
-          Author your documentation once in MDX. Thally turns it into a connected graph of pages, concepts, and code,
-          then publishes each node as polished HTML for people and clean, structured formats for machines.
+          Author your documentation once in MDX. Thally builds it into a graph of pages, concepts, and code, then
+          publishes every page as polished HTML for people and as Markdown, JSON, and llms.txt for machines.
         </p>
         <div className={styles.heroActions}>
           <a className={`${styles.button} ${styles.primaryButton}`} href="#studio">
@@ -207,8 +207,8 @@ export default function ContentGraphFeaturePage() {
         <div className={styles.sectionHeading}>
           <h2>One source. Many surfaces.</h2>
           <p>
-            Documentation, SDK references, examples, and AI context are usually maintained separately. The Content Graph
-            keeps them as one thing: authored once, projected everywhere.
+            Documentation, SDK references, examples, and AI context usually live apart and drift apart. The Content
+            Graph makes them one thing: authored once, projected everywhere.
           </p>
         </div>
         <div className={styles.stepsGrid}>
@@ -240,8 +240,8 @@ export default function ContentGraphFeaturePage() {
         <div className={styles.sectionHeading}>
           <h2>One source, every format.</h2>
           <p>
-            Here&apos;s a real page authored in MDX on the left. Switch the format on the right to see exactly what each
-            reader receives, all projected from the single source, never hand-maintained.
+            The left pane is a real page authored in MDX. Switch formats on the right to see exactly what each reader
+            receives: every projection generated from that one source, none of it hand-maintained.
           </p>
         </div>
         <FormatStudio />
@@ -260,9 +260,8 @@ export default function ContentGraphFeaturePage() {
         <aside className={styles.honestyPanel}>
           <Leaf className={styles.honestyIcon} />
           <p>
-            <strong>Competitors can copy features; they can&apos;t copy this.</strong> The graph strengthens with every
-            accepted review, correction, and release: years of product-specific understanding that make each change
-            propagate more precisely than the last.
+            <strong>The graph gets sharper the longer it runs.</strong> Every accepted review, correction, and release
+            teaches it more about your product, so each change propagates more precisely than the last.
           </p>
         </aside>
       </section>
@@ -271,8 +270,8 @@ export default function ContentGraphFeaturePage() {
         <div className={styles.sectionHeading}>
           <h2>Every reader gets their format.</h2>
           <p>
-            A URL in the Content Graph negotiates its representation. People get a rendered page; tools and agents get
-            clean structure from the same node, always in sync.
+            Every URL in the Content Graph answers in the format its reader asks for. People get a rendered page; tools
+            and agents get clean structure from the same node, always in sync.
           </p>
         </div>
         <div className={styles.surfacesGrid}>
@@ -339,12 +338,12 @@ export default function ContentGraphFeaturePage() {
           <div aria-hidden="true" className={styles.ctaGrid} />
           <h2>Author once. Let the graph do the rest.</h2>
           <p>
-            Point Thally at your MDX and watch it become a living graph: published, in sync, for every reader you have
-            and the agents you don&apos;t yet.
+            Point Thally at your MDX and it becomes a living graph: published, in sync, and ready for the readers you
+            have today and the agents arriving tomorrow.
           </p>
           <div className={styles.ctaActions}>
             <a className={`${styles.button} ${styles.primaryButton}`} href={DESTINATIONS.signup}>
-              Create your site <ArrowRight />
+              Create your docs site <ArrowRight />
             </a>
             <Link className={styles.textLink} href="/features/track">
               See how Track uses the graph <ArrowRight />

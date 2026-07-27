@@ -158,7 +158,7 @@ export default function MigrationHostingFeaturePage() {
         </h1>
         <p className={styles.heroDescription}>
           Import from wherever your documentation lives today: GitBook, Mintlify, Docusaurus, or a folder of Markdown.
-          Thally converts it into a connected graph and deploys it to a global edge in a single step.
+          Thally converts it into a connected graph and puts it live on a global edge, all in one pass.
         </p>
         <div className={styles.heroActions}>
           <a className={`${styles.button} ${styles.primaryButton}`} href="#migrate">
@@ -173,7 +173,7 @@ export default function MigrationHostingFeaturePage() {
 
       <section className={`${styles.section} ${styles.alt}`} id="how">
         <div className={styles.sectionHeading}>
-          <h2>From somewhere else to live, fast.</h2>
+          <h2>From your current tool to live, fast.</h2>
           <p>
             Migration isn&apos;t a lock-in trap or a weekend project. Point Thally at your existing docs and it does the
             conversion, the build, and the deploy.
@@ -197,9 +197,9 @@ export default function MigrationHostingFeaturePage() {
         <aside className={styles.honestyPanel}>
           <Leaf className={styles.honestyIcon} />
           <p>
-            <strong>Reduce setup friction.</strong> The fastest way to adopt Thally is to bring what you already have.
-            Migration is designed so your first site is live in minutes, not sprints, and you can leave with your
-            Markdown intact.
+            <strong>No lock-in, in either direction.</strong> The fastest way to adopt Thally is to bring the docs you
+            already have: your first site is live in minutes, not sprints. And if you ever leave, your Markdown leaves
+            with you.
           </p>
         </aside>
       </section>
@@ -289,7 +289,7 @@ export default function MigrationHostingFeaturePage() {
           </p>
           <div className={styles.ctaActions}>
             <a className={`${styles.button} ${styles.primaryButton}`} href={DESTINATIONS.signup}>
-              Create your site <ArrowRight />
+              Create your docs site <ArrowRight />
             </a>
             <Link className={styles.textLink} href="/features/content-graph">
               See how the graph is built <ArrowRight />

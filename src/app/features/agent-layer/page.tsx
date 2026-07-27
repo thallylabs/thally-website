@@ -30,7 +30,7 @@ import styles from "./agent-layer-page.module.css";
 export const metadata: Metadata = {
   title: "Thally Agent Layer: Grounded Answers for AI Agents",
   description:
-    "The Agent Layer publishes your documentation as llms.txt, MCP tools, and structured JSON, and serves it with the evidence to back every answer, so nothing is guessed.",
+    "Your customers ask AI tools before they open your docs. The Agent Layer publishes your documentation as llms.txt, MCP tools, and structured JSON, with the evidence to back every answer.",
   alternates: {
     canonical: "/features/agent-layer",
   },
@@ -60,8 +60,8 @@ const steps = [
     icon: Terminal,
     description: (
       <>
-        Thally serves your docs as Model Context Protocol tools. Agents can search, fetch, and cite pages directly. No
-        scraping, no stale copy.
+        Thally serves your docs as Model Context Protocol tools. Agents search, fetch, and cite your pages from inside
+        the editor or assistant. No scraping, no stale copies.
       </>
     ),
   },
@@ -170,8 +170,8 @@ export default function AgentLayerFeaturePage() {
           Answers, <span>with receipts.</span>
         </h1>
         <p className={styles.heroDescription}>
-          The tools your customers use to code are AI agents. The Agent Layer publishes your documentation in the
-          formats those agents read best, and serves it with the evidence to back every answer, so nothing is guessed.
+          Your customers now ask AI tools before they open your docs. The Agent Layer publishes your documentation in
+          the formats those tools read best, with the evidence to back every answer, so nothing gets guessed.
         </p>
         <div className={styles.heroActions}>
           <a className={`${styles.button} ${styles.primaryButton}`} href="#ask">
@@ -317,7 +317,7 @@ export default function AgentLayerFeaturePage() {
           </p>
           <div className={styles.ctaActions}>
             <a className={`${styles.button} ${styles.primaryButton}`} href={DESTINATIONS.signup}>
-              Enable the Agent Layer <ArrowRight />
+              Create your docs site <ArrowRight />
             </a>
             <Link className={styles.textLink} href="/features/content-graph">
               See where the formats come from <ArrowRight />

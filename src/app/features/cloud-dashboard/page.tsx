@@ -152,10 +152,10 @@ export default function CloudDashboardFeaturePage() {
 
       <section className={styles.section} id="manage">
         <div className={styles.sectionHeading}>
-          <h2>The whole knowledge pipeline, controllable.</h2>
+          <h2>The whole pipeline, under your control.</h2>
           <p>
-            The dashboard is where product change becomes managed communication: nothing hidden, nothing automatic that
-            you didn&apos;t choose.
+            Thally automates the noticing and drafting; the dashboard is where you stay in charge. Nothing hidden,
+            nothing published that you didn&apos;t approve.
           </p>
         </div>
         <div className={styles.fgrid}>
@@ -226,7 +226,7 @@ export default function CloudDashboardFeaturePage() {
           </p>
           <div className={styles.ctaActions}>
             <a className={`${styles.button} ${styles.primaryButton}`} href={DESTINATIONS.signup}>
-              Open the dashboard <ArrowRight />
+              Create your workspace <ArrowRight />
             </a>
             <Link className={styles.textLink} href="/features/automation">
               See how drafts arrive <ArrowRight />

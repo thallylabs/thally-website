@@ -17,7 +17,7 @@ import styles from "./automation-page.module.css";
 export const metadata: Metadata = {
   title: "Thally Automation: Ship the Code. Docs Follow.",
   description:
-    "Connect your repositories once. When a pull request merges, Thally analyzes the change, drafts the documentation updates it implies, and opens them as a pull request on your docs for human review.",
+    "Connect your repositories once. When a pull request merges, Thally analyzes the change, drafts the documentation updates it implies, and opens them as a pull request on your docs repo, ready for your review.",
   alternates: {
     canonical: "/features/automation",
   },
@@ -132,8 +132,7 @@ export default function AutomationFeaturePage() {
         </h1>
         <p className={styles.heroDescription}>
           Connect your repositories once. When a pull request merges, Thally analyzes the change, drafts the
-          documentation updates it implies, and opens them as a pull request on your docs, waiting for a human to
-          approve.
+          documentation updates it implies, and opens them as a pull request on your docs repo, ready for your review.
         </p>
         <div className={styles.heroActions}>
           <a className={`${styles.button} ${styles.primaryButton}`} href="#loop">
@@ -198,8 +197,8 @@ export default function AutomationFeaturePage() {
         <div className={styles.sectionHeading}>
           <h2>From merge to draft PR, automatically.</h2>
           <p>
-            This is what happens the moment a pull request merges on a connected repository. Run it to watch a real
-            change flow from code to a reviewable docs pull request.
+            This is what happens the moment a pull request merges on a connected repository. Run the simulation to watch
+            one change go from merged code to a reviewable docs pull request.
           </p>
         </div>
         <AutomationDemo />
