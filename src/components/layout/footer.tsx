@@ -10,10 +10,12 @@ const navigation = [
   {
     title: "Product",
     links: [
-      { name: "Change intelligence", href: "/#automation" },
-      { name: "Features", href: "/#features" },
-      { name: "Migration", href: "/#migrate" },
-      { name: "Cloud dashboard", href: "/#dashboard" },
+      { name: "Thally Track", href: "/features/track" },
+      { name: "Automation", href: "/features/automation" },
+      { name: "Content Graph", href: "/features/content-graph" },
+      { name: "Agent Layer", href: "/features/agent-layer" },
+      { name: "Migration & Hosting", href: "/features/migration-hosting" },
+      { name: "Cloud Dashboard", href: "/features/cloud-dashboard" },
     ],
   },
   {

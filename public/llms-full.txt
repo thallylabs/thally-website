@@ -29,6 +29,11 @@ Generated from the same repository as thally.io. Last generated: 2026-07-24.
 
 - [Home](/): product overview, features, pricing, FAQ
 - [Thally Track](/features/track): product-change impact analysis, evidence, findings, and reviewable drafts
+- [Automation](/features/automation): merged product changes become reviewable documentation pull requests
+- [Content Graph](/features/content-graph): write once in MDX and publish HTML, JSON, llms.txt, and Markdown
+- [Agent Layer](/features/agent-layer): llms.txt, MCP server, and grounded answers with cited sources
+- [Migration & Hosting](/features/migration-hosting): migrate from GitBook, Mintlify, Docusaurus, or Markdown and let Thally host
+- [Cloud Dashboard](/features/cloud-dashboard): sites, drafts, analytics, team, and AI context in one workspace
 - [Pricing](/pricing): Free (self-host, MIT), Cloud (workspace platform fee), Enterprise (SSO, SLA)
 - [Blog](/blog): comparisons, guides, and product deep dives (RSS at /rss.xml)
 - [About](/about): the problem, position, product principles, and long-term mission

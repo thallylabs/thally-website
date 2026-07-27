@@ -44,6 +44,36 @@ const routes: SitemapRoute[] = [
     sources: ["src/app/features/track", "src/components/icons/index.tsx"],
   },
   {
+    path: "/features/automation",
+    priority: 0.9,
+    changeFrequency: "monthly",
+    sources: ["src/app/features/automation", "src/components/icons/index.tsx"],
+  },
+  {
+    path: "/features/content-graph",
+    priority: 0.9,
+    changeFrequency: "monthly",
+    sources: ["src/app/features/content-graph", "src/components/icons/index.tsx"],
+  },
+  {
+    path: "/features/agent-layer",
+    priority: 0.9,
+    changeFrequency: "monthly",
+    sources: ["src/app/features/agent-layer", "src/components/icons/index.tsx"],
+  },
+  {
+    path: "/features/migration-hosting",
+    priority: 0.9,
+    changeFrequency: "monthly",
+    sources: ["src/app/features/migration-hosting", "src/components/icons/index.tsx"],
+  },
+  {
+    path: "/features/cloud-dashboard",
+    priority: 0.9,
+    changeFrequency: "monthly",
+    sources: ["src/app/features/cloud-dashboard", "src/components/icons/index.tsx"],
+  },
+  {
     path: "/blog",
     priority: 0.8,
     changeFrequency: "weekly",
