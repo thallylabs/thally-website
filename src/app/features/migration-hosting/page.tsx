@@ -197,9 +197,9 @@ export default function MigrationHostingFeaturePage() {
         <aside className={styles.honestyPanel}>
           <Leaf className={styles.honestyIcon} />
           <p>
-            <strong>No lock-in, in either direction.</strong> The fastest way to adopt Thally is to bring the docs you
-            already have: your first site is live in minutes, not sprints. And if you ever leave, your Markdown leaves
-            with you.
+            <strong>No lock-in, in either direction.</strong> Your repository, your renderer, and your domain stay
+            yours: the engine is MIT licensed and hosting is optional. If you ever stop paying, the site can keep
+            running on the open-source engine, hosted wherever you choose.
           </p>
         </aside>
       </section>
@@ -284,8 +284,8 @@ export default function MigrationHostingFeaturePage() {
           <div aria-hidden="true" className={styles.ctaGrid} />
           <h2>Start a site, or bring the one you have.</h2>
           <p>
-            Connect a repository, import your existing docs, and let Thally host them: graph, machine formats, and
-            global edge included from the first deploy.
+            Import your existing docs and let Thally host them, or bring your own infrastructure. Either way, you pay
+            for the service and keep the site.
           </p>
           <div className={styles.ctaActions}>
             <a className={`${styles.button} ${styles.primaryButton}`} href={DESTINATIONS.signup}>

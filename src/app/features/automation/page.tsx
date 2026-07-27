@@ -198,7 +198,7 @@ export default function AutomationFeaturePage() {
           <h2>From merge to draft PR, automatically.</h2>
           <p>
             This is what happens the moment a pull request merges on a connected repository. Run the simulation to watch
-            one change go from merged code to a reviewable docs pull request.
+            one change go from merged code to a review-ready docs pull request.
           </p>
         </div>
         <AutomationDemo />
@@ -258,8 +258,8 @@ export default function AutomationFeaturePage() {
         <div className={styles.sectionHeading}>
           <h2>The work nobody owns, owned.</h2>
           <p>
-            Product changes create communication work. Automation makes sure it&apos;s discovered the moment it happens,
-            not weeks later, in a support ticket.
+            Stale docs show up as support tickets, broken onboarding, and wrong AI answers. Automation finds the
+            documentation work the moment it exists, not weeks later in a support thread.
           </p>
         </div>
         <div className={styles.compareGrid}>
@@ -297,9 +297,9 @@ export default function AutomationFeaturePage() {
       <section className={styles.section} id="start">
         <div className={styles.ctaCard}>
           <div aria-hidden="true" className={styles.ctaDots} />
-          <h2>Connect a repo. Never chase docs again.</h2>
+          <h2>Ship without wondering what the docs forgot.</h2>
           <p>
-            Install the read-only GitHub App, choose your triggers, and let every merge draft its own documentation,
+            Install the read-only GitHub App, choose your triggers, and every merge drafts its own documentation:
             reviewed by you, shipped on your say-so.
           </p>
           <div className={styles.ctaActions}>

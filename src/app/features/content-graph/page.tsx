@@ -35,7 +35,7 @@ import styles from "./content-graph-page.module.css";
 export const metadata: Metadata = {
   title: "Thally Content Graph: Write Once, Speak Every Format",
   description:
-    "Author your documentation once in MDX. Thally builds it into a graph of pages, concepts, and code, then publishes every page as polished HTML for people and as Markdown, JSON, and llms.txt for machines.",
+    "Author your documentation once in MDX. Thally builds it into a graph of pages, concepts, and code, and publishes every surface (site, Markdown, JSON, llms.txt) from that one source, so every reader sees the same truth.",
   alternates: {
     canonical: "/features/content-graph",
   },
@@ -167,8 +167,9 @@ export default function ContentGraphFeaturePage() {
           Write once. <span>Speak every format.</span>
         </h1>
         <p className={styles.heroDescription}>
-          Author your documentation once in MDX. Thally builds it into a graph of pages, concepts, and code, then
-          publishes every page as polished HTML for people and as Markdown, JSON, and llms.txt for machines.
+          Author your documentation once in MDX. Thally builds it into a graph of pages, concepts, and code, and every
+          published surface (the site, Markdown, JSON, llms.txt) is a projection of that one source. Change it once and
+          every reader sees the same truth.
         </p>
         <div className={styles.heroActions}>
           <a className={`${styles.button} ${styles.primaryButton}`} href="#studio">
