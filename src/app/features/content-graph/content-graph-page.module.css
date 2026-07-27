@@ -517,7 +517,7 @@
   margin-bottom: 1.25rem;
 }
 
-.renderView h1 {
+.renderTitle {
   font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 700;

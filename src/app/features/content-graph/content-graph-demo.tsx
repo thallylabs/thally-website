@@ -51,7 +51,9 @@ function HtmlProjection() {
   return (
     <div className={styles.renderView}>
       <div className={styles.renderCrumbs}>Docs / SDK / Sending a job</div>
-      <h1>Sending a job</h1>
+      <div className={styles.renderTitle} role="presentation">
+        Sending a job
+      </div>
       <p>
         The client sends a job and waits for the result. Every request is subject to a <strong>timeout</strong>:{" "}
         <strong>60{" "}seconds</strong> by default.
