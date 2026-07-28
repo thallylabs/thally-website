@@ -53,11 +53,10 @@ export const Footer = () => {
       <SectionGrid className="[mask-image:linear-gradient(to_bottom,black,transparent)] opacity-10" />
 
       <div className="relative container">
-        <div className="border-primary-foreground/15 dark:border-border flex flex-col items-start gap-8 border-b py-14 md:flex-row md:items-center md:justify-between md:py-20">
-          <div className="flex items-center gap-4">
+        <div className="border-primary-foreground/15 dark:border-border flex flex-col items-start gap-8 border-b py-14 md:flex-row md:items-end md:justify-between md:py-20">
+          <div className="flex flex-col items-start gap-10 md:gap-12">
             <Logo
               inverted
-              hideWordmark
               markClassName="size-7"
               className="text-primary-foreground dark:text-foreground"
             />
