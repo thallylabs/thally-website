@@ -11,12 +11,13 @@ export const LEGAL_ENTITY_NAME = "Fairspleet LLC";
 
 export const SITE_TAGLINE = "Every Product Change. Every Knowledge Surface. Automatically in Sync.";
 
-export const SITE_TITLE = `${SITE_NAME} | Product Knowledge, Automatically in Sync`;
-
-export const SOCIAL_PREVIEW_TITLE = SITE_NAME;
+export const SOCIAL_PREVIEW_TITLE =
+  `${SITE_NAME} - The Product Knowledge Layer for Software Teams`;
 
 export const SOCIAL_PREVIEW_DESCRIPTION =
-  "Thally is the product knowledge layer for agents and teams";
+  "Automatically keep every knowledge surface in sync with product changes";
+
+export const SITE_TITLE = SOCIAL_PREVIEW_TITLE;
 
 export const SITE_DESCRIPTION = SOCIAL_PREVIEW_DESCRIPTION;
 
