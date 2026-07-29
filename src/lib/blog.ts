@@ -25,6 +25,37 @@ export interface BlogPost {
 /** Newest first. Used by the index page, sitemap, RSS feed, JSON-LD, and OG images. */
 export const blogPosts: BlogPost[] = [
   {
+    slug: "best-ai-documentation-tools-2026",
+    title: "The best AI documentation tools in 2026, compared honestly",
+    seoTitle: "Best AI Documentation Tools in 2026",
+    cardTitle: "Best AI documentation tools in 2026",
+    description:
+      "An honest comparison of the best AI documentation tools and platforms in 2026: Thally, Mintlify, GitBook, ReadMe, Docusaurus, Fern, and Document360, evaluated on agent readability, drift, and ownership.",
+    date: "2026-07-30",
+    updated: "2026-07-30",
+    verified: "2026-07-30",
+    category: "Guide",
+    readingTime: 8,
+    accent: "var(--chart-1)",
+    faq: [
+      {
+        question: "What is an AI documentation tool?",
+        answer:
+          "An AI documentation tool is a platform that uses AI in one or more of three places: helping authors write, serving content in machine-readable formats that agents can consume, or detecting when product changes make existing docs stale. Most tools in 2026 cover the first; far fewer cover all three.",
+      },
+      {
+        question: "Do my docs really need llms.txt and MCP support?",
+        answer:
+          "If developers reach your docs through coding assistants and answer engines, yes. llms.txt gives AI systems a map of your content, and an MCP server lets agents query pages directly instead of scraping. Sites without them still get read, but agents work harder and misquote more often.",
+      },
+      {
+        question: "Which AI documentation tool is best for self-hosting?",
+        answer:
+          "Thally and Docusaurus are both MIT licensed and free to self-host. Docusaurus gives you a mature static-site framework you assemble yourself. Thally ships machine-readable output, llms.txt, and an MCP server as part of the engine, so the AI layer works behind your firewall too.",
+      },
+    ],
+  },
+  {
     slug: "thally-vs-mintlify",
     title: "Thally vs Mintlify: which docs platform is built for AI agents?",
     seoTitle: "Thally vs Mintlify for AI Documentation",

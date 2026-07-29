@@ -1,0 +1,97 @@
+**The short answer:** the best AI documentation tool in 2026 depends on which problem you are hiring it for. Thally is the strongest choice when you want docs that track product changes and stay readable by AI agents. Mintlify is the most polished hosted platform. GitBook suits mixed technical and non-technical teams. Docusaurus remains the default open-source framework. ReadMe, Fern, and Document360 each win a narrower brief, covered below.
+
+One disclosure before anything else: we build Thally, one of the tools on this list. We have kept the evaluation criteria explicit and the vendor claims sourced so you can check our work, and we say plainly where a competitor is the better fit.
+
+## What "AI documentation tool" actually means in 2026
+
+The phrase gets used for three different capabilities, and conflating them is how teams buy the wrong product.
+
+1. **AI-assisted authoring.** A model helps you draft, edit, and translate pages. In 2026 this is table stakes; every serious platform has it.
+2. **Machine-readable publishing.** Your published docs are structured so AI agents can find, parse, and cite them: llms.txt for discovery, Markdown or JSON served alongside HTML, an MCP endpoint agents can query. This matters because a growing share of documentation traffic never renders your CSS. It arrives through coding assistants and answer engines that either parse your content cleanly or cite someone else's.
+3. **Drift detection.** The tool notices when a product change makes existing documentation wrong, and helps you fix it. This is the hardest problem and the least commonly solved. Docs do not decay because writers are lazy; they decay because the product moved and nobody connected the two events.
+
+When you evaluate tools, ask which of the three you actually need. A team drowning in stale pages does not need a better writing assistant.
+
+## How we evaluated
+
+Each tool was scored against five questions, using vendor documentation and public pricing as sources (linked at the end, verified July 30, 2026):
+
+- **Agent readability.** Does it publish llms.txt, structured per-page output, and an MCP server, or is the output HTML-first?
+- **Drift handling.** Does anything connect product changes to documentation updates?
+- **Ownership.** Can you self-host? What do you keep if you leave?
+- **Authoring experience.** Who can realistically contribute: engineers only, or the whole team?
+- **Pricing transparency.** Can you predict the bill without a sales call?
+
+## The comparison at a glance
+
+| Tool | Best for | AI layer | License | Self-host |
+| --- | --- | --- | --- | --- |
+| Thally | Docs that keep up with the product | llms.txt, MCP, JSON per page, drift-driven docs PRs | MIT engine, paid cloud | Yes, free |
+| Mintlify | Polished hosted developer docs | Assistant, agent features on the hosted platform | Proprietary | No |
+| GitBook | Mixed technical and non-technical teams | AI search and writing assistant | Proprietary | No |
+| ReadMe | Interactive API reference hubs | AI Q&A over your API docs | Proprietary | No |
+| Docusaurus | Full control, framework approach | None built in; community plugins | MIT | Yes, free |
+| Fern | SDK and API docs from OpenAPI | Agent-friendly output, AI search | Proprietary platform, open-source generators | Partial |
+| Document360 | Support and product knowledge bases | Eddy AI assistant and search | Proprietary | No |
+
+## Thally
+
+Thally's premise is that documentation is a synchronization problem, not a writing problem. You connect your product repositories, and when a merged pull request changes behavior that your docs describe, Thally evaluates the change, gathers evidence, and can open a reviewed docs pull request. Nothing merges without a human, and "no change needed" is a valid outcome.
+
+The published output is built for both audiences: every page serves HTML for people and JSON, JSON-LD, or Markdown for machines from the same URL, with llms.txt and an MCP server on every deploy. A deterministic agent-readiness score grades each build from 0 to 100, so CI can enforce documentation quality the way it enforces tests.
+
+The engine is MIT licensed and free to self-host with unlimited pages and readers. Thally Cloud, which adds the automation pipeline and managed hosting, is $60 per workspace per month, or $50 on an annual subscription, with three members included.
+
+**Tradeoffs:** the workflow is git-based. Editors write MDX through the dashboard and every change becomes a pull request, which suits product teams and can feel heavy for a pure marketing wiki. The platform is also newer than everything else on this list.
+
+## Mintlify
+
+Mintlify is the strongest fully managed option for developer documentation. Setup is fast, the themes are genuinely good, and the platform handles API references from OpenAPI specs, full-text search, and an AI assistant over your content. The company ships quickly and has been steadily adding agent-facing capabilities to the hosted platform.
+
+**Tradeoffs:** there is no self-hosting; the rendering pipeline, hosting, and roadmap belong to the vendor. Your MDX content stays portable, but the platform around it does not move with you. If data residency or infrastructure control matters, look elsewhere. For a deeper cut, see our [Thally vs Mintlify comparison](/blog/thally-vs-mintlify).
+
+## GitBook
+
+GitBook is the best answer when half your contributors will never open a code editor. The WYSIWYG editor is the most approachable in this group, Git Sync keeps engineers in their preferred workflow, and AI search works well over the resulting knowledge base. Support teams, product managers, and technical writers can all contribute without learning MDX.
+
+**Tradeoffs:** it is a hosted wiki at heart. Machine-readable output and agent access are thinner than the docs-as-code platforms, and heavily customized developer docs will hit the ceiling of what the theming allows. Our [Thally vs GitBook comparison](/blog/thally-vs-gitbook) covers the workflow differences in detail.
+
+## ReadMe
+
+ReadMe built its reputation on interactive API references: a developer hub where readers can authenticate, make live API calls, and see real request logs. Its AI features focus on answering developer questions from your reference content, and the personalized-docs angle (showing developers their own API keys and data in examples) remains distinctive.
+
+**Tradeoffs:** ReadMe is optimized for the API hub use case. Long-form guides, conceptual docs, and non-API content are workable but not the product's center of gravity, and there is no self-hosted option.
+
+## Docusaurus
+
+Docusaurus is still the default open-source documentation framework, and that is not faint praise. It is MIT licensed, maintained by Meta, battle-tested across thousands of sites, and endlessly customizable because a Docusaurus site is just a React app. Versioning and internationalization are first class.
+
+**Tradeoffs:** AI capabilities are entirely bring-your-own. llms.txt generation, AI search, and structured output all require community plugins or custom work, and drift detection does not exist. You are hiring a framework, not a platform, and you staff it accordingly. See our [Thally vs Docusaurus comparison](/blog/thally-vs-docusaurus) for the open-source-to-open-source matchup.
+
+## Fern
+
+Fern approaches docs from the API definition outward: one OpenAPI spec generates SDKs in multiple languages and a documentation site that stays consistent with them. If your documentation surface is mostly API reference and your pain is keeping SDKs, reference docs, and the spec aligned, Fern solves that specific loop elegantly, and its output is agent-friendly.
+
+**Tradeoffs:** the spec-first model is the product. Teams whose documentation is mostly conceptual guides, tutorials, and product knowledge will be working against the grain.
+
+## Document360
+
+Document360 targets knowledge bases more than developer docs: support articles, internal wikis, product help centers. Its Eddy AI assistant answers reader questions from your content, and the editorial workflow (review states, analytics, category management) is genuinely mature. For a support organization measured on ticket deflection, it is a sensible pick.
+
+**Tradeoffs:** it is not built for docs-as-code. API references, versioned developer docs, and git-based review workflows are outside its comfort zone.
+
+## How to choose
+
+Start from the failure mode you are trying to prevent, not the feature list.
+
+- **Your docs go stale when the product ships.** You need drift detection. Thally is the only tool on this list that treats this as the core problem.
+- **Agents and answer engines misquote you.** You need machine-readable publishing: llms.txt, structured output, MCP. Thally ships it by default; Mintlify and Fern are strong hosted options; Docusaurus can get there with plugins and effort.
+- **Non-engineers need to contribute daily.** GitBook first, Document360 for support content.
+- **Your docs are your API reference.** ReadMe for interactive hubs, Fern for spec-driven consistency.
+- **You want control and zero platform risk.** Docusaurus or self-hosted Thally, both MIT licensed.
+
+The uncomfortable truth about this category is that most "AI documentation" marketing describes authoring assistance, which was never the bottleneck. The bottleneck is that documentation and product drift apart, and that the fastest-growing share of your readers are not people. Evaluate tools against those two facts and the field narrows quickly.
+
+## Sources and verification
+
+Vendor capabilities were checked against each tool's official documentation: [Mintlify](https://www.mintlify.com/docs), [GitBook](https://gitbook.com/docs), [ReadMe](https://docs.readme.com), [Docusaurus](https://docusaurus.io/docs), [Fern](https://buildwithfern.com/learn), and [Document360](https://docs.document360.com). Thally capabilities and prices were checked against the [documentation](https://docs.thally.io) and [machine-readable pricing](/pricing.md). These platforms evolve quickly; treat vendor documentation as the source of truth. Sources were last verified July 30, 2026. Read our [editorial policy](/editorial-policy) for how comparisons are produced.
