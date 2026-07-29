@@ -6,8 +6,6 @@
  * new, versioned filename.
  */
 
-import { SOCIAL_PREVIEW_TITLE } from "@/lib/site";
-
 export interface SocialPreviewImage {
   url: string;
   width: number;
@@ -18,9 +16,9 @@ export interface SocialPreviewImage {
 
 /** The current Open Graph and Twitter image served by the marketing site. */
 export const socialPreviewImage: SocialPreviewImage = {
-  url: "/brand/thally-og-2026-07-29.png",
+  url: "/brand/thally-og-2026-07-30.png",
   width: 1200,
   height: 630,
-  alt: SOCIAL_PREVIEW_TITLE,
+  alt: "Thally",
   type: "image/png",
 };
