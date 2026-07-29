@@ -11,7 +11,10 @@ import Logos from "@/components/sections/logos";
 import { Migrate } from "@/components/sections/migrate";
 import { NoLockIn } from "@/components/sections/no-lock-in";
 import Pricing from "@/components/sections/pricing";
-import { SITE_TITLE, SITE_URL } from "@/lib/site";
+import { OG_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
+
+const SOCIAL_PREVIEW_PATH = "/brand/thally-cloud-og-2026-07.png";
+const SOCIAL_PREVIEW_ALT = "Thally Cloud: Your product changes. Your docs keep up.";
 
 export const metadata: Metadata = {
   title: {
@@ -19,6 +22,33 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: "/",
+  },
+  openGraph: {
+    title: SITE_TITLE,
+    description: OG_DESCRIPTION,
+    siteName: SITE_NAME,
+    type: "website",
+    locale: "en_US",
+    url: SITE_URL,
+    images: [
+      {
+        url: SOCIAL_PREVIEW_PATH,
+        width: 2400,
+        height: 1260,
+        alt: SOCIAL_PREVIEW_ALT,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: OG_DESCRIPTION,
+    images: [
+      {
+        url: SOCIAL_PREVIEW_PATH,
+        alt: SOCIAL_PREVIEW_ALT,
+      },
+    ],
   },
 };
 
