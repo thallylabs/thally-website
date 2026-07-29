@@ -11,10 +11,14 @@ import Logos from "@/components/sections/logos";
 import { Migrate } from "@/components/sections/migrate";
 import { NoLockIn } from "@/components/sections/no-lock-in";
 import Pricing from "@/components/sections/pricing";
-import { OG_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/lib/site";
-
-const SOCIAL_PREVIEW_PATH = "/brand/thally-cloud-og-2026-07.png";
-const SOCIAL_PREVIEW_ALT = "Thally Cloud: Your product changes. Your docs keep up.";
+import {
+  SITE_NAME,
+  SITE_TITLE,
+  SITE_URL,
+  SOCIAL_PREVIEW_DESCRIPTION,
+  SOCIAL_PREVIEW_TITLE,
+} from "@/lib/site";
+import { socialPreviewImage } from "@/lib/social-preview";
 
 export const metadata: Metadata = {
   title: {
@@ -24,31 +28,19 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: SITE_TITLE,
-    description: OG_DESCRIPTION,
+    title: SOCIAL_PREVIEW_TITLE,
+    description: SOCIAL_PREVIEW_DESCRIPTION,
     siteName: SITE_NAME,
     type: "website",
     locale: "en_US",
     url: SITE_URL,
-    images: [
-      {
-        url: SOCIAL_PREVIEW_PATH,
-        width: 2400,
-        height: 1260,
-        alt: SOCIAL_PREVIEW_ALT,
-      },
-    ],
+    images: [socialPreviewImage],
   },
   twitter: {
     card: "summary_large_image",
-    title: SITE_TITLE,
-    description: OG_DESCRIPTION,
-    images: [
-      {
-        url: SOCIAL_PREVIEW_PATH,
-        alt: SOCIAL_PREVIEW_ALT,
-      },
-    ],
+    title: SOCIAL_PREVIEW_TITLE,
+    description: SOCIAL_PREVIEW_DESCRIPTION,
+    images: [socialPreviewImage],
   },
 };
 
