@@ -13,11 +13,14 @@ export const SITE_TAGLINE = "Every Product Change. Every Knowledge Surface. Auto
 
 export const SITE_TITLE = `${SITE_NAME} | Product Knowledge, Automatically in Sync`;
 
-export const SITE_DESCRIPTION =
-  "Thally traces product changes to the docs they affect and drafts evidence-backed updates for your team to review, so customer-facing knowledge stays in sync.";
+export const SOCIAL_PREVIEW_TITLE = SITE_NAME;
 
-export const OG_DESCRIPTION =
-  "Every product change creates communication work. Thally finds the affected docs and drafts evidence-backed updates for your team to review.";
+export const SOCIAL_PREVIEW_DESCRIPTION =
+  "Thally is the product knowledge layer for agents and teams";
+
+export const SITE_DESCRIPTION = SOCIAL_PREVIEW_DESCRIPTION;
+
+export const OG_DESCRIPTION = SOCIAL_PREVIEW_DESCRIPTION;
 
 export const DESTINATIONS = {
   app: "https://app.thally.io",

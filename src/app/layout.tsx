@@ -14,7 +14,10 @@ import {
   SITE_TITLE,
   SITE_URL,
   SOCIAL,
+  SOCIAL_PREVIEW_DESCRIPTION,
+  SOCIAL_PREVIEW_TITLE,
 } from "@/lib/site";
+import { socialPreviewImage } from "@/lib/social-preview";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -83,17 +86,19 @@ export const metadata: Metadata = {
     apple: [{ url: "/favicon/favicon-180.png", sizes: "180x180", type: "image/png" }],
   },
   openGraph: {
-    title: SITE_TITLE,
-    description: OG_DESCRIPTION,
+    title: SOCIAL_PREVIEW_TITLE,
+    description: SOCIAL_PREVIEW_DESCRIPTION,
     siteName: SITE_NAME,
     type: "website",
     locale: "en_US",
     url: SITE_URL,
+    images: [socialPreviewImage],
   },
   twitter: {
     card: "summary_large_image",
-    title: SITE_TITLE,
-    description: OG_DESCRIPTION,
+    title: SOCIAL_PREVIEW_TITLE,
+    description: SOCIAL_PREVIEW_DESCRIPTION,
+    images: [socialPreviewImage],
   },
   verification: {
     ...(process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : {}),
