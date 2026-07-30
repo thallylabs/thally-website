@@ -252,8 +252,8 @@ function KnowledgeFlowGraph({ className }: { className?: string }) {
               }}
               className={styles.source}
               title={name}
-              aria-label={name}
             >
+              <span className={styles.visuallyHidden}>{name}</span>
               <Icon className={styles.sourceIcon} style={{ color }} aria-hidden="true" />
               <i className={styles.anchor} aria-hidden="true" />
             </span>
