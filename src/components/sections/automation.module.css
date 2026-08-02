@@ -79,29 +79,166 @@
   position: sticky;
   border: 1px solid var(--demo-line);
   border-radius: 24px;
-  margin-bottom: 30vh;
   padding: 52px 56px;
   background: var(--demo-card);
   box-shadow: 0 -30px 80px rgb(0 0 0 / 55%);
+  transform-origin: top center;
+  will-change: transform;
 }
 
-.stackCard:nth-child(1) {
+.stackCard1 {
   z-index: 1;
   top: 60px;
 }
 
-.stackCard:nth-child(2) {
-  z-index: 2;
+.stackCard2 {
+  z-index: 3;
   top: 76px;
 }
 
-.stackCard:nth-child(3) {
-  z-index: 3;
+.stackCard3 {
+  z-index: 5;
   top: 92px;
 }
 
-.stackCard:last-child {
-  margin-bottom: 0;
+.pullBridge {
+  position: relative;
+  z-index: 0;
+  height: clamp(260px, 34vh, 360px);
+  pointer-events: none;
+}
+
+.pullBridge2 {
+  z-index: 2;
+}
+
+.pullRig {
+  position: absolute;
+  inset: 0;
+  width: min(100%, 420px);
+  margin-inline: auto;
+}
+
+.rope {
+  position: absolute;
+  inset: 0 auto 0 50%;
+  width: 300px;
+  height: 100%;
+  overflow: visible;
+  transform: translateX(-50%);
+  will-change: opacity;
+}
+
+.ropeShadow,
+.ropeCore {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.ropeShadow {
+  stroke: rgb(0 0 0 / 72%);
+  stroke-width: 6px;
+}
+
+.ropeCore {
+  stroke: #a6b678;
+  stroke-width: 2px;
+  stroke-dasharray: 2 5;
+  filter: drop-shadow(0 0 8px rgb(183 226 77 / 20%));
+}
+
+.hand {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  width: 116px;
+  height: 86px;
+  margin-top: -43px;
+  will-change: transform, opacity;
+}
+
+.handLeft {
+  left: calc(50% - 103px);
+  transform-origin: 88% 58%;
+}
+
+.handRight {
+  left: calc(50% - 13px);
+  transform-origin: 12% 58%;
+}
+
+.handIllustration {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 8px 16px rgb(0 0 0 / 46%));
+}
+
+.handIllustrationRight {
+  transform: scaleX(-1);
+}
+
+.handSkin {
+  fill: #d8c9aa;
+  stroke: #34392f;
+  stroke-width: 1.4px;
+}
+
+.handSleeve {
+  fill: #151b14;
+  stroke: #31382c;
+  stroke-width: 1.4px;
+}
+
+.handFinger,
+.handThumb,
+.handCuff {
+  stroke: #7f755f;
+  stroke-width: 1.4px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.handCuff {
+  stroke: #56604c;
+}
+
+.ropeKnot {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  z-index: 3;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #a6b678;
+  border-radius: 50%;
+  background: var(--demo-bg);
+  box-shadow: 0 0 16px rgb(183 226 77 / 18%);
+  translate: -50% 0;
+  will-change: transform, opacity;
+}
+
+.ropeKnot span {
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  width: 1px;
+  height: 18px;
+  background: linear-gradient(to bottom, #a6b678, transparent);
+  translate: -50% 0;
+}
+
+.pullIndex {
+  position: absolute;
+  right: 26px;
+  bottom: 22px;
+  color: rgb(154 160 145 / 46%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
 }
 
 .feature {
@@ -1575,8 +1712,11 @@
   }
 
   .stackCard {
-    margin-bottom: 22vh;
     padding: 36px 32px;
+  }
+
+  .pullBridge {
+    height: clamp(220px, 28vh, 300px);
   }
 
   .featureVisual {
@@ -1601,6 +1741,41 @@
   .stackCard {
     border-radius: 20px;
     padding: 26px 20px;
+  }
+
+  .stackCard1 {
+    top: 28px;
+  }
+
+  .stackCard2 {
+    top: 40px;
+  }
+
+  .stackCard3 {
+    top: 52px;
+  }
+
+  .pullBridge {
+    height: clamp(180px, 24vh, 230px);
+  }
+
+  .hand {
+    width: 88px;
+    height: 66px;
+    margin-top: -33px;
+  }
+
+  .handLeft {
+    left: calc(50% - 78px);
+  }
+
+  .handRight {
+    left: calc(50% - 10px);
+  }
+
+  .pullIndex {
+    right: 8px;
+    bottom: 14px;
   }
 
   .featureTitle {
@@ -1670,5 +1845,19 @@
 
   .meterPartial .meterFill {
     width: 40%;
+  }
+
+  .stackCard {
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .pullBridge {
+    height: 96px;
+  }
+
+  .hand,
+  .pullIndex {
+    display: none;
   }
 }

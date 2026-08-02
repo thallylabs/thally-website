@@ -1,5 +1,9 @@
+"use client";
+
+import type { MotionValue } from "motion/react";
+import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import Image from "next/image";
-import type { ReactNode } from "react";
+import { type ReactNode, useRef } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -453,6 +457,7 @@ function ReadinessDemo() {
 }
 
 function FeatureCard({
+  index,
   eyebrow,
   icon,
   title,
@@ -460,7 +465,10 @@ function FeatureCard({
   visual,
   caption,
   track = false,
+  lift,
+  scale,
 }: {
+  index: 0 | 1 | 2;
   eyebrow: string;
   icon: ReactNode;
   title: string;
@@ -468,9 +476,14 @@ function FeatureCard({
   visual: ReactNode;
   caption: string;
   track?: boolean;
+  lift?: MotionValue<number>;
+  scale?: MotionValue<number>;
 }) {
   return (
-    <article className={styles.stackCard}>
+    <motion.article
+      className={cn(styles.stackCard, styles[`stackCard${index + 1}` as keyof typeof styles])}
+      style={{ y: lift, scale }}
+    >
       <div className={styles.feature}>
         <div className={styles.featureCopy}>
           <div className={styles.eyebrow}>
@@ -485,7 +498,128 @@ function FeatureCard({
           <p className={styles.caption}>{caption}</p>
         </div>
       </div>
-    </article>
+    </motion.article>
+  );
+}
+
+function PullingHand({ side }: { side: "left" | "right" }) {
+  return (
+    <svg
+      className={cn(styles.handIllustration, side === "right" && styles.handIllustrationRight)}
+      viewBox="0 0 124 92"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path className={styles.handSleeve} d="M2 48 37 34l20 36L22 91H2V48Z" />
+      <path
+        className={styles.handSkin}
+        d="M35 35c8-6 18-7 26-2l17 10 15-1c7 0 12 5 12 11 0 5-3 9-8 11l-22 8c-10 4-22 1-29-7L31 50c-4-5-2-11 4-15Z"
+      />
+      <path className={styles.handFinger} d="m61 35 20 12c5 3 7 9 4 14" />
+      <path className={styles.handFinger} d="m51 40 20 14c5 4 6 10 2 15" />
+      <path className={styles.handFinger} d="m43 47 16 13c4 4 4 9 1 13" />
+      <path className={styles.handThumb} d="M91 43c-5 4-7 9-5 14 2 5 7 8 13 7" />
+      <path className={styles.handCuff} d="m30 39 23 34" />
+    </svg>
+  );
+}
+
+function PullStage({
+  index,
+  children,
+}: {
+  index: 1 | 2;
+  children: (motion: { lift?: MotionValue<number>; scale?: MotionValue<number> }) => ReactNode;
+}) {
+  const bridgeRef = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: bridgeRef,
+    offset: ["start end", "end start"],
+  });
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 155,
+    damping: 27,
+    mass: 0.42,
+    restDelta: 0.0005,
+  });
+
+  const ropePath = useTransform(
+    progress,
+    [0, 0.2, 0.55, 1],
+    [
+      "M150 0 C116 78 184 205 150 320",
+      "M150 0 C126 84 174 204 150 320",
+      "M150 0 C145 94 155 214 150 320",
+      "M150 0 C150 104 150 216 150 320",
+    ],
+  );
+  const ropeOpacity = useTransform(progress, [0, 0.08, 0.76, 0.96, 1], [0, 0.85, 1, 0.45, 0]);
+  const ropeLength = useTransform(progress, [0, 0.16, 0.72], [0.35, 0.72, 1]);
+  const knotY = useTransform(progress, [0, 0.72, 1], [22, 0, -8]);
+
+  const leftY = useTransform(progress, [0, 0.14, 0.3, 0.46, 0.64, 0.82, 1], [82, 82, 24, 24, -38, -38, -72]);
+  const rightY = useTransform(progress, [0, 0.14, 0.3, 0.46, 0.64, 0.82, 1], [112, 54, 54, -6, -6, -66, -66]);
+  const leftX = useTransform(progress, [0, 0.3, 0.46, 0.64, 1], [-12, 0, -8, 0, -5]);
+  const rightX = useTransform(progress, [0, 0.14, 0.3, 0.46, 1], [12, 2, 10, 0, 5]);
+  const leftRotate = useTransform(progress, [0, 0.3, 0.46, 0.64, 1], [-7, 2, -5, 2, -2]);
+  const rightRotate = useTransform(progress, [0, 0.14, 0.46, 0.64, 1], [7, -2, 5, -2, 2]);
+  const leftOpacity = useTransform(progress, [0, 0.08, 0.88, 1], [0, 1, 1, 0]);
+  const rightOpacity = useTransform(progress, [0, 0.12, 0.91, 1], [0, 1, 1, 0]);
+
+  const lift = useTransform(progress, [0.08, 0.72, 0.94], [96, 0, 0]);
+  const scale = useTransform(progress, [0.08, 0.72], [0.986, 1]);
+
+  return (
+    <>
+      <div ref={bridgeRef} className={cn(styles.pullBridge, index === 2 && styles.pullBridge2)} aria-hidden="true">
+        <div className={styles.pullRig}>
+          <motion.svg
+            className={styles.rope}
+            viewBox="0 0 300 320"
+            preserveAspectRatio="none"
+            style={{ opacity: reduce ? 0.46 : ropeOpacity }}
+          >
+            <motion.path
+              className={styles.ropeShadow}
+              d={reduce ? "M150 0V320" : ropePath}
+              pathLength={reduce ? 1 : ropeLength}
+            />
+            <motion.path
+              className={styles.ropeCore}
+              d={reduce ? "M150 0V320" : ropePath}
+              pathLength={reduce ? 1 : ropeLength}
+            />
+          </motion.svg>
+
+          {!reduce && (
+            <>
+              <motion.div
+                className={cn(styles.hand, styles.handLeft)}
+                style={{ x: leftX, y: leftY, rotate: leftRotate, opacity: leftOpacity }}
+              >
+                <PullingHand side="left" />
+              </motion.div>
+              <motion.div
+                className={cn(styles.hand, styles.handRight)}
+                style={{ x: rightX, y: rightY, rotate: rightRotate, opacity: rightOpacity }}
+              >
+                <PullingHand side="right" />
+              </motion.div>
+            </>
+          )}
+
+          <motion.div
+            className={styles.ropeKnot}
+            style={{ y: reduce ? 0 : knotY, opacity: reduce ? 0.55 : ropeOpacity }}
+          >
+            <span />
+          </motion.div>
+          <span className={styles.pullIndex}>0{index + 1}</span>
+        </div>
+      </div>
+      {children(reduce ? {} : { lift, scale })}
+    </>
   );
 }
 
@@ -509,6 +643,7 @@ export function Automation() {
 
         <div className={styles.stack}>
           <FeatureCard
+            index={0}
             eyebrow="TAG IT"
             icon="@"
             title="Request a docs update from GitHub."
@@ -516,23 +651,37 @@ export function Automation() {
             visual={<GitHubDemo />}
             caption="A no-change result is valid. Thally never pushes to main."
           />
-          <FeatureCard
-            eyebrow="THALLY TRACK"
-            icon={<BranchIcon className="size-3.5" />}
-            title="Thally maps merged product changes to affected knowledge."
-            description="Choose the product repos Thally should watch. Track gathers evidence, finds affected docs, and drafts an update only when one is needed."
-            visual={<TrackDemo />}
-            caption="Ship to any watched repo: the right docs PR follows."
-            track
-          />
-          <FeatureCard
-            eyebrow="SCORE IT"
-            icon={<GaugeIcon className="size-3.5" />}
-            title="Turn quality findings into fix PRs."
-            description="The readiness report identifies the pages lowering your score. Ask Thally to prepare reviewable fixes for the findings it can resolve."
-            visual={<ReadinessDemo />}
-            caption="The readiness report in Thally Cloud: every deduction links to the page behind it."
-          />
+          <PullStage index={1}>
+            {({ lift, scale }) => (
+              <FeatureCard
+                index={1}
+                eyebrow="THALLY TRACK"
+                icon={<BranchIcon className="size-3.5" />}
+                title="Thally maps merged product changes to affected knowledge."
+                description="Choose the product repos Thally should watch. Track gathers evidence, finds affected docs, and drafts an update only when one is needed."
+                visual={<TrackDemo />}
+                caption="Ship to any watched repo: the right docs PR follows."
+                track
+                lift={lift}
+                scale={scale}
+              />
+            )}
+          </PullStage>
+          <PullStage index={2}>
+            {({ lift, scale }) => (
+              <FeatureCard
+                index={2}
+                eyebrow="SCORE IT"
+                icon={<GaugeIcon className="size-3.5" />}
+                title="Turn quality findings into fix PRs."
+                description="The readiness report identifies the pages lowering your score. Ask Thally to prepare reviewable fixes for the findings it can resolve."
+                visual={<ReadinessDemo />}
+                caption="The readiness report in Thally Cloud: every deduction links to the page behind it."
+                lift={lift}
+                scale={scale}
+              />
+            )}
+          </PullStage>
         </div>
       </div>
     </section>
