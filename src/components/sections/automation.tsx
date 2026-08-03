@@ -506,20 +506,20 @@ function PullingHand({ side }: { side: "left" | "right" }) {
   return (
     <svg
       className={cn(styles.handIllustration, side === "right" && styles.handIllustrationRight)}
-      viewBox="0 0 124 92"
+      viewBox="0 0 92 64"
       fill="none"
       aria-hidden="true"
     >
-      <path className={styles.handSleeve} d="M2 48 37 34l20 36L22 91H2V48Z" />
+      <path className={styles.handSleeve} d="M1 22 27 16l13 32-25 12H1V22Z" />
       <path
         className={styles.handSkin}
-        d="M35 35c8-6 18-7 26-2l17 10 15-1c7 0 12 5 12 11 0 5-3 9-8 11l-22 8c-10 4-22 1-29-7L31 50c-4-5-2-11 4-15Z"
+        d="M25 18c5-6 13-8 20-4l16 9c6 3 9 9 8 15-1 8-7 14-15 16l-13 3c-8 2-16-3-18-11l-4-15c-1-5 1-10 6-13Z"
       />
-      <path className={styles.handFinger} d="m61 35 20 12c5 3 7 9 4 14" />
-      <path className={styles.handFinger} d="m51 40 20 14c5 4 6 10 2 15" />
-      <path className={styles.handFinger} d="m43 47 16 13c4 4 4 9 1 13" />
-      <path className={styles.handThumb} d="M91 43c-5 4-7 9-5 14 2 5 7 8 13 7" />
-      <path className={styles.handCuff} d="m30 39 23 34" />
+      <path className={styles.handDigit} d="M43 12h27c5 0 8 4 8 8s-3 7-8 7H48" />
+      <path className={styles.handDigit} d="M46 24h28c5 0 8 4 8 8s-3 7-8 7H50" />
+      <path className={styles.handDigit} d="M45 36h25c5 0 8 4 8 8s-3 7-8 7H47" />
+      <path className={styles.handThumb} d="M30 20c9 1 15 5 21 12l9 10c3 4 8 4 12 1 4-3 4-8 1-12L61 18" />
+      <path className={styles.handCuff} d="m24 18 12 35" />
     </svg>
   );
 }
@@ -544,28 +544,18 @@ function PullStage({
     restDelta: 0.0005,
   });
 
-  const ropePath = useTransform(
-    progress,
-    [0, 0.2, 0.55, 1],
-    [
-      "M150 0 C116 78 184 205 150 320",
-      "M150 0 C126 84 174 204 150 320",
-      "M150 0 C145 94 155 214 150 320",
-      "M150 0 C150 104 150 216 150 320",
-    ],
-  );
   const ropeOpacity = useTransform(progress, [0, 0.08, 0.76, 0.96, 1], [0, 0.85, 1, 0.45, 0]);
   const ropeLength = useTransform(progress, [0, 0.16, 0.72], [0.35, 0.72, 1]);
   const knotY = useTransform(progress, [0, 0.72, 1], [22, 0, -8]);
 
-  const leftY = useTransform(progress, [0, 0.14, 0.3, 0.46, 0.64, 0.82, 1], [82, 82, 24, 24, -38, -38, -72]);
-  const rightY = useTransform(progress, [0, 0.14, 0.3, 0.46, 0.64, 0.82, 1], [112, 54, 54, -6, -6, -66, -66]);
-  const leftX = useTransform(progress, [0, 0.3, 0.46, 0.64, 1], [-12, 0, -8, 0, -5]);
-  const rightX = useTransform(progress, [0, 0.14, 0.3, 0.46, 1], [12, 2, 10, 0, 5]);
-  const leftRotate = useTransform(progress, [0, 0.3, 0.46, 0.64, 1], [-7, 2, -5, 2, -2]);
-  const rightRotate = useTransform(progress, [0, 0.14, 0.46, 0.64, 1], [7, -2, 5, -2, 2]);
-  const leftOpacity = useTransform(progress, [0, 0.08, 0.88, 1], [0, 1, 1, 0]);
-  const rightOpacity = useTransform(progress, [0, 0.12, 0.91, 1], [0, 1, 1, 0]);
+  const leftY = useTransform(progress, [0, 0.08, 0.42, 0.48, 0.55, 1], [48, 36, -24, -32, 58, -22]);
+  const rightY = useTransform(progress, [0, 0.08, 0.42, 0.48, 0.55, 1], [96, 84, 18, 10, 0, -60]);
+  const leftX = useTransform(progress, [0, 0.42, 0.48, 0.55, 1], [-3, 0, -8, 0, 0]);
+  const rightX = useTransform(progress, [0, 0.08, 1], [3, 0, 0]);
+  const leftRotate = useTransform(progress, [0, 0.42, 0.48, 0.55, 1], [-2, 1, -3, -1, 1]);
+  const rightRotate = useTransform(progress, [0, 0.42, 1], [2, -1, 1]);
+  const leftOpacity = useTransform(progress, [0, 0.06, 0.42, 0.48, 0.55, 0.92, 1], [0, 1, 1, 0.12, 1, 1, 0]);
+  const rightOpacity = useTransform(progress, [0, 0.08, 0.94, 1], [0, 1, 1, 0]);
 
   const lift = useTransform(progress, [0.08, 0.72, 0.94], [96, 0, 0]);
   const scale = useTransform(progress, [0.08, 0.72], [0.986, 1]);
@@ -580,16 +570,8 @@ function PullStage({
             preserveAspectRatio="none"
             style={{ opacity: reduce ? 0.46 : ropeOpacity }}
           >
-            <motion.path
-              className={styles.ropeShadow}
-              d={reduce ? "M150 0V320" : ropePath}
-              pathLength={reduce ? 1 : ropeLength}
-            />
-            <motion.path
-              className={styles.ropeCore}
-              d={reduce ? "M150 0V320" : ropePath}
-              pathLength={reduce ? 1 : ropeLength}
-            />
+            <motion.path className={styles.ropeShadow} d="M150 0V320" pathLength={reduce ? 1 : ropeLength} />
+            <motion.path className={styles.ropeCore} d="M150 0V320" pathLength={reduce ? 1 : ropeLength} />
           </motion.svg>
 
           {!reduce && (

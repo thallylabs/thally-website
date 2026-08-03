@@ -143,9 +143,8 @@
 }
 
 .ropeCore {
-  stroke: #a6b678;
-  stroke-width: 2px;
-  stroke-dasharray: 2 5;
+  stroke: #aeba82;
+  stroke-width: 2.5px;
   filter: drop-shadow(0 0 8px rgb(183 226 77 / 20%));
 }
 
@@ -153,20 +152,20 @@
   position: absolute;
   top: 50%;
   z-index: 2;
-  width: 116px;
-  height: 86px;
-  margin-top: -43px;
+  width: 68px;
+  height: 48px;
+  margin-top: -24px;
   will-change: transform, opacity;
 }
 
 .handLeft {
-  left: calc(50% - 103px);
-  transform-origin: 88% 58%;
+  left: calc(50% - 55px);
+  transform-origin: 81% 50%;
 }
 
 .handRight {
   left: calc(50% - 13px);
-  transform-origin: 12% 58%;
+  transform-origin: 19% 50%;
 }
 
 .handIllustration {
@@ -184,7 +183,7 @@
 .handSkin {
   fill: #d8c9aa;
   stroke: #34392f;
-  stroke-width: 1.4px;
+  stroke-width: 1.2px;
 }
 
 .handSleeve {
@@ -193,17 +192,25 @@
   stroke-width: 1.4px;
 }
 
-.handFinger,
-.handThumb,
-.handCuff {
-  stroke: #7f755f;
-  stroke-width: 1.4px;
+.handDigit,
+.handThumb {
+  fill: none;
+  stroke: #d8c9aa;
+  stroke-width: 9px;
   stroke-linecap: round;
   stroke-linejoin: round;
+  filter: drop-shadow(0 0 0.8px #34392f);
+}
+
+.handThumb {
+  stroke-width: 10px;
 }
 
 .handCuff {
+  fill: none;
   stroke: #56604c;
+  stroke-width: 1.2px;
+  stroke-linecap: round;
 }
 
 .ropeKnot {
@@ -1760,17 +1767,17 @@
   }
 
   .hand {
-    width: 88px;
-    height: 66px;
-    margin-top: -33px;
+    width: 56px;
+    height: 40px;
+    margin-top: -20px;
   }
 
   .handLeft {
-    left: calc(50% - 78px);
+    left: calc(50% - 45px);
   }
 
   .handRight {
-    left: calc(50% - 10px);
+    left: calc(50% - 11px);
   }
 
   .pullIndex {
