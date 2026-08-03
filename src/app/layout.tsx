@@ -2,6 +2,7 @@ import "./globals.css";
 
 import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import Script from "next/script";
 
 import { ConditionalFooter } from "@/components/layout/conditional-footer";
 import Navbar from "@/components/layout/navbar";
@@ -28,6 +29,8 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 });
+
+const GOOGLE_ANALYTICS_ID = "G-T2YRHCMWFN";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -157,6 +160,19 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`font-sans ${jakarta.variable} ${inter.variable}`}>
       <body className="flex min-h-svh flex-col antialiased">
+        <Script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GOOGLE_ANALYTICS_ID}');
+          `}
+        </Script>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
         <ThemeProvider
