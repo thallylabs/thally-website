@@ -1,6 +1,10 @@
-import { SectionGrid, SectionHeader } from "@/components/section-decor";
+"use client";
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
+
+import { Plus } from "@/components/icons";
+import { Reveal } from "@/components/motion/reveal";
+import { SplitReveal } from "@/components/motion/split-reveal";
 
 const homeQuestions = [
   {
@@ -73,11 +77,9 @@ const pricingQuestions = [
   },
 ];
 
+/** Template faq-section: numbered accordion cards with rotating plus icons. */
 export const FAQ = ({ context = "home" }: { context?: "home" | "pricing" }) => {
   const questions = context === "pricing" ? pricingQuestions : homeQuestions;
-  const midpoint = Math.ceil(questions.length / 2);
-  const leftQuestions = questions.slice(0, midpoint);
-  const rightQuestions = questions.slice(midpoint);
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -92,41 +94,49 @@ export const FAQ = ({ context = "home" }: { context?: "home" | "pricing" }) => {
   };
 
   return (
-    <section className="relative pb-16 md:pb-28 lg:pb-32">
+    <section className="bg-canvas marketing-section-pad relative">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      <SectionGrid className="opacity-10" mask="radial-gradient(ellipse_at_bottom,black,transparent_70%)" />
-      <div className="relative container mx-auto lg:max-w-5xl">
-        <SectionHeader
-          title="Frequently asked questions"
-          description={
-            context === "pricing"
-              ? "Find answers about plans, billing, hosting, cancellation, and Enterprise support."
-              : "Find answers about product change intelligence, documentation automation, migration, AI tools, and how Thally fits your stack."
-          }
-          align="center"
-          layout="stack"
-          className="mx-auto"
-        />
-
-        <div className="mt-8 grid gap-x-12 md:mt-12 md:grid-cols-2 lg:mt-16">
-          <Accordion type="single" collapsible className="text-muted-foreground border-border border-t">
-            {leftQuestions.map((item, i) => (
-              <AccordionItem key={i} value={`left-${i}`}>
-                <AccordionTrigger>{item.question}</AccordionTrigger>
-                <AccordionContent className="text-foreground">{item.answer}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-
-          <Accordion collapsible type="single" className="text-muted-foreground border-border md:border-t">
-            {rightQuestions.map((item, i) => (
-              <AccordionItem key={i} value={`right-${i}`}>
-                <AccordionTrigger>{item.question}</AccordionTrigger>
-                <AccordionContent className="text-foreground">{item.answer}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+      <div className="mx-auto w-full max-w-[1296px] px-5">
+        <div className="mx-auto mb-16 max-w-[628px] text-center">
+          <SplitReveal as="h2" mode="chars" className="heading-section text-canvas-foreground">
+            Frequently asked questions
+          </SplitReveal>
+          <Reveal delay={0.15} distance={20}>
+            <p className="text-canvas-muted mt-5 text-lg">
+              {context === "pricing"
+                ? "Find answers about plans, billing, hosting, cancellation, and Enterprise support."
+                : "Find answers about product change intelligence, documentation automation, migration, AI tools, and how Thally fits your stack."}
+            </p>
+          </Reveal>
         </div>
+
+        <AccordionPrimitive.Root type="single" collapsible className="flex flex-col gap-6">
+          {questions.map((item, i) => (
+            <Reveal key={item.question} delay={0.1 + i * 0.05} distance={30}>
+              <AccordionPrimitive.Item
+                value={`item-${i}`}
+                className="border-canvas-card-stroke group rounded-[24px] border"
+              >
+                <AccordionPrimitive.Header>
+                  <AccordionPrimitive.Trigger className="flex w-full items-center justify-between gap-5 p-7 pb-5 text-left">
+                    <span className="text-canvas-foreground text-lg tracking-[-0.04em] sm:text-xl">
+                      <span className="text-canvas-muted-2 mr-2 font-mono text-sm">
+                        {String(i + 1).padStart(2, "0")}.
+                      </span>
+                      {item.question}
+                    </span>
+                    <span className="bg-canvas-card-stroke flex size-10 shrink-0 items-center justify-center rounded-full transition-transform duration-300 group-data-[state=open]:rotate-45">
+                      <Plus className="text-canvas-foreground size-5" />
+                    </span>
+                  </AccordionPrimitive.Trigger>
+                </AccordionPrimitive.Header>
+                <AccordionPrimitive.Content className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden">
+                  <p className="text-canvas-muted max-w-2xl px-7 pb-7">{item.answer}</p>
+                </AccordionPrimitive.Content>
+              </AccordionPrimitive.Item>
+            </Reveal>
+          ))}
+        </AccordionPrimitive.Root>
       </div>
     </section>
   );

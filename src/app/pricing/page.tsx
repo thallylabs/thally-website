@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { CTA } from "@/components/sections/cta";
 import { FAQ } from "@/components/sections/faq";
-import { NoLockIn } from "@/components/sections/no-lock-in";
-import Pricing from "@/components/sections/pricing";
+import { Guarantees } from "@/components/sections/guarantees";
+import { PricingCards } from "@/components/sections/pricing-cards";
 import Pricing2 from "@/components/sections/pricing2";
 import { SITE_URL } from "@/lib/site";
 
@@ -71,19 +72,20 @@ export default function Page() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(pricingJsonLd) }} />
-      <Pricing headerTag="h1" />
-      <section className="container pb-12 text-center">
-        <p className="text-muted-foreground text-sm">
+      <PricingCards headerTag="h1" />
+      <section className="bg-canvas pb-16">
+        <p className="text-canvas-muted-2 mx-auto max-w-[1480px] px-5 text-center text-sm">
           AI agents and procurement tools can read the same current plan details in{" "}
-          <Link className="text-foreground underline underline-offset-4" href="/pricing.md">
+          <Link className="text-canvas-foreground underline underline-offset-4" href="/pricing.md">
             machine-readable pricing
           </Link>
           .
         </p>
       </section>
-      <NoLockIn />
       <Pricing2 />
+      <Guarantees />
       <FAQ context="pricing" />
+      <CTA />
     </>
   );
 }

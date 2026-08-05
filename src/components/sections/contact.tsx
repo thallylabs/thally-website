@@ -4,8 +4,8 @@ import { ArrowRight, Check, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { type FormEvent, useEffect, useRef, useState } from "react";
 
-import { SectionGrid } from "@/components/section-decor";
-import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/motion/reveal";
+import { SplitReveal } from "@/components/motion/split-reveal";
 import { DESTINATIONS, SOCIAL } from "@/lib/site";
 
 const LEAF_PATH =
@@ -214,9 +214,9 @@ function EnvelopeScene() {
 }
 
 const fieldClassName =
-  "w-full rounded-none border-0 border-b border-foreground/15 bg-transparent px-0 pt-0 pb-3 text-[1.02rem] tracking-[-0.01em] text-foreground shadow-none outline-none transition-colors placeholder:text-muted-foreground/70 focus:border-ring focus-visible:outline-none";
+  "w-full rounded-none border-0 border-b border-canvas-card-stroke bg-transparent px-0 pt-0 pb-4 text-[1.02rem] tracking-[-0.01em] text-white shadow-none outline-none transition-colors placeholder:text-canvas-muted focus:border-b-white focus-visible:outline-none";
 
-const labelClassName = "mb-3 block font-mono text-[0.68rem] tracking-[0.18em] text-muted-foreground uppercase";
+const labelClassName = "mb-3 block font-mono text-[0.68rem] tracking-[0.18em] text-canvas-muted uppercase";
 
 export default function Contact() {
   const [isSent, setIsSent] = useState(false);
@@ -227,37 +227,39 @@ export default function Contact() {
   };
 
   return (
-    <>
-      <header className="relative overflow-hidden px-6 pt-24 pb-14 text-center sm:pt-28 sm:pb-16 lg:pt-32">
-        <SectionGrid
-          className="opacity-60"
-          mask="radial-gradient(ellipse 62% 62% at 50% 30%, black, transparent 78%)"
-        />
-        <div className="relative">
-          <h1 className="font-display mx-auto max-w-[15ch] text-[clamp(2.5rem,5.4vw,4.1rem)] leading-[1.02] font-bold tracking-[-0.04em] text-balance">
-            Talk to the <span className="text-muted-foreground/65">Thally team.</span>
-          </h1>
-          <p className="text-muted-foreground mx-auto mt-6 max-w-[54ch] text-lg leading-8 font-medium text-pretty sm:text-xl">
+    <div className="bg-canvas">
+      <header className="px-6 pt-20 pb-14 text-center sm:pb-16 md:pt-28">
+        <SplitReveal
+          as="h1"
+          mode="words"
+          onMount
+          stagger={0.4}
+          className="heading-hero text-canvas-foreground mx-auto max-w-[15ch]"
+        >
+          Talk to the Thally team.
+        </SplitReveal>
+        <Reveal delay={0.4} distance={24}>
+          <p className="text-canvas-muted mx-auto mt-6 max-w-[54ch] text-lg leading-8 text-pretty sm:text-xl">
             Tell us what you&apos;re building: migrating docs, planning to self-host, evaluating Enterprise SSO, or
             something else entirely. We usually reply within one business day.
           </p>
-        </div>
+        </Reveal>
       </header>
 
       <section aria-label="Contact the Thally team" className="px-6 pt-0 pb-20 sm:pb-24 lg:pb-32">
-        <div className="bg-card border-foreground/15 mx-auto grid max-w-[1060px] overflow-hidden rounded-[1.5rem] border min-[901px]:grid-cols-[1.5fr_1fr]">
-          <div className="min-h-[29rem] px-7 py-9 min-[901px]:px-14 min-[901px]:pt-[3.25rem] min-[901px]:pb-12 sm:p-12">
+        <div className="mx-auto grid max-w-[1160px] gap-10 min-[901px]:grid-cols-[1.5fr_1fr] min-[901px]:gap-14">
+          <Reveal className="border-canvas-card-stroke min-h-[29rem] rounded-[15px] border bg-white/10 px-7 py-9 backdrop-blur-xl min-[901px]:px-14 min-[901px]:pt-[3.25rem] min-[901px]:pb-12 sm:p-12">
             {isSent ? (
               <div
                 className="flex min-h-[23rem] flex-col items-center justify-center text-center"
                 aria-live="polite"
                 role="status"
               >
-                <span className="bg-chart-5/12 text-chart-5 flex size-11 items-center justify-center rounded-full">
+                <span className="bg-canvas-accent/15 text-canvas-accent flex size-11 items-center justify-center rounded-full">
                   <Check className="size-5" aria-hidden="true" />
                 </span>
-                <h2 className="mt-[1.125rem] text-xl font-semibold">Message sent.</h2>
-                <p className="text-muted-foreground mt-2 max-w-sm text-[0.94rem] leading-relaxed">
+                <h2 className="text-canvas-foreground mt-[1.125rem] text-xl font-semibold">Message sent.</h2>
+                <p className="text-canvas-muted mt-2 max-w-sm text-[0.94rem] leading-relaxed">
                   Thanks, we&apos;ll get back to you within one business day.
                   <br />A copy went to your email.
                 </p>
@@ -272,7 +274,7 @@ export default function Contact() {
                     <select
                       id="contact-topic"
                       name="topic"
-                      className={`${fieldClassName} cursor-pointer appearance-none pr-7`}
+                      className={`${fieldClassName} [&>option]:bg-canvas cursor-pointer appearance-none pr-7 [&>option]:text-white`}
                       defaultValue="Sales"
                     >
                       <option>Sales</option>
@@ -283,7 +285,7 @@ export default function Contact() {
                     </select>
                     <ChevronDown
                       aria-hidden="true"
-                      className="text-muted-foreground pointer-events-none absolute top-1 right-0 size-[0.9375rem]"
+                      className="text-canvas-muted pointer-events-none absolute top-1 right-0 size-[0.9375rem]"
                     />
                   </div>
                 </div>
@@ -333,53 +335,61 @@ export default function Contact() {
                 </div>
 
                 <div className="flex flex-col items-start gap-4 pt-0.5 sm:flex-row sm:items-center">
-                  <p className="text-muted-foreground text-sm">Goes straight to the people building Thally.</p>
-                  <Button type="submit" className="w-full sm:ml-auto sm:w-auto">
+                  <p className="text-canvas-muted-2 text-sm">Goes straight to the people building Thally.</p>
+                  <button
+                    type="submit"
+                    className="text-canvas inline-flex w-full items-center justify-center gap-2 rounded-lg bg-white px-6 py-3 font-medium transition-colors hover:bg-white/90 sm:ml-auto sm:w-auto"
+                  >
                     Send message
-                    <ArrowRight aria-hidden="true" />
-                  </Button>
+                    <ArrowRight aria-hidden="true" className="size-4" />
+                  </button>
                 </div>
               </form>
             )}
-          </div>
+          </Reveal>
 
-          <aside className="bg-muted/45 border-border flex flex-col border-t min-[901px]:border-t-0 min-[901px]:border-l">
-            <div className="border-border flex flex-1 flex-col justify-center border-b px-8 py-8 sm:px-10">
-              <p className={labelClassName}>Email us directly</p>
-              <Link
-                href={DESTINATIONS.email}
-                className="font-display hover:text-chart-5 focus-visible:outline-ring w-fit text-xl font-bold tracking-[-0.025em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-4"
+          <Reveal delay={0.35} className="flex">
+            <aside className="flex w-full flex-col gap-10 min-[901px]:pt-2">
+              <div>
+                <p className={labelClassName}>Email us directly</p>
+                <Link
+                  href={DESTINATIONS.email}
+                  className="font-display text-canvas-muted w-fit text-xl font-medium tracking-[-0.025em] transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                >
+                  team@thally.io
+                </Link>
+                <p className="text-canvas-muted-2 mt-2 text-sm leading-relaxed">Same people, same reply time.</p>
+              </div>
+
+              <div>
+                <p className={labelClassName}>Found a bug?</p>
+                <Link
+                  href={`${SOCIAL.github}/issues`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group text-canvas-muted flex w-fit items-center gap-2 text-[0.94rem] font-semibold transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                >
+                  Open an issue on GitHub
+                  <ArrowRight
+                    aria-hidden="true"
+                    className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
+                  />
+                </Link>
+                <p className="text-canvas-muted-2 mt-2 text-sm leading-relaxed">
+                  Issues and feature requests live in the open.
+                </p>
+              </div>
+
+              <div
+                className="border-canvas-hairline relative min-h-[10.625rem] flex-1 overflow-hidden rounded-[15px] border"
+                aria-label="Animated envelope illustration"
               >
-                team@thally.io
-              </Link>
-              <p className="text-muted-foreground mt-2 text-sm leading-relaxed">Same people, same reply time.</p>
-            </div>
-
-            <div className="border-border flex flex-1 flex-col justify-center border-b px-8 py-8 sm:px-10">
-              <p className={labelClassName}>Found a bug?</p>
-              <Link
-                href={`${SOCIAL.github}/issues`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group hover:text-chart-5 focus-visible:outline-ring flex w-fit items-center gap-2 text-[0.94rem] font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-4"
-              >
-                Open an issue on GitHub
-                <ArrowRight
-                  aria-hidden="true"
-                  className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5"
-                />
-              </Link>
-              <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
-                Issues and feature requests live in the open.
-              </p>
-            </div>
-
-            <div className="relative min-h-[10.625rem] flex-[1.25]" aria-label="Animated envelope illustration">
-              <EnvelopeScene />
-            </div>
-          </aside>
+                <EnvelopeScene />
+              </div>
+            </aside>
+          </Reveal>
         </div>
       </section>
-    </>
+    </div>
   );
 }

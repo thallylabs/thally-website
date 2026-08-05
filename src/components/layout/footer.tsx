@@ -1,9 +1,7 @@
 import { Github } from "lucide-react";
 import Link from "next/link";
 
-import { Logo } from "@/components/layout/logo";
-import { SectionGrid } from "@/components/section-decor";
-import { Button } from "@/components/ui/button";
+import { ThallyMark } from "@/components/layout/logo";
 import { DESTINATIONS, LEGAL_ENTITY_NAME, SOCIAL } from "@/lib/site";
 
 const navigation = [
@@ -45,68 +43,77 @@ const navigation = [
   },
 ];
 
-const socialLinks = [{ icon: Github, href: SOCIAL.github, label: "GitHub" }];
-
+/**
+ * Template footer: a charcoal rounded card floating over the night
+ * illustration, with a big tagline, link columns, and a giant wordmark.
+ */
 export const Footer = () => {
   return (
-    <footer className="bg-primary text-primary-foreground dark:bg-card dark:text-card-foreground dark:border-border relative overflow-hidden border-t border-transparent">
-      <SectionGrid className="[mask-image:linear-gradient(to_bottom,black,transparent)] opacity-10" />
+    <footer className="bg-canvas relative overflow-hidden pt-[120px]">
+      {/* Photographic backdrop */}
+      <div aria-hidden className="absolute inset-0 overflow-hidden rounded-[52px]">
+        <img src="/template/footer-1-1.webp" alt="" className="h-full w-full object-cover opacity-80" />
+      </div>
 
-      <div className="relative container">
-        <div className="border-primary-foreground/15 dark:border-border flex flex-col items-start gap-8 border-b py-14 md:flex-row md:items-end md:justify-between md:py-20">
-          <div className="flex flex-col items-start gap-10 md:gap-12">
-            <Logo
-              inverted
-              markClassName="size-7"
-              className="text-primary-foreground dark:text-foreground"
-            />
-            <h2 className="font-display max-w-md text-3xl leading-tight font-semibold tracking-tight text-balance md:text-4xl">
-              Every product change. Every knowledge surface. Automatically in sync.
-            </h2>
-          </div>
-          <Button asChild variant="secondary" size="lg">
-            <Link href={DESTINATIONS.signup}>Create your docs site</Link>
-          </Button>
-        </div>
+      <div className="relative mx-auto w-full max-w-[1480px] px-5 pb-2">
+        <div className="mb-6 rounded-[30px] bg-[#19181b] p-8 sm:p-14 lg:mt-[150px] lg:mb-10 lg:p-20">
+          <h2 className="heading-section max-w-3xl text-white">Docs that keep up with the product.</h2>
 
-        <nav className="border-primary-foreground/15 dark:border-border grid grid-cols-2 gap-y-10 border-b py-12 sm:grid-cols-4 md:py-16">
-          {navigation.map((section) => (
-            <div key={section.title}>
-              <h3 className="text-sm font-semibold tracking-wide uppercase opacity-70">{section.title}</h3>
-              <ul className="mt-5 space-y-3">
-                {section.links.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className="text-primary-foreground/80 hover:text-primary-foreground dark:text-muted-foreground dark:hover:text-foreground transition-colors"
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </nav>
-
-        <div className="flex flex-wrap items-center justify-between gap-4 py-8">
-          <p className="text-primary-foreground/60 dark:text-muted-foreground text-sm">
-            © {LEGAL_ENTITY_NAME}. Thally is a Fairspleet product. All rights reserved.
-          </p>
-          <div className="flex items-center gap-4">
-            {socialLinks.map((link) => (
-              <Link
-                aria-label={link.label}
-                key={link.href}
-                href={link.href}
+          <div className="mt-20 flex flex-col justify-between gap-12 lg:mt-28 lg:flex-row">
+            <div className="flex flex-col justify-end gap-5">
+              <a
+                href={SOCIAL.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10 dark:border-border dark:text-foreground dark:hover:bg-accent flex size-9 items-center justify-center rounded-full border transition-colors"
+                aria-label="GitHub"
+                className="flex size-10 items-center justify-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10"
               >
-                <link.icon className="size-4" />
-              </Link>
-            ))}
+                <Github className="size-5" />
+              </a>
+              <p className="max-w-xs text-sm text-[#afafaf]">
+                The open-source engine behind Thally Cloud is MIT licensed. Your content stays in your repository.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-10 sm:grid-cols-4 lg:gap-16">
+              {navigation.map((column) => (
+                <div key={column.title} className="flex flex-col gap-5">
+                  <p className="text-lg font-medium text-white">{column.title}</p>
+                  <ul className="flex flex-col gap-3.5">
+                    {column.links.map((link) => (
+                      <li key={link.name}>
+                        <Link
+                          href={link.href}
+                          className="text-[15px] text-[#afafaf] transition-colors hover:text-white"
+                        >
+                          {link.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
+
+          <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center">
+            <p className="text-sm text-[#afafaf]">
+              © {LEGAL_ENTITY_NAME}. Thally is a Fairspleet product. All rights reserved.
+            </p>
+            <p className="text-sm text-[#afafaf]">
+              <a href={DESTINATIONS.signup} className="text-white underline-offset-4 hover:underline">
+                Create your docs site
+              </a>
+            </p>
+          </div>
+        </div>
+
+        {/* Giant wordmark, template .footer-logo-block */}
+        <div aria-hidden className="pointer-events-none flex items-end justify-center gap-6 pb-4 select-none">
+          <ThallyMark inverted className="size-[clamp(3rem,10vw,9rem)] opacity-95" />
+          <span className="font-display text-[clamp(4rem,16vw,15rem)] leading-none font-semibold tracking-[-0.06em] text-white">
+            Thally
+          </span>
         </div>
       </div>
     </footer>

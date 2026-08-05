@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
 
-import { Automation } from "@/components/sections/automation";
-import { Dashboard } from "@/components/sections/dashboard";
+import { CTA } from "@/components/sections/cta";
+import { Daybreak } from "@/components/sections/daybreak";
 import { FAQ } from "@/components/sections/faq";
-import { Feature1 } from "@/components/sections/feature1";
-import { Feature2 } from "@/components/sections/feature2";
-import { Feature3 } from "@/components/sections/feature3";
+import { FeatureShowcase } from "@/components/sections/feature-showcase";
+import { Guarantees } from "@/components/sections/guarantees";
 import Hero from "@/components/sections/hero";
-import Logos from "@/components/sections/logos";
-import { Migrate } from "@/components/sections/migrate";
-import { NoLockIn } from "@/components/sections/no-lock-in";
-import Pricing from "@/components/sections/pricing";
+import { PipelineTabs } from "@/components/sections/pipeline-tabs";
+import { PricingCards } from "@/components/sections/pricing-cards";
+import { QuoteCard } from "@/components/sections/quote-card";
 import {
   SITE_NAME,
   SITE_TITLE,
@@ -107,18 +105,14 @@ export default function Home() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       <Hero />
-      <Logos />
-      <Automation />
-      <div className="mx-2.5 overflow-hidden rounded-4xl lg:mx-4">
-        <Feature2 />
-        <Feature3 />
-      </div>
-      <Migrate />
-      <Dashboard />
-      <Feature1 />
-      <NoLockIn />
-      <Pricing />
+      <FeatureShowcase />
+      <QuoteCard />
+      <Daybreak />
+      <PipelineTabs />
+      <Guarantees />
+      <PricingCards />
       <FAQ context="home" />
+      <CTA />
     </>
   );
 }

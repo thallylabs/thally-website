@@ -21,7 +21,15 @@ import { cn } from "@/lib/utils";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -86,103 +94,110 @@ const Navbar = () => {
     { label: "Contact", href: "/contact" },
   ];
 
-  const bgColor = "bg-popover";
-
   return (
-    <header className={cn("relative z-50 overflow-x-clip", bgColor)}>
-      <div className="max-w-9xl container">
-        <div className="flex items-center justify-between py-3">
-          {/* Logo */}
-          <Link href="/" aria-label="Thally home">
-            <Logo />
-          </Link>
-
-          {/* Desktop Navigation */}
-          <NavigationMenu className="hidden items-center lg:flex">
-            <NavigationMenuList className="gap-2">
-              {ITEMS.map((link) =>
-                link.dropdownItems ? (
-                  <NavigationMenuItem key={link.label}>
-                    <NavigationMenuTrigger className="text-foreground bg-transparent font-medium lg:text-base">
-                      {link.label}
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                      <ul className="grid w-[460px] grid-cols-2 gap-1 p-3">
-                        {link.dropdownItems.map((item) => (
-                          <li key={item.title}>
-                            <NavigationMenuLink asChild>
-                              <Link
-                                href={item.href}
-                                className="hover:bg-accent focus:bg-accent flex flex-row items-start gap-3 rounded-lg p-3 leading-none no-underline outline-hidden transition-colors select-none"
-                              >
-                                <span className="bg-primary/10 text-primary flex size-8 shrink-0 items-center justify-center rounded-md">
-                                  <item.icon className="size-4" />
-                                </span>
-                                <div className="space-y-1">
-                                  <div className="text-sm leading-none font-semibold">{item.title}</div>
-                                  <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
-                                    {item.description}
-                                  </p>
-                                </div>
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                ) : (
-                  <NavigationMenuItem key={link.label}>
-                    <Link
-                      href={link.href}
-                      className={cn(
-                        "text-foreground px-3 py-2 font-medium lg:text-base",
-                        pathname === link.href && "text-muted-foreground",
-                      )}
-                    >
-                      {link.label}
-                    </Link>
-                  </NavigationMenuItem>
-                ),
-              )}
-            </NavigationMenuList>
-          </NavigationMenu>
-
-          {/* Auth Buttons */}
-          <div className="flex items-center gap-2.5">
-            <Link href={DESTINATIONS.signup} className="hidden lg:block">
-              <Button variant="ghost" className="text-muted-foreground">
-                Create site
-              </Button>
-            </Link>
-            <Link
-              href={DESTINATIONS.login}
-              className={`transition-opacity duration-300 ${isMenuOpen ? "max-lg:pointer-events-none max-lg:opacity-0" : "opacity-100"}`}
-            >
-              <Button variant="outline">Log in</Button>
+    <header className="bg-canvas sticky top-0 z-50 overflow-x-clip pt-3 pb-1">
+      <div className="mx-auto w-full max-w-[1480px] px-2.5 sm:px-5">
+        <div
+          className={cn(
+            "border-canvas-hairline relative mx-auto rounded-2xl border shadow-[0_1px_0_0_rgba(255,255,255,0.04)_inset] backdrop-blur-xl transition-all duration-500",
+            isScrolled ? "max-w-5xl bg-[#19181b]/95" : "bg-canvas/80 max-w-full",
+          )}
+        >
+          <div className="flex items-center justify-between px-4 py-2.5 sm:px-5">
+            {/* Logo */}
+            <Link href="/" aria-label="Thally home" className="shrink-0">
+              <Logo inverted className="text-canvas-foreground" />
             </Link>
 
-            {/* Hamburger Menu Button (Mobile Only) */}
-            <button
-              className="text-muted-foreground relative flex size-8 lg:hidden"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <span className="sr-only">Open main menu</span>
-              <div className="absolute top-1/2 left-1/2 block w-[18px] -translate-x-1/2 -translate-y-1/2">
-                <span
-                  aria-hidden="true"
-                  className={`absolute block h-0.5 w-full rounded-full bg-current transition duration-500 ease-in-out ${isMenuOpen ? "rotate-45" : "-translate-y-1.5"}`}
-                ></span>
-                <span
-                  aria-hidden="true"
-                  className={`absolute block h-0.5 w-full rounded-full bg-current transition duration-500 ease-in-out ${isMenuOpen ? "opacity-0" : ""}`}
-                ></span>
-                <span
-                  aria-hidden="true"
-                  className={`absolute block h-0.5 w-full rounded-full bg-current transition duration-500 ease-in-out ${isMenuOpen ? "-rotate-45" : "translate-y-1.5"}`}
-                ></span>
-              </div>
-            </button>
+            {/* Desktop Navigation */}
+            <NavigationMenu className="absolute left-1/2 hidden -translate-x-1/2 items-center lg:flex">
+              <NavigationMenuList className="gap-1">
+                {ITEMS.map((link) =>
+                  link.dropdownItems ? (
+                    <NavigationMenuItem key={link.label}>
+                      <NavigationMenuTrigger className="text-canvas-muted hover:text-canvas-foreground data-[state=open]:text-canvas-foreground rounded-lg bg-transparent text-[15px] font-medium tracking-[-0.02em] hover:bg-white/5 focus:bg-white/5 data-[state=open]:bg-white/5">
+                        {link.label}
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent className="border-canvas-hairline bg-canvas text-canvas-foreground border">
+                        <ul className="grid w-[460px] grid-cols-2 gap-1 p-3">
+                          {link.dropdownItems.map((item) => (
+                            <li key={item.title}>
+                              <NavigationMenuLink asChild>
+                                <Link
+                                  href={item.href}
+                                  className="flex flex-row items-start gap-3 rounded-lg p-3 leading-none no-underline outline-hidden transition-colors select-none hover:bg-white/5 focus:bg-white/5"
+                                >
+                                  <span className="bg-canvas-accent/10 text-canvas-accent flex size-8 shrink-0 items-center justify-center rounded-md">
+                                    <item.icon className="size-4" />
+                                  </span>
+                                  <div className="space-y-1">
+                                    <div className="text-canvas-foreground text-sm leading-none font-semibold">
+                                      {item.title}
+                                    </div>
+                                    <p className="text-canvas-muted line-clamp-2 text-sm leading-snug">
+                                      {item.description}
+                                    </p>
+                                  </div>
+                                </Link>
+                              </NavigationMenuLink>
+                            </li>
+                          ))}
+                        </ul>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                  ) : (
+                    <NavigationMenuItem key={link.label}>
+                      <Link
+                        href={link.href}
+                        className={cn(
+                          "text-canvas-muted hover:text-canvas-foreground rounded-lg px-3 py-2 text-[15px] font-medium tracking-[-0.02em] transition-colors hover:bg-white/5",
+                          pathname === link.href && "text-canvas-foreground bg-white/8",
+                        )}
+                      >
+                        {link.label}
+                      </Link>
+                    </NavigationMenuItem>
+                  ),
+                )}
+              </NavigationMenuList>
+            </NavigationMenu>
+
+            {/* Auth Buttons */}
+            <div className="flex items-center gap-2">
+              <Link href={DESTINATIONS.login} className="hidden lg:block">
+                <Button variant="ghost" className="text-canvas-muted hover:text-canvas-foreground hover:bg-white/5">
+                  Log in
+                </Button>
+              </Link>
+              <Link
+                href={DESTINATIONS.signup}
+                className={`transition-opacity duration-300 ${isMenuOpen ? "max-lg:pointer-events-none max-lg:opacity-0" : "opacity-100"}`}
+              >
+                <Button className="btn-sheen text-canvas rounded-lg bg-white font-semibold">Get started</Button>
+              </Link>
+
+              {/* Hamburger Menu Button (Mobile Only) */}
+              <button
+                className="text-canvas-muted relative flex size-8 lg:hidden"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                <span className="sr-only">Open main menu</span>
+                <div className="absolute top-1/2 left-1/2 block w-[18px] -translate-x-1/2 -translate-y-1/2">
+                  <span
+                    aria-hidden="true"
+                    className={`absolute block h-0.5 w-full rounded-full bg-current transition duration-500 ease-in-out ${isMenuOpen ? "rotate-45" : "-translate-y-1.5"}`}
+                  ></span>
+                  <span
+                    aria-hidden="true"
+                    className={`absolute block h-0.5 w-full rounded-full bg-current transition duration-500 ease-in-out ${isMenuOpen ? "opacity-0" : ""}`}
+                  ></span>
+                  <span
+                    aria-hidden="true"
+                    className={`absolute block h-0.5 w-full rounded-full bg-current transition duration-500 ease-in-out ${isMenuOpen ? "-rotate-45" : "translate-y-1.5"}`}
+                  ></span>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -190,30 +205,33 @@ const Navbar = () => {
       {/* Mobile Menu Overlay */}
       <div
         className={cn(
-          "absolute inset-0 top-full container flex h-[calc(100vh-64px)] flex-col transition-all duration-300 ease-in-out lg:hidden",
+          "bg-canvas absolute inset-0 top-full flex h-[calc(100vh-64px)] flex-col px-5 transition-all duration-300 ease-in-out lg:hidden",
           isMenuOpen ? "visible translate-x-0 opacity-100" : "invisible translate-x-full opacity-0",
-          bgColor,
         )}
       >
         <div className="mt-8 space-y-2">
           <Link href={DESTINATIONS.signup} className="block" onClick={() => setIsMenuOpen(false)}>
-            <Button size="sm" className="w-full">
+            <Button size="sm" className="text-canvas w-full bg-white font-semibold hover:bg-white/90">
               Create your docs site
             </Button>
           </Link>
           <Link href={DESTINATIONS.login} className="block" onClick={() => setIsMenuOpen(false)}>
-            <Button size="sm" className="w-full" variant="outline">
+            <Button
+              size="sm"
+              className="border-canvas-stroke text-canvas-foreground w-full bg-transparent hover:bg-white/5"
+              variant="outline"
+            >
               Log in
             </Button>
           </Link>
         </div>
-        <nav className="mt-3 flex flex-1 flex-col gap-6">
+        <nav className="mt-3 flex flex-1 flex-col gap-6 overflow-y-auto pb-10">
           {ITEMS.map((link) =>
             link.dropdownItems ? (
               <div key={link.label}>
                 <button
                   onClick={() => setOpenDropdown(openDropdown === link.label ? null : link.label)}
-                  className="text-foreground flex w-full items-center justify-between text-lg tracking-[-0.36px]"
+                  className="text-canvas-foreground flex w-full items-center justify-between text-lg tracking-[-0.36px]"
                   aria-label={`${link.label} menu`}
                   aria-expanded={openDropdown === link.label}
                 >
@@ -229,18 +247,18 @@ const Navbar = () => {
                     <Link
                       key={item.title}
                       href={item.href}
-                      className="hover:bg-accent flex items-start gap-3 rounded-md p-2"
+                      className="flex items-start gap-3 rounded-md p-2 hover:bg-white/5"
                       onClick={() => {
                         setIsMenuOpen(false);
                         setOpenDropdown(null);
                       }}
                     >
-                      <span className="bg-primary/10 text-primary flex size-8 shrink-0 items-center justify-center rounded-md">
+                      <span className="bg-canvas-accent/10 text-canvas-accent flex size-8 shrink-0 items-center justify-center rounded-md">
                         <item.icon className="size-4" />
                       </span>
                       <div>
-                        <div className="text-foreground font-medium">{item.title}</div>
-                        <p className="text-muted-foreground text-sm">{item.description}</p>
+                        <div className="text-canvas-foreground font-medium">{item.title}</div>
+                        <p className="text-canvas-muted text-sm">{item.description}</p>
                       </div>
                     </Link>
                   ))}
@@ -251,8 +269,8 @@ const Navbar = () => {
                 key={link.label}
                 href={link.href}
                 className={cn(
-                  "text-foreground text-lg tracking-[-0.36px]",
-                  pathname === link.href && "text-muted-foreground",
+                  "text-canvas-foreground text-lg tracking-[-0.36px]",
+                  pathname === link.href && "text-canvas-muted",
                 )}
                 onClick={() => setIsMenuOpen(false)}
               >
