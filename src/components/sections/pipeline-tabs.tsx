@@ -98,15 +98,17 @@ export function PipelineTabs() {
                       >
                         {stage.title}
                       </h3>
-                      <p
-                        className={cn(
-                          "mt-1.5 text-sm leading-relaxed transition-all duration-300",
-                          active === i ? "text-canvas-muted max-h-24 opacity-100" : "max-h-0 overflow-hidden opacity-0",
-                          reduced && "max-h-24 opacity-100",
-                        )}
+                      <motion.div
+                        initial={false}
+                        animate={{
+                          height: active === i || reduced ? "auto" : 0,
+                          opacity: active === i || reduced ? 1 : 0,
+                        }}
+                        transition={{ duration: reduced ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] }}
+                        className="overflow-hidden"
                       >
-                        {stage.description}
-                      </p>
+                        <p className="text-canvas-muted mt-1.5 text-sm leading-relaxed">{stage.description}</p>
+                      </motion.div>
                     </div>
                   </div>
                 </button>
@@ -129,7 +131,7 @@ export function PipelineTabs() {
                   animate={{ opacity: active === i ? 1 : 0, y: active === i ? 0 : 24 }}
                   transition={{ duration: reduced ? 0 : 0.45, ease: [0.22, 1, 0.36, 1] }}
                   className={cn(
-                    "absolute inset-0 flex items-center justify-center p-6 sm:p-10",
+                    "absolute inset-0 flex transform-gpu items-center justify-center p-6 will-change-transform sm:p-10",
                     active !== i && "pointer-events-none",
                   )}
                 >
@@ -241,7 +243,7 @@ function StageVisual({ index }: { index: number }) {
 
 function Panel({ title, icon, children }: { title: string; icon: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div className="w-full max-w-md rounded-2xl border border-white/10 bg-black/45 p-5 backdrop-blur-xl">
+    <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0a0d13] p-5">
       <div className="mb-4 flex items-center gap-2">
         {icon}
         <span className="text-sm font-medium text-white/80">{title}</span>
