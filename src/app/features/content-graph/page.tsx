@@ -6,31 +6,30 @@
  */
 
 import type { Metadata } from "next";
-import Link from "next/link";
+import { SiCloudflare, SiGithub, SiMarkdown, SiNetlify, SiVercel } from "react-icons/si";
 
+import {
+  FeatureBanner,
+  PartnerStrip,
+  ProcessCards,
+  QuotePanels,
+} from "@/components/feature-template/feature-template";
 import type { ThallyIcon } from "@/components/icons";
 import {
-  Account,
-  ArrowRight,
   Check,
   Docs,
-  DualReader,
   GitBranch,
   Globe,
   Json,
-  Leaf,
   Mcp,
-  Negotiation,
-  RefreshCw,
   Search,
   Structured,
-  Terminal,
-  Trust,
 } from "@/components/icons";
-import { DESTINATIONS, SITE_URL } from "@/lib/site";
+import { Reveal } from "@/components/motion/reveal";
+import { SplitReveal } from "@/components/motion/split-reveal";
+import { SITE_URL } from "@/lib/site";
 
 import { FormatStudio, GraphExplorer } from "./content-graph-demo";
-import styles from "./content-graph-page.module.css";
 
 export const metadata: Metadata = {
   title: "Thally Content Graph: Write Once, Speak Every Format",
@@ -46,37 +45,12 @@ export const metadata: Metadata = {
   },
 };
 
-const contentSteps = [
-  {
-    label: "Step 01",
-    title: "Author in MDX",
-    description:
-      "Write prose, code samples, and components in one MDX file per page. Frontmatter names the concepts and product surfaces the page covers.",
-    icon: Structured,
-  },
-  {
-    label: "Step 02",
-    title: "Thally builds the graph",
-    description:
-      "Every page becomes a node, linked to the concepts it defines, the code it references, and the product repositories that back it.",
-    icon: Negotiation,
-  },
-  {
-    label: "Step 03",
-    title: "Publish to every reader",
-    description:
-      "One URL serves each reader the right format: rich HTML for people, Markdown and JSON for tools, llms.txt for agents. Same source, never out of step.",
-    icon: DualReader,
-  },
-] as const;
-
 const surfaceCards: {
   description: string;
   format: string;
   icon: ThallyIcon;
   title: string;
   who: string;
-  whoIcon: ThallyIcon;
 }[] = [
   {
     description: "Typeset pages with code highlighting, navigation, and search: the site your customers read.",
@@ -84,7 +58,6 @@ const surfaceCards: {
     icon: Globe,
     title: "Rendered HTML",
     who: "For people",
-    whoIcon: Account,
   },
   {
     description: "Portable Markdown for pull requests, changelogs, and anywhere plain text belongs.",
@@ -92,7 +65,6 @@ const surfaceCards: {
     icon: Docs,
     title: "Clean Markdown",
     who: "For editors",
-    whoIcon: Account,
   },
   {
     description: "Every block, concept reference, and piece of evidence as data, for pipelines and custom renderers.",
@@ -100,7 +72,6 @@ const surfaceCards: {
     icon: Json,
     title: "Structured JSON",
     who: "For tools",
-    whoIcon: Terminal,
   },
   {
     description: "A compact, machine-first projection that gives AI tools grounded, current context with sources.",
@@ -108,7 +79,6 @@ const surfaceCards: {
     icon: Mcp,
     title: "llms.txt",
     who: "For agents",
-    whoIcon: DualReader,
   },
   {
     description: "Concept-aware index built from the graph: results that understand what a page actually defines.",
@@ -116,7 +86,6 @@ const surfaceCards: {
     icon: Search,
     title: "Search index",
     who: "For search",
-    whoIcon: Terminal,
   },
   {
     description: "Each node carries the commit and symbol it describes, so every claim traces back to the product.",
@@ -124,22 +93,7 @@ const surfaceCards: {
     icon: GitBranch,
     title: "Evidence links",
     who: "Receipts",
-    whoIcon: Trust,
   },
-];
-
-const oldWayItems = [
-  "The HTML docs, the README, and the AI context drift apart the moment one changes.",
-  "Machine formats are hand-written afterthoughts, stale within a release.",
-  "A single fact lives in five places; correcting it means five edits and four mistakes.",
-  "No system knows which surfaces a product change should touch.",
-];
-
-const graphWayItems = [
-  "One MDX source is the truth; every format is derived, never duplicated.",
-  "HTML, Markdown, JSON, and llms.txt regenerate together on every change.",
-  "Fix a fact once; the graph propagates it to every connected surface.",
-  "The graph knows exactly which pages a product change affects.",
 ];
 
 const softwareJsonLd = {
@@ -156,202 +110,285 @@ const softwareJsonLd = {
   publisher: { "@id": `${SITE_URL}/#organization` },
 };
 
+/** Static source-to-surfaces board shown inside the banner's glass frame. */
+function ProjectionBoard() {
+  return (
+    <div className="grid gap-3 bg-[#07090d] p-5 sm:grid-cols-3 sm:p-8">
+      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+        <p className="text-[11px] tracking-wider text-white/45 uppercase">Source · docs/sdk</p>
+        <p className="mt-2 flex items-center gap-2 font-mono text-sm text-white/90">
+          <Structured className="text-canvas-accent size-4 shrink-0" />
+          sending-jobs.mdx
+        </p>
+        <div className="mt-3 rounded-lg bg-black/50 p-3 font-mono text-[11px] leading-5 text-white/60">
+          <p>title: Sending a job</p>
+          <p>surface: sdk</p>
+          <p>concepts: [client, timeout, retries]</p>
+        </div>
+        <span className="text-canvas-accent bg-canvas-accent/10 mt-4 inline-block rounded-full px-2.5 py-1 text-[11px] font-medium">
+          One MDX file per page
+        </span>
+      </div>
+      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+        <p className="text-[11px] tracking-wider text-white/45 uppercase">Content graph</p>
+        <div className="mt-2 space-y-2">
+          {[
+            ["concepts defined", "3 linked"],
+            ["code references", "2 linked"],
+            ["product repos", "1 linked"],
+          ].map(([edge, count]) => (
+            <div key={edge} className="flex items-center justify-between rounded-lg border border-white/10 px-3 py-2.5">
+              <span className="font-mono text-xs text-white/80">{edge}</span>
+              <span className="text-canvas-accent text-[11px] font-medium">{count}</span>
+            </div>
+          ))}
+        </div>
+        <p className="mt-3 text-xs text-white/50">Every page becomes a node in your product&apos;s graph</p>
+      </div>
+      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+        <p className="text-[11px] tracking-wider text-white/45 uppercase">Published surfaces</p>
+        <div className="mt-2 grid grid-cols-2 gap-2">
+          {["HTML", "Markdown", "JSON", "llms.txt", "Search index", "Evidence"].map((surface) => (
+            <p
+              key={surface}
+              className="flex items-center gap-1.5 rounded-lg border border-white/10 px-2.5 py-2 text-xs text-white/80"
+            >
+              <Check className="text-canvas-accent size-3.5 shrink-0" />
+              {surface}
+            </p>
+          ))}
+        </div>
+        <p className="mt-3 text-xs text-white/50">Same source, never out of step</p>
+      </div>
+    </div>
+  );
+}
+
+/** Small light mocks for the pastel process cards. */
+function AuthorVisual() {
+  return (
+    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
+      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">sending-jobs.mdx</p>
+      <div className="mt-3 space-y-2">
+        {["title: Sending a job", "surface: sdk", "concepts: [client, timeout]", "# Sending a job"].map((line) => (
+          <p key={line} className="rounded-lg bg-white/80 px-3 py-2.5 font-mono text-xs text-[#38332d]">
+            {line}
+          </p>
+        ))}
+      </div>
+      <p className="mt-3 text-center text-xs text-[#7c7b79]">Prose, code samples, and components in one file</p>
+    </div>
+  );
+}
+
+function GraphVisual() {
+  return (
+    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
+      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">One node, many edges</p>
+      <div className="mt-3 grid grid-cols-2 gap-2">
+        {["Concepts", "Code refs", "Product repos", "Surfaces"].map((item) => (
+          <p key={item} className="rounded-lg bg-white/80 px-3 py-3 text-center text-xs font-medium text-[#38332d]">
+            {item}
+          </p>
+        ))}
+      </div>
+      <p className="mt-3 text-center text-xs text-[#7c7b79]">Linked automatically on every build</p>
+    </div>
+  );
+}
+
+function PublishVisual() {
+  return (
+    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
+      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">One URL</p>
+      <div className="mt-3 rounded-lg bg-[#1c1a17] p-3 font-mono text-[11px] leading-5">
+        <p className="text-white/70">GET /sdk/sending-jobs</p>
+        <p className="text-[#c6f24e]">GET /sdk/sending-jobs.md</p>
+        <p className="text-[#c6f24e]">GET /sdk/sending-jobs.json</p>
+      </div>
+      <div className="mt-3 flex items-center justify-between text-xs text-[#38332d]">
+        <span className="font-medium">llms.txt for agents</span>
+        <span className="rounded-full bg-[#38332d] px-2 py-0.5 text-[11px] text-white">always in sync</span>
+      </div>
+    </div>
+  );
+}
+
 export default function ContentGraphFeaturePage() {
   return (
-    <div className={styles.page}>
+    <div className="bg-canvas">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }} />
 
-      <header className={styles.hero}>
-        <div aria-hidden="true" className={styles.heroGrid} />
-        <h1>
-          Write once. <span>Speak every format.</span>
-        </h1>
-        <p className={styles.heroDescription}>
-          Author your documentation once in MDX. Thally builds it into a graph of pages, concepts, and code, and every
-          published surface (the site, Markdown, JSON, llms.txt) is a projection of that one source. Change it once and
-          every reader sees the same truth.
-        </p>
-        <div className={styles.heroActions}>
-          <a className={`${styles.button} ${styles.primaryButton}`} href="#studio">
-            See it transform <ArrowRight />
-          </a>
-          <a className={styles.textLink} href="#graph">
-            Explore the graph <ArrowRight />
-          </a>
-        </div>
-        <div className={styles.surfaceStrip}>
-          <span className={styles.surfaceChip}>
-            <Structured /> page.mdx
-          </span>
-          <span aria-hidden="true" className={`${styles.surfaceChip} ${styles.surfaceChipArrow}`}>
-            <ArrowRight />
-          </span>
-          <span className={styles.surfaceChip}>
-            <Globe /> HTML
-          </span>
-          <span className={styles.surfaceChip}>
-            <Docs /> Markdown
-          </span>
-          <span className={styles.surfaceChip}>
-            <Json /> JSON
-          </span>
-          <span className={styles.surfaceChip}>
-            <Mcp /> llms.txt
-          </span>
-          <span className={styles.surfaceChip}>
-            <Terminal /> Search index
-          </span>
-        </div>
-      </header>
+      <FeatureBanner
+        title="Write once."
+        titleAccent="Speak every format."
+        description="Author your documentation once in MDX. Thally builds it into a graph of pages, concepts, and code, and every published surface (the site, Markdown, JSON, llms.txt) is a projection of that one source. Change it once and every reader sees the same truth."
+        primaryCta={{ label: "See it transform", href: "#studio" }}
+        secondaryCta={{ label: "Explore the graph", href: "#graph" }}
+      >
+        <ProjectionBoard />
+      </FeatureBanner>
 
-      <section className={`${styles.section} ${styles.sectionAlt}`} id="how">
-        <div className={styles.sectionHeading}>
-          <h2>One source. Many surfaces.</h2>
-          <p>
-            Documentation, SDK references, examples, and AI context usually live apart and drift apart. The Content
-            Graph makes them one thing: authored once, projected everywhere.
-          </p>
+      <div id="how">
+        <ProcessCards
+          title="One source. Many surfaces."
+          steps={[
+            {
+              label: "Author",
+              title: "Author in MDX",
+              subtitle: "Prose, code samples, and components in one MDX file per page.",
+              description:
+                "Write prose, code samples, and components in one MDX file per page. Frontmatter names the concepts and product surfaces the page covers.",
+              visual: <AuthorVisual />,
+            },
+            {
+              label: "Build",
+              title: "Thally builds the graph",
+              subtitle: "Every page becomes a node linked to concepts, code, and repositories.",
+              description:
+                "Every page becomes a node, linked to the concepts it defines, the code it references, and the product repositories that back it.",
+              visual: <GraphVisual />,
+            },
+            {
+              label: "Publish",
+              title: "Publish to every reader",
+              subtitle: "One URL serves each reader the right format, never out of step.",
+              description:
+                "One URL serves each reader the right format: rich HTML for people, Markdown and JSON for tools, llms.txt for agents. Same source, never out of step.",
+              visual: <PublishVisual />,
+            },
+          ]}
+        />
+      </div>
+
+      <QuotePanels
+        title="Author once. Let the graph do the rest."
+        media={
+          <div className="relative h-full min-h-[420px]">
+            <img
+              src="/images/admin-dashboard-1600.webp"
+              alt="Thally Cloud dashboard with the Content Graph"
+              className="absolute inset-0 h-full w-full object-cover object-left-top"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+            <p className="absolute bottom-6 left-8 text-lg font-medium text-white">
+              The Content Graph inside Thally Cloud
+            </p>
+          </div>
+        }
+        quote="One MDX source is the truth; every format is derived, never duplicated. Fix a fact once and the graph propagates it to every connected surface"
+        quoteAttribution="Write once, or maintain forever"
+        wideQuote="The graph is not another place to store knowledge; it is the pipeline that keeps every surface synchronized as your product evolves, so machines and humans always read the same thing"
+        wideAttribution="The product is the source of truth"
+      />
+
+      {/* Format studio demo */}
+      <section id="studio" className="bg-canvas pb-[120px]">
+        <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
+          <p className="text-canvas-accent text-sm font-medium tracking-widest uppercase">Live demo</p>
+          <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
+            One source, every format.
+          </SplitReveal>
+          <Reveal delay={0.15} distance={20}>
+            <p className="mt-5 text-lg text-[#afafaf]">
+              The left pane is a real page authored in MDX. Switch formats on the right to see exactly what each reader
+              receives: every projection generated from that one source, none of it hand-maintained.
+            </p>
+          </Reveal>
         </div>
-        <div className={styles.stepsGrid}>
-          {contentSteps.map((step) => {
-            const StepIcon = step.icon;
-            return (
-              <article className={styles.stepCard} key={step.label}>
-                <div className={styles.stepNumber}>{step.label}</div>
-                <span className={styles.stepIcon}>
-                  <StepIcon />
-                </span>
-                <h3>{step.title}</h3>
-                <p>{step.description}</p>
-              </article>
-            );
-          })}
+        <div className="mx-auto w-full max-w-[1180px] px-5">
+          <div className="rounded-[24px] border-[0.83px] border-white/16 bg-[#1c1b1d]/45 p-[13px] backdrop-blur-2xl">
+            <div className="overflow-hidden rounded-[14px]">
+              <FormatStudio />
+            </div>
+          </div>
         </div>
-        <aside className={styles.honestyPanel}>
-          <Leaf className={styles.honestyIcon} />
-          <p>
-            <strong>The product is the source of truth.</strong> The graph is not another place to store knowledge; it
-            is the pipeline that keeps every surface synchronized as your product evolves, so machines and humans always
-            read the same thing.
-          </p>
-        </aside>
       </section>
 
-      <section className={styles.section} id="studio">
-        <div className={styles.sectionHeading}>
-          <h2>One source, every format.</h2>
-          <p>
-            The left pane is a real page authored in MDX. Switch formats on the right to see exactly what each reader
-            receives: every projection generated from that one source, none of it hand-maintained.
+      {/* Graph explorer demo */}
+      <section id="graph" className="bg-canvas pb-[120px]">
+        <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
+          <p className="text-canvas-accent text-sm font-medium tracking-widest uppercase">Graph explorer</p>
+          <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
+            Your knowledge, as a graph.
+          </SplitReveal>
+          <Reveal delay={0.15} distance={20}>
+            <p className="mt-5 text-lg text-[#afafaf]">
+              Every page you write joins a graph unique to your product. Thally learns how one source connects to the
+              concepts it defines, the surfaces it publishes to, and the code that proves it, so a single change
+              ripples exactly where it should.
+            </p>
+          </Reveal>
+        </div>
+        <div className="mx-auto w-full max-w-[1180px] px-5">
+          <div className="rounded-[24px] border-[0.83px] border-white/16 bg-[#1c1b1d]/45 p-[13px] backdrop-blur-2xl">
+            <div className="overflow-hidden rounded-[14px]">
+              <GraphExplorer />
+            </div>
+          </div>
+          <p className="mx-auto mt-6 max-w-2xl text-center text-sm text-[#7c7b79]">
+            The graph gets sharper the longer it runs. Every accepted review, correction, and release teaches it more
+            about your product, so each change propagates more precisely than the last.
           </p>
         </div>
-        <FormatStudio />
       </section>
 
-      <section className={`${styles.section} ${styles.sectionAlt}`} id="graph">
-        <div className={styles.sectionHeading}>
-          <h2>Your knowledge, as a graph.</h2>
-          <p>
-            Every page you write joins a graph unique to your product. Thally learns how one source connects to the
-            concepts it defines, the surfaces it publishes to, and the code that proves it, so a single change ripples
-            exactly where it should.
-          </p>
+      {/* Surfaces hairline grid */}
+      <section id="surfaces" className="bg-canvas pb-[60px]">
+        <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
+          <p className="text-canvas-accent text-sm font-medium tracking-widest uppercase">Surfaces</p>
+          <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
+            Every reader gets their format.
+          </SplitReveal>
+          <Reveal delay={0.15} distance={20}>
+            <p className="mt-5 text-lg text-[#afafaf]">
+              Every URL in the Content Graph answers in the format its reader asks for. People get a rendered page;
+              tools and agents get clean structure from the same node, always in sync.
+            </p>
+          </Reveal>
         </div>
-        <GraphExplorer />
-        <aside className={styles.honestyPanel}>
-          <Leaf className={styles.honestyIcon} />
-          <p>
-            <strong>The graph gets sharper the longer it runs.</strong> Every accepted review, correction, and release
-            teaches it more about your product, so each change propagates more precisely than the last.
-          </p>
-        </aside>
-      </section>
-
-      <section className={styles.section} id="surfaces">
-        <div className={styles.sectionHeading}>
-          <h2>Every reader gets their format.</h2>
-          <p>
-            Every URL in the Content Graph answers in the format its reader asks for. People get a rendered page; tools
-            and agents get clean structure from the same node, always in sync.
-          </p>
-        </div>
-        <div className={styles.surfacesGrid}>
-          {surfaceCards.map((card) => {
-            const CardIcon = card.icon;
-            const WhoIcon = card.whoIcon;
-            return (
-              <article className={styles.surfaceCard} key={card.title}>
-                <div className={styles.surfaceHead}>
-                  <CardIcon />
-                  <b>{card.title}</b>
-                  <span className={styles.surfaceFormat}>{card.format}</span>
+        <div className="mx-auto w-full max-w-[1240px] px-5">
+          <Reveal distance={40}>
+            <div className="border-canvas-card-stroke grid overflow-hidden rounded-[32px] border sm:grid-cols-3">
+              {surfaceCards.map((card, i) => (
+                <div
+                  key={card.title}
+                  className={[
+                    "border-canvas-card-stroke flex flex-col items-center gap-4 px-8 py-11 text-center",
+                    (i + 1) % 3 !== 0 ? "sm:border-r" : "",
+                    i < 3 ? "sm:border-b" : "",
+                    i < 5 ? "max-sm:border-b" : "",
+                  ].join(" ")}
+                >
+                  <card.icon className="text-canvas-foreground size-7" />
+                  <div className="flex max-w-[305px] flex-col gap-1.5">
+                    <h3 className="text-canvas-foreground text-xl tracking-[-0.04em]">{card.title}</h3>
+                    <p className="font-mono text-xs text-white/45">{card.format}</p>
+                    <p className="text-canvas-muted text-[15px] leading-relaxed tracking-[-0.03em]">
+                      {card.description}
+                    </p>
+                  </div>
+                  <span className="text-canvas-accent bg-canvas-accent/10 rounded-full px-2.5 py-1 text-[11px] font-medium">
+                    {card.who}
+                  </span>
                 </div>
-                <p>{card.description}</p>
-                <span className={styles.surfaceWho}>
-                  <WhoIcon /> {card.who}
-                </span>
-              </article>
-            );
-          })}
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 
-      <section className={`${styles.section} ${styles.sectionAlt}`} id="why">
-        <div className={styles.sectionHeading}>
-          <h2>Write once, or maintain forever.</h2>
-          <p>
-            Keeping separate documents, references, and AI context in sync is work nobody owns. The graph makes that
-            work disappear.
-          </p>
-        </div>
-        <div className={styles.compare}>
-          <div className={`${styles.compareCol} ${styles.compareColBad}`}>
-            <div className={styles.compareHead}>
-              <div className={styles.compareLabel}>The old way</div>
-              <h3>Maintain many copies</h3>
-            </div>
-            <ul>
-              {oldWayItems.map((item) => (
-                <li key={item}>
-                  <RefreshCw /> {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className={`${styles.compareCol} ${styles.compareColGood}`}>
-            <div className={styles.compareHead}>
-              <div className={styles.compareLabel}>With Content Graph</div>
-              <h3>Write once, project everywhere</h3>
-            </div>
-            <ul>
-              {graphWayItems.map((item) => (
-                <li key={item}>
-                  <Check /> {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.section} id="start">
-        <div className={styles.ctaCard}>
-          <div aria-hidden="true" className={styles.ctaGrid} />
-          <h2>Author once. Let the graph do the rest.</h2>
-          <p>
-            Point Thally at your MDX and it becomes a living graph: published, in sync, and ready for the readers you
-            have today and the agents arriving tomorrow.
-          </p>
-          <div className={styles.ctaActions}>
-            <a className={`${styles.button} ${styles.primaryButton}`} href={DESTINATIONS.signup}>
-              Create your docs site <ArrowRight />
-            </a>
-            <Link className={styles.textLink} href="/features/track">
-              See how Track uses the graph <ArrowRight />
-            </Link>
-          </div>
-        </div>
-      </section>
+      <PartnerStrip
+        title="Ready for the readers you have today and the agents arriving tomorrow"
+        items={[
+          { name: "GitHub", icon: <SiGithub /> },
+          { name: "Markdown", icon: <SiMarkdown /> },
+          { name: "MCP", icon: <Mcp /> },
+          { name: "Vercel", icon: <SiVercel /> },
+          { name: "Netlify", icon: <SiNetlify /> },
+          { name: "Cloudflare", icon: <SiCloudflare /> },
+        ]}
+      />
     </div>
   );
 }
