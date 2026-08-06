@@ -270,17 +270,21 @@ function DashboardCollage() {
 const Hero = () => {
   return (
     <section className="bg-canvas px-2.5 pt-2 sm:px-5">
-      <div className="mx-auto grid w-full max-w-[1860px] gap-2.5 lg:grid-cols-[48fr_52fr]">
-        {/* Left card: headline over the night illustration */}
-        <div className="border-canvas-card-stroke relative flex min-h-[560px] flex-col justify-between overflow-hidden rounded-[35px] border p-6 sm:p-10 lg:min-h-[900px] lg:p-[70px]">
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-cover bg-[position:18%_100%]"
-            style={{ backgroundImage: "url(/template/background.webp)" }}
-          />
-          <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/85 via-black/45 to-black/10" />
+      {/* One continuous card: single illustration spanning both halves */}
+      <div className="border-canvas-card-stroke relative mx-auto min-h-[560px] w-full max-w-[1860px] overflow-hidden rounded-[35px] border lg:min-h-[900px]">
+        <div
+          aria-hidden
+          className="absolute inset-0 bg-cover bg-[position:50%_72%]"
+          style={{ backgroundImage: "url(/template/background.webp)" }}
+        />
+        {/* Legibility washes: darker toward the headline side and base */}
+        <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/25 to-black/20" />
+        <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
 
-          <div className="relative max-w-[560px]">
+        <div className="relative grid min-h-[inherit] lg:grid-cols-[48fr_52fr]">
+          {/* Left: headline, capture form, trusted marquee */}
+          <div className="flex flex-col justify-between p-6 sm:p-10 lg:p-[70px]">
+            <div className="max-w-[560px]">
             <SplitReveal as="h1" mode="words" onMount className="heading-hero text-white" stagger={0.4}>
               Every product change. Every knowledge surface. Automatically in sync.
             </SplitReveal>
@@ -309,15 +313,10 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Right card: illustration with the dashboard collage */}
-        <div className="border-canvas-card-stroke relative hidden min-h-[900px] overflow-hidden rounded-[35px] border lg:block">
-          <div
-            aria-hidden
-            className="absolute inset-0 bg-cover bg-[position:82%_38%]"
-            style={{ backgroundImage: "url(/template/background.webp)" }}
-          />
-          <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/45 via-transparent to-black/30" />
-          <DashboardCollage />
+          {/* Right: the dashboard collage over the shared scene */}
+          <div className="relative hidden lg:block">
+            <DashboardCollage />
+          </div>
         </div>
       </div>
     </section>
