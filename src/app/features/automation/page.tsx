@@ -1,7 +1,7 @@
 /**
  * Public Thally Automation product page.
  *
- * Distinct architecture on the shared Sireny design language: glass
+ * Distinct architecture on the shared marketing design language: glass
  * banner with a merge-to-draft board, click-driven setup tabs, the
  * interactive pipeline and trigger demos, a marquee activity log, a
  * without/with split on the template art, and the partner strip.

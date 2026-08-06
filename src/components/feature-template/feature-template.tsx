@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Shared feature-page building blocks ported from the Sireny template's
+ * Shared feature-page building blocks for the marketing design system:
  * feature.html: the banner with a glass-framed visual that tilts in on
  * scroll under a drifting comet, the sticky-stacking pastel process
  * cards with their numbered rail, the growth/quote panels, and the

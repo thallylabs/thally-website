@@ -1,7 +1,7 @@
 /**
  * Public Thally Agent Layer product page.
  *
- * Distinct architecture on the shared Sireny design language: glass banner
+ * Distinct architecture on the shared marketing design language: glass banner
  * with an agent Q&A board, a machine-surfaces bento (two large template-art
  * cards plus a hairline 2x2 grid), a light grounded-vs-ungrounded band, the
  * interactive Q&A demo, and the partner strip.
