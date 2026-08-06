@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Thally Leaf-Fall Background</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      /* The engine paints here. Keep it fixed, full-viewport, behind your content. */
+      #scene {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        display: block;
+      }
+      /* Your auth form / content goes above it: */
+      .content {
+        position: relative;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="scene" aria-hidden="true"></canvas>
+
+    <!-- Your auth UI lives here, above the canvas -->
+    <div class="content"><!-- <YourAuthForm /> --></div>
+
+    <!-- Load order matters: leaf data first, engine second -->
+    <script src="leaf-path.js"></script>
+    <script src="tree.js"></script>
+  </body>
+</html>
