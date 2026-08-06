@@ -262,6 +262,26 @@
     @apply py-20 md:py-28 lg:py-[120px];
   }
 
+  /* Template .linear-text: white-to-blue gradient display type. */
+  .linear-text {
+    background-image: linear-gradient(#fff 46%, #8bc0ff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow:
+      0 3.9px 10.4px rgba(0, 0, 0, 0.15),
+      0 2.6px 2.6px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Template .hero-subtitle: Inter Tight 40px/1.2, -0.04em, weight 400. */
+  .subtitle-display {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 2.8vw, 2.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+    font-weight: 400;
+  }
+
   /* Template button hover: an iridescent panel wipes up under the label
      (.button-secondary-hover-bg, 700ms outCirc). */
   .btn-sheen {
