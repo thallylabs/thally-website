@@ -39,7 +39,7 @@ export function LeafTree({ className }: { className?: string }) {
       aria-hidden
       className={className}
       onLoad={() => syncScene(isReducedMotion)}
-      src="/auth-tree/background-only.html"
+      src="/auth-tree/background-only.html?v=2"
       tabIndex={-1}
       title="Decorative olive tree animation"
     />
