@@ -2,7 +2,6 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
-import { useState } from "react";
 import type { IconType } from "react-icons";
 import {
   SiClaude,
@@ -52,43 +51,23 @@ function AgentMarquee() {
   );
 }
 
-/** Email-capture pill matching the template form: glass input + white button. */
-function CaptureForm() {
-  const [email, setEmail] = useState("");
-
+/** Hero CTA pair: primary signup plus the live Track demo. */
+function HeroCtas() {
   return (
-    <form
-      className="relative"
-      onSubmit={(event) => {
-        event.preventDefault();
-        const target = new URL(DESTINATIONS.signup);
-        if (email) target.searchParams.set("email", email);
-        window.location.href = target.toString();
-      }}
-    >
-      <input
-        type="email"
-        value={email}
-        onChange={(event) => setEmail(event.target.value)}
-        placeholder="Type your work email"
-        aria-label="Work email"
-        className="min-h-[76px] w-full rounded-[15px] border border-white/15 bg-white/15 pr-[220px] pl-4 text-white backdrop-blur-2xl placeholder:text-white/70 focus:border-white focus:outline-none max-sm:pr-4"
-      />
-      <div className="absolute inset-y-0 right-0 flex p-2 max-sm:hidden">
-        <button
-          type="submit"
-          className="btn-sheen text-canvas flex items-center rounded-lg bg-white px-5 text-lg font-medium"
-        >
-          Create your docs site
-        </button>
-      </div>
-      <button
-        type="submit"
-        className="btn-sheen text-canvas mt-2 w-full rounded-lg bg-white px-5 py-3 text-lg font-medium sm:hidden"
+    <div className="flex flex-col gap-3 sm:flex-row">
+      <a
+        href={DESTINATIONS.signup}
+        className="btn-sheen text-canvas inline-flex items-center justify-center rounded-lg bg-white px-7 py-3.5 text-lg font-medium"
       >
-        Create your docs site
-      </button>
-    </form>
+        Get Started
+      </a>
+      <Link
+        href="/features/track#demo"
+        className="btn-sheen inline-flex items-center justify-center rounded-lg border border-[#606060] px-7 py-3.5 text-lg font-medium text-white"
+      >
+        Try Thally
+      </Link>
+    </div>
   );
 }
 
@@ -292,15 +271,7 @@ const Hero = () => {
             <Reveal delay={0.5} distance={30} className="mt-6">
               <p className="text-xl tracking-[-0.04em] text-white">Docs that keep up with the product</p>
               <div className="mt-5">
-                <CaptureForm />
-              </div>
-              <div className="mt-3">
-                <Link
-                  href="/features/track"
-                  className="text-sm font-medium text-white/60 underline-offset-4 transition-colors hover:text-white hover:underline"
-                >
-                  See how Thally works
-                </Link>
+                <HeroCtas />
               </div>
             </Reveal>
           </div>

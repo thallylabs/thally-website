@@ -314,8 +314,8 @@
     font-weight: 400;
   }
 
-  /* Template button hover: an iridescent panel wipes up under the label
-     (.button-secondary-hover-bg, 700ms outCirc). */
+  /* Button hover: a Thally olive-to-lime panel wipes up under the
+     label (template mechanics, 700ms outCirc, brand colors). */
   .btn-sheen {
     position: relative;
     overflow: hidden;
@@ -328,10 +328,7 @@
     inset: 0;
     z-index: -1;
     border-radius: inherit;
-    mix-blend-mode: hard-light;
-    background-image: url("/template/primary-button.webp");
-    background-size: cover;
-    background-position: 50%;
+    background-image: linear-gradient(135deg, #737938, #9aa35a 45%, #c6e278);
     transform: translateY(100%);
     transition: transform 0.7s cubic-bezier(0, 0.55, 0.45, 1);
   }
