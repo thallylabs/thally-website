@@ -31,12 +31,14 @@ export function LeafTree({ className }: { className?: string }) {
   }, []);
 
   return (
+    // No sandbox: sandboxed frames composite on an opaque backdrop, and
+    // the scene must stay transparent over the card art. First-party
+    // static content, so isolation is not load-bearing here.
     <iframe
       ref={frameRef}
       aria-hidden
       className={className}
       onLoad={() => syncScene(isReducedMotion)}
-      sandbox="allow-scripts"
       src="/auth-tree/background-only.html"
       tabIndex={-1}
       title="Decorative olive tree animation"

@@ -54,26 +54,41 @@ export function FeatureShowcase() {
 
       <div className="mx-auto w-full max-w-[1480px] px-5 pb-[120px]">
         <div className="flex flex-col gap-2.5">
-          {/* Two large showcase cards: the Thally Cloud tree scenes */}
+          {/* Two large showcase cards: the template art with the Thally
+              Cloud tree scenes layered on top */}
           <div className="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
-            <Reveal className="relative min-h-[520px] overflow-hidden rounded-[32px] border-[0.5px] border-black/10 bg-[#f4f4e7] sm:min-h-[640px]">
+            <Reveal
+              className="relative min-h-[520px] overflow-hidden rounded-[32px] border-[0.5px] sm:min-h-[640px]"
+              style={{
+                borderColor: "rgba(234,236,237,0.23)",
+                backgroundImage: "url(/template/card-bg-1.webp)",
+                backgroundSize: "100% 100%",
+                backgroundRepeat: "no-repeat",
+              }}
+            >
               <GrowingTree className="absolute inset-0 h-full w-full" />
-              <p className="subtitle-display absolute inset-x-6 bottom-10 mx-auto max-w-[500px] text-center text-[#1c1a17]">
+              <p className="subtitle-display absolute inset-x-6 bottom-10 mx-auto max-w-[500px] text-center text-white">
                 Write once.
                 <br />
-                <span className="text-[#737938]">Thally creates every format.</span>
+                <span className="linear-text">Thally creates every format.</span>
               </p>
             </Reveal>
 
             <Reveal
               delay={0.3}
-              className="relative min-h-[520px] overflow-hidden rounded-[32px] border-[0.5px] border-black/10 bg-[#f4f4e7] sm:min-h-[640px]"
+              className="relative min-h-[520px] overflow-hidden rounded-[32px] border-[0.5px] sm:min-h-[640px]"
+              style={{
+                borderColor: "rgba(234,236,237,0.23)",
+                backgroundImage: "url(/template/text-container-1.webp)",
+                backgroundSize: "100% 100%",
+                backgroundRepeat: "no-repeat",
+              }}
             >
               <LeafTree className="pointer-events-none absolute inset-0 h-full w-full border-0" />
-              <p className="subtitle-display absolute inset-x-6 bottom-10 mx-auto max-w-[420px] text-center text-[#1c1a17]">
+              <p className="subtitle-display absolute inset-x-6 bottom-10 mx-auto max-w-[420px] text-center text-white">
                 Answers with receipts.
                 <br />
-                <span className="text-[#737938]">Grounded chat cites your docs.</span>
+                <span className="linear-text">Grounded chat cites your docs.</span>
               </p>
             </Reveal>
           </div>

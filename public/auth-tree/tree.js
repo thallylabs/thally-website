@@ -17,15 +17,15 @@
     fallRate: 1, // how often leaves detach
     maxResting: 64, // leaves allowed on the ground before oldest fade
     palette: [
-      "#737938",
-      "#868c46",
-      "#5f6630",
-      "#7c8a3f",
-      "#69712f",
-      "#909a52",
       "#9aa35a",
+      "#aebb6a",
+      "#8a9448",
+      "#b7c46f",
+      "#7c8a3f",
+      "#c3d06e",
+      "#a5b061",
     ],
-    bark: ["#4c4c33", "#3c3d28"],
+    bark: ["#8a8f5a", "#6e7342"],
   };
 
   // ---- Utils --------------------------------------------------------------
@@ -289,17 +289,13 @@
 
   function draw(t) {
     const wind = windAt(t);
-    // background wash
-    const g = ctx.createLinearGradient(0, 0, 0, H);
-    g.addColorStop(0, "#fdfdf6");
-    g.addColorStop(1, "#f2f2e4");
-    ctx.fillStyle = g;
-    ctx.fillRect(0, 0, W, H);
+    // transparent background: the host card art shows through
+    ctx.clearRect(0, 0, W, H);
 
     // soft ground shadow band
     const gg = ctx.createLinearGradient(0, groundY - 30, 0, groundY + 40);
-    gg.addColorStop(0, "rgba(80,84,50,0)");
-    gg.addColorStop(1, "rgba(80,84,50,0.10)");
+    gg.addColorStop(0, "rgba(198,226,120,0)");
+    gg.addColorStop(1, "rgba(198,226,120,0.10)");
     ctx.fillStyle = gg;
     ctx.fillRect(0, groundY - 30, W, 70);
 

@@ -26,13 +26,14 @@ export function GrowingTree({ className }: { className?: string }) {
       className={className}
       style={
         {
-          "--chart-1": "#9aa35a",
-          "--chart-2": "#737938",
-          "--chart-4": "#868c46",
-          "--chart-5": "#4a8a5c",
-          "--muted-foreground": "#5a5f38",
-          "--border": "rgba(90, 95, 56, 0.2)",
-          "--foreground": "#2f3120",
+          // Brightened olives so the scene reads on the dark card art.
+          "--chart-1": "#c3d06e",
+          "--chart-2": "#9aa35a",
+          "--chart-4": "#aebb6a",
+          "--chart-5": "#7fae74",
+          "--muted-foreground": "#8a8f5a",
+          "--border": "rgba(174, 187, 106, 0.25)",
+          "--foreground": "#c6e278",
         } as React.CSSProperties
       }
     />
