@@ -1,11 +1,12 @@
 "use client";
 
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 import { Cloud, GitPullRequest, Mcp, Overview, Structured, Track } from "@/components/icons";
-import { Logo } from "@/components/layout/logo";
+import { ThallyMark } from "@/components/layout/logo";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -21,15 +22,28 @@ import { cn } from "@/lib/utils";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
   const pathname = usePathname();
+  const reduced = useReducedMotion();
+
+  // Template "Header Scroll" (a-52): the pill contracts continuously
+  // with scroll position until it reaches its persistent width, while
+  // the background fades to #19181b and the wordmark collapses.
+  const { scrollY } = useScroll();
+  const pillWidth = useTransform(scrollY, [0, 520], ["100%", "75%"]);
+  const pillBg = useTransform(scrollY, [0, 520], ["rgba(25, 24, 27, 0)", "rgba(25, 24, 27, 0.97)"]);
+  const wordmarkOpacity = useTransform(scrollY, [0, 380], [1, 0]);
+  const wordmarkWidth = useTransform(scrollY, [0, 380], ["3.4rem", "0rem"]);
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const query = window.matchMedia("(min-width: 1024px)");
+    const update = () => setIsDesktop(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
   }, []);
+
+  const scrub = isDesktop && !reduced;
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -97,16 +111,23 @@ const Navbar = () => {
   return (
     <header className="bg-canvas sticky top-0 z-50 overflow-x-clip pt-3 pb-1">
       <div className="mx-auto w-full max-w-[1480px] px-2.5 sm:px-5">
-        <div
+        <motion.div
+          style={scrub ? { width: pillWidth, backgroundColor: pillBg } : undefined}
           className={cn(
-            "border-canvas-hairline relative mx-auto rounded-2xl border shadow-[0_1px_0_0_rgba(255,255,255,0.04)_inset] backdrop-blur-xl transition-all duration-500",
-            isScrolled ? "max-w-5xl bg-[#19181b]/95" : "bg-canvas/80 max-w-full",
+            "border-canvas-hairline relative mx-auto min-w-[860px] rounded-2xl border shadow-[0_1px_0_0_rgba(255,255,255,0.04)_inset] backdrop-blur-xl max-lg:w-full",
+            !scrub && "bg-canvas/80",
           )}
         >
           <div className="flex items-center justify-between px-4 py-2.5 sm:px-5">
             {/* Logo */}
-            <Link href="/" aria-label="Thally home" className="shrink-0">
-              <Logo inverted className="text-canvas-foreground" />
+            <Link href="/" aria-label="Thally home" className="flex shrink-0 items-center gap-2">
+              <ThallyMark inverted />
+              <motion.span
+                style={scrub ? { opacity: wordmarkOpacity, width: wordmarkWidth } : undefined}
+                className="font-display overflow-hidden text-xl font-semibold tracking-tight whitespace-nowrap text-white"
+              >
+                Thally
+              </motion.span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -199,7 +220,7 @@ const Navbar = () => {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* Mobile Menu Overlay */}
