@@ -290,7 +290,6 @@ export default function TrackFeaturePage() {
       {/* Live demo */}
       <section id="demo" className="bg-canvas pb-[120px]">
         <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
-          <p className="text-canvas-accent text-sm font-medium tracking-widest uppercase">Live demo</p>
           <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
             Try Track right now.
           </SplitReveal>

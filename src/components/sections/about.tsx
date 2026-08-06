@@ -40,9 +40,6 @@ const About = () => {
       <section className="px-2.5 pt-20 sm:px-5 md:pt-28">
         <div className="mx-auto w-full max-w-[1480px]">
           <div className="mx-auto max-w-4xl text-center">
-            <Reveal delay={0} distance={16} blur={false}>
-              <p className="text-canvas-accent text-sm font-semibold tracking-widest uppercase">About Thally</p>
-            </Reveal>
             <SplitReveal
               as="h1"
               mode="words"
@@ -180,9 +177,6 @@ const About = () => {
             {/* Closing card */}
             <Reveal className="border-canvas-card-stroke rounded-[32px] border bg-white/[0.04] p-8 backdrop-blur-sm md:p-14">
               <div className="max-w-2xl">
-                <p className="text-canvas-accent text-sm font-semibold tracking-widest uppercase">
-                  Who is behind Thally
-                </p>
                 <h2 className="heading-card text-canvas-foreground mt-4">
                   Thally is built and operated by Fairspleet LLC.
                 </h2>

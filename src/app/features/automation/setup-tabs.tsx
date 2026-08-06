@@ -46,7 +46,6 @@ export function SetupTabs() {
       {/* Centered section header with hairline divider */}
       <div className="mb-[60px] border-b border-white/18 pb-[60px]">
         <div className="mx-auto max-w-[746px] px-5 text-center">
-          <p className="text-canvas-accent text-sm font-medium tracking-widest uppercase">How it works</p>
           <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
             Set it up once. It runs on every merge.
           </SplitReveal>

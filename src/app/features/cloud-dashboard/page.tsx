@@ -158,7 +158,6 @@ export default function CloudDashboardFeaturePage() {
       <section id="manage" className="bg-canvas pt-[120px]">
         <div className="mb-[60px] border-b border-white/18 pb-[60px]">
           <div className="mx-auto max-w-[746px] px-5 text-center">
-            <p className="text-canvas-accent text-sm font-medium tracking-widest uppercase">What you can manage</p>
             <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
               The whole pipeline, under your control.
             </SplitReveal>
@@ -266,7 +265,6 @@ export default function CloudDashboardFeaturePage() {
       {/* Interactive dashboard demo */}
       <section id="dash" className="bg-canvas pb-[120px]">
         <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
-          <p className="text-canvas-accent text-sm font-medium tracking-widest uppercase">Interactive demo</p>
           <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
             One view of everything Thally does.
           </SplitReveal>

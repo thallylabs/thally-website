@@ -272,7 +272,6 @@ export default function AutomationFeaturePage() {
       {/* Live merge simulation */}
       <section id="loop" className="bg-canvas pb-[120px]">
         <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
-          <p className="text-canvas-accent text-sm font-medium tracking-widest uppercase">Live simulation</p>
           <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
             From merge to draft PR, automatically.
           </SplitReveal>
@@ -382,7 +381,7 @@ export default function AutomationFeaturePage() {
             }}
           >
             <div>
-              <p className="text-canvas-accent text-[11px] tracking-wider uppercase">With Automation</p>
+              <p className="text-[11px] tracking-wider text-white/60 uppercase">With Automation</p>
               <ul className="mt-5 space-y-3">
                 {withAutomation.map((item) => (
                   <li key={item} className="flex gap-2.5 text-[15px] leading-relaxed tracking-[-0.03em] text-white/85">

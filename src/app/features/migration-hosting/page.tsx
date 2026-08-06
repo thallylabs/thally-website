@@ -176,7 +176,6 @@ export default function MigrationHostingFeaturePage() {
       {/* Comparison table */}
       <section id="compare" className="bg-canvas pt-[120px] pb-[120px]">
         <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
-          <p className="text-canvas-accent text-sm font-medium tracking-widest uppercase">Compare</p>
           <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
             The usual migration, or an import.
           </SplitReveal>
@@ -230,7 +229,6 @@ export default function MigrationHostingFeaturePage() {
       {/* Migration console demo */}
       <section id="migrate" className="bg-canvas pb-[120px]">
         <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
-          <p className="text-canvas-accent text-sm font-medium tracking-widest uppercase">Live demo</p>
           <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
             Pick a source. Watch it go live.
           </SplitReveal>
@@ -253,7 +251,6 @@ export default function MigrationHostingFeaturePage() {
       {/* Hosting hairline grid */}
       <section id="hosting" className="bg-canvas pb-[60px]">
         <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
-          <p className="text-canvas-accent text-sm font-medium tracking-widest uppercase">Hosting</p>
           <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
             Everything a docs site needs, built in.
           </SplitReveal>
