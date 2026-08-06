@@ -3,7 +3,7 @@
 import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "motion/react";
 import { useRef, useState } from "react";
 
-import { Check, GitBranch, GitPullRequest, Structured, Track } from "@/components/icons";
+import { GitBranch, GitPullRequest, Structured, Track } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
 import { cn } from "@/lib/utils";
@@ -191,108 +191,14 @@ export function PipelineTabs() {
 }
 
 function StageVisual({ index }: { index: number }) {
-  if (index === 0) {
-    return (
-      <Panel title="Connected repositories" icon={<GitBranch className="text-canvas-accent size-4" />}>
-        {["acme/api", "acme/web-app", "acme/docs"].map((repo, i) => (
-          <div
-            key={repo}
-            className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3.5"
-          >
-            <span className="font-mono text-sm text-white/85">{repo}</span>
-            <span className="flex items-center gap-1.5 text-xs text-white/50">
-              <Check className="text-canvas-accent size-3.5" />
-              {i === 2 ? "docs target" : "watching"}
-            </span>
-          </div>
-        ))}
-        <p className="px-1 text-xs text-white/45">Read-only access. You choose exactly what Thally can see.</p>
-      </Panel>
-    );
-  }
-
-  if (index === 1) {
-    return (
-      <Panel title="Impact analysis" icon={<Track className="text-canvas-accent size-4" />}>
-        <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
-          <p className="text-xs text-white/50">Merged · acme/api</p>
-          <p className="mt-1 font-mono text-sm text-white/85">feat: per-project webhook secrets #517</p>
-        </div>
-        <div aria-hidden className="mx-auto h-5 w-px bg-gradient-to-b from-white/30 to-transparent" />
-        <div className="space-y-2">
-          {[
-            ["guides/webhooks.mdx", "update needed"],
-            ["api/projects.mdx", "update needed"],
-            ["guides/quickstart.mdx", "no change"],
-          ].map(([page, verdict]) => (
-            <div
-              key={page}
-              className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3"
-            >
-              <span className="font-mono text-xs text-white/75">{page}</span>
-              <span
-                className={cn(
-                  "rounded-full px-2 py-0.5 text-[11px] font-medium",
-                  verdict === "no change" ? "bg-white/8 text-white/50" : "bg-canvas-accent/15 text-canvas-accent",
-                )}
-              >
-                {verdict}
-              </span>
-            </div>
-          ))}
-        </div>
-      </Panel>
-    );
-  }
-
-  if (index === 2) {
-    return (
-      <Panel title="Drafted docs PR" icon={<GitPullRequest className="text-canvas-accent size-4" />}>
-        <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
-          <p className="font-mono text-sm text-white/85">docs: document per-project webhook secrets</p>
-          <p className="mt-1 text-xs text-white/50">Drafted by Thally · labeled origin: track</p>
-        </div>
-        <div className="rounded-xl border border-white/10 bg-black/40 p-4 font-mono text-xs leading-6">
-          <p className="text-red-300/70">- Webhook secrets are shared across projects.</p>
-          <p className="text-canvas-accent">+ Each project now has its own webhook secret.</p>
-          <p className="text-canvas-accent">+ Rotate secrets from Project Settings.</p>
-        </div>
-        <p className="px-1 text-xs text-white/45">Updated 2 pages, added 1 · every line backed by the diff</p>
-      </Panel>
-    );
-  }
-
+  const src = `/template/automate-image-0${index + 1}.webp`;
   return (
-    <Panel title="Awaiting your review" icon={<Structured className="text-canvas-accent size-4" />}>
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3.5">
-        <div className="flex items-center justify-between">
-          <p className="font-mono text-sm text-white/85">docs#84 · webhook secrets</p>
-          <span className="bg-canvas-accent/15 text-canvas-accent rounded-full px-2 py-0.5 text-[11px] font-medium">
-            Open, awaiting review
-          </span>
-        </div>
-      </div>
-      <div className="flex gap-2">
-        <span className="bg-canvas-accent text-canvas flex-1 rounded-xl px-4 py-3 text-center text-sm font-semibold">
-          Approve &amp; merge
-        </span>
-        <span className="flex-1 rounded-xl border border-white/15 px-4 py-3 text-center text-sm font-medium text-white/70">
-          Request changes
-        </span>
-      </div>
-      <p className="px-1 text-xs text-white/45">Nothing publishes until a human approves it.</p>
-    </Panel>
-  );
-}
-
-function Panel({ title, icon, children }: { title: string; icon: React.ReactNode; children: React.ReactNode }) {
-  return (
-    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#0a0d13] p-6">
-      <div className="mb-4 flex items-center gap-2">
-        {icon}
-        <span className="text-sm font-medium text-white/80">{title}</span>
-      </div>
-      <div className="space-y-2.5">{children}</div>
-    </div>
+    <img
+      src={src}
+      alt=""
+      aria-hidden
+      className="w-full max-w-[500px]"
+      loading={index === 0 ? "eager" : "lazy"}
+    />
   );
 }
