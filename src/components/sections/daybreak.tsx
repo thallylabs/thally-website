@@ -64,8 +64,6 @@ export function Daybreak() {
         </motion.div>
       </div>
 
-      {/* Cushion: the full-bleed image holds the screen alone here */}
-      <div aria-hidden className="h-[75vh]" />
 
       {/* The original migration section on a light token island, kept
           transparent so it rides directly on the pinned pastel scene. */}
