@@ -9,13 +9,13 @@ import type { Metadata } from "next";
 import { SiCloudflare, SiGithub, SiMarkdown, SiNetlify, SiVercel } from "react-icons/si";
 
 import {
+  BannerBoard,
   FeatureBanner,
   PartnerStrip,
   QuotePanels,
 } from "@/components/feature-template/feature-template";
 import type { ThallyIcon } from "@/components/icons";
 import {
-  Check,
   Docs,
   GitBranch,
   Globe,
@@ -109,57 +109,119 @@ const softwareJsonLd = {
   publisher: { "@id": `${SITE_URL}/#organization` },
 };
 
-/** Static source-to-surfaces board shown inside the banner's glass frame. */
+/** Dense source-to-surfaces board shown inside the banner's glass frame. */
 function ProjectionBoard() {
   return (
-    <div className="grid gap-3 bg-[#07090d] p-5 sm:grid-cols-3 sm:p-8">
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-        <p className="text-[11px] tracking-wider text-white/45 uppercase">Source · docs/sdk</p>
-        <p className="mt-2 flex items-center gap-2 font-mono text-sm text-white/90">
-          <Structured className="text-canvas-accent size-4 shrink-0" />
-          sending-jobs.mdx
-        </p>
-        <div className="mt-3 rounded-lg bg-black/50 p-3 font-mono text-[11px] leading-5 text-white/60">
-          <p>title: Sending a job</p>
-          <p>surface: sdk</p>
-          <p>concepts: [client, timeout, retries]</p>
-        </div>
-        <span className="text-canvas-accent bg-canvas-accent/10 mt-4 inline-block rounded-full px-2.5 py-1 text-[11px] font-medium">
-          One MDX file per page
-        </span>
-      </div>
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-        <p className="text-[11px] tracking-wider text-white/45 uppercase">Content graph</p>
-        <div className="mt-2 space-y-2">
-          {[
-            ["concepts defined", "3 linked"],
-            ["code references", "2 linked"],
-            ["product repos", "1 linked"],
-          ].map(([edge, count]) => (
-            <div key={edge} className="flex items-center justify-between rounded-lg border border-white/10 px-3 py-2.5">
-              <span className="font-mono text-xs text-white/80">{edge}</span>
-              <span className="text-canvas-accent text-[11px] font-medium">{count}</span>
-            </div>
-          ))}
-        </div>
-        <p className="mt-3 text-xs text-white/50">Every page becomes a node in your product&apos;s graph</p>
-      </div>
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-        <p className="text-[11px] tracking-wider text-white/45 uppercase">Published surfaces</p>
-        <div className="mt-2 grid grid-cols-2 gap-2">
-          {["HTML", "Markdown", "JSON", "llms.txt", "Search index", "Evidence"].map((surface) => (
-            <p
-              key={surface}
-              className="flex items-center gap-1.5 rounded-lg border border-white/10 px-2.5 py-2 text-xs text-white/80"
-            >
-              <Check className="text-canvas-accent size-3.5 shrink-0" />
-              {surface}
-            </p>
-          ))}
-        </div>
-        <p className="mt-3 text-xs text-white/50">Same source, never out of step</p>
-      </div>
-    </div>
+    <BannerBoard
+      columns={[
+        [
+          { kind: "summary", progress: 76, avatars: 4, links: 9, comments: 2 },
+          {
+            kind: "task",
+            chips: [
+              { label: "Source", tone: "purple" },
+              { label: "docs/sdk", tone: "kind" },
+            ],
+            id: "MDX",
+            title: "guides/quickstart.mdx",
+            desc: "title: Quickstart · concepts: [client, timeout, retries]",
+            mono: true,
+            avatars: 2,
+            links: 3,
+            comments: 4,
+          },
+          { kind: "filler", h: 120 },
+        ],
+        [
+          {
+            kind: "visual",
+            chips: [
+              { label: "Build", tone: "high" },
+              { label: "Graph", tone: "purple" },
+            ],
+            id: "G-114",
+            icon: <Structured className="text-canvas-accent size-9" />,
+            title: "Typed content graph",
+            desc: "Pages, concepts, and code linked as one graph.",
+          },
+          {
+            kind: "task",
+            chips: [
+              { label: "Linked", tone: "med" },
+              { label: "Concepts", tone: "kind" },
+            ],
+            title: "3 concepts · 2 code refs",
+            desc: "Every page becomes a node in your product's graph.",
+            progress: 60,
+            avatars: 3,
+            links: 2,
+            comments: 3,
+          },
+          { kind: "filler", h: 140 },
+        ],
+        [
+          {
+            kind: "checklist",
+            chips: [
+              { label: "Published", tone: "low" },
+              { label: "Surfaces", tone: "kind" },
+            ],
+            id: "P-208",
+            title: "Projected to every surface",
+            desc: "Same source, never out of step",
+            items: [
+              { label: "Rendered HTML", done: true },
+              { label: "Clean Markdown", done: true },
+              { label: "Structured JSON", done: true },
+              { label: "llms.txt", done: true },
+            ],
+          },
+          { kind: "filler", h: 110 },
+          {
+            kind: "task",
+            chips: [
+              { label: "Index", tone: "med" },
+              { label: "Search", tone: "kind" },
+            ],
+            title: "Search index rebuilt",
+            desc: "Concept-aware results built from the graph.",
+            avatars: 2,
+            links: 1,
+          },
+        ],
+        [
+          {
+            kind: "task",
+            chips: [
+              { label: "Receipts", tone: "high" },
+              { label: "Evidence", tone: "kind" },
+            ],
+            id: "E-410",
+            title: "evidence: bono@a1f9c2",
+            desc: "Each node carries the commit and symbol it describes.",
+            mono: true,
+            progress: 100,
+            avatars: 3,
+            links: 5,
+            comments: 1,
+          },
+          {
+            kind: "task",
+            chips: [
+              { label: "Agents", tone: "purple" },
+              { label: "llms.txt", tone: "kind" },
+            ],
+            title: "/llms.txt",
+            desc: "Compact, machine-first projection with sources.",
+            mono: true,
+            avatars: 2,
+            links: 2,
+            comments: 2,
+          },
+          { kind: "filler", h: 130 },
+        ],
+      ]}
+    />
   );
 }
 

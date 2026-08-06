@@ -11,8 +11,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiClaude, SiCursor, SiGithubcopilot, SiGooglegemini, SiPerplexity, SiWindsurf } from "react-icons/si";
 
-import { FeatureBanner, PartnerStrip } from "@/components/feature-template/feature-template";
-import { ArrowRight, Check, GitBranch, Json, Lock, RefreshCw } from "@/components/icons";
+import { BannerBoard, FeatureBanner, PartnerStrip } from "@/components/feature-template/feature-template";
+import { ArrowRight, Check, GitBranch, Json, Lock, Mcp, RefreshCw } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
 import { DESTINATIONS, SITE_URL } from "@/lib/site";
@@ -90,51 +90,118 @@ const groundedPoints = [
   "You control what's exposed and can revoke it anytime.",
 ] as const;
 
-/** Static agent Q&A board shown inside the banner's glass frame. */
+/** Dense agent Q&A board shown inside the banner's glass frame. */
 function AgentBoard() {
   return (
-    <div className="grid gap-3 bg-[#07090d] p-5 sm:grid-cols-3 sm:p-8">
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-        <p className="text-[11px] tracking-wider text-white/45 uppercase">Agent asks</p>
-        <p className="mt-2 font-mono text-sm text-white/90">What&apos;s the default request timeout?</p>
-        <p className="mt-3 text-xs leading-relaxed text-white/50">
-          MCP tools: search · fetch, called from inside the editor or assistant
-        </p>
-        <span className="text-canvas-accent bg-canvas-accent/10 mt-4 inline-block rounded-full px-2.5 py-1 text-[11px] font-medium">
-          No scraping, no stale copies
-        </span>
-      </div>
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-        <p className="text-[11px] tracking-wider text-white/45 uppercase">Retrieved from your docs</p>
-        <div className="mt-2 space-y-2">
-          {[
-            ["/sdk/configuration", "bono@a1f9c2"],
-            ["/guides/long-running-jobs", "bono@a1f9c2"],
-          ].map(([page, evidence]) => (
-            <div key={page} className="flex items-center justify-between rounded-lg border border-white/10 px-3 py-2.5">
-              <span className="font-mono text-xs text-white/80">{page}</span>
-              <span className="text-canvas-accent text-[11px] font-medium">{evidence}</span>
-            </div>
-          ))}
-        </div>
-        <p className="mt-3 text-xs text-white/50">Regenerated on every product change</p>
-      </div>
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-        <p className="text-[11px] tracking-wider text-white/45 uppercase">Answer, with receipts</p>
-        <p className="mt-2 text-sm leading-relaxed text-white/90">
-          The client waits 60 seconds before aborting a request by default.{" "}
-          <span className="text-canvas-accent font-mono text-xs">[1]</span>
-        </p>
-        <div className="mt-3 rounded-lg bg-black/50 p-3 font-mono text-[11px] leading-5">
-          <p className="text-white/70">[1] /sdk/configuration</p>
-          <p className="text-canvas-accent">evidence: bono@a1f9c2</p>
-        </div>
-        <p className="mt-3 flex items-center gap-1.5 text-xs text-white/50">
-          <Check className="text-canvas-accent size-3.5" />
-          Grounded, never guessed
-        </p>
-      </div>
-    </div>
+    <BannerBoard
+      columns={[
+        [
+          { kind: "summary", progress: 64, avatars: 4, links: 7, comments: 3 },
+          {
+            kind: "task",
+            chips: [
+              { label: "Question", tone: "high" },
+              { label: "MCP", tone: "kind" },
+            ],
+            id: "Q-114",
+            title: "What's the default request timeout?",
+            desc: "MCP tools: search · fetch, called from inside the editor",
+            avatars: 2,
+            links: 1,
+            comments: 6,
+          },
+          { kind: "filler", h: 120 },
+        ],
+        [
+          {
+            kind: "visual",
+            chips: [
+              { label: "Live", tone: "low" },
+              { label: "MCP", tone: "purple" },
+            ],
+            id: "S-201",
+            icon: <Mcp className="text-canvas-accent size-9" />,
+            title: "MCP endpoint connected",
+            desc: "search() and fetch(): no scraping, no stale copies.",
+          },
+          {
+            kind: "task",
+            chips: [
+              { label: "Retrieved", tone: "med" },
+              { label: "SDK", tone: "kind" },
+            ],
+            title: "/sdk/configuration",
+            desc: "evidence: bono@a1f9c2 · ranked by relevance",
+            mono: true,
+            progress: 96,
+            avatars: 3,
+            links: 1,
+            comments: 2,
+          },
+          { kind: "filler", h: 140 },
+        ],
+        [
+          {
+            kind: "checklist",
+            chips: [
+              { label: "Answer", tone: "high" },
+              { label: "Cited", tone: "kind" },
+            ],
+            id: "A-117",
+            title: "60 seconds before aborting",
+            desc: "Grounded, never guessed",
+            items: [
+              { label: "[1] /sdk/configuration evidence", done: true },
+              { label: "[2] /guides/long-running-jobs evidence", done: true },
+              { label: "Freshness checked against updated-at" },
+            ],
+          },
+          { kind: "filler", h: 110 },
+          {
+            kind: "task",
+            chips: [
+              { label: "Retrieved", tone: "med" },
+              { label: "Guides", tone: "kind" },
+            ],
+            title: "/guides/long-running-jobs",
+            desc: "evidence: bono@a1f9c2",
+            mono: true,
+            avatars: 2,
+          },
+        ],
+        [
+          {
+            kind: "task",
+            chips: [
+              { label: "Fresh", tone: "low" },
+              { label: "updated-at", tone: "kind" },
+            ],
+            id: "F-301",
+            title: "Freshness signals",
+            desc: "Regenerated on every product change, so agents prefer current facts.",
+            progress: 100,
+            avatars: 3,
+            links: 4,
+            comments: 1,
+          },
+          {
+            kind: "task",
+            chips: [
+              { label: "Scoped", tone: "purple" },
+              { label: "per-surface", tone: "kind" },
+            ],
+            id: "F-302",
+            title: "Scoped access",
+            desc: "Granular, revocable, read-only surfaces.",
+            progress: 80,
+            avatars: 2,
+            links: 2,
+            comments: 2,
+          },
+          { kind: "filler", h: 130 },
+        ],
+      ]}
+    />
   );
 }
 

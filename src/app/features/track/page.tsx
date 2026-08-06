@@ -9,6 +9,7 @@ import type { Metadata } from "next";
 import { SiCloudflare, SiDocker, SiGithub, SiMarkdown, SiNetlify, SiVercel } from "react-icons/si";
 
 import {
+  BannerBoard,
   FeatureBanner,
   PartnerStrip,
   ProcessCards,
@@ -50,58 +51,119 @@ const softwareJsonLd = {
   publisher: { "@id": `${SITE_URL}/#organization` },
 };
 
-/** Static impact-analysis board shown inside the banner's glass frame. */
+/** Dense impact-analysis board shown inside the banner's glass frame. */
 function ImpactBoard() {
   return (
-    <div className="grid gap-3 bg-[#07090d] p-5 sm:grid-cols-3 sm:p-8">
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-        <p className="text-[11px] tracking-wider text-white/45 uppercase">Merged · acme/api</p>
-        <p className="mt-2 font-mono text-sm text-white/90">feat: per-project webhook secrets #517</p>
-        <p className="mt-3 text-xs leading-relaxed text-white/50">
-          12 files changed · public surface: 2 endpoints, 1 config schema
-        </p>
-        <span className="text-canvas-accent bg-canvas-accent/10 mt-4 inline-block rounded-full px-2.5 py-1 text-[11px] font-medium">
-          Bounded change
-        </span>
-      </div>
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-        <p className="text-[11px] tracking-wider text-white/45 uppercase">Affected knowledge</p>
-        <div className="mt-2 space-y-2">
-          {[
-            ["guides/webhooks.mdx", "0.94"],
-            ["api/projects.mdx", "0.87"],
-            ["guides/quickstart.mdx", "no change"],
-          ].map(([page, score]) => (
-            <div key={page} className="flex items-center justify-between rounded-lg border border-white/10 px-3 py-2.5">
-              <span className="font-mono text-xs text-white/80">{page}</span>
-              <span
-                className={
-                  score === "no change" ? "text-[11px] text-white/40" : "text-canvas-accent text-[11px] font-medium"
-                }
-              >
-                {score}
-              </span>
-            </div>
-          ))}
-        </div>
-        <p className="mt-3 text-xs text-white/50">Confidence backed by specific diffs</p>
-      </div>
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-        <p className="text-[11px] tracking-wider text-white/45 uppercase">Drafted for review</p>
-        <p className="mt-2 flex items-center gap-2 font-mono text-sm text-white/90">
-          <GitPullRequest className="text-canvas-accent size-4 shrink-0" />
-          docs: per-project webhook secrets
-        </p>
-        <div className="mt-3 rounded-lg bg-black/50 p-3 font-mono text-[11px] leading-5">
-          <p className="text-red-300/70">- Secrets are shared across projects.</p>
-          <p className="text-canvas-accent">+ Each project has its own secret.</p>
-        </div>
-        <p className="mt-3 flex items-center gap-1.5 text-xs text-white/50">
-          <Check className="text-canvas-accent size-3.5" />
-          Human review before anything ships
-        </p>
-      </div>
-    </div>
+    <BannerBoard
+      columns={[
+        [
+          { kind: "summary", progress: 72, avatars: 4, links: 8, comments: 3 },
+          {
+            kind: "task",
+            chips: [
+              { label: "Merged", tone: "low" },
+              { label: "acme/api", tone: "kind" },
+            ],
+            id: "#517",
+            title: "feat: per-project webhook secrets",
+            desc: "12 files changed · public surface: 2 endpoints, 1 config schema",
+            mono: true,
+            avatars: 2,
+            links: 2,
+            comments: 5,
+          },
+          { kind: "filler", h: 120 },
+        ],
+        [
+          {
+            kind: "visual",
+            chips: [
+              { label: "High", tone: "high" },
+              { label: "Analysis", tone: "purple" },
+            ],
+            id: "T-101",
+            icon: <GitPullRequest className="text-canvas-accent size-9" />,
+            title: "Impact analysis",
+            desc: "Track maps the bounded change to affected knowledge.",
+          },
+          {
+            kind: "task",
+            chips: [
+              { label: "Affected", tone: "med" },
+              { label: "Guides", tone: "kind" },
+            ],
+            title: "guides/webhooks.mdx",
+            desc: "Confidence 0.94, backed by specific diffs.",
+            mono: true,
+            progress: 94,
+            avatars: 3,
+            links: 1,
+            comments: 4,
+          },
+          { kind: "filler", h: 140 },
+        ],
+        [
+          {
+            kind: "checklist",
+            chips: [
+              { label: "High", tone: "high" },
+              { label: "Docs PR", tone: "kind" },
+            ],
+            id: "#292",
+            title: "docs: per-project webhook secrets",
+            desc: "Opened by thally-bot · needs 1 review",
+            items: [
+              { label: "guides/webhooks.mdx updated", done: true },
+              { label: "api/projects.mdx updated", done: true },
+              { label: "Changelog entry drafted" },
+            ],
+          },
+          { kind: "filler", h: 110 },
+          {
+            kind: "task",
+            chips: [
+              { label: "No change", tone: "kind" },
+              { label: "Guides", tone: "kind" },
+            ],
+            title: "guides/quickstart.mdx",
+            desc: "Evidence says nothing to update here.",
+            mono: true,
+            avatars: 2,
+          },
+        ],
+        [
+          {
+            kind: "task",
+            chips: [
+              { label: "Review", tone: "low" },
+              { label: "Human", tone: "kind" },
+            ],
+            id: "T-204",
+            title: "Approve and merge",
+            desc: "Human review before anything ships.",
+            progress: 90,
+            avatars: 4,
+            links: 6,
+            comments: 2,
+          },
+          {
+            kind: "task",
+            chips: [
+              { label: "Medium", tone: "med" },
+              { label: "API", tone: "kind" },
+            ],
+            title: "api/projects.mdx",
+            desc: "Confidence 0.87, endpoint params changed.",
+            mono: true,
+            progress: 87,
+            avatars: 3,
+            links: 2,
+            comments: 3,
+          },
+          { kind: "filler", h: 130 },
+        ],
+      ]}
+    />
   );
 }
 
