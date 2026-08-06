@@ -9,13 +9,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiClaude, SiCursor, SiGithub, SiGithubcopilot, SiGooglegemini, SiPerplexity } from "react-icons/si";
 
-import {
-  FeatureBanner,
-  PartnerStrip,
-  ProcessCards,
-  QuotePanels,
-} from "@/components/feature-template/feature-template";
-import { ArrowRight, Billing, Check, Mcp, Overview, Sites, Team, Track } from "@/components/icons";
+import { FeatureBanner, PartnerStrip } from "@/components/feature-template/feature-template";
+import { ArrowRight, Billing, Mcp, Overview, Sites, Team, Track } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
 import { DESTINATIONS, SITE_URL } from "@/lib/site";
@@ -52,21 +47,12 @@ const softwareJsonLd = {
   publisher: { "@id": `${SITE_URL}/#organization` },
 };
 
+/** The four small bento cells; Drafts and Analytics graduate to the large cards. */
 const manageCells = [
   {
     body: "Create, configure, and monitor every documentation site: builds, domains, and deploy status at a glance.",
     icon: Sites,
     title: "Sites",
-  },
-  {
-    body: "Every change Thally proposes, queued with evidence. Approve, edit, or dismiss. You decide what ships.",
-    icon: Track,
-    title: "Drafts",
-  },
-  {
-    body: "See what readers and agents actually reach, including the share of traffic that comes from AI tools.",
-    icon: Overview,
-    title: "Analytics",
   },
   {
     body: "Manage your MCP endpoint and llms.txt, track agent-readiness, and scope exactly what AI can read.",
@@ -85,39 +71,15 @@ const manageCells = [
   },
 ] as const;
 
-/** Live activity feed mock for the first pastel process card. */
-function ActivityVisual() {
+/** Large-card mock: the drafts queue with review actions. */
+function DraftsQueueVisual() {
   return (
-    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
-      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">Recent activity</p>
-      <div className="mt-3 space-y-2">
-        {[
-          ["Drafted", "docs: default timeout is now 60s", "2m"],
-          ["Published", "docs: document TimeoutError", "4m"],
-          ["Deployed", "jahce.thally.site", "1h"],
-          ["Refreshed", "llms.txt", "1h"],
-        ].map(([verb, target, time]) => (
-          <div
-            key={target}
-            className="flex items-center justify-between gap-3 rounded-lg bg-white/80 px-3 py-2.5 text-xs text-[#38332d]"
-          >
-            <span className="truncate">
-              {verb} <span className="font-mono">{target}</span>
-            </span>
-            <span className="shrink-0 text-[#7c7b79]">{time}</span>
-          </div>
-        ))}
+    <div className="mx-auto w-full max-w-lg rounded-2xl border border-white/12 bg-black/45 p-5">
+      <div className="flex items-center gap-2.5">
+        <Track className="text-canvas-accent size-5" />
+        <span className="text-sm text-white/75">Awaiting your review</span>
       </div>
-    </div>
-  );
-}
-
-/** Drafts queue mock for the second pastel process card. */
-function QueueVisual() {
-  return (
-    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
-      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">Awaiting your review</p>
-      <div className="mt-3 space-y-2">
+      <div className="mt-4 space-y-2">
         {[
           ["docs: default timeout is now 60s", "high"],
           ["docs: document TimeoutError class", "high"],
@@ -125,50 +87,48 @@ function QueueVisual() {
         ].map(([title, confidence]) => (
           <div
             key={title}
-            className="flex items-center justify-between gap-3 rounded-lg bg-white/80 px-3 py-2.5 text-xs text-[#38332d]"
+            className="flex items-center justify-between gap-3 rounded-lg bg-white/6 px-3 py-2.5 text-xs text-white/85"
           >
             <span className="truncate font-mono">{title}</span>
-            <span className="shrink-0 rounded-full bg-[#38332d]/10 px-2 py-0.5 text-[11px] font-medium">
+            <span className="shrink-0 rounded-full border border-white/12 px-2 py-0.5 text-[11px] font-medium text-white/55">
               {confidence}
             </span>
           </div>
         ))}
       </div>
-      <div className="mt-3 flex items-center gap-2 text-[11px] font-medium">
-        <span className="rounded-full bg-[#38332d] px-2.5 py-1 text-white">Approve</span>
-        <span className="rounded-full border border-[#38332d]/25 px-2.5 py-1 text-[#38332d]">Edit</span>
-        <span className="rounded-full border border-[#38332d]/25 px-2.5 py-1 text-[#38332d]">Dismiss</span>
+      <div className="mt-4 flex items-center gap-2 text-[11px] font-medium">
+        <span className="text-canvas rounded-full bg-white px-2.5 py-1">Approve</span>
+        <span className="rounded-full border border-white/15 px-2.5 py-1 text-white/70">Edit</span>
+        <span className="rounded-full border border-white/15 px-2.5 py-1 text-white/70">Dismiss</span>
       </div>
     </div>
   );
 }
 
-/** Agent-context scopes mock for the third pastel process card. */
-function ScopesVisual() {
+/** Large-card mock: reader and agent analytics stat tiles. */
+function AnalyticsVisual() {
   return (
-    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
-      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">Agent context</p>
-      <div className="mt-3 space-y-2">
+    <div className="mx-auto w-full max-w-md rounded-2xl border border-white/12 bg-black/45 p-5">
+      <div className="flex items-center gap-2.5">
+        <Overview className="text-canvas-accent size-5" />
+        <span className="text-sm text-white/75">Last 30 days</span>
+      </div>
+      <div className="mt-4 grid grid-cols-2 gap-2">
         {[
-          ["MCP endpoint", "Live"],
-          ["llms.txt · 128 pages", "Live"],
-          ["Maintainers approve drafts", "4 members"],
-        ].map(([item, status]) => (
-          <div
-            key={item}
-            className="flex items-center justify-between gap-3 rounded-lg bg-white/80 px-3 py-2.5 text-xs text-[#38332d]"
-          >
-            <span className="flex items-center gap-2 truncate">
-              <Check className="size-3.5 shrink-0 text-[#38332d]" />
-              {item}
-            </span>
-            <span className="shrink-0 text-[11px] font-medium text-[#7c7b79]">{status}</span>
+          ["12.4k", "Pages read"],
+          ["38%", "Traffic from AI tools"],
+          ["1.8k", "Answers served"],
+          ["96%", "Grounded citations"],
+        ].map(([value, label]) => (
+          <div key={label} className="rounded-xl bg-white/6 px-3.5 py-3">
+            <p className="font-display text-xl font-semibold tracking-tight text-white">{value}</p>
+            <p className="mt-0.5 text-[11px] text-white/55">{label}</p>
           </div>
         ))}
       </div>
-      <div className="mt-3 flex items-center justify-between text-xs text-[#38332d]">
-        <span className="font-medium">Agent-readiness</span>
-        <span className="rounded-full bg-[#38332d] px-2 py-0.5 text-[11px] text-white">82 · Good</span>
+      <div className="mt-3 flex items-center justify-between rounded-lg bg-white/6 px-3 py-2.5 text-xs">
+        <span className="truncate font-mono text-white/85">/guides/quickstart</span>
+        <span className="shrink-0 text-[11px] font-medium text-white/55">Top page</span>
       </div>
     </div>
   );
@@ -194,93 +154,114 @@ export default function CloudDashboardFeaturePage() {
         />
       </FeatureBanner>
 
-      <ProcessCards
-        title="See what changed. Review what's queued. Control who reads what."
-        steps={[
-          {
-            label: "See",
-            title: "See what changed",
-            subtitle: "A live feed of everything Thally noticed and drafted.",
-            description:
-              "Monitor every documentation site with builds, domains, and deploy status at a glance, and see what readers and agents actually reach, including the share of traffic that comes from AI tools.",
-            visual: <ActivityVisual />,
-          },
-          {
-            label: "Review",
-            title: "Review what's queued",
-            subtitle: "Every change Thally proposes, queued with evidence.",
-            description:
-              "Approve, edit, or dismiss. You decide what ships. Pending reviews are front and center, assigned to real people, so nothing slips because it was nobody's default view.",
-            visual: <QueueVisual />,
-          },
-          {
-            label: "Control",
-            title: "Control who reads what",
-            subtitle: "Agent-readiness and scopes are explicit and controllable.",
-            description:
-              "Manage your MCP endpoint and llms.txt, scope exactly what AI can read, then invite editors and maintainers and decide who can approve the drafts that go live.",
-            visual: <ScopesVisual />,
-          },
-        ]}
-      />
-
-      {/* Six-panel manage grid */}
-      <section id="manage" className="bg-canvas py-[120px]">
-        <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
-          <p className="text-canvas-accent text-sm font-medium tracking-widest uppercase">What you can manage</p>
-          <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
-            The whole pipeline, under your control.
-          </SplitReveal>
-          <Reveal delay={0.15} distance={20}>
-            <p className="mt-5 text-lg text-[#afafaf]">
-              Thally automates the noticing and drafting; the dashboard is where you stay in charge. Nothing hidden,
-              nothing published that you didn&apos;t approve.
-            </p>
-          </Reveal>
+      {/* Manage bento: two large template-art cards over a 2x2 hairline grid */}
+      <section id="manage" className="bg-canvas pt-[120px]">
+        <div className="mb-[60px] border-b border-white/18 pb-[60px]">
+          <div className="mx-auto max-w-[746px] px-5 text-center">
+            <p className="text-canvas-accent text-sm font-medium tracking-widest uppercase">What you can manage</p>
+            <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
+              The whole pipeline, under your control.
+            </SplitReveal>
+            <Reveal delay={0.15} distance={20}>
+              <p className="mt-5 text-lg text-[#afafaf]">
+                Thally automates the noticing and drafting; the dashboard is where you stay in charge. Nothing hidden,
+                nothing published that you didn&apos;t approve.
+              </p>
+            </Reveal>
+          </div>
         </div>
+
+        <div className="mx-auto w-full max-w-[1480px] px-5">
+          <div className="flex flex-col gap-2.5">
+            <div className="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
+              <Reveal
+                className="relative flex min-h-[520px] flex-col justify-between gap-8 overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
+                style={{
+                  borderColor: "rgba(234,236,237,0.23)",
+                  backgroundImage: "url(/template/card-bg-1.webp)",
+                  backgroundSize: "100% 100%",
+                  backgroundRepeat: "no-repeat",
+                }}
+              >
+                <p className="mx-auto max-w-md text-center text-[15px] leading-relaxed text-white/70">
+                  Every change Thally proposes, queued with evidence. Approve, edit, or dismiss. You decide what ships.
+                </p>
+                <DraftsQueueVisual />
+                <p className="subtitle-display mx-auto max-w-[500px] text-center text-white">
+                  Review every draft.
+                  <br />
+                  <span className="linear-text">You decide what ships.</span>
+                </p>
+              </Reveal>
+
+              <Reveal
+                delay={0.3}
+                className="relative flex min-h-[520px] flex-col justify-between gap-8 overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
+                style={{
+                  borderColor: "rgba(234,236,237,0.23)",
+                  backgroundImage: "url(/template/text-container-1.webp)",
+                  backgroundSize: "100% 100%",
+                  backgroundRepeat: "no-repeat",
+                }}
+              >
+                <p className="mx-auto max-w-sm text-center text-[15px] leading-relaxed text-white/70">
+                  See what readers and agents actually reach, including the share of traffic that comes from AI tools.
+                </p>
+                <AnalyticsVisual />
+                <p className="subtitle-display mx-auto max-w-[420px] text-center text-white">
+                  See who reads.
+                  <br />
+                  <span className="linear-text">including the AI tools.</span>
+                </p>
+              </Reveal>
+            </div>
+
+            <Reveal delay={0.2} distance={40}>
+              <div className="border-canvas-card-stroke grid overflow-hidden rounded-[32px] border sm:grid-cols-2">
+                {manageCells.map((cell, i) => (
+                  <div
+                    key={cell.title}
+                    className={cn(
+                      "border-canvas-card-stroke flex flex-col items-center gap-5 px-8 py-11 text-center",
+                      i % 2 === 0 && "sm:border-r",
+                      i < 2 && "border-b",
+                    )}
+                  >
+                    <cell.icon className="text-canvas-accent size-7" />
+                    <div className="flex max-w-[340px] flex-col gap-1.5">
+                      <h3 className="font-display text-xl font-semibold tracking-tight text-white">{cell.title}</h3>
+                      <p className="text-[15px] leading-relaxed tracking-[-0.03em] text-[#afafaf]">{cell.body}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* One-place philosophy quote */}
+      <section className="bg-canvas py-[120px]">
         <div className="mx-auto w-full max-w-[1240px] px-5">
           <Reveal distance={40}>
-            <div className="border-canvas-card-stroke grid overflow-hidden rounded-[32px] border sm:grid-cols-2 lg:grid-cols-3">
-              {manageCells.map((cell, i) => (
-                <article
-                  key={cell.title}
-                  className={cn(
-                    "border-canvas-card-stroke flex flex-col gap-4 p-10 max-sm:p-8",
-                    i < manageCells.length - 1 && "max-sm:border-b",
-                    i % 2 === 0 && "sm:max-lg:border-r",
-                    i < 4 && "sm:max-lg:border-b",
-                    i % 3 !== 2 && "lg:border-r",
-                    i < 3 && "lg:border-b",
-                  )}
-                >
-                  <cell.icon className="text-canvas-accent size-6" />
-                  <h3 className="font-display text-xl font-semibold tracking-tight text-white">{cell.title}</h3>
-                  <p className="text-sm leading-relaxed text-[#afafaf]">{cell.body}</p>
-                </article>
-              ))}
+            <div
+              className="border-canvas-card-stroke overflow-hidden rounded-[50px] border p-12 text-center sm:p-[100px]"
+              style={{
+                backgroundImage: "url(/template/bg-2.webp)",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              }}
+            >
+              <p className="subtitle-display mx-auto max-w-[820px] text-white">
+                Knowledge work fails when it&apos;s spread across a wiki, a repo, an analytics tab, and someone&apos;s
+                memory. The dashboard puts it in one place
+              </p>
+              <p className="mt-6 text-sm text-white/60">Five tabs and no owner, or one control room</p>
             </div>
           </Reveal>
         </div>
       </section>
-
-      <QuotePanels
-        title="Scattered tools, or one control room."
-        media={
-          <div className="relative h-full min-h-[420px]">
-            <img
-              src="/images/admin-dashboard-1600.webp"
-              alt="The Thally Cloud dashboard"
-              className="absolute inset-0 h-full w-full object-cover object-left-top"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-            <p className="absolute bottom-6 left-8 text-lg font-medium text-white">One control room in Thally Cloud</p>
-          </div>
-        }
-        quote="Approve, edit, or dismiss. You decide what ships"
-        quoteAttribution="The Drafts queue, by design"
-        wideQuote="Knowledge work fails when it's spread across a wiki, a repo, an analytics tab, and someone's memory. The dashboard puts it in one place"
-        wideAttribution="Five tabs and no owner, or one control room"
-      />
 
       {/* Interactive dashboard demo */}
       <section id="dash" className="bg-canvas pb-[120px]">

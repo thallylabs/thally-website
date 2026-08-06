@@ -1,21 +1,17 @@
 /**
  * Public Thally Automation product page.
  *
- * Rebuilt on the shared Sireny feature template: glass banner with a
- * merge-to-draft board, sticky pastel process cards, quote panels, the
- * interactive pipeline and trigger demos, and the partner strip.
+ * Distinct architecture on the shared Sireny design language: glass
+ * banner with a merge-to-draft board, click-driven setup tabs, the
+ * interactive pipeline and trigger demos, a marquee activity log, a
+ * without/with split on the template art, and the partner strip.
  */
 
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiCloudflare, SiDocker, SiGithub, SiMarkdown, SiNetlify, SiVercel } from "react-icons/si";
 
-import {
-  FeatureBanner,
-  PartnerStrip,
-  ProcessCards,
-  QuotePanels,
-} from "@/components/feature-template/feature-template";
+import { FeatureBanner, PartnerStrip } from "@/components/feature-template/feature-template";
 import { ArrowRight, Check, GitPullRequest } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
@@ -23,6 +19,7 @@ import { DESTINATIONS, SITE_URL } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 import { AutomationDemo, AutomationTriggers } from "./automation-demo";
+import { SetupTabs } from "./setup-tabs";
 
 export const metadata: Metadata = {
   title: "Thally Automation: Ship the Code. Docs Follow.",
@@ -157,69 +154,37 @@ function MergeBoard() {
   );
 }
 
-/** Small light mocks for the pastel process cards. */
-function ReposVisual() {
-  return (
-    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
-      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">Connected once</p>
-      <div className="mt-3 space-y-2">
-        {["jahce/bono · product", "jahce/leaflet · product", "jahce/dabs · docs", "read-only GitHub App"].map(
-          (item) => (
-            <p
-              key={item}
-              className="flex items-center gap-2 rounded-lg bg-white/80 px-3 py-2.5 font-mono text-xs text-[#38332d]"
-            >
-              <Check className="size-3.5 text-[#38332d]" />
-              {item}
-            </p>
-          ),
-        )}
-      </div>
-    </div>
+/** Status pill styling shared by the marquee feed cards. */
+function statusPillClass(tone: (typeof feedItems)[number]["statusTone"]) {
+  return cn(
+    "rounded-full border px-2.5 py-1 text-[11px]",
+    tone === "review"
+      ? "border-canvas-accent/40 text-canvas-accent"
+      : tone === "ok"
+        ? "border-white/20 text-white/70"
+        : "border-white/10 text-white/40",
   );
 }
 
-function TriggersVisual() {
+/** One dark bordered card in the activity marquee. */
+function FeedCard({ item }: { item: (typeof feedItems)[number] }) {
   return (
-    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
-      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">Triggers</p>
-      <div className="mt-3 space-y-2">
-        {[
-          ["Merged pull request", "on"],
-          ["Release tag", "on"],
-          ["Schema or API change", "on"],
-          ["Scheduled sweep", "off"],
-        ].map(([label, state]) => (
-          <div key={label} className="flex items-center justify-between rounded-lg bg-white/80 px-3 py-2.5">
-            <span className="text-xs font-medium text-[#38332d]">{label}</span>
-            <span
-              className={cn(
-                "rounded-full px-2 py-0.5 text-[11px]",
-                state === "on" ? "bg-[#38332d] text-white" : "bg-black/10 text-[#7c7b79]",
-              )}
-            >
-              {state}
-            </span>
-          </div>
-        ))}
+    <div className="border-canvas-card-stroke w-[340px] shrink-0 rounded-2xl border bg-white/[0.03] p-5 sm:w-[420px]">
+      <div className="flex items-center gap-2.5">
+        <span
+          aria-hidden
+          className={cn(
+            "size-2 shrink-0 rounded-full",
+            item.statusTone === "review" ? "bg-canvas-accent" : "bg-white/30",
+          )}
+        />
+        <span className="text-[11px] tracking-wider text-white/45 uppercase">{item.label}</span>
+        <span className="ml-auto text-xs text-white/40">{item.time}</span>
       </div>
-      <p className="mt-3 text-center text-xs text-[#7c7b79]">You choose the events · Thally ignores the rest</p>
-    </div>
-  );
-}
-
-function DraftReviewVisual() {
-  return (
-    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
-      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">Draft PR</p>
-      <div className="mt-3 rounded-lg bg-[#1c1a17] p-3 font-mono text-[11px] leading-5">
-        <p className="text-red-300/80">- The client waits 30 seconds.</p>
-        <p className="text-[#c6f24e]">+ The client waits 60 seconds.</p>
-        <p className="text-[#c6f24e]">+ Override per request with timeout.</p>
-      </div>
-      <div className="mt-3 flex items-center justify-between text-xs text-[#38332d]">
-        <span className="font-medium">jahce/dabs #291</span>
-        <span className="rounded-full bg-[#38332d] px-2 py-0.5 text-[11px] text-white">Awaiting review</span>
+      <p className="mt-3 truncate font-mono text-sm text-white/90">{item.title}</p>
+      <p className="mt-1 truncate text-xs text-white/45">{item.detail}</p>
+      <div className="mt-4 border-t border-white/10 pt-3.5">
+        <span className={statusPillClass(item.statusTone)}>{item.status}</span>
       </div>
     </div>
   );
@@ -241,56 +206,7 @@ export default function AutomationFeaturePage() {
         <MergeBoard />
       </FeatureBanner>
 
-      <div id="how">
-        <ProcessCards
-          title="Set it up once. It runs on every merge."
-          steps={[
-            {
-              label: "Connect",
-              title: "Connect repositories",
-              subtitle: "Install the read-only GitHub App on your product and docs repositories.",
-              description:
-                "Install the read-only GitHub App on your product and docs repositories. Thally watches merged pull requests on their default branches.",
-              visual: <ReposVisual />,
-            },
-            {
-              label: "Choose",
-              title: "Choose your triggers",
-              subtitle: "Decide what starts a draft and which docs repo receives it.",
-              description:
-                "Decide what should start a draft (a merged PR, a release tag, a schema change) and which docs repo receives the resulting pull request.",
-              visual: <TriggersVisual />,
-            },
-            {
-              label: "Review",
-              title: "Review and merge",
-              subtitle: "Every change arrives as a draft pull request with evidence and a diff.",
-              description:
-                "Every change arrives as a draft pull request with evidence and a diff. Nothing publishes until a human approves it.",
-              visual: <DraftReviewVisual />,
-            },
-          ]}
-        />
-      </div>
-
-      <QuotePanels
-        title="The work nobody owns, owned."
-        media={
-          <div className="relative h-full min-h-[420px]">
-            <img
-              src="/images/admin-dashboard-1600.webp"
-              alt="Thally Cloud dashboard with the automation activity feed"
-              className="absolute inset-0 h-full w-full object-cover object-left-top"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-            <p className="absolute bottom-6 left-8 text-lg font-medium text-white">Automation inside Thally Cloud</p>
-          </div>
-        }
-        quote="Humans approve important communication. Automation never publishes on its own"
-        quoteAttribution="It removes the work of noticing and drafting; the judgment of what ships stays with your team."
-        wideQuote="Stale docs show up as support tickets, broken onboarding, and wrong AI answers. Automation finds the documentation work the moment it exists, not weeks later in a support thread"
-        wideAttribution="Automation is the hands-off half of Track: Thally does the watching, analyzing, and drafting."
-      />
+      <SetupTabs />
 
       {/* Live merge simulation */}
       <section id="loop" className="bg-canvas pb-[120px]">
@@ -333,10 +249,13 @@ export default function AutomationFeaturePage() {
         </div>
       </section>
 
-      {/* Activity feed and comparison */}
-      <section id="activity" className="bg-canvas pb-[120px]">
+      {/* Activity marquee band */}
+      <section id="activity" className="border-y border-white/10 bg-[#0a0d13]/60 py-[100px]">
         <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
-          <SplitReveal as="h2" mode="chars" className="heading-section text-white">
+          <p className="text-sm font-medium tracking-widest text-white/45 uppercase">
+            Recent automation · jahce/dabs
+          </p>
+          <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
             A running log of what Thally drafted.
           </SplitReveal>
           <Reveal delay={0.15} distance={20}>
@@ -347,75 +266,76 @@ export default function AutomationFeaturePage() {
           </Reveal>
         </div>
 
-        <div className="mx-auto w-full max-w-[1240px] space-y-2.5 px-5">
-          <Reveal className="border-canvas-card-stroke overflow-hidden rounded-[32px] border">
-            <p className="border-canvas-card-stroke border-b px-6 py-4 text-[11px] tracking-wider text-white/45 uppercase">
-              Recent automation · jahce/dabs
+        <div className="guarantee-marquee flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+          {[false, true].map((hidden) => (
+            <div
+              key={String(hidden)}
+              aria-hidden={hidden || undefined}
+              className="guarantee-marquee-track flex min-w-max shrink-0 gap-2.5 pr-2.5"
+            >
+              {feedItems.map((item) => (
+                <FeedCard key={item.title} item={item} />
+              ))}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Without / with split on the template art */}
+      <section className="bg-canvas px-5 py-[120px]">
+        <div className="mx-auto grid w-full max-w-[1480px] gap-4 lg:grid-cols-2">
+          <Reveal
+            className="relative flex min-h-[420px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
+            style={{
+              borderColor: "rgba(234,236,237,0.23)",
+              backgroundImage: "url(/template/card-bg-1.webp)",
+              backgroundSize: "100% 100%",
+              backgroundRepeat: "no-repeat",
+            }}
+          >
+            <div>
+              <p className="text-[11px] tracking-wider text-white/45 uppercase">Without automation</p>
+              <ul className="mt-5 space-y-3">
+                {withoutAutomation.map((item) => (
+                  <li key={item} className="text-[15px] leading-relaxed tracking-[-0.03em] text-[#afafaf]">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <p className="subtitle-display mx-auto mt-10 max-w-[420px] text-center text-white">
+              Docs drift,
+              <br />
+              <span className="linear-text">quietly.</span>
             </p>
-            {feedItems.map((item, i) => (
-              <div
-                key={item.title}
-                className={cn(
-                  "flex flex-wrap items-center gap-x-4 gap-y-1 px-6 py-4",
-                  i < feedItems.length - 1 && "border-canvas-card-stroke border-b",
-                )}
-              >
-                <span
-                  aria-hidden
-                  className={cn(
-                    "size-2 shrink-0 rounded-full",
-                    item.statusTone === "review" ? "bg-canvas-accent" : "bg-white/30",
-                  )}
-                />
-                <div className="min-w-0 flex-1">
-                  <p className="text-sm text-white/90">
-                    {item.label} <span className="font-mono text-white/80">{item.title}</span>
-                  </p>
-                  <p className="text-xs text-white/45">{item.detail}</p>
-                </div>
-                <span className="text-xs text-white/40">{item.time}</span>
-                <span
-                  className={cn(
-                    "rounded-full border px-2.5 py-1 text-[11px]",
-                    item.statusTone === "review"
-                      ? "border-canvas-accent/40 text-canvas-accent"
-                      : item.statusTone === "ok"
-                        ? "border-white/20 text-white/70"
-                        : "border-white/10 text-white/40",
-                  )}
-                >
-                  {item.status}
-                </span>
-              </div>
-            ))}
           </Reveal>
 
-          <Reveal delay={0.15}>
-            <div className="border-canvas-card-stroke grid overflow-hidden rounded-[32px] border sm:grid-cols-2">
-              <div className="border-canvas-card-stroke border-b p-8 sm:border-r sm:border-b-0">
-                <p className="text-[11px] tracking-wider text-white/45 uppercase">Without automation</p>
-                <h3 className="mt-2 text-xl tracking-[-0.04em] text-white">Docs drift, quietly</h3>
-                <ul className="mt-5 space-y-3">
-                  {withoutAutomation.map((item) => (
-                    <li key={item} className="text-[15px] leading-relaxed tracking-[-0.03em] text-[#afafaf]">
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="p-8">
-                <p className="text-canvas-accent text-[11px] tracking-wider uppercase">With Automation</p>
-                <h3 className="mt-2 text-xl tracking-[-0.04em] text-white">Drafts arrive on merge</h3>
-                <ul className="mt-5 space-y-3">
-                  {withAutomation.map((item) => (
-                    <li key={item} className="flex gap-2.5 text-[15px] leading-relaxed tracking-[-0.03em] text-white/85">
-                      <Check className="text-canvas-accent mt-1 size-3.5 shrink-0" />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+          <Reveal
+            delay={0.3}
+            className="relative flex min-h-[420px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
+            style={{
+              borderColor: "rgba(234,236,237,0.23)",
+              backgroundImage: "url(/template/text-container-1.webp)",
+              backgroundSize: "100% 100%",
+              backgroundRepeat: "no-repeat",
+            }}
+          >
+            <div>
+              <p className="text-canvas-accent text-[11px] tracking-wider uppercase">With Automation</p>
+              <ul className="mt-5 space-y-3">
+                {withAutomation.map((item) => (
+                  <li key={item} className="flex gap-2.5 text-[15px] leading-relaxed tracking-[-0.03em] text-white/85">
+                    <Check className="text-canvas-accent mt-1 size-3.5 shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
+            <p className="subtitle-display mx-auto mt-10 max-w-[420px] text-center text-white">
+              Drafts arrive
+              <br />
+              <span className="linear-text">on merge.</span>
+            </p>
           </Reveal>
         </div>
       </section>

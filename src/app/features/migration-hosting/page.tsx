@@ -3,22 +3,18 @@
  *
  * Static marketing page with a deterministic migration console demo.
  * No credentials or network calls; the demo runs entirely on mock data.
+ * Architecture: terminal-first banner, comparison table, live demo,
+ * hosting hairline grid, partner strip, closing CTA.
  */
 
 import type { Metadata } from "next";
 import { SiDocusaurus, SiGitbook, SiMarkdown, SiMintlify, SiNextra, SiVitepress } from "react-icons/si";
 
-import {
-  FeatureBanner,
-  PartnerStrip,
-  ProcessCards,
-  QuotePanels,
-} from "@/components/feature-template/feature-template";
+import { FeatureBanner, PartnerStrip } from "@/components/feature-template/feature-template";
 import type { ThallyIcon } from "@/components/icons";
 import {
   Check,
   Data,
-  GitBranch,
   GitPullRequest,
   Globe,
   RefreshCw,
@@ -27,6 +23,7 @@ import {
 } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
+import { CTA } from "@/components/sections/cta";
 import { SITE_URL } from "@/lib/site";
 
 import { MigrationDemo } from "./migration-demo";
@@ -97,6 +94,16 @@ const hostingFeatures: {
   },
 ];
 
+/** Comparison rows derived from the page's migration and hosting copy. */
+const comparisonRows: { label: string; thally: string; usual: string }[] = [
+  { label: "Time to live site", usual: "Weeks of rewriting", thally: "One pass" },
+  { label: "Your Markdown", usual: "Locked in", thally: "Stays yours, reversible" },
+  { label: "Redirects", usual: "Manual", thally: "Carried over" },
+  { label: "SSL and edge", usual: "You configure", thally: "Included" },
+  { label: "Rollback", usual: "Risky", thally: "One click" },
+  { label: "Previews", usual: "None", thally: "Per branch" },
+];
+
 const softwareJsonLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
@@ -111,108 +118,40 @@ const softwareJsonLd = {
   publisher: { "@id": `${SITE_URL}/#organization` },
 };
 
-/** Static migration board shown inside the banner's glass frame. */
-function MigrationBoard() {
+/** Static terminal log shown inside the banner's glass frame. */
+function MigrationTerminal() {
   return (
-    <div className="grid gap-3 bg-[#07090d] p-5 sm:grid-cols-3 sm:p-8">
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-        <p className="text-[11px] tracking-wider text-white/45 uppercase">Import from · GitBook</p>
-        <p className="mt-2 flex items-center gap-2 font-mono text-sm text-white/90">
-          <GitBranch className="text-canvas-accent size-4 shrink-0" />
-          jahce/legacy-docs
-        </p>
-        <p className="mt-3 text-xs leading-relaxed text-white/50">
-          128 pages · structure, links, and redirects preserved
-        </p>
-        <span className="text-canvas-accent bg-canvas-accent/10 mt-4 inline-block rounded-full px-2.5 py-1 text-[11px] font-medium">
+    <div className="bg-[#101410]">
+      <div className="flex items-center gap-2 border-b border-white/10 px-5 py-3.5 sm:px-7">
+        <span aria-hidden className="size-2.5 rounded-full bg-white/15" />
+        <span aria-hidden className="size-2.5 rounded-full bg-white/15" />
+        <span aria-hidden className="size-2.5 rounded-full bg-white/15" />
+        <p className="ml-3 font-mono text-xs text-white/45">thally migrate · jahce/legacy-docs</p>
+        <span className="text-canvas-accent bg-canvas-accent/10 ml-auto rounded-full px-2.5 py-1 text-[11px] font-medium">
           Non-destructive import
         </span>
       </div>
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-        <p className="text-[11px] tracking-wider text-white/45 uppercase">Conversion</p>
-        <div className="mt-2 rounded-lg bg-black/50 p-3 font-mono text-[11px] leading-5">
-          <p className="text-white/50">· Converting to MDX and resolving cross-references</p>
-          <p className="text-white/50">· Building Content Graph · indexing code samples</p>
-          <p className="text-canvas-accent">✓ Machine formats · HTML, Markdown, JSON, llms.txt</p>
-        </div>
-        <p className="mt-3 text-xs text-white/50">One pass: fetch, convert, build, deploy</p>
+      <div className="px-5 py-6 font-mono text-[13px] leading-8 sm:px-7 sm:py-8 sm:text-[15px] sm:leading-9">
+        <p className="text-white/85">
+          <span className="text-canvas-accent">$</span> thally migrate --source gitbook jahce/legacy-docs
+        </p>
+        <p className="text-white/50">· Fetching GitBook space · 128 pages found</p>
+        <p className="text-canvas-accent">✓ Imported 128 pages · structure, links, and redirects preserved</p>
+        <p className="text-white/50">· Converting to MDX and resolving cross-references</p>
+        <p className="text-white/50">· Building Content Graph · indexing code samples</p>
+        <p className="text-canvas-accent">✓ Machine formats · HTML, Markdown, JSON, llms.txt</p>
+        <p className="text-white/50">· Deploying to edge · iad sfo lhr fra sin syd</p>
+        <p className="text-canvas-accent">✓ Live at jahce.thally.site · SSL, previews, and rollback included</p>
       </div>
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-        <p className="text-[11px] tracking-wider text-white/45 uppercase">Live site</p>
-        <div className="mt-2 flex items-center justify-between gap-2">
-          <p className="flex items-center gap-2 font-mono text-sm text-white/90">
-            <Globe className="text-canvas-accent size-4 shrink-0" />
-            jahce.thally.site
-          </p>
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 px-5 py-3.5 sm:px-7">
+        <p className="font-mono text-xs text-white/50">One pass: fetch, convert, build, deploy</p>
+        <p className="flex items-center gap-2 font-mono text-xs text-white/60">
+          <Globe className="text-canvas-accent size-3.5 shrink-0" />
+          jahce.thally.site
           <span className="text-canvas-accent bg-canvas-accent/10 rounded-full px-2.5 py-1 text-[11px] font-medium">
             Live
           </span>
-        </div>
-        <div className="mt-3 flex flex-wrap gap-1.5">
-          {["iad", "sfo", "lhr", "fra", "sin", "syd"].map((region) => (
-            <span key={region} className="rounded-md border border-white/10 px-2 py-1 font-mono text-[11px] text-white/60">
-              {region}
-            </span>
-          ))}
-        </div>
-        <p className="mt-3 flex items-center gap-1.5 text-xs text-white/50">
-          <Check className="text-canvas-accent size-3.5" />
-          SSL, previews, and rollback included
         </p>
-      </div>
-    </div>
-  );
-}
-
-/** Small light mocks for the pastel process cards. */
-function ImportVisual() {
-  return (
-    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
-      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">Sources</p>
-      <div className="mt-3 space-y-2">
-        {["GitBook space", "Mintlify · mint.json", "Docusaurus · /docs", "Markdown repo"].map((item) => (
-          <p
-            key={item}
-            className="flex items-center gap-2 rounded-lg bg-white/80 px-3 py-2.5 font-mono text-xs text-[#38332d]"
-          >
-            <Check className="size-3.5 text-[#38332d]" />
-            {item}
-          </p>
-        ))}
-      </div>
-      <p className="mt-3 text-center text-xs text-[#7c7b79]">Connect a repo or paste a URL</p>
-    </div>
-  );
-}
-
-function BuildVisual() {
-  return (
-    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
-      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">Content graph</p>
-      <div className="mt-3 grid grid-cols-2 gap-2">
-        {["MDX pages", "Resolved links", "Code samples", "Machine formats"].map((item) => (
-          <p key={item} className="rounded-lg bg-white/80 px-3 py-3 text-center text-xs font-medium text-[#38332d]">
-            {item}
-          </p>
-        ))}
-      </div>
-      <p className="mt-3 text-center text-xs text-[#7c7b79]">Generated automatically, never hand-maintained</p>
-    </div>
-  );
-}
-
-function DeployVisual() {
-  return (
-    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
-      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">Deploy</p>
-      <div className="mt-3 rounded-lg bg-[#1c1a17] p-3 font-mono text-[11px] leading-5">
-        <p className="text-white/70">preview: pr-42.jahce.thally.site</p>
-        <p className="text-[#c6f24e]">+ live: jahce.thally.site</p>
-        <p className="text-[#c6f24e]">+ ssl issued · edge warm in 6 regions</p>
-      </div>
-      <div className="mt-3 flex items-center justify-between text-xs text-[#38332d]">
-        <span className="font-medium">Every deploy versioned</span>
-        <span className="rounded-full bg-[#38332d] px-2 py-0.5 text-[11px] text-white">rollback in one click</span>
       </div>
     </div>
   );
@@ -231,61 +170,62 @@ export default function MigrationHostingFeaturePage() {
         secondaryCta={{ label: "See what's included", href: "#hosting" }}
         finePrint="Your Markdown stays yours. Imports are non-destructive and reversible."
       >
-        <MigrationBoard />
+        <MigrationTerminal />
       </FeatureBanner>
 
-      <div id="how">
-        <ProcessCards
-          title="From your current tool to live, fast."
-          steps={[
-            {
-              label: "Import",
-              title: "Import your source",
-              subtitle: "GitBook, Mintlify, Docusaurus, or plain Markdown, structure preserved.",
-              description:
-                "Connect a repo or paste a URL. Thally reads GitBook, Mintlify, Docusaurus, and plain Markdown, preserving structure and links.",
-              visual: <ImportVisual />,
-            },
-            {
-              label: "Build",
-              title: "Build the graph",
-              subtitle: "Your pages become MDX in a Content Graph, machine formats included.",
-              description:
-                "Your pages become MDX in a Content Graph: cross-links resolved, code samples indexed, machine formats generated automatically.",
-              visual: <BuildVisual />,
-            },
-            {
-              label: "Deploy",
-              title: "Deploy to the edge",
-              subtitle: "Previews on every push; merges go live worldwide in seconds.",
-              description:
-                "Every push builds a preview; merges go live worldwide in seconds, with SSL, custom domains, and instant rollback included.",
-              visual: <DeployVisual />,
-            },
-          ]}
-        />
-      </div>
-
-      <QuotePanels
-        title="An import, then live."
-        media={
-          <div className="relative h-full min-h-[420px]">
-            <img
-              src="/images/admin-dashboard-1600.webp"
-              alt="Thally Cloud dashboard with migration and hosting"
-              className="absolute inset-0 h-full w-full object-cover object-left-top"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-            <p className="absolute bottom-6 left-8 text-lg font-medium text-white">
-              Migration and hosting inside Thally Cloud
+      {/* Comparison table */}
+      <section id="compare" className="bg-canvas pt-[120px] pb-[120px]">
+        <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
+          <p className="text-canvas-accent text-sm font-medium tracking-widest uppercase">Compare</p>
+          <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
+            The usual migration, or an import.
+          </SplitReveal>
+          <Reveal delay={0.15} distance={20}>
+            <p className="mt-5 text-lg text-[#afafaf]">
+              Not a dreaded rewrite: weeks of copy-paste become one import. Structure, links, and redirects carried
+              over automatically. A preview URL to check before you point your domain. Live on the edge in minutes,
+              reversible if you change your mind.
             </p>
+          </Reveal>
+        </div>
+        <div className="mx-auto w-full max-w-[1100px] px-5">
+          <div className="border-canvas-card-stroke overflow-hidden rounded-[32px] border">
+            <Reveal distance={24}>
+              <div className="border-canvas-hairline grid grid-cols-2 border-b px-6 py-5 sm:grid-cols-[2fr_1fr_1fr] sm:px-9">
+                <p aria-hidden className="hidden sm:block" />
+                <p className="text-canvas-muted-2 text-xs font-medium tracking-widest uppercase">
+                  The usual migration
+                </p>
+                <p className="text-xs font-medium tracking-widest text-white uppercase">With Thally</p>
+              </div>
+            </Reveal>
+            {comparisonRows.map((row, i) => (
+              <Reveal key={row.label} delay={0.08 + i * 0.06} distance={20}>
+                <div
+                  className={[
+                    "grid grid-cols-2 gap-y-2 px-6 py-5 sm:grid-cols-[2fr_1fr_1fr] sm:items-center sm:px-9 sm:py-6",
+                    i < comparisonRows.length - 1 ? "border-canvas-hairline border-b" : "",
+                  ].join(" ")}
+                >
+                  <p className="col-span-2 text-lg tracking-[-0.02em] text-white sm:col-span-1">{row.label}</p>
+                  <p className="text-canvas-muted-2 text-[15px]">{row.usual}</p>
+                  <p className="flex items-center gap-2 text-[15px] text-white">
+                    <Check className="text-canvas-accent size-4 shrink-0" />
+                    {row.thally}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
           </div>
-        }
-        quote="Structure, links, and redirects carried over automatically. A preview URL to check before you point your domain. Live on the edge in minutes, reversible if you change your mind"
-        quoteAttribution="Not a dreaded rewrite: weeks of copy-paste become one import"
-        wideQuote="No lock-in, in either direction. Your repository, your renderer, and your domain stay yours: the engine is MIT licensed and hosting is optional. If you ever stop paying, the site can keep running on the open-source engine, hosted wherever you choose"
-        wideAttribution="Pay for the service. Keep the site"
-      />
+          <Reveal delay={0.2} distance={16}>
+            <p className="text-canvas-muted-2 mx-auto mt-8 max-w-[860px] text-center text-[15px] leading-relaxed">
+              No lock-in, in either direction. Your repository, your renderer, and your domain stay yours: the engine
+              is MIT licensed and hosting is optional. If you ever stop paying, the site can keep running on the
+              open-source engine, hosted wherever you choose. Pay for the service. Keep the site.
+            </p>
+          </Reveal>
+        </div>
+      </section>
 
       {/* Migration console demo */}
       <section id="migrate" className="bg-canvas pb-[120px]">
@@ -366,6 +306,8 @@ export default function MigrationHostingFeaturePage() {
           { name: "Markdown", icon: <SiMarkdown /> },
         ]}
       />
+
+      <CTA />
     </div>
   );
 }

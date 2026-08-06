@@ -1,22 +1,18 @@
 /**
  * Public Thally Agent Layer product page.
  *
- * Rebuilt on the shared Sireny feature template: glass banner with an
- * agent Q&A board, sticky pastel process cards, quote panels, the
- * interactive Q&A demo, the machine-surface grid, and the partner strip.
+ * Distinct architecture on the shared Sireny design language: glass banner
+ * with an agent Q&A board, a machine-surfaces bento (two large template-art
+ * cards plus a hairline 2x2 grid), a light grounded-vs-ungrounded band, the
+ * interactive Q&A demo, and the partner strip.
  */
 
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SiClaude, SiCursor, SiGithubcopilot, SiGooglegemini, SiPerplexity, SiWindsurf } from "react-icons/si";
 
-import {
-  FeatureBanner,
-  PartnerStrip,
-  ProcessCards,
-  QuotePanels,
-} from "@/components/feature-template/feature-template";
-import { ArrowRight, Check, GitBranch, Json, Lock, Mcp, RefreshCw, Terminal } from "@/components/icons";
+import { FeatureBanner, PartnerStrip } from "@/components/feature-template/feature-template";
+import { ArrowRight, Check, GitBranch, Json, Lock, RefreshCw } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
 import { DESTINATIONS, SITE_URL } from "@/lib/site";
@@ -53,50 +49,30 @@ const softwareJsonLd = {
   publisher: { "@id": `${SITE_URL}/#organization` },
 };
 
-const surfaces = [
-  {
-    icon: Mcp,
-    title: "llms.txt",
-    format: "/llms.txt",
-    description:
-      "A compact index and per-page projection that fits an agent's context budget: facts first, layout gone.",
-    who: "Context",
-  },
-  {
-    icon: Terminal,
-    title: "MCP tools",
-    format: "search · fetch",
-    description:
-      "Standard Model Context Protocol tools let agents query your docs live inside the editor or assistant.",
-    who: "Tools",
-  },
+const smallSurfaces = [
   {
     icon: Json,
     title: "Structured JSON",
     format: "application/json",
     description: "Concept references and blocks as data, so pipelines and custom agents parse meaning, not markup.",
-    who: "Parsing",
   },
   {
     icon: GitBranch,
     title: "Evidence links",
     format: "source refs",
     description: "Every fact traces to a commit and symbol in your product: the receipts behind each answer.",
-    who: "Receipts",
   },
   {
     icon: RefreshCw,
     title: "Freshness signals",
     format: "updated-at",
     description: "Each surface carries when it last synced with the product, so agents can prefer current facts.",
-    who: "Recency",
   },
   {
     icon: Lock,
     title: "Scoped access",
     format: "per-surface",
     description: "Decide which surfaces are public to agents and which stay internal: granular, revocable, read-only.",
-    who: "Control",
   },
 ] as const;
 
@@ -162,55 +138,48 @@ function AgentBoard() {
   );
 }
 
-/** Small light mocks for the pastel process cards. */
-function LlmsTxtVisual() {
+/** Large-card visual: a dark mono llms.txt index panel. */
+function LlmsTxtPanel() {
   return (
-    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
-      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">Machine surface</p>
-      <div className="mt-3 space-y-2">
-        {["/llms.txt", "/sdk/configuration", "/sdk/errors", "/guides/long-running-jobs"].map((item) => (
-          <p
-            key={item}
-            className="flex items-center gap-2 rounded-lg bg-white/80 px-3 py-2.5 font-mono text-xs text-[#38332d]"
-          >
-            <Check className="size-3.5 text-[#38332d]" />
-            {item}
-          </p>
+    <div className="mx-auto w-full max-w-lg rounded-2xl border border-white/12 bg-black/45 p-5">
+      <div className="flex items-center justify-between">
+        <span className="font-mono text-sm text-white/75">/llms.txt</span>
+        <span className="text-canvas-accent font-mono text-[11px]">text/plain</span>
+      </div>
+      <div className="mt-4 space-y-2 font-mono text-xs leading-5">
+        <p className="text-white/50"># Facts first, layout gone</p>
+        {["/sdk/configuration", "/sdk/errors", "/guides/long-running-jobs", "/api/tokens"].map((page) => (
+          <div key={page} className="flex items-center justify-between rounded-lg border border-white/10 px-3 py-2">
+            <span className="text-white/80">{page}</span>
+            <span className="text-white/40">.md</span>
+          </div>
         ))}
       </div>
-      <p className="mt-3 text-center text-xs text-[#7c7b79]">Facts first · layout gone</p>
+      <p className="mt-3 text-center text-xs text-white/45">A compact index that fits an agent&apos;s context budget</p>
     </div>
   );
 }
 
-function McpVisual() {
+/** Large-card visual: the MCP endpoint with search and fetch tools. */
+function McpToolsPanel() {
   return (
-    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
-      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">MCP endpoint</p>
-      <div className="mt-3 grid grid-cols-2 gap-2">
-        {["search", "fetch", "cite pages", "live docs"].map((item) => (
-          <p key={item} className="rounded-lg bg-white/80 px-3 py-3 text-center text-xs font-medium text-[#38332d]">
-            {item}
-          </p>
+    <div className="mx-auto w-full max-w-md rounded-2xl border border-white/12 bg-black/45 p-5">
+      <div className="flex items-center justify-between">
+        <span className="font-mono text-sm text-white/75">mcp://docs.yourproduct.com</span>
+        <span className="text-canvas-accent font-mono text-[11px]">connected</span>
+      </div>
+      <div className="mt-4 space-y-2">
+        {[
+          ["search", "query your docs live, ranked by relevance"],
+          ["fetch", "pull the current page, cited by commit"],
+        ].map(([tool, hint]) => (
+          <div key={tool} className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2.5">
+            <p className="text-canvas-accent font-mono text-xs">{tool}()</p>
+            <p className="mt-1 text-xs text-white/55">{hint}</p>
+          </div>
         ))}
       </div>
-      <p className="mt-3 text-center text-xs text-[#7c7b79]">No scraping · no stale copies</p>
-    </div>
-  );
-}
-
-function EvidenceVisual() {
-  return (
-    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
-      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">Sourced answer</p>
-      <div className="mt-3 rounded-lg bg-[#1c1a17] p-3 font-mono text-[11px] leading-5">
-        <p className="text-white/85">The client waits 60 seconds by default. [1]</p>
-        <p className="text-[#c6f24e]">[1] /sdk/configuration · bono@a1f9c2</p>
-      </div>
-      <div className="mt-3 flex items-center justify-between text-xs text-[#38332d]">
-        <span className="font-medium">Pages and commits cited</span>
-        <span className="rounded-full bg-[#38332d] px-2 py-0.5 text-[11px] text-white">Grounded</span>
-      </div>
+      <p className="mt-3 text-center text-xs text-white/45">Standard Model Context Protocol, inside the editor</p>
     </div>
   );
 }
@@ -231,56 +200,150 @@ export default function AgentLayerFeaturePage() {
         <AgentBoard />
       </FeatureBanner>
 
-      <div id="how">
-        <ProcessCards
-          title="Docs an agent can actually reason about."
-          steps={[
-            {
-              label: "Publish",
-              title: "Publish machine surfaces",
-              subtitle: "Every page emits a compact, prose-light llms.txt projection.",
-              description:
-                "Every page emits an llms.txt projection: compact, prose-light, and stripped of layout noise so a model spends its context on facts.",
-              visual: <LlmsTxtVisual />,
-            },
-            {
-              label: "Expose",
-              title: "Expose an MCP endpoint",
-              subtitle: "Agents search, fetch, and cite your pages. No scraping, no stale copies.",
-              description:
-                "Thally serves your docs as Model Context Protocol tools. Agents search, fetch, and cite your pages from inside the editor or assistant.",
-              visual: <McpVisual />,
-            },
-            {
-              label: "Answer",
-              title: "Answer with evidence",
-              subtitle: "Each response carries the pages and commits it drew from.",
-              description:
-                "Each response carries the pages and commits it drew from. When your product changes, the answer changes: grounded, never guessed.",
-              visual: <EvidenceVisual />,
-            },
-          ]}
-        />
-      </div>
-
-      <QuotePanels
-        title="Grounded beats confident."
-        media={
-          <div className="relative h-full min-h-[420px]">
-            <img
-              src="/images/admin-dashboard-1600.webp"
-              alt="Thally Cloud dashboard with Agent Layer surfaces"
-              className="absolute inset-0 h-full w-full object-cover object-left-top"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-            <p className="absolute bottom-6 left-8 text-lg font-medium text-white">The Agent Layer in Thally Cloud</p>
+      {/* Machine surfaces bento */}
+      <section id="surfaces" className="bg-canvas pt-[120px]">
+        <div className="mb-[60px] border-b border-white/18 pb-[60px]">
+          <div className="mx-auto max-w-3xl px-5 text-center">
+            <SplitReveal as="h2" mode="chars" className="heading-section text-canvas-foreground">
+              Built for machines, without the guesswork.
+            </SplitReveal>
+            <Reveal delay={0.15} distance={24}>
+              <p className="text-canvas-muted mx-auto mt-6 max-w-xl text-lg">
+                Everything an AI tool needs to answer accurately about your product, served from the same source your
+                customers read.
+              </p>
+            </Reveal>
           </div>
-        }
-        quote="Evidence before confidence. An agent that can't cite a source shouldn't sound certain"
-        quoteAttribution="The Agent Layer ties every answer to a page and a commit, so trust is earned, not asserted."
-        wideQuote="An agent guessing about your API is worse than no agent at all. The Agent Layer replaces plausible-sounding fiction with sourced fact"
-        wideAttribution="Human documentation is written for eyes; agents need current facts, clearly scoped, with sources. The Agent Layer projects both from one graph."
-      />
+        </div>
+
+        <div className="mx-auto w-full max-w-[1480px] px-5 pb-[120px]">
+          <div className="flex flex-col gap-2.5">
+            <div className="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
+              <Reveal
+                className="relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
+                style={{
+                  borderColor: "rgba(234,236,237,0.23)",
+                  backgroundImage: "url(/template/card-bg-1.webp)",
+                  backgroundSize: "100% 100%",
+                  backgroundRepeat: "no-repeat",
+                }}
+              >
+                <LlmsTxtPanel />
+                <p className="subtitle-display mx-auto mt-10 max-w-[500px] text-center text-white">
+                  Docs an agent can
+                  <br />
+                  <span className="linear-text">actually read.</span>
+                </p>
+              </Reveal>
+
+              <Reveal
+                delay={0.3}
+                className="relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
+                style={{
+                  borderColor: "rgba(234,236,237,0.23)",
+                  backgroundImage: "url(/template/text-container-1.webp)",
+                  backgroundSize: "100% 100%",
+                  backgroundRepeat: "no-repeat",
+                }}
+              >
+                <McpToolsPanel />
+                <p className="subtitle-display mx-auto mt-10 max-w-[420px] text-center text-white">
+                  Tools, not scraping.
+                  <br />
+                  <span className="linear-text">search and fetch built in.</span>
+                </p>
+              </Reveal>
+            </div>
+
+            <Reveal delay={0.2} distance={40}>
+              <div className="border-canvas-card-stroke grid overflow-hidden rounded-[32px] border sm:grid-cols-2">
+                {smallSurfaces.map((surface, i) => (
+                  <div
+                    key={surface.title}
+                    className={cn(
+                      "border-canvas-card-stroke flex flex-col items-center gap-5 px-8 py-11 text-center",
+                      i % 2 === 0 && "sm:border-r",
+                      i < 2 && "border-b",
+                    )}
+                  >
+                    <surface.icon className="text-canvas-foreground size-7" />
+                    <div className="flex max-w-[305px] flex-col gap-1.5">
+                      <h3 className="text-canvas-foreground text-xl tracking-[-0.04em]">{surface.title}</h3>
+                      <p className="text-canvas-muted text-[15px] leading-relaxed tracking-[-0.03em]">
+                        {surface.description}
+                      </p>
+                    </div>
+                    <span className="font-mono text-[11px] text-white/45">{surface.format}</span>
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Grounded vs ungrounded light band */}
+      <section id="trust" className="bg-canvas px-2.5 pb-[120px] sm:px-5">
+        <div className="relative mx-auto max-w-[1480px] overflow-hidden rounded-[52px]">
+          <div
+            aria-hidden
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url(/template/ready-made-bg.webp)" }}
+          />
+          <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-white/60 to-white/10" />
+
+          <div className="marketing-section-pad relative">
+            <div className="mx-auto max-w-3xl px-5 text-center">
+              <SplitReveal as="h2" mode="chars" className="heading-section text-canvas-cream-foreground">
+                Grounded beats confident.
+              </SplitReveal>
+              <Reveal delay={0.15} distance={24}>
+                <p className="text-canvas-cream-foreground/75 mx-auto mt-5 max-w-xl text-lg">
+                  An agent guessing about your API is worse than no agent at all. The Agent Layer replaces
+                  plausible-sounding fiction with sourced fact.
+                </p>
+              </Reveal>
+            </div>
+
+            <div className="mx-auto mt-14 grid max-w-4xl gap-4 px-5 sm:grid-cols-2">
+              <Reveal className="flex flex-col rounded-[25px] border border-white bg-[#f6f2ea]/90 p-8">
+                <h3 className="text-canvas-cream-foreground text-xl tracking-[-0.04em]">Confidently wrong</h3>
+                <ul className="mt-5 space-y-3">
+                  {ungroundedPoints.map((point) => (
+                    <li key={point} className="text-canvas-cream-muted text-[15px] leading-relaxed">
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-auto border-t border-[#bdbdbd] pt-4">
+                  <span className="text-canvas-cream-foreground/70 text-[11px] font-semibold tracking-widest uppercase">
+                    Ungrounded model
+                  </span>
+                </div>
+              </Reveal>
+              <Reveal delay={0.15} className="flex flex-col rounded-[25px] border border-white bg-[#f6f2ea]/90 p-8">
+                <h3 className="text-canvas-cream-foreground text-xl tracking-[-0.04em]">Sourced and current</h3>
+                <ul className="mt-5 space-y-3">
+                  {groundedPoints.map((point) => (
+                    <li
+                      key={point}
+                      className="text-canvas-cream-foreground flex gap-2.5 text-[15px] leading-relaxed"
+                    >
+                      <Check className="text-canvas-cream-foreground mt-1 size-3.5 shrink-0" />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-auto border-t border-[#bdbdbd] pt-4">
+                  <span className="text-canvas-cream-foreground/70 text-[11px] font-semibold tracking-widest uppercase">
+                    Through the Agent Layer
+                  </span>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Live Q&A demo */}
       <section id="ask" className="bg-canvas pb-[120px]">
@@ -300,82 +363,6 @@ export default function AgentLayerFeaturePage() {
           <div className="rounded-[24px] border-[0.83px] border-white/16 bg-[#1c1b1d]/45 p-[13px] backdrop-blur-2xl">
             <AgentLayerDemo />
           </div>
-        </div>
-      </section>
-
-      {/* Machine surfaces and comparison */}
-      <section id="surfaces" className="bg-canvas pb-[120px]">
-        <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
-          <SplitReveal as="h2" mode="chars" className="heading-section text-white">
-            Built for machines, without the guesswork.
-          </SplitReveal>
-          <Reveal delay={0.15} distance={20}>
-            <p className="mt-5 text-lg text-[#afafaf]">
-              Everything an AI tool needs to answer accurately about your product, served from the same source your
-              customers read.
-            </p>
-          </Reveal>
-        </div>
-
-        <div className="mx-auto w-full max-w-[1240px] space-y-2.5 px-5">
-          <Reveal>
-            <div className="border-canvas-card-stroke grid overflow-hidden rounded-[32px] border sm:grid-cols-2 lg:grid-cols-3">
-              {surfaces.map((surface, i) => (
-                <div
-                  key={surface.title}
-                  className={cn(
-                    "border-canvas-card-stroke flex flex-col gap-3 p-8",
-                    (i + 1) % 3 !== 0 && "lg:border-r",
-                    (i + 1) % 2 !== 0 && "max-lg:sm:border-r",
-                    i < surfaces.length - 3 && "lg:border-b",
-                    i < surfaces.length - 2 && "max-lg:sm:border-b",
-                    i < surfaces.length - 1 && "max-sm:border-b",
-                  )}
-                >
-                  <div className="flex items-center gap-3">
-                    <surface.icon className="text-canvas-accent size-5 shrink-0" />
-                    <b className="text-white">{surface.title}</b>
-                    <span className="ml-auto font-mono text-[11px] text-white/45">{surface.format}</span>
-                  </div>
-                  <p className="text-[15px] leading-relaxed tracking-[-0.03em] text-[#afafaf]">
-                    {surface.description}
-                  </p>
-                  <span className="mt-auto text-[11px] tracking-wider text-white/45 uppercase">{surface.who}</span>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-
-          <Reveal delay={0.15} id="trust">
-            <div className="border-canvas-card-stroke grid overflow-hidden rounded-[32px] border sm:grid-cols-2">
-              <div className="border-canvas-card-stroke border-b p-8 sm:border-r sm:border-b-0">
-                <p className="text-[11px] tracking-wider text-white/45 uppercase">Ungrounded model</p>
-                <h3 className="mt-2 text-xl tracking-[-0.04em] text-white">Confidently wrong</h3>
-                <ul className="mt-5 space-y-3">
-                  {ungroundedPoints.map((point) => (
-                    <li key={point} className="text-[15px] leading-relaxed tracking-[-0.03em] text-[#afafaf]">
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="p-8">
-                <p className="text-canvas-accent text-[11px] tracking-wider uppercase">Through the Agent Layer</p>
-                <h3 className="mt-2 text-xl tracking-[-0.04em] text-white">Sourced and current</h3>
-                <ul className="mt-5 space-y-3">
-                  {groundedPoints.map((point) => (
-                    <li
-                      key={point}
-                      className="flex gap-2.5 text-[15px] leading-relaxed tracking-[-0.03em] text-white/85"
-                    >
-                      <Check className="text-canvas-accent mt-1 size-3.5 shrink-0" />
-                      {point}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </Reveal>
         </div>
       </section>
 

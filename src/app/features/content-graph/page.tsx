@@ -11,7 +11,6 @@ import { SiCloudflare, SiGithub, SiMarkdown, SiNetlify, SiVercel } from "react-i
 import {
   FeatureBanner,
   PartnerStrip,
-  ProcessCards,
   QuotePanels,
 } from "@/components/feature-template/feature-template";
 import type { ThallyIcon } from "@/components/icons";
@@ -164,55 +163,35 @@ function ProjectionBoard() {
   );
 }
 
-/** Small light mocks for the pastel process cards. */
-function AuthorVisual() {
-  return (
-    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
-      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">sending-jobs.mdx</p>
-      <div className="mt-3 space-y-2">
-        {["title: Sending a job", "surface: sdk", "concepts: [client, timeout]", "# Sending a job"].map((line) => (
-          <p key={line} className="rounded-lg bg-white/80 px-3 py-2.5 font-mono text-xs text-[#38332d]">
-            {line}
-          </p>
-        ))}
-      </div>
-      <p className="mt-3 text-center text-xs text-[#7c7b79]">Prose, code samples, and components in one file</p>
-    </div>
-  );
-}
-
-function GraphVisual() {
-  return (
-    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
-      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">One node, many edges</p>
-      <div className="mt-3 grid grid-cols-2 gap-2">
-        {["Concepts", "Code refs", "Product repos", "Surfaces"].map((item) => (
-          <p key={item} className="rounded-lg bg-white/80 px-3 py-3 text-center text-xs font-medium text-[#38332d]">
-            {item}
-          </p>
-        ))}
-      </div>
-      <p className="mt-3 text-center text-xs text-[#7c7b79]">Linked automatically on every build</p>
-    </div>
-  );
-}
-
-function PublishVisual() {
-  return (
-    <div className="rounded-2xl border border-white/70 bg-white/60 p-4">
-      <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">One URL</p>
-      <div className="mt-3 rounded-lg bg-[#1c1a17] p-3 font-mono text-[11px] leading-5">
-        <p className="text-white/70">GET /sdk/sending-jobs</p>
-        <p className="text-[#c6f24e]">GET /sdk/sending-jobs.md</p>
-        <p className="text-[#c6f24e]">GET /sdk/sending-jobs.json</p>
-      </div>
-      <div className="mt-3 flex items-center justify-between text-xs text-[#38332d]">
-        <span className="font-medium">llms.txt for agents</span>
-        <span className="rounded-full bg-[#38332d] px-2 py-0.5 text-[11px] text-white">always in sync</span>
-      </div>
-    </div>
-  );
-}
+/** Author -> Build -> Publish steps for the numbered workflow strip. */
+const workflowSteps: {
+  description: string;
+  icon: ThallyIcon;
+  label: string;
+  title: string;
+}[] = [
+  {
+    label: "Author",
+    title: "Author in MDX",
+    description:
+      "Write prose, code samples, and components in one MDX file per page. Frontmatter names the concepts and product surfaces the page covers.",
+    icon: Structured,
+  },
+  {
+    label: "Build",
+    title: "Thally builds the graph",
+    description:
+      "Every page becomes a node, linked to the concepts it defines, the code it references, and the product repositories that back it.",
+    icon: GitBranch,
+  },
+  {
+    label: "Publish",
+    title: "Publish to every reader",
+    description:
+      "One URL serves each reader the right format: rich HTML for people, Markdown and JSON for tools, llms.txt for agents. Same source, never out of step.",
+    icon: Globe,
+  },
+];
 
 export default function ContentGraphFeaturePage() {
   return (
@@ -229,37 +208,42 @@ export default function ContentGraphFeaturePage() {
         <ProjectionBoard />
       </FeatureBanner>
 
-      <div id="how">
-        <ProcessCards
-          title="One source. Many surfaces."
-          steps={[
-            {
-              label: "Author",
-              title: "Author in MDX",
-              subtitle: "Prose, code samples, and components in one MDX file per page.",
-              description:
-                "Write prose, code samples, and components in one MDX file per page. Frontmatter names the concepts and product surfaces the page covers.",
-              visual: <AuthorVisual />,
-            },
-            {
-              label: "Build",
-              title: "Thally builds the graph",
-              subtitle: "Every page becomes a node linked to concepts, code, and repositories.",
-              description:
-                "Every page becomes a node, linked to the concepts it defines, the code it references, and the product repositories that back it.",
-              visual: <GraphVisual />,
-            },
-            {
-              label: "Publish",
-              title: "Publish to every reader",
-              subtitle: "One URL serves each reader the right format, never out of step.",
-              description:
-                "One URL serves each reader the right format: rich HTML for people, Markdown and JSON for tools, llms.txt for agents. Same source, never out of step.",
-              visual: <PublishVisual />,
-            },
-          ]}
-        />
-      </div>
+      {/* Numbered workflow strip */}
+      <section id="how" className="bg-canvas py-[120px]">
+        <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
+          <SplitReveal as="h2" mode="chars" className="heading-section text-white">
+            One source. Many surfaces.
+          </SplitReveal>
+          <div className="bg-canvas-card-stroke mx-auto mt-8 h-px w-24" />
+        </div>
+        <div className="mx-auto w-full max-w-[1240px] px-5">
+          <div className="border-canvas-card-stroke grid overflow-hidden rounded-[32px] border sm:grid-cols-3">
+            {workflowSteps.map((step, i) => (
+              <Reveal
+                key={step.label}
+                delay={0.1 + i * 0.12}
+                distance={30}
+                className={[
+                  "border-canvas-card-stroke",
+                  i < 2 ? "sm:border-r" : "",
+                  i < 2 ? "max-sm:border-b" : "",
+                ].join(" ")}
+              >
+                <div className="flex h-full flex-col gap-5 p-10">
+                  <p className="text-canvas-muted-2 font-mono text-xs tracking-widest uppercase">
+                    Step 0{i + 1} · {step.label}
+                  </p>
+                  <step.icon className="text-canvas-foreground size-7" />
+                  <h3 className="text-xl tracking-[-0.04em] text-white">{step.title}</h3>
+                  <p className="text-canvas-muted text-[15px] leading-relaxed tracking-[-0.03em]">
+                    {step.description}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
       <QuotePanels
         title="Author once. Let the graph do the rest."
