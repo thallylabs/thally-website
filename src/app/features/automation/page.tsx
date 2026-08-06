@@ -11,7 +11,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SiCloudflare, SiDocker, SiGithub, SiMarkdown, SiNetlify, SiVercel } from "react-icons/si";
 
-import { FeatureBanner, PartnerStrip } from "@/components/feature-template/feature-template";
+import { BannerBoard, FeatureBanner, PartnerStrip } from "@/components/feature-template/feature-template";
 import { ArrowRight, Check, GitPullRequest } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
@@ -99,58 +99,119 @@ const withAutomation = [
   "Every surface regenerates together: humans and agents stay in sync.",
 ] as const;
 
-/** Static merge-to-draft board shown inside the banner's glass frame. */
+/** Dense merge-to-draft board shown inside the banner's glass frame. */
 function MergeBoard() {
   return (
-    <div className="grid gap-3 bg-[#07090d] p-5 sm:grid-cols-3 sm:p-8">
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-        <p className="text-[11px] tracking-wider text-white/45 uppercase">Merge detected · jahce/bono</p>
-        <p className="mt-2 font-mono text-sm text-white/90">DEFAULT_TIMEOUT_MS 30000 → 60000</p>
-        <p className="mt-3 text-xs leading-relaxed text-white/50">
-          event: pull_request.closed · merged: true, on the watched default branch
-        </p>
-        <span className="text-canvas-accent bg-canvas-accent/10 mt-4 inline-block rounded-full px-2.5 py-1 text-[11px] font-medium">
-          merge to main
-        </span>
-      </div>
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-        <p className="text-[11px] tracking-wider text-white/45 uppercase">Thally analyzes</p>
-        <div className="mt-2 space-y-2">
-          {[
-            ["/sdk/configuration", "affected"],
-            ["/guides/long-running-jobs", "affected"],
-            ["/guides/quickstart", "no change"],
-          ].map(([page, verdict]) => (
-            <div key={page} className="flex items-center justify-between rounded-lg border border-white/10 px-3 py-2.5">
-              <span className="font-mono text-xs text-white/80">{page}</span>
-              <span
-                className={
-                  verdict === "no change" ? "text-[11px] text-white/40" : "text-canvas-accent text-[11px] font-medium"
-                }
-              >
-                {verdict}
-              </span>
-            </div>
-          ))}
-        </div>
-        <p className="mt-3 text-xs text-white/50">The Content Graph matches the change to affected docs</p>
-      </div>
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-        <p className="text-[11px] tracking-wider text-white/45 uppercase">Draft PR opened</p>
-        <p className="mt-2 flex items-center gap-2 font-mono text-sm text-white/90">
-          <GitPullRequest className="text-canvas-accent size-4 shrink-0" />
-          docs: default timeout is now 60s
-        </p>
-        <div className="mt-3 rounded-lg bg-black/50 p-3 font-mono text-[11px] leading-5">
-          <p className="text-red-300/70">- The client waits 30 seconds.</p>
-          <p className="text-canvas-accent">+ The client waits 60 seconds.</p>
-        </div>
-        <p className="mt-3 flex items-center gap-1.5 text-xs text-white/50">
-          <Check className="text-canvas-accent size-3.5" />
-          jahce/dabs #291 · opened by thally-bot · needs 1 review
-        </p>
-      </div>
-    </div>
+    <BannerBoard
+      columns={[
+        [
+          { kind: "summary", progress: 68, avatars: 4, links: 10, comments: 2 },
+          {
+            kind: "task",
+            chips: [
+              { label: "Merged", tone: "low" },
+              { label: "jahce/bono", tone: "kind" },
+            ],
+            id: "#517",
+            title: "DEFAULT_TIMEOUT_MS 30000 to 60000",
+            desc: "pull_request.closed · merged on the watched default branch",
+            mono: true,
+            avatars: 2,
+            links: 2,
+            comments: 13,
+          },
+          { kind: "filler", h: 120 },
+        ],
+        [
+          {
+            kind: "visual",
+            chips: [
+              { label: "High", tone: "high" },
+              { label: "Analysis", tone: "purple" },
+            ],
+            id: "D-202",
+            icon: <GitPullRequest className="text-canvas-accent size-9" />,
+            title: "Thally analyzes the change",
+            desc: "The Content Graph matches the diff to affected docs.",
+          },
+          {
+            kind: "task",
+            chips: [
+              { label: "Affected", tone: "med" },
+              { label: "SDK", tone: "kind" },
+            ],
+            title: "/sdk/configuration",
+            desc: "Default timeout documented at 30 seconds.",
+            mono: true,
+            progress: 40,
+            avatars: 3,
+            links: 1,
+            comments: 8,
+          },
+          { kind: "filler", h: 140 },
+        ],
+        [
+          {
+            kind: "checklist",
+            chips: [
+              { label: "High", tone: "high" },
+              { label: "Docs PR", tone: "kind" },
+            ],
+            id: "#291",
+            title: "docs: default timeout is now 60s",
+            desc: "Opened by thally-bot · needs 1 review",
+            items: [
+              { label: "/sdk/configuration updated", done: true },
+              { label: "/guides/long-running-jobs updated", done: true },
+              { label: "Changelog entry drafted" },
+            ],
+          },
+          { kind: "filler", h: 110 },
+          {
+            kind: "task",
+            chips: [
+              { label: "No change", tone: "kind" },
+              { label: "Guides", tone: "kind" },
+            ],
+            title: "/guides/quickstart",
+            desc: "Evidence says nothing to update here.",
+            mono: true,
+            avatars: 2,
+          },
+        ],
+        [
+          {
+            kind: "task",
+            chips: [
+              { label: "Review", tone: "low" },
+              { label: "Human", tone: "kind" },
+            ],
+            id: "A-203",
+            title: "Approve and merge",
+            desc: "Nothing publishes until a human approves it.",
+            progress: 90,
+            avatars: 4,
+            links: 10,
+            comments: 2,
+          },
+          {
+            kind: "task",
+            chips: [
+              { label: "Medium", tone: "med" },
+              { label: "Changelog", tone: "kind" },
+            ],
+            id: "A-205",
+            title: "Draft release note",
+            desc: "Timeout change, retries, and defaults.",
+            progress: 100,
+            avatars: 3,
+            links: 10,
+            comments: 2,
+          },
+          { kind: "filler", h: 130 },
+        ],
+      ]}
+    />
   );
 }
 
