@@ -157,7 +157,7 @@ export function ProcessCards({ title, steps }: { title?: string; steps: ProcessS
 
   return (
     <section
-      className="relative overflow-hidden rounded-[60px] py-[120px]"
+      className="relative rounded-[60px] py-[120px]"
       style={{
         backgroundImage: "url(/template/feature-bg.webp)",
         backgroundSize: "cover",
