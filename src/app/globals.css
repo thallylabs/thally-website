@@ -195,6 +195,38 @@
 }
 
 /*
+ * A scope that restores the light theme's tokens inside the forced-dark
+ * site, for sections that render on the daylight illustration.
+ */
+.light-island {
+  --background: oklch(0.99 0.007 106);
+  --foreground: oklch(0.235 0.017 138);
+  --card-foreground: oklch(0.235 0.017 138);
+  --card: oklch(1 0 0);
+  --popover-foreground: oklch(0.235 0.017 138);
+  --popover: oklch(0.99 0.007 106);
+  --primary: oklch(0.235 0.017 138);
+  --primary-foreground: oklch(0.99 0.007 106);
+  --secondary: oklch(0.95 0.008 107);
+  --secondary-foreground: oklch(0.3 0.015 138);
+  --muted: oklch(0.95 0.008 107);
+  --muted-foreground: oklch(0.5 0.013 140);
+  --accent: oklch(0.955 0.009 138);
+  --accent-foreground: oklch(0.28 0.015 138);
+  --accent-2: oklch(0.55 0.14 292);
+  --destructive: oklch(0.619 0.212 20);
+  --border: oklch(0.235 0.017 138 / 0.1);
+  --input: oklch(0.89 0.008 120);
+  --ring: oklch(0.5 0.07 165);
+  --chart-1: oklch(0.8 0.19 124);
+  --chart-2: oklch(0.5 0.12 165);
+  --chart-3: oklch(0.55 0.14 292);
+  --chart-4: oklch(0.66 0.16 132);
+  --chart-5: oklch(0.54 0.1 150);
+  color: var(--foreground);
+}
+
+/*
  * Marketing canvas tokens ported from the Sireny template, adapted to
  * the Thally brand (lime primary accent instead of the template blue).
  */

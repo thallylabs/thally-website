@@ -3,22 +3,9 @@
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { useRef } from "react";
 
-import { Check } from "@/components/icons";
 import { ThallyMark } from "@/components/layout/logo";
 import { Reveal } from "@/components/motion/reveal";
-import { SplitReveal } from "@/components/motion/split-reveal";
-
-const SOURCES = ["Mintlify", "Docusaurus", "GitBook", "Nextra", "VitePress", "Starlight", "Markdown"];
-const TARGETS = ["Vercel", "Netlify", "Cloudflare", "Docker", "Static export"];
-
-const MIGRATION_LOG = [
-  "$ npx create-thally-docs migrate github.com/acme/docs",
-  "Detected Mintlify (mint.json)",
-  "52 pages converted to clean MDX",
-  "Navigation rebuilt, redirects carried over",
-  "OpenAPI spec wired to the API Reference tab",
-  "$ cd acme-docs && npm run dev",
-];
+import { Migrate } from "@/components/sections/migrate";
 
 /**
  * Template "ready-made-section", faithful mechanics: a sticky viewport
@@ -80,83 +67,18 @@ export function Daybreak() {
       {/* Cushion: the full-bleed image holds the screen alone here */}
       <div aria-hidden className="h-[75vh]" />
 
-      {/* Light content scrolling over the pinned full-bleed image */}
-      <div className="relative z-10">
-        <div className="mx-auto w-full max-w-[1480px] px-5 pt-[8vh] pb-[120px]">
-          <div className="mx-auto max-w-[735px] text-center">
-            <SplitReveal as="h2" mode="chars" className="heading-section text-canvas-cream-foreground">
-              Bring your existing docs to Thally.
-            </SplitReveal>
-            <Reveal delay={0.15} distance={20}>
-              <p className="text-canvas-cream-foreground/75 mt-5 text-lg">
-                Use Thally Cloud to migrate a public docs site, or run the CLI against a GitHub repository. Either
-                path creates editable MDX and a Thally project you control.
-              </p>
-            </Reveal>
-          </div>
+      {/* The original migration section, restored on a light token
+          island so it keeps its daylight look inside the forced-dark
+          site, scrolling over the pinned full-bleed image. */}
+      <div className="light-island bg-background relative z-10">
+        <Migrate />
+      </div>
 
-          {/* Frosted glass cards, template ready-made-image blocks */}
-          <div className="mt-14 flex flex-col justify-center gap-2.5 lg:flex-row">
-            <Reveal className="rounded-[35px] border border-white bg-white/60 p-6 backdrop-blur-lg lg:max-w-[467px]">
-              <p className="text-canvas-cream-foreground text-sm font-semibold tracking-widest uppercase">
-                Migrate from
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {SOURCES.map((source) => (
-                  <span
-                    key={source}
-                    className="border-canvas-cream-foreground/15 text-canvas-cream-foreground rounded-full border bg-white/70 px-3.5 py-1.5 text-sm font-medium"
-                  >
-                    {source}
-                  </span>
-                ))}
-              </div>
-              <p className="text-canvas-cream-foreground mt-8 text-sm font-semibold tracking-widest uppercase">
-                Deploy to
-              </p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {TARGETS.map((target) => (
-                  <span
-                    key={target}
-                    className="border-canvas-cream-foreground/15 text-canvas-cream-muted rounded-full border px-3.5 py-1.5 text-sm font-medium"
-                  >
-                    {target}
-                  </span>
-                ))}
-              </div>
-            </Reveal>
-
-            <Reveal
-              delay={0.3}
-              className="w-full rounded-[35px] border border-white bg-white/60 p-6 backdrop-blur-lg lg:max-w-[763px]"
-            >
-              <div className="rounded-2xl bg-[#101410] p-5 font-mono text-[13px] leading-7">
-                {MIGRATION_LOG.map((line) => (
-                  <p key={line} className={line.startsWith("$") ? "text-white" : "text-canvas-accent"}>
-                    {line.startsWith("$") ? (
-                      line
-                    ) : (
-                      <>
-                        <Check className="mr-2 inline size-3.5" />
-                        {line}
-                      </>
-                    )}
-                  </p>
-                ))}
-              </div>
-              <p className="text-canvas-cream-muted mt-4 px-1 text-sm">
-                Self-host the MIT-licensed engine, or let Thally Cloud build and publish it for you.
-              </p>
-            </Reveal>
-          </div>
-
-          {/* Large display line, template Smarter-Calmer treatment */}
-          <div className="pt-24 pb-4 text-center">
-            <Reveal distance={60}>
-              <p className="heading-display text-canvas-cream-foreground/90">Smarter. Calmer. Current.</p>
-            </Reveal>
-          </div>
-        </div>
+      {/* Large display line, template Smarter-Calmer treatment */}
+      <div className="relative z-10 pt-16 pb-4 text-center">
+        <Reveal distance={60}>
+          <p className="heading-display text-canvas-cream-foreground/90">Smarter. Calmer. Current.</p>
+        </Reveal>
       </div>
     </section>
   );
