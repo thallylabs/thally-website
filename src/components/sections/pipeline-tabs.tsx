@@ -4,39 +4,46 @@ import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "motion
 import { useRef, useState } from "react";
 
 import { Check, GitBranch, GitPullRequest, Structured, Track } from "@/components/icons";
+import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
 import { cn } from "@/lib/utils";
 
 const STAGES = [
   {
-    number: "01",
-    title: "Connect your repositories",
-    description:
-      "Install the read-only GitHub App and choose the product repos Thally should watch. Setup happens once.",
+    number: "01.",
+    label: "Connect repositories",
+    title: "Set it up once. It runs on every merge.",
+    body: "Install the read-only GitHub App and choose the product repos Thally should watch. You choose exactly what Thally can see.",
+    icon: GitBranch,
   },
   {
-    number: "02",
-    title: "Understand every merge",
-    description:
-      "Track evaluates merged changes, gathers evidence, and finds the documentation each change affects.",
+    number: "02.",
+    label: "Impact analysis",
+    title: "Understand the change before the update.",
+    body: "Track evaluates merged changes, gathers evidence, and finds the documentation each change affects.",
+    icon: Track,
   },
   {
-    number: "03",
-    title: "Draft the update",
-    description:
-      "Thally opens an evidence-backed pull request on your docs repo, only when the evidence says one is needed.",
+    number: "03.",
+    label: "Drafted docs PRs",
+    title: "Evidence-backed drafts, ready to review.",
+    body: "Thally opens a pull request on your docs repo only when the evidence says an update is needed.",
+    icon: GitPullRequest,
   },
   {
-    number: "04",
-    title: "You approve what ships",
-    description: "Your team reviews, edits, and merges. A no-change result is valid. Thally never pushes to main.",
+    number: "04.",
+    label: "Human review",
+    title: "You approve what ships. Every time.",
+    body: "Your team reviews, edits, and merges. A no-change result is valid. Thally never pushes to main.",
+    icon: Structured,
   },
 ];
 
 /**
- * Template "automation-section": a tall scroll-driven section with a
- * sticky viewport. Left tab titles highlight and right visuals swap as
- * scrolling progresses through four stages.
+ * Template "automation-section": centered bordered section header, then
+ * a 400vh sticky runway pinning two large hairline cards. The left card
+ * crossfades a per-stage headline above a divider tab list; the right
+ * card has the icon tab pill row and a large visual area.
  */
 export function PipelineTabs() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -54,90 +61,130 @@ export function PipelineTabs() {
   });
 
   return (
-    <section id="automation" ref={sectionRef} className="bg-canvas relative lg:h-[320vh]">
-      <div className="lg:sticky lg:top-0 lg:flex lg:h-screen lg:items-center">
-        <div className="mx-auto w-full max-w-[1480px] px-5 py-20 lg:py-0">
-          <div className="max-w-2xl">
-            <p className="text-canvas-accent text-sm font-medium tracking-widest uppercase">
-              Product change intelligence
+    <section id="automation" className="bg-canvas pt-[120px]">
+      {/* Centered section header with hairline divider */}
+      <div className="mb-[60px] border-b border-white/18 pb-[60px]">
+        <div className="mx-auto max-w-[746px] px-5 text-center">
+          <p className="text-canvas-accent text-sm font-medium tracking-widest uppercase">
+            Product change intelligence
+          </p>
+          <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
+            One product change. The right knowledge updates.
+          </SplitReveal>
+          <Reveal delay={0.15} distance={20}>
+            <p className="mt-5 text-lg text-white/90">
+              Thally watches the repos you choose and drafts only the updates the evidence supports.
             </p>
-            <SplitReveal as="h2" mode="chars" className="heading-section mt-3 text-white">
-              One product change. The right knowledge updates.
-            </SplitReveal>
-          </div>
+          </Reveal>
+        </div>
+      </div>
 
-          <div className="mt-12 grid gap-10 lg:grid-cols-[5fr_7fr] lg:gap-16">
-            {/* Stage list */}
-            <div className="flex flex-col justify-center gap-2">
-              {STAGES.map((stage, i) => (
-                <button
-                  key={stage.number}
-                  type="button"
-                  onClick={() => setActive(i)}
-                  aria-current={active === i}
-                  className={cn(
-                    "group rounded-2xl border border-transparent p-5 text-left transition-all duration-300",
-                    active === i ? "border-canvas-hairline bg-white/[0.04]" : "hover:bg-white/[0.02]",
-                  )}
-                >
-                  <div className="flex items-baseline gap-4">
-                    <span
-                      className={cn(
-                        "font-mono text-sm transition-colors",
-                        active === i ? "text-canvas-accent" : "text-canvas-muted-2",
-                      )}
-                    >
-                      {stage.number}
-                    </span>
-                    <div>
-                      <h3
+      {/* Sticky runway */}
+      <div ref={sectionRef} className="relative lg:h-[400vh]">
+        <div className="lg:sticky lg:top-[60px] lg:h-[90vh]">
+          <div className="mx-auto flex h-full w-full max-w-[1480px] flex-col gap-2.5 px-5 pb-10 lg:flex-row">
+            {/* Left card */}
+            <div className="border-canvas-card-stroke flex w-full flex-col justify-between gap-10 rounded-[35px] border p-7 sm:p-10">
+              {/* Crossfading per-stage headline, template .automation-left-title stack */}
+              <div className="relative min-h-[220px] sm:min-h-[240px]">
+                {STAGES.map((stage, i) => (
+                  <motion.div
+                    key={stage.number}
+                    initial={false}
+                    animate={{ opacity: active === i ? 1 : 0 }}
+                    transition={{ duration: reduced ? 0 : 0.5 }}
+                    className={cn("absolute inset-0 flex max-w-[513px] flex-col gap-6", active !== i && "pointer-events-none")}
+                  >
+                    <h3 className="heading-card text-left text-white">{stage.title}</h3>
+                    <p className="text-lg tracking-[-0.04em] text-[#afafaf]">{stage.body}</p>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Divider tab list, template .automation-tab-block */}
+              <div className="flex flex-col gap-8">
+                {STAGES.map((stage, i) => (
+                  <button
+                    key={stage.number}
+                    type="button"
+                    onClick={() => setActive(i)}
+                    aria-current={active === i}
+                    className="border-b border-[#383838] pb-5 text-left"
+                  >
+                    <span className="flex items-end gap-3">
+                      <span
                         className={cn(
-                          "text-lg font-semibold tracking-tight transition-colors",
-                          active === i ? "text-white" : "text-canvas-muted",
+                          "font-mono text-lg transition-colors duration-500",
+                          active === i ? "text-canvas-accent" : "text-[#7c7b79]",
                         )}
                       >
-                        {stage.title}
-                      </h3>
-                      <motion.div
-                        initial={false}
-                        animate={{
-                          height: active === i || reduced ? "auto" : 0,
-                          opacity: active === i || reduced ? 1 : 0,
-                        }}
-                        transition={{ duration: reduced ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] }}
-                        className="overflow-hidden"
+                        {stage.number}
+                      </span>
+                      <span
+                        className={cn(
+                          "text-xl tracking-[-0.04em] transition-colors duration-500",
+                          active === i ? "text-white" : "text-[#afafaf]",
+                        )}
                       >
-                        <p className="text-canvas-muted mt-1.5 text-sm leading-relaxed">{stage.description}</p>
-                      </motion.div>
-                    </div>
-                  </div>
-                </button>
-              ))}
-              <p className="text-canvas-muted-2 mt-4 pl-5 text-sm">
-                A no-change result is valid. Thally never pushes to main.
-              </p>
+                        {stage.label}
+                      </span>
+                    </span>
+                    <motion.div
+                      initial={false}
+                      animate={{
+                        height: active === i || reduced ? "auto" : 0,
+                        opacity: active === i || reduced ? 1 : 0,
+                      }}
+                      transition={{ duration: reduced ? 0 : 0.5, ease: [0.22, 1, 0.36, 1] }}
+                      className="overflow-hidden"
+                    >
+                      <p className="max-w-md pt-3 text-[15px] leading-relaxed tracking-[-0.03em] text-[#afafaf]">
+                        {stage.body}
+                      </p>
+                    </motion.div>
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {/* Stage visual */}
-            <div className="border-canvas-hairline relative min-h-[420px] overflow-hidden rounded-[28px] border">
-              <div
-                aria-hidden
-                className="absolute inset-0 bg-gradient-to-br from-[#0a1410] via-[#02050c] to-[#0b0916]"
-              />
-              {STAGES.map((_, i) => (
-                <motion.div
-                  key={i}
-                  initial={false}
-                  animate={{ opacity: active === i ? 1 : 0, y: active === i ? 0 : 24 }}
-                  transition={{ duration: reduced ? 0 : 0.45, ease: [0.22, 1, 0.36, 1] }}
-                  className={cn(
-                    "absolute inset-0 flex transform-gpu items-center justify-center p-6 will-change-transform sm:p-10",
-                    active !== i && "pointer-events-none",
-                  )}
-                >
-                  <StageVisual index={i} />
-                </motion.div>
-              ))}
+            {/* Right card */}
+            <div className="border-canvas-card-stroke flex w-full flex-col items-center overflow-hidden rounded-[35px] border p-7 sm:p-10">
+              {/* Icon tab pill row, template .automated-right-tab */}
+              <div className="border-canvas-card-stroke flex items-center gap-1 rounded-full border p-1.5">
+                {STAGES.map((stage, i) => (
+                  <button
+                    key={stage.number}
+                    type="button"
+                    onClick={() => setActive(i)}
+                    aria-label={stage.label}
+                    aria-current={active === i}
+                    className={cn(
+                      "flex size-[52px] items-center justify-center rounded-full transition-colors duration-500",
+                      active === i ? "bg-[#222222] text-white" : "text-[#7c7b79] hover:text-white",
+                    )}
+                  >
+                    <stage.icon className="size-5" />
+                  </button>
+                ))}
+              </div>
+
+              {/* Visual area */}
+              <div className="relative my-auto min-h-[420px] w-full sm:min-h-[460px]">
+                {STAGES.map((_, i) => (
+                  <motion.div
+                    key={i}
+                    initial={false}
+                    animate={{ opacity: active === i ? 1 : 0, y: active === i ? 0 : 24 }}
+                    transition={{ duration: reduced ? 0 : 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    className={cn(
+                      "absolute inset-0 flex transform-gpu items-center justify-center will-change-transform",
+                      active !== i && "pointer-events-none",
+                    )}
+                  >
+                    <StageVisual index={i} />
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -153,7 +200,7 @@ function StageVisual({ index }: { index: number }) {
         {["acme/api", "acme/web-app", "acme/docs"].map((repo, i) => (
           <div
             key={repo}
-            className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3"
+            className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3.5"
           >
             <span className="font-mono text-sm text-white/85">{repo}</span>
             <span className="flex items-center gap-1.5 text-xs text-white/50">
@@ -183,7 +230,7 @@ function StageVisual({ index }: { index: number }) {
           ].map(([page, verdict]) => (
             <div
               key={page}
-              className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-2.5"
+              className="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3"
             >
               <span className="font-mono text-xs text-white/75">{page}</span>
               <span
@@ -220,7 +267,7 @@ function StageVisual({ index }: { index: number }) {
 
   return (
     <Panel title="Awaiting your review" icon={<Structured className="text-canvas-accent size-4" />}>
-      <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3">
+      <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3.5">
         <div className="flex items-center justify-between">
           <p className="font-mono text-sm text-white/85">docs#84 · webhook secrets</p>
           <span className="bg-canvas-accent/15 text-canvas-accent rounded-full px-2 py-0.5 text-[11px] font-medium">
@@ -229,10 +276,10 @@ function StageVisual({ index }: { index: number }) {
         </div>
       </div>
       <div className="flex gap-2">
-        <span className="bg-canvas-accent text-canvas flex-1 rounded-xl px-4 py-2.5 text-center text-sm font-semibold">
+        <span className="bg-canvas-accent text-canvas flex-1 rounded-xl px-4 py-3 text-center text-sm font-semibold">
           Approve &amp; merge
         </span>
-        <span className="flex-1 rounded-xl border border-white/15 px-4 py-2.5 text-center text-sm font-medium text-white/70">
+        <span className="flex-1 rounded-xl border border-white/15 px-4 py-3 text-center text-sm font-medium text-white/70">
           Request changes
         </span>
       </div>
@@ -243,7 +290,7 @@ function StageVisual({ index }: { index: number }) {
 
 function Panel({ title, icon, children }: { title: string; icon: React.ReactNode; children: React.ReactNode }) {
   return (
-    <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#0a0d13] p-5">
+    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#0a0d13] p-6">
       <div className="mb-4 flex items-center gap-2">
         {icon}
         <span className="text-sm font-medium text-white/80">{title}</span>
