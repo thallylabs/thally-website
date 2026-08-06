@@ -67,10 +67,9 @@ export function Daybreak() {
       {/* Cushion: the full-bleed image holds the screen alone here */}
       <div aria-hidden className="h-[75vh]" />
 
-      {/* The original migration section, restored on a light token
-          island so it keeps its daylight look inside the forced-dark
-          site, scrolling over the pinned full-bleed image. */}
-      <div className="light-island bg-background relative z-10">
+      {/* The original migration section on a light token island, kept
+          transparent so it rides directly on the pinned pastel scene. */}
+      <div className="light-island relative z-10">
         <Migrate />
       </div>
 
