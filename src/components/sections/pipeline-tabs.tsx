@@ -191,9 +191,13 @@ export function PipelineTabs() {
 }
 
 function StageVisual({ index }: { index: number }) {
-  // Stage 01 uses the Thally-labeled workflow diagram; the rest keep
+  // Stages 01 and 02 use the Thally-labeled diagrams; the rest keep
   // the template's automate illustrations.
-  const src = index === 0 ? "/template/workflow-diagram.png" : `/template/automate-image-0${index + 1}.webp`;
+  const BRANDED: Record<number, string> = {
+    0: "/template/workflow-diagram.png",
+    1: "/template/impact-analysis-diagram.png",
+  };
+  const src = BRANDED[index] ?? `/template/automate-image-0${index + 1}.webp`;
   return (
     <img
       src={src}
