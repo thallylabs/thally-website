@@ -51,8 +51,8 @@ export function CTA() {
         <Reveal delay={0.2} className="border-canvas-card-stroke -mb-[200px] rounded-[40px] border p-3">
           <div className="overflow-hidden rounded-[28px] bg-black/40 backdrop-blur-xl">
             <img
-              src="/images/admin-dashboard-1600.webp"
-              alt="Thally Cloud dashboard showing sites, docs tasks, and analytics"
+              src="/images/cloud-dashboard-dark-2000.webp"
+              alt="Thally Cloud dashboard home showing readiness, activity, and site status"
               className="w-full"
             />
           </div>
