@@ -194,7 +194,7 @@ export function FeatureBanner({
                 {secondaryCta && (
                   <Link
                     href={secondaryCta.href}
-                    className="inline-flex items-center gap-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
+                    className="inline-flex min-h-11 items-center gap-2 px-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
                   >
                     {secondaryCta.label}
                     <ArrowRight className="size-4" />
@@ -386,8 +386,8 @@ function BoardCardView({ card }: { card: BoardCard }) {
     return (
       <div className={base}>
         {card.chips && (
-          <div className="flex items-center justify-between">
-            <span className="flex gap-1">
+          <div className="flex flex-wrap items-center justify-between gap-1">
+            <span className="flex min-w-0 flex-wrap gap-1">
               {card.chips.map((chip) => (
                 <span
                   key={chip.label}
@@ -404,8 +404,8 @@ function BoardCardView({ card }: { card: BoardCard }) {
           {card.icon}
           <span className="font-mono text-[9px] tracking-wide text-white/30">preview</span>
         </div>
-        <p className="mt-2.5 text-[13px] font-semibold text-white">{card.title}</p>
-        {card.desc && <p className="mt-0.5 text-[11px] text-white/50">{card.desc}</p>}
+        <p className="mt-2.5 text-[13px] font-semibold break-words text-white">{card.title}</p>
+        {card.desc && <p className="mt-0.5 text-[11px] break-words text-white/50">{card.desc}</p>}
       </div>
     );
   }
@@ -413,8 +413,8 @@ function BoardCardView({ card }: { card: BoardCard }) {
   if (card.kind === "checklist") {
     return (
       <div className={base}>
-        <div className="flex items-center justify-between">
-          <span className="flex gap-1">
+        <div className="flex flex-wrap items-center justify-between gap-1">
+          <span className="flex min-w-0 flex-wrap gap-1">
             {card.chips.map((chip) => (
               <span
                 key={chip.label}
@@ -426,11 +426,11 @@ function BoardCardView({ card }: { card: BoardCard }) {
           </span>
           {card.id && <span className="text-[10px] text-white/40">{card.id}</span>}
         </div>
-        <p className="mt-2 text-[13px] font-semibold text-white">{card.title}</p>
-        {card.desc && <p className="mt-0.5 text-[11px] text-white/50">{card.desc}</p>}
+        <p className="mt-2 text-[13px] font-semibold break-words text-white">{card.title}</p>
+        {card.desc && <p className="mt-0.5 text-[11px] break-words text-white/50">{card.desc}</p>}
         <div className="mt-2.5 space-y-1.5 border-t border-white/8 pt-2.5">
           {card.items.map((item) => (
-            <p key={item.label} className="flex items-center gap-2 text-[11px] text-white/60">
+            <p key={item.label} className="flex items-center gap-2 text-[11px] break-words text-white/60">
               {item.done ? (
                 <span className="text-canvas-accent text-[11px] leading-none">&#10003;</span>
               ) : (
@@ -449,8 +449,8 @@ function BoardCardView({ card }: { card: BoardCard }) {
 
   return (
     <div className={base}>
-      <div className="flex items-center justify-between">
-        <span className="flex gap-1">
+      <div className="flex flex-wrap items-center justify-between gap-1">
+        <span className="flex min-w-0 flex-wrap gap-1">
           {card.chips.map((chip) => (
             <span
               key={chip.label}
@@ -462,10 +462,15 @@ function BoardCardView({ card }: { card: BoardCard }) {
         </span>
         {card.id && <span className="text-[10px] text-white/40">{card.id}</span>}
       </div>
-      <p className={cn("mt-2 text-[13px] font-semibold text-white", card.mono && "font-mono font-normal")}>
+      <p
+        className={cn(
+          "mt-2 text-[13px] font-semibold break-words text-white",
+          card.mono && "font-mono font-normal",
+        )}
+      >
         {card.title}
       </p>
-      {card.desc && <p className="mt-0.5 text-[11px] text-white/50">{card.desc}</p>}
+      {card.desc && <p className="mt-0.5 text-[11px] break-words text-white/50">{card.desc}</p>}
       {card.progress !== undefined && (
         <div className="mt-2.5">
           <div className="flex items-center justify-between text-[10px] text-white/45">
@@ -550,12 +555,13 @@ export function ProcessCards({ title, steps }: { title?: string; steps: ProcessS
         )}
 
         {/* Sticky number rail, template .process-number-block */}
-        <div className="sticky top-[110px] z-20 mb-10 flex gap-10 max-sm:gap-4">
+        {/* Scrolls rather than overflowing once the labels stop fitting. */}
+        <div className="sticky top-[110px] z-20 mb-10 flex gap-10 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] max-sm:gap-3 [&::-webkit-scrollbar]:hidden">
           {steps.map((step, i) => (
-            <span key={step.label} className="flex items-center gap-3">
+            <span key={step.label} className="flex shrink-0 items-center gap-3 max-sm:gap-2">
               <span
                 className={cn(
-                  "flex size-[33px] items-center justify-center rounded-full border text-sm transition-colors duration-500",
+                  "flex size-[33px] shrink-0 items-center justify-center rounded-full border text-sm transition-colors duration-500 max-sm:size-7 max-sm:text-xs",
                   active === i
                     ? "border-[#38332d] text-[#0a0a0a]"
                     : "border-[#b4afaf] text-[#afafaf]",
@@ -565,7 +571,7 @@ export function ProcessCards({ title, steps }: { title?: string; steps: ProcessS
               </span>
               <span
                 className={cn(
-                  "text-xl tracking-[-0.04em] transition-colors duration-500",
+                  "text-xl whitespace-nowrap tracking-[-0.04em] transition-colors duration-500 max-sm:text-[15px]",
                   active === i ? "text-[#0a0a0a]" : "text-[#afafaf]",
                 )}
               >
@@ -585,7 +591,9 @@ export function ProcessCards({ title, steps }: { title?: string; steps: ProcessS
             >
               <div className="flex max-w-[655px] flex-col justify-between gap-10">
                 <div className="flex flex-col gap-6 text-[#38332d]">
-                  <h3 className="font-display text-4xl tracking-[-0.04em] sm:text-5xl">{step.title}</h3>
+                  <h3 className="font-display text-3xl tracking-[-0.04em] break-words sm:text-5xl min-[400px]:text-4xl">
+                    {step.title}
+                  </h3>
                   <p className="font-display text-2xl font-light tracking-[-0.04em] sm:text-[28px]">
                     {step.subtitle}
                   </p>

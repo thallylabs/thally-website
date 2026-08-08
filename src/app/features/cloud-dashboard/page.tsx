@@ -483,7 +483,7 @@ export default function CloudDashboardFeaturePage() {
             </a>
             <Link
               href="/features/automation"
-              className="inline-flex items-center gap-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
+              className="inline-flex min-h-11 items-center gap-2 px-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
             >
               See how drafts arrive
               <ArrowRight className="size-4" />

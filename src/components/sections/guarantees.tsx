@@ -49,7 +49,7 @@ const GUARANTEES = [
 
 function GuaranteeCard({ item }: { item: (typeof GUARANTEES)[number] }) {
   return (
-    <div className="w-[340px] shrink-0 rounded-[25px] border border-white bg-[#f6f2ea]/90 p-6 sm:w-[430px]">
+    <div className="w-[min(340px,calc(100vw-2.5rem))] shrink-0 rounded-[25px] border border-white bg-[#f6f2ea]/90 p-6 sm:w-[430px]">
       <p className="text-canvas-cream-foreground text-base leading-relaxed font-medium">{item.title}</p>
       <p className="text-canvas-cream-muted mt-2.5 text-sm leading-relaxed">{item.body}</p>
       <div className="mt-5 border-t border-[#bdbdbd] pt-4">

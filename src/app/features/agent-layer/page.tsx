@@ -250,9 +250,9 @@ const MCP_TOOLS = [
 function McpToolsPanel() {
   return (
     <div className="mx-auto w-full max-w-md rounded-2xl border border-white/12 bg-black/45 p-5">
-      <div className="flex items-center justify-between gap-3">
-        <span className="flex items-center gap-2">
-          <Mcp className="size-4 text-white/45" />
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+        <span className="flex min-w-0 items-center gap-2">
+          <Mcp className="size-4 shrink-0 text-white/45" />
           <span className="text-sm text-white/75">MCP endpoint</span>
         </span>
         <span className="text-canvas-accent flex shrink-0 items-center gap-1.5 font-mono text-[11px]">
@@ -502,7 +502,7 @@ export default function AgentLayerFeaturePage() {
             </a>
             <Link
               href="/features/content-graph"
-              className="inline-flex items-center gap-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
+              className="inline-flex min-h-11 items-center gap-2 px-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
             >
               See where the formats come from
               <ArrowRight className="size-4" />

@@ -677,6 +677,13 @@
   width: 2.625rem;
 }
 
+/* Keep the switch visually 42x24 but give touch input a 44px-tall hit area. */
+.toggle::before {
+  content: "";
+  position: absolute;
+  inset: -0.625rem -0.125rem;
+}
+
 .toggle::after {
   background: var(--auto-surface);
   border-radius: 50%;

@@ -356,8 +356,22 @@
     animation-play-state: paused;
   }
   @media (prefers-reduced-motion: reduce) {
+    /* Without the scroll animation the duplicated track can never reveal its
+       tail, so drop the clip and let the cards wrap into a static grid. */
+    .guarantee-marquee {
+      overflow: visible;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
     .guarantee-marquee-track {
+      min-width: 0;
+      flex-shrink: 1;
+      flex-wrap: wrap;
+      justify-content: center;
       animation: none;
+    }
+    .guarantee-marquee-track[aria-hidden="true"] {
+      display: none;
     }
   }
 }
@@ -530,9 +544,13 @@ html.theme-transition::view-transition-new(root) {
   .logos-marquee {
     mask-image: none;
     overflow: visible;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   .logos-marquee-track {
     min-width: 0;
+    /* the track is shrink-0 for the animation; it must shrink to wrap here */
+    flex-shrink: 1;
     flex-wrap: wrap;
     justify-content: center;
     animation: none !important;
