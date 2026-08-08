@@ -86,7 +86,7 @@ export function FeatureBanner({
   /** Template banners carry a trusted-logos marquee under the CTA. */
   showTrusted?: boolean;
   /** How the copy and the board are arranged. */
-  layout?: "centered" | "split" | "offset";
+  layout?: "centered" | "split" | "reverse" | "offset" | "stage" | "bleed";
   finePrint?: string;
   /** Visual placed inside the glass banner frame. */
   children?: ReactNode;
@@ -131,23 +131,29 @@ export function FeatureBanner({
         className="pointer-events-none absolute top-[34%] right-[6%] h-[380px] w-[3px] rounded-full bg-gradient-to-b from-transparent via-amber-200/40 to-transparent blur-[1px]"
       />
 
-      <div className={cn("mx-auto w-full px-5", layout === "split" ? "max-w-[1560px]" : "max-w-[1480px]")}>
+      <div className={cn("mx-auto w-full px-5", layout === "split" ? "max-w-[1560px]" : "max-w-[1480px]", layout === "bleed" && "lg:overflow-hidden")}>
         <div
           className={cn(
-            layout === "split"
-              ? "grid items-center gap-14 lg:grid-cols-[1fr_1fr]"
+            layout === "bleed"
+              ? "grid items-center gap-12 lg:grid-cols-[minmax(0,420px)_1fr]"
+              : layout === "split" || layout === "reverse"
+                ? "grid items-center gap-14 lg:grid-cols-[1fr_1fr]"
               : layout === "offset"
                 ? "mb-[60px] grid max-w-[1240px] items-end gap-10 lg:grid-cols-[1.15fr_1fr]"
-                : "mx-auto mb-[60px] flex max-w-[1240px] flex-col items-center gap-8 text-center",
+                : layout === "stage"
+                  ? "mx-auto mb-[70px] flex max-w-[860px] flex-col items-center gap-7 text-center"
+                  : "mx-auto mb-[60px] flex max-w-[1240px] flex-col items-center gap-8 text-center",
           )}
         >
           <div
             className={cn(
               "flex flex-col gap-8",
-              layout === "centered" ? "items-center" : "items-start text-left",
+              layout === "centered" || layout === "stage" ? "items-center" : "items-start text-left",
+              layout === "bleed" && "lg:pr-4",
+              layout === "reverse" && "lg:order-last",
             )}
           >
-            <h1 className={cn("heading-hero text-white", layout === "centered" ? "max-w-4xl" : "max-w-[620px]")}>
+            <h1 className={cn("heading-hero text-white", layout === "centered" ? "max-w-4xl" : layout === "stage" ? "max-w-3xl" : layout === "bleed" ? "max-w-[420px]" : "max-w-[620px]")}>
               <SplitReveal as="span" mode="words" onMount>
                 {title}
               </SplitReveal>
@@ -163,19 +169,19 @@ export function FeatureBanner({
               )}
             </h1>
             <Reveal delay={0.35} distance={24}>
-              <p className={cn("text-lg text-[#afafaf]", layout === "centered" ? "mx-auto max-w-2xl" : "max-w-xl")}>
+              <p className={cn("text-lg text-[#afafaf]", layout === "centered" || layout === "stage" ? "mx-auto max-w-2xl" : "max-w-xl")}>
                 {description}
               </p>
             </Reveal>
             <Reveal
               delay={0.5}
               distance={20}
-              className={cn("flex flex-col gap-4", layout === "centered" ? "items-center" : "items-start")}
+              className={cn("flex flex-col gap-4", layout === "centered" || layout === "stage" ? "items-center" : "items-start")}
             >
               <span
                 className={cn(
                   "flex flex-wrap items-center gap-4",
-                  layout === "centered" && "justify-center",
+                  (layout === "centered" || layout === "stage") && "justify-center",
                 )}
               >
                 <a
@@ -215,9 +221,16 @@ export function FeatureBanner({
             </Reveal>
           )}
 
-          {/* Split layout: the board sits beside the copy. */}
-          {layout === "split" && children && (
-            <div ref={frameRef} style={{ perspective: "100vw" }}>
+          {/* Split and reverse: the board sits beside the copy. */}
+          {(layout === "split" || layout === "reverse" || layout === "bleed") && children && (
+            <div
+              ref={frameRef}
+              style={{ perspective: "100vw" }}
+              className={cn(
+                layout === "reverse" && "lg:order-first",
+                layout === "bleed" && "lg:-mr-[12vw]",
+              )}
+            >
               <motion.div
                 style={{ rotateX, transformStyle: "preserve-3d" }}
                 className="overflow-hidden rounded-[24px] border-[0.83px] border-white/16"
@@ -228,14 +241,14 @@ export function FeatureBanner({
           )}
         </div>
 
-        {/* Full-width board for the centered and offset layouts */}
-        {layout !== "split" && children && (
+        {/* Full-width board for the centered, offset, and stage layouts */}
+        {layout !== "split" && layout !== "reverse" && layout !== "bleed" && children && (
           <div ref={frameRef} style={{ perspective: "100vw" }}>
             <motion.div
               style={{ rotateX, transformStyle: "preserve-3d" }}
               className={cn(
                 "mx-auto w-full overflow-hidden rounded-[24px] border-[0.83px] border-white/16",
-                layout === "offset" ? "max-w-[1480px]" : "max-w-[1318px]",
+                layout === "offset" ? "max-w-[1480px]" : layout === "stage" ? "max-w-none" : "max-w-[1318px]",
               )}
             >
               {children}
