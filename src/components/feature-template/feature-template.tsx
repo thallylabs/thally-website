@@ -374,7 +374,7 @@ function BoardCardView({ card }: { card: BoardCard }) {
         <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-white/10">
           <div className="bg-canvas-accent h-full rounded-full" style={{ width: `${card.progress}%` }} />
         </div>
-        <div className="mt-2 flex items-center justify-between">
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
           <BoardAvatars count={card.avatars ?? 4} />
           <BoardMeta links={card.links} comments={card.comments} />
         </div>
@@ -482,7 +482,7 @@ function BoardCardView({ card }: { card: BoardCard }) {
           </div>
         </div>
       )}
-      <div className="mt-2.5 flex items-center justify-between">
+      <div className="mt-2.5 flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
         {card.avatars !== undefined && <BoardAvatars count={card.avatars} />}
         <BoardMeta links={card.links} comments={card.comments} />
       </div>

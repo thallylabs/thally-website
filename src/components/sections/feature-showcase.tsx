@@ -267,7 +267,7 @@ function AnswerPreview() {
         </div>
 
         {/* Reasoning trace */}
-        <button type="button" className="mt-4 flex items-center gap-1 text-[13px] text-white/40">
+        <button type="button" className="mt-2 flex min-h-10 items-center gap-1 text-[13px] text-white/40">
           Searched 3 pages for 2s
           <ChevronDown className="size-3.5 -rotate-90" />
         </button>
