@@ -52,11 +52,12 @@ export const Footer = () => {
     <footer className="bg-canvas relative overflow-hidden pt-[120px]">
       {/* Photographic backdrop */}
       <div aria-hidden className="absolute inset-0 overflow-hidden rounded-[52px]">
-        <img src="/template/footer-1-1.webp" alt="" className="h-full w-full object-cover opacity-80" />
+        <img src="/template/footer-1-1.webp" alt="" className="h-full w-full object-cover opacity-30" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#000104]/70 via-[#000104]/85 to-[#000104]" />
       </div>
 
       <div className="relative mx-auto w-full max-w-[1480px] px-5 pb-2">
-        <div className="mb-6 rounded-[30px] bg-[#19181b] p-8 sm:p-14 lg:mt-[150px] lg:mb-10 lg:p-20">
+        <div className="border-canvas-hairline mb-6 rounded-[30px] border bg-[#08090c] p-8 sm:p-14 lg:mt-[150px] lg:mb-10 lg:p-20">
           <h2 className="heading-section max-w-3xl text-white">Docs that keep up with your products.</h2>
 
           <div className="mt-20 flex flex-col justify-between gap-12 lg:mt-28 lg:flex-row">
