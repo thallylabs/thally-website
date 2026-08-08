@@ -311,7 +311,10 @@ const Hero = () => {
             inflate that enough to squeeze the collage column in half. */}
         <div className="relative grid min-h-[inherit] lg:grid-cols-[minmax(0,48fr)_minmax(0,52fr)]">
           {/* Left: headline, capture form, trusted marquee */}
-          <div className="flex flex-col justify-between p-6 sm:p-10 lg:p-[70px]">
+          {/* min-w-0: grid items floor at min-content by default, and the
+              split heading's inline-block words pushed that past the card,
+              cutting the whole hero off on phones. */}
+          <div className="flex min-w-0 flex-col justify-between p-6 sm:p-10 lg:p-[70px]">
             <div className="max-w-[560px]">
             <SplitReveal as="h1" mode="words" onMount className="heading-hero text-white" stagger={0.4}>
               Every product change. Every knowledge surface. Automatically in sync.
@@ -334,7 +337,7 @@ const Hero = () => {
         </div>
 
           {/* Right: the dashboard collage over the shared scene */}
-          <div className="relative hidden lg:block">
+          <div className="relative hidden min-w-0 lg:block">
             <DashboardCollage />
           </div>
         </div>
