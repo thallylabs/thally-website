@@ -335,10 +335,23 @@
 }
 
 .studioSource {
+  /* The authored source reads as its own surface, distinct from the
+     generated output beside it. */
+  background: linear-gradient(160deg, #12160f 0%, #0d1010 100%);
   border-right: 1px solid var(--cg-border);
   display: flex;
   flex-direction: column;
   min-width: 0;
+  position: relative;
+}
+
+.studioSource::before {
+  background: linear-gradient(180deg, #a9b578, transparent);
+  content: "";
+  inset: 0 auto 0 0;
+  opacity: 0.5;
+  position: absolute;
+  width: 2px;
 }
 
 .studioOutput {

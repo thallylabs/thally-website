@@ -168,11 +168,25 @@ const PROJECTIONS: Record<FormatId, () => ReactElement> = {
 
 export function FormatStudio() {
   const [format, setFormat] = useState<FormatId>("html");
+  const [isPaused, setIsPaused] = useState(false);
   const Projection = PROJECTIONS[format];
   const caption = CAPTIONS[format];
 
+  // Cycle the projections so the section demonstrates itself; picking a
+  // tab or hovering stops the rotation and hands control to the reader.
+  useEffect(() => {
+    if (isPaused) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const order = FORMAT_TABS.map((tab) => tab.id);
+    const timer = window.setInterval(() => {
+      setFormat((current) => order[(order.indexOf(current) + 1) % order.length]);
+    }, 2000);
+    return () => window.clearInterval(timer);
+  }, [isPaused]);
+
   return (
-    <div className={styles.studio}>
+    <div className={styles.studio} onMouseEnter={() => setIsPaused(true)} onFocusCapture={() => setIsPaused(true)}>
       <div className={styles.studioSource}>
         <div className={styles.studioBar}>
           <span aria-hidden="true" className={styles.barDots}>
@@ -221,7 +235,10 @@ export function FormatStudio() {
                 aria-pressed={format === tab.id}
                 className={`${styles.formatTab} ${format === tab.id ? styles.formatTabActive : ""}`}
                 key={tab.id}
-                onClick={() => setFormat(tab.id)}
+                onClick={() => {
+                  setIsPaused(true);
+                  setFormat(tab.id);
+                }}
                 type="button"
               >
                 <TabIcon /> {tab.label}
