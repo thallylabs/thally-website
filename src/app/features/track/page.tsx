@@ -333,8 +333,8 @@ export default function TrackFeaturePage() {
         media={
           <div className="relative h-full min-h-[420px]">
             <img
-              src="/images/admin-dashboard-1600.webp"
-              alt="Thally Cloud dashboard with the Track queue"
+              src="/images/track-cloud-2000.webp"
+              alt="The Track page in Thally Cloud showing setup progress and watched product repositories"
               className="absolute inset-0 h-full w-full object-cover object-left-top"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
