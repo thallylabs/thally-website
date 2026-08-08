@@ -37,8 +37,6 @@ const navigation = [
     links: [
       { name: "Terms of service", href: "/terms" },
       { name: "Privacy policy", href: "/privacy" },
-      { name: "Editorial policy", href: "/editorial-policy" },
-      { name: "Agent methodology", href: "/agent-readiness-methodology" },
     ],
   },
 ];

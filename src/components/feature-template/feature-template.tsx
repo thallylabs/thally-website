@@ -8,6 +8,7 @@
  * partner logo grid.
  */
 
+import { Link2, MessageSquare } from "lucide-react";
 import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from "motion/react";
 import Link from "next/link";
 import { type ReactNode, useRef, useState } from "react";
@@ -229,13 +230,25 @@ const CHIP_TONES: Record<BoardChip["tone"], string> = {
   kind: "bg-white/10 text-white/70",
 };
 
-const AVATAR_TINTS = ["#e8b28b", "#a3b9e2", "#9fd9b4", "#d9a3c9", "#e2d5a3"];
+const BOARD_PEOPLE = [
+  { initials: "AO", tint: "#8a6f52" },
+  { initials: "JC", tint: "#4d5f80" },
+  { initials: "TB", tint: "#5a6340" },
+  { initials: "MR", tint: "#7a5068" },
+  { initials: "EK", tint: "#5c6b6f" },
+];
 
 function BoardAvatars({ count = 3 }: { count?: number }) {
   return (
     <span className="flex -space-x-1.5">
-      {AVATAR_TINTS.slice(0, count).map((tint) => (
-        <span key={tint} className="size-5 rounded-full border border-black/40" style={{ background: tint }} />
+      {BOARD_PEOPLE.slice(0, count).map((person) => (
+        <span
+          key={person.initials}
+          className="flex size-[18px] items-center justify-center rounded-full text-[8px] font-semibold text-white/90 ring-[1.5px] ring-[#101318]"
+          style={{ background: person.tint }}
+        >
+          {person.initials}
+        </span>
       ))}
     </span>
   );
@@ -244,18 +257,42 @@ function BoardAvatars({ count = 3 }: { count?: number }) {
 function BoardMeta({ links, comments }: { links?: number; comments?: number }) {
   if (links === undefined && comments === undefined) return null;
   return (
-    <span className="flex items-center gap-2.5 text-[10px] text-white/45">
-      {links !== undefined && <span>&#128279; {links}</span>}
-      {comments !== undefined && <span>&#128172; {comments}</span>}
+    <span className="flex items-center gap-2.5 text-[10px] text-white/35">
+      {links !== undefined && (
+        <span className="flex items-center gap-1">
+          <Link2 className="size-3" />
+          {links}
+        </span>
+      )}
+      {comments !== undefined && (
+        <span className="flex items-center gap-1">
+          <MessageSquare className="size-3" />
+          {comments}
+        </span>
+      )}
     </span>
   );
 }
 
 function BoardCardView({ card }: { card: BoardCard }) {
-  const base = "rounded-xl border border-white/10 bg-[#101318]/95 p-3.5";
+  const base = "rounded-xl border border-white/[0.08] bg-[#0f1216]/95 p-3";
 
   if (card.kind === "filler") {
-    return <div className="rounded-xl border border-white/5 bg-white/[0.015]" style={{ height: card.h ?? 160 }} />;
+    return (
+      <div
+        className="flex flex-col gap-2.5 rounded-xl border border-white/[0.06] bg-[#0f1216]/70 p-3.5"
+        style={{ height: card.h ?? 160 }}
+        aria-hidden
+      >
+        <div className="flex gap-1.5">
+          <span className="h-3 w-10 rounded bg-white/[0.07]" />
+          <span className="h-3 w-12 rounded bg-white/[0.05]" />
+        </div>
+        <span className="h-2.5 w-3/4 rounded bg-white/[0.06]" />
+        <span className="h-2 w-1/2 rounded bg-white/[0.04]" />
+        <span className="mt-auto h-[3px] w-full rounded-full bg-white/[0.05]" />
+      </div>
+    );
   }
 
   if (card.kind === "summary") {
@@ -294,7 +331,10 @@ function BoardCardView({ card }: { card: BoardCard }) {
             {card.id && <span className="text-[10px] text-white/40">{card.id}</span>}
           </div>
         )}
-        <div className="mt-2.5 flex items-center justify-center rounded-lg bg-black py-7">{card.icon}</div>
+        <div className="mt-2.5 flex flex-col items-center justify-center gap-2 rounded-lg border border-white/[0.06] bg-black/60 py-6">
+          {card.icon}
+          <span className="font-mono text-[9px] tracking-wide text-white/30">preview</span>
+        </div>
         <p className="mt-2.5 text-[13px] font-semibold text-white">{card.title}</p>
         {card.desc && <p className="mt-0.5 text-[11px] text-white/50">{card.desc}</p>}
       </div>

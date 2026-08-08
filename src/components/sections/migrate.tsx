@@ -330,8 +330,8 @@ export const Migrate = () => {
           <div>
             <MigrationTerminal />
 
-            <div className="mt-8">
-              <p className="text-muted-foreground text-sm font-medium">Deploys to</p>
+            <div className="mt-8 rounded-2xl border border-white/60 bg-white/70 p-6 backdrop-blur-md">
+              <p className="text-sm font-semibold text-[#2b3124]">Deploys to</p>
               <ul className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-3">
                 {TARGETS.map((target) => (
                   <li key={target.name} className="flex items-center gap-2 text-sm font-medium">
@@ -345,7 +345,7 @@ export const Migrate = () => {
                 ))}
                 <li className="text-sm font-medium">Static export</li>
               </ul>
-              <p className="text-muted-foreground mt-5 max-w-md text-sm leading-relaxed">
+              <p className="mt-5 max-w-md text-sm leading-relaxed text-[#4a5040]">
                 Your migrated docs become an editable Thally project. Self-host the MIT-licensed engine, or let Thally
                 Cloud build and publish it for you.
               </p>

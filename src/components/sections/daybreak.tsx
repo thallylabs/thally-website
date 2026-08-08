@@ -71,12 +71,6 @@ export function Daybreak() {
         <Migrate />
       </div>
 
-      {/* Large display line, template Smarter-Calmer treatment */}
-      <div className="relative z-10 pt-16 pb-4 text-center">
-        <Reveal distance={60}>
-          <p className="heading-display text-canvas-cream-foreground/90">Migrated. Synced. Yours.</p>
-        </Reveal>
-      </div>
     </section>
   );
 }
