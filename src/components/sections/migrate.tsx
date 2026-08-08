@@ -228,7 +228,10 @@ function MigrationOrbit() {
 
   return (
     <div
-      className="group relative mx-auto mt-4 aspect-square w-full max-w-[26rem]"
+      // overflow-hidden: the ring below rotates, and a rotated square's
+      // bounding box is up to 1.41x its width, which pushed the page sideways
+      // on phones. The corners it clips are empty; the chips ride a circle.
+      className="group relative mx-auto mt-4 aspect-square w-full max-w-[26rem] overflow-hidden"
       role="img"
       aria-label="Mintlify, Docusaurus, GitBook, Nextra, VitePress, Starlight, and plain Markdown orbiting the Thally logo"
     >
