@@ -99,7 +99,7 @@ export function FeatureBanner({
       {/* Glowing edge streaks, template banner light lines */}
       <div
         aria-hidden
-        className="pointer-events-none absolute top-[10%] left-[7%] h-[440px] w-[3px] rounded-full bg-gradient-to-b from-transparent via-sky-300/50 to-transparent blur-[1px]"
+        className="pointer-events-none absolute top-[10%] left-[7%] h-[440px] w-[3px] rounded-full bg-gradient-to-b from-transparent via-[#a9b578]/45 to-transparent blur-[1px]"
       />
       <div
         aria-hidden
@@ -225,7 +225,7 @@ const CHIP_TONES: Record<BoardChip["tone"], string> = {
   high: "bg-[#ff8da1]/20 text-[#ffb3c0]",
   med: "bg-[#ffd58a]/20 text-[#ffe0a8]",
   low: "bg-[#8ecf9a]/20 text-[#b2e0bb]",
-  purple: "bg-[#b9a3e2]/20 text-[#cdbcec]",
+  purple: "bg-[#7d8a9c]/18 text-[#a9b6c4]",
   kind: "bg-white/10 text-white/70",
 };
 

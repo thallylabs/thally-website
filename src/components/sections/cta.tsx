@@ -6,13 +6,13 @@ import { SplitReveal } from "@/components/motion/split-reveal";
 import { DESTINATIONS } from "@/lib/site";
 
 /**
- * Template cta-section: night sky with a violet bloom, centered heading,
+ * Template cta-section: night sky with an olive bloom, centered heading,
  * white CTA, and a large product frame that overhangs into the footer.
  */
 export function CTA() {
   return (
     <section className="relative z-[1] overflow-hidden pt-[120px]">
-      {/* Background: blurred dusk clouds under a night -> violet gradient */}
+      {/* Background: blurred dusk sky under a night -> olive gradient */}
       <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden rounded-b-[52px]">
         <img
           src="/template/cta-bg.webp"
@@ -21,7 +21,7 @@ export function CTA() {
         />
         <div
           className="absolute inset-0 mix-blend-hard-light"
-          style={{ backgroundImage: "linear-gradient(#000104 40%, rgba(96,55,173,0.6))" }}
+          style={{ backgroundImage: "linear-gradient(#000104 40%, rgba(115,121,56,0.55))" }}
         />
       </div>
 

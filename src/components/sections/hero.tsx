@@ -273,7 +273,7 @@ function DashboardCollage() {
               <Meta due="Mon" links={2} />
             </div>
           </div>
-          <div className={`${cardBase} border-[#8a7bb0]/20 bg-[#12101a]/95`}>
+          <div className={`${cardBase} border-[#7d8a9c]/20 bg-[#0d1116]/95`}>
             <CardHead chips={[["Review", "low"], ["Docs PR", "kind"]]} id="#84" />
             <p className="mt-2 font-mono text-[12px] leading-snug font-medium text-white/90">docs: webhook secrets</p>
             <p className="mt-1 text-[10px] leading-relaxed text-white/40">Drafted by Thally, awaiting review.</p>
