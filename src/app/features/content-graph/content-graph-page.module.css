@@ -342,16 +342,6 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-  position: relative;
-}
-
-.studioSource::before {
-  background: linear-gradient(180deg, #a9b578, transparent);
-  content: "";
-  inset: 0 auto 0 0;
-  opacity: 0.5;
-  position: absolute;
-  width: 2px;
 }
 
 .studioOutput {
@@ -483,9 +473,16 @@
 
 .formatTabActive,
 .formatTabActive:hover {
-  background: var(--cg-surface);
-  box-shadow: inset 0 0 0 1px var(--cg-border-strong);
-  color: var(--foreground);
+  /* The rotating selection needs to be unmistakable at a glance. */
+  background: #e9ecdf;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 45%);
+  color: #14170f;
+  font-weight: 600;
+}
+
+.formatTabActive svg,
+.formatTabActive:hover svg {
+  color: #14170f;
 }
 
 .studioView {

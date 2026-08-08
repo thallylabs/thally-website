@@ -28,25 +28,6 @@ const FORMAT_TABS: { icon: ThallyIcon; id: FormatId; label: string }[] = [
   { icon: Mcp, id: "llms", label: "llms.txt" },
 ];
 
-const CAPTIONS: Record<FormatId, { text: string; url: string }> = {
-  html: {
-    text: "Rendered for people: typography, code highlighting, and navigation.",
-    url: "GET /sdk/sending-jobs",
-  },
-  md: {
-    text: "Portable Markdown: the same source, projected as plain text.",
-    url: "GET /sdk/sending-jobs.md",
-  },
-  json: {
-    text: "Structured data: every block and concept reference as JSON.",
-    url: "GET /sdk/sending-jobs.json",
-  },
-  llms: {
-    text: "Machine-first context: compact, grounded, with source evidence.",
-    url: "GET /sdk/sending-jobs · llms.txt",
-  },
-};
-
 function HtmlProjection() {
   return (
     <div className={styles.renderView}>
@@ -168,14 +149,14 @@ const PROJECTIONS: Record<FormatId, () => ReactElement> = {
 
 export function FormatStudio() {
   const [format, setFormat] = useState<FormatId>("html");
-  const [isPaused, setIsPaused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isTaken, setIsTaken] = useState(false);
   const Projection = PROJECTIONS[format];
-  const caption = CAPTIONS[format];
 
   // Cycle the projections so the section demonstrates itself; picking a
   // tab or hovering stops the rotation and hands control to the reader.
   useEffect(() => {
-    if (isPaused) return;
+    if (isHovered || isTaken) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const order = FORMAT_TABS.map((tab) => tab.id);
@@ -183,10 +164,14 @@ export function FormatStudio() {
       setFormat((current) => order[(order.indexOf(current) + 1) % order.length]);
     }, 2000);
     return () => window.clearInterval(timer);
-  }, [isPaused]);
+  }, [isHovered, isTaken]);
 
   return (
-    <div className={styles.studio} onMouseEnter={() => setIsPaused(true)} onFocusCapture={() => setIsPaused(true)}>
+    <div
+      className={styles.studio}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className={styles.studioSource}>
         <div className={styles.studioBar}>
           <span aria-hidden="true" className={styles.barDots}>
@@ -236,7 +221,7 @@ export function FormatStudio() {
                 className={`${styles.formatTab} ${format === tab.id ? styles.formatTabActive : ""}`}
                 key={tab.id}
                 onClick={() => {
-                  setIsPaused(true);
+                  setIsTaken(true);
                   setFormat(tab.id);
                 }}
                 type="button"
@@ -248,11 +233,6 @@ export function FormatStudio() {
         </div>
         <div className={styles.studioView}>
           <Projection />
-        </div>
-        <div aria-live="polite" className={styles.studioCaption}>
-          <Check />
-          <span>{caption.text}</span>
-          <span className={styles.captionUrl}>{caption.url}</span>
         </div>
       </div>
     </div>
