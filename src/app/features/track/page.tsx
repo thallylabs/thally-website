@@ -209,8 +209,8 @@ function CandidateVisual() {
       <p className="text-xs font-semibold tracking-wider text-[#38332d]/70 uppercase">Candidate</p>
       <div className="mt-3 rounded-lg bg-[#1c1a17] p-3 font-mono text-[11px] leading-5">
         <p className="text-red-300/80">- Webhook secrets are shared.</p>
-        <p className="text-[#c6f24e]">+ Each project has its own secret.</p>
-        <p className="text-[#c6f24e]">+ Rotate from Project Settings.</p>
+        <p className="text-[#a9b578]">+ Each project has its own secret.</p>
+        <p className="text-[#a9b578]">+ Rotate from Project Settings.</p>
       </div>
       <div className="mt-3 flex items-center justify-between text-xs text-[#38332d]">
         <span className="font-medium">guides/webhooks.mdx</span>

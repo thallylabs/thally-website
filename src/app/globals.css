@@ -239,7 +239,8 @@
   --canvas-card-stroke: rgba(234, 236, 237, 0.23);
   --canvas-hairline: rgba(234, 236, 237, 0.12);
   --canvas-glass: rgba(255, 255, 255, 0.14);
-  --canvas-accent: oklch(0.86 0.19 123);
+  /* Muted olive: reads as an accent without shouting on the dark canvas. */
+  --canvas-accent: oklch(0.78 0.072 116);
   --canvas-cream: #f4efe7;
   --canvas-cream-foreground: #1c1a17;
   --canvas-cream-muted: #6d675e;

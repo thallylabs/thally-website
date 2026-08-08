@@ -1,5 +1,6 @@
 "use client";
 
+import { Calendar, Link2, MessageSquare } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import Link from "next/link";
 import type { IconType } from "react-icons";
@@ -71,13 +72,28 @@ function HeroCtas() {
   );
 }
 
-/* --- Dashboard collage, template Hero-Dashborad treatment ------------- */
+/* --- Docs-task board collage, template Hero-Dashborad treatment ------- */
 
-function Avatars({ tints }: { tints: string[] }) {
+type Person = { initials: string; tint: string };
+
+const PEOPLE: Record<string, Person> = {
+  ada: { initials: "AO", tint: "#8a6f52" },
+  jah: { initials: "JC", tint: "#4d5f80" },
+  bot: { initials: "TB", tint: "#5a6340" },
+  mei: { initials: "MR", tint: "#7a5068" },
+};
+
+function Avatars({ people }: { people: Person[] }) {
   return (
     <span className="flex -space-x-1.5">
-      {tints.map((tint) => (
-        <span key={tint} className="size-5 rounded-full border border-black/40" style={{ background: tint }} />
+      {people.map((person) => (
+        <span
+          key={person.initials}
+          className="flex size-[18px] items-center justify-center rounded-full text-[8px] font-semibold text-white/90 ring-[1.5px] ring-[#101318]"
+          style={{ background: person.tint }}
+        >
+          {person.initials}
+        </span>
       ))}
     </span>
   );
@@ -85,42 +101,77 @@ function Avatars({ tints }: { tints: string[] }) {
 
 function Chip({ label, tone }: { label: string; tone: "high" | "med" | "low" | "kind" }) {
   const tones = {
-    high: "bg-[#ff8da1]/20 text-[#ffb3c0]",
-    med: "bg-[#ffd58a]/20 text-[#ffe0a8]",
-    low: "bg-[#8ecf9a]/20 text-[#b2e0bb]",
-    kind: "bg-white/10 text-white/70",
+    high: "bg-[#c4788a]/18 text-[#e0a3ae]",
+    med: "bg-[#c2a068]/18 text-[#dcc08e]",
+    low: "bg-[#7d9c86]/18 text-[#a8c7b2]",
+    kind: "bg-white/[0.07] text-white/55",
   } as const;
-  return <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${tones[tone]}`}>{label}</span>;
+  return <span className={`rounded px-1.5 py-0.5 text-[9px] font-medium ${tones[tone]}`}>{label}</span>;
 }
 
-function Meta({ links, comments }: { links: number; comments: number }) {
+function Meta({ links, comments, due }: { links?: number; comments?: number; due?: string }) {
   return (
-    <span className="flex items-center gap-2.5 text-[10px] text-white/45">
-      <span>&#128279; {links}</span>
-      <span>&#128172; {comments}</span>
+    <span className="flex items-center gap-2.5 text-[10px] text-white/35">
+      {due && (
+        <span className="flex items-center gap-1">
+          <Calendar className="size-3" />
+          {due}
+        </span>
+      )}
+      {links !== undefined && (
+        <span className="flex items-center gap-1">
+          <Link2 className="size-3" />
+          {links}
+        </span>
+      )}
+      {comments !== undefined && (
+        <span className="flex items-center gap-1">
+          <MessageSquare className="size-3" />
+          {comments}
+        </span>
+      )}
     </span>
   );
 }
 
-function ProgressRow({ value, tint = "#c6f24e" }: { value: number; tint?: string }) {
+function ProgressRow({ value, tint = "#a9b578" }: { value: number; tint?: string }) {
   return (
     <div className="mt-2.5">
-      <div className="flex items-center justify-between text-[10px] text-white/45">
+      <div className="flex items-center justify-between text-[10px] text-white/35">
         <span>Progress</span>
-        <span>{value}%</span>
+        <span className="tabular-nums">{value}%</span>
       </div>
-      <div className="mt-1 h-1 overflow-hidden rounded-full bg-white/10">
+      <div className="mt-1 h-[3px] overflow-hidden rounded-full bg-white/[0.08]">
         <div className="h-full rounded-full" style={{ width: `${value}%`, background: tint }} />
       </div>
     </div>
   );
 }
 
-const cardBase = "rounded-xl border border-white/10 bg-[#101318]/95 p-3.5 shadow-[0_20px_50px_rgba(0,0,0,0.45)]";
+/** Card header: label chips on the left, task id on the right. */
+function CardHead({ chips, id }: { chips: Array<[string, "high" | "med" | "low" | "kind"]>; id: string }) {
+  return (
+    <div className="flex items-center justify-between">
+      <span className="flex gap-1">
+        {chips.map(([label, tone]) => (
+          <Chip key={label} label={label} tone={tone} />
+        ))}
+      </span>
+      <span className="font-mono text-[9px] text-white/25">{id}</span>
+    </div>
+  );
+}
+
+const cardBase =
+  "rounded-xl border border-white/[0.08] bg-[#0f1216]/95 p-3 shadow-[0_20px_50px_rgba(0,0,0,0.45)]";
 
 /**
  * Dense docs-task collage anchored to the card bottom, standing in for
  * the template's Hero-Dashborad.png with Thally content.
+ */
+/**
+ * Docs-task board anchored to the card bottom, standing in for the
+ * template's Hero-Dashborad.png with Thally content.
  */
 function DashboardCollage() {
   const reduced = useReducedMotion();
@@ -138,113 +189,108 @@ function DashboardCollage() {
         <div className="space-y-3">
           <div className={cardBase}>
             <div className="flex items-center justify-between">
-              <span className="text-[10px] text-white/45">Progress</span>
-              <span className="text-[10px] text-white/45">68%</span>
+              <span className="text-[10px] text-white/40">This week</span>
+              <span className="text-[10px] text-white/40 tabular-nums">4 of 6 done</span>
             </div>
-            <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-white/10">
-              <div className="bg-canvas-accent h-full w-2/3 rounded-full" />
-            </div>
-            <div className="mt-2 flex items-center justify-between">
-              <Avatars tints={["#e8b28b", "#a3b9e2", "#9fd9b4", "#d9a3c9"]} />
+            <ProgressRow value={68} />
+            <div className="mt-2.5 flex items-center justify-between border-t border-white/[0.06] pt-2.5">
+              <Avatars people={[PEOPLE.ada, PEOPLE.jah, PEOPLE.bot, PEOPLE.mei]} />
               <Meta links={10} comments={2} />
             </div>
           </div>
           <div className={cardBase}>
-            <div className="flex items-center justify-between">
-              <span className="flex gap-1">
-                <Chip label="Medium" tone="med" />
-                <Chip label="Guides" tone="kind" />
-              </span>
-              <span className="text-[10px] text-white/40">D-199</span>
-            </div>
-            <p className="mt-2 text-[13px] font-semibold text-white">Update webhook guide</p>
-            <p className="mt-0.5 text-[11px] text-white/50">Per-project secrets shipped in #517.</p>
+            <CardHead chips={[["Medium", "med"], ["Guides", "kind"]]} id="D-199" />
+            <p className="mt-2 text-[12px] leading-snug font-medium text-white/90">Update webhook guide</p>
+            <p className="mt-1 text-[10px] leading-relaxed text-white/40">
+              Per-project secrets shipped in <span className="font-mono text-white/55">#517</span>.
+            </p>
             <ProgressRow value={60} />
-            <div className="mt-2 flex items-center justify-between">
-              <Avatars tints={["#a3b9e2", "#9fd9b4"]} />
-              <Meta links={2} comments={13} />
+            <div className="mt-2.5 flex items-center justify-between border-t border-white/[0.06] pt-2.5">
+              <Avatars people={[PEOPLE.jah, PEOPLE.mei]} />
+              <Meta due="Thu" comments={13} />
             </div>
           </div>
         </div>
 
-        {/* Column 2, elevated like the template's flower card */}
+        {/* Column 2, elevated */}
         <div className="-translate-y-4 space-y-3">
           <div className={cardBase}>
-            <div className="flex items-center justify-between">
-              <span className="flex gap-1">
-                <Chip label="High" tone="high" />
-                <Chip label="API ref" tone="kind" />
-              </span>
-              <span className="text-[10px] text-white/40">D-202</span>
+            <CardHead chips={[["High", "high"], ["API ref", "kind"]]} id="D-202" />
+            <p className="mt-2 flex items-center gap-1.5 text-[12px] leading-snug font-medium text-white/90">
+              <GitPullRequest className="size-3.5 shrink-0 text-white/50" />
+              Impact analysis
+            </p>
+            <p className="mt-1 font-mono text-[10px] text-white/40">feat: per-project webhook secrets</p>
+            {/* Diff preview instead of an empty tile */}
+            <div className="mt-2.5 space-y-1 rounded-lg bg-black/50 p-2.5 font-mono text-[9px] leading-[1.6]">
+              <p className="text-[#c48b95]">- Secrets are shared across projects.</p>
+              <p className="text-[#a9b578]">+ Each project has its own secret.</p>
+              <p className="text-white/25">@@ guides/webhooks.mdx</p>
             </div>
-            <div className="mt-2.5 flex items-center justify-center rounded-lg bg-black py-6">
-              <GitPullRequest className="text-canvas-accent size-10" />
-            </div>
-            <p className="mt-2.5 text-[13px] font-semibold text-white">Impact analysis</p>
-            <p className="mt-0.5 text-[11px] text-white/50">feat: per-project webhook secrets</p>
-            <div className="mt-2 flex items-center justify-between">
-              <Avatars tints={["#e8b28b", "#d9a3c9", "#a3b9e2"]} />
+            <div className="mt-2.5 flex items-center justify-between border-t border-white/[0.06] pt-2.5">
+              <Avatars people={[PEOPLE.bot, PEOPLE.ada, PEOPLE.jah]} />
               <Meta links={1} comments={8} />
             </div>
           </div>
           <div className={cardBase}>
-            <div className="flex items-center justify-between">
-              <span className="flex gap-1">
-                <Chip label="Low" tone="low" />
-                <Chip label="Changelog" tone="kind" />
-              </span>
-              <span className="text-[10px] text-white/40">D-201</span>
+            <CardHead chips={[["Low", "low"], ["Changelog", "kind"]]} id="D-201" />
+            <p className="mt-2 text-[12px] leading-snug font-medium text-white/90">Draft release notes</p>
+            <p className="mt-1 text-[10px] leading-relaxed text-white/40">Auth changes and new endpoints.</p>
+            <div className="mt-2.5 flex items-center justify-between border-t border-white/[0.06] pt-2.5">
+              <Avatars people={[PEOPLE.mei]} />
+              <Meta due="Fri" />
             </div>
-            <p className="mt-2 text-[13px] font-semibold text-white">Draft release notes</p>
-            <p className="mt-0.5 text-[11px] text-white/50">Auth changes and new endpoints.</p>
           </div>
         </div>
 
         {/* Column 3 */}
         <div className="space-y-3">
           <div className={cardBase}>
-            <div className="flex items-center justify-between">
-              <span className="flex gap-1">
-                <Chip label="High" tone="high" />
-                <Chip label="Guides" tone="kind" />
-              </span>
-              <span className="text-[10px] text-white/40">D-203</span>
-            </div>
-            <p className="mt-2 text-[13px] font-semibold text-white">Reverify auth guide</p>
-            <p className="mt-0.5 text-[11px] text-white/50">Drift sweep flagged 3 sections.</p>
-            <div className="mt-2.5 space-y-1.5">
-              {["Refresh tokens", "Session limits", "Error codes"].map((item, i) => (
-                <p key={item} className="flex items-center gap-2 text-[11px] text-white/60">
-                  {i === 0 ? (
-                    <Check className="text-canvas-accent size-3" />
+            <CardHead chips={[["High", "high"], ["Guides", "kind"]]} id="D-203" />
+            <p className="mt-2 text-[12px] leading-snug font-medium text-white/90">Reverify auth guide</p>
+            <p className="mt-1 text-[10px] leading-relaxed text-white/40">Drift sweep flagged 3 sections.</p>
+            <div className="mt-2.5 space-y-1.5 border-t border-white/[0.06] pt-2.5">
+              {[
+                ["Refresh tokens", true],
+                ["Session limits", false],
+                ["Error codes", false],
+              ].map(([item, done]) => (
+                <p
+                  key={String(item)}
+                  className={`flex items-center gap-2 text-[10px] ${done ? "text-white/30 line-through" : "text-white/60"}`}
+                >
+                  {done ? (
+                    <Check className="size-3 shrink-0 text-[#a9b578]" />
                   ) : (
-                    <span className="size-3 rounded-full border border-white/30" />
+                    <span className="size-3 shrink-0 rounded-[3px] border border-white/25" />
                   )}
                   {item}
                 </p>
               ))}
-              <p className="flex items-center gap-2 text-[11px] text-white/40">
-                <span className="text-sm leading-none">+</span> Add subtask
-              </p>
+            </div>
+            <div className="mt-2.5 flex items-center justify-between">
+              <Avatars people={[PEOPLE.ada]} />
+              <Meta due="Mon" links={2} />
             </div>
           </div>
-          <div className={`${cardBase} border-[#b9a3e2]/25 bg-[#171225]/95`}>
-            <div className="flex items-center justify-between">
-              <span className="flex gap-1">
-                <Chip label="Review" tone="low" />
-                <Chip label="Docs PR" tone="kind" />
+          <div className={`${cardBase} border-[#8a7bb0]/20 bg-[#12101a]/95`}>
+            <CardHead chips={[["Review", "low"], ["Docs PR", "kind"]]} id="#84" />
+            <p className="mt-2 font-mono text-[12px] leading-snug font-medium text-white/90">docs: webhook secrets</p>
+            <p className="mt-1 text-[10px] leading-relaxed text-white/40">Drafted by Thally, awaiting review.</p>
+            <div className="mt-2.5 flex items-center gap-1.5 border-t border-white/[0.06] pt-2.5">
+              <span className="rounded bg-white/[0.07] px-1.5 py-0.5 font-mono text-[9px] text-white/50">+42</span>
+              <span className="rounded bg-white/[0.07] px-1.5 py-0.5 font-mono text-[9px] text-white/50">-11</span>
+              <span className="ml-auto">
+                <Avatars people={[PEOPLE.bot, PEOPLE.jah]} />
               </span>
-              <span className="text-[10px] text-white/40">#84</span>
             </div>
-            <p className="mt-2 text-[13px] font-semibold text-white">docs: webhook secrets</p>
-            <p className="mt-0.5 text-[11px] text-white/50">Drafted by Thally, awaiting review.</p>
-            <ProgressRow value={40} tint="#b9a3e2" />
           </div>
         </div>
       </motion.div>
     </div>
   );
 }
+
 
 const Hero = () => {
   return (
