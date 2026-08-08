@@ -94,6 +94,7 @@ const groundedPoints = [
 function AgentBoard() {
   return (
     <BannerBoard
+      dense
       columns={[
         [
           { kind: "summary", progress: 64, avatars: 4, links: 7, comments: 3 },
@@ -257,6 +258,7 @@ export default function AgentLayerFeaturePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }} />
 
       <FeatureBanner
+        layout="split"
         title="Answers,"
         titleAccent="with receipts."
         description="Your customers now ask AI tools before they open your docs. The Agent Layer publishes your documentation in the formats those tools read best, with the evidence to back every answer, so nothing gets guessed."

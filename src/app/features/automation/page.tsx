@@ -103,6 +103,7 @@ const withAutomation = [
 function MergeBoard() {
   return (
     <BannerBoard
+      dense
       columns={[
         [
           { kind: "summary", progress: 68, avatars: 4, links: 10, comments: 2 },
@@ -257,6 +258,7 @@ export default function AutomationFeaturePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }} />
 
       <FeatureBanner
+        layout="split"
         title="Ship the code."
         titleAccent="Docs follow."
         description="Connect your repositories once. When a pull request merges, Thally analyzes the change, drafts the documentation updates it implies, and opens them as a pull request on your docs repo, ready for your review."

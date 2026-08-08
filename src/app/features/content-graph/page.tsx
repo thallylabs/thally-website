@@ -261,6 +261,7 @@ export default function ContentGraphFeaturePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }} />
 
       <FeatureBanner
+        layout="offset"
         title="Write once."
         titleAccent="Speak every format."
         description="Author your documentation once in MDX. Thally builds it into a graph of pages, concepts, and code, and every published surface (the site, Markdown, JSON, llms.txt) is a projection of that one source. Change it once and every reader sees the same truth."

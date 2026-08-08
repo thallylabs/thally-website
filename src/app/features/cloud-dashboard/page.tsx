@@ -140,6 +140,7 @@ export default function CloudDashboardFeaturePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }} />
 
       <FeatureBanner
+        layout="offset"
         title="Your knowledge ops,"
         titleAccent="one place."
         description="Every site, every pending draft, your analytics, your team, and the context you serve to AI, managed from a single dashboard. See what changed, review what's queued, and control who reads what."
