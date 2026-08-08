@@ -10,7 +10,18 @@ import Link from "next/link";
 import { SiClaude, SiCursor, SiGithub, SiGithubcopilot, SiGooglegemini, SiPerplexity } from "react-icons/si";
 
 import { FeatureBanner, PartnerStrip } from "@/components/feature-template/feature-template";
-import { ArrowRight, Billing, Mcp, Overview, Sites, Team, Track } from "@/components/icons";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Billing,
+  Check,
+  ChevronDown,
+  Mcp,
+  Overview,
+  Sites,
+  Team,
+  Track,
+} from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
 import { DESTINATIONS, SITE_URL } from "@/lib/site";
@@ -71,64 +82,217 @@ const manageCells = [
   },
 ] as const;
 
+/** Reviewers shown on the queue header, initials on tinted circles. */
+const QUEUE_REVIEWERS = [
+  { initials: "AO", tint: "#8a6f52" },
+  { initials: "JC", tint: "#4d5f80" },
+] as const;
+
+/** The three drafts sitting in the review queue, with their evidence. */
+const DRAFT_QUEUE = [
+  {
+    title: "docs: default timeout is now 60s",
+    confidence: "high",
+    meta: "acme/sdk#812 · sdk/configuration.mdx · 12m ago",
+    added: "+18",
+    removed: "-4",
+    pending: false,
+  },
+  {
+    title: "docs: document TimeoutError class",
+    confidence: "high",
+    meta: "acme/sdk#812 · sdk/errors.mdx · 26m ago",
+    added: "+31",
+    removed: "-0",
+    pending: false,
+  },
+  {
+    title: "docs: retry uses exponential backoff",
+    confidence: "drafting",
+    meta: "acme/api#517 · 2 files · started 1h ago",
+    added: "+12",
+    removed: "-7",
+    pending: true,
+  },
+] as const;
+
 /** Large-card mock: the drafts queue with review actions. */
 function DraftsQueueVisual() {
   return (
     <div className="mx-auto w-full max-w-lg rounded-2xl border border-white/12 bg-black/45 p-5">
-      <div className="flex items-center gap-2.5">
-        <Track className="text-canvas-accent size-5" />
-        <span className="text-sm text-white/75">Awaiting your review</span>
+      <div className="flex items-center justify-between gap-3 border-b border-white/[0.08] pb-3">
+        <span className="flex items-center gap-2.5">
+          <Track className="text-canvas-accent size-5" />
+          <span className="text-sm text-white/75">Awaiting your review</span>
+        </span>
+        <span className="flex items-center gap-2.5">
+          <span className="flex -space-x-1.5">
+            {QUEUE_REVIEWERS.map((person) => (
+              <span
+                key={person.initials}
+                className="flex size-[18px] items-center justify-center rounded-full text-[8px] font-semibold text-white/90 ring-[1.5px] ring-[#0b0d12]"
+                style={{ background: person.tint }}
+              >
+                {person.initials}
+              </span>
+            ))}
+          </span>
+          <span className="rounded-full border border-white/12 px-2 py-0.5 text-[11px] font-medium text-white/60">
+            3 drafts
+          </span>
+        </span>
       </div>
-      <div className="mt-4 space-y-2">
-        {[
-          ["docs: default timeout is now 60s", "high"],
-          ["docs: document TimeoutError class", "high"],
-          ["docs: retry uses exponential backoff", "medium"],
-        ].map(([title, confidence]) => (
-          <div
-            key={title}
-            className="flex items-center justify-between gap-3 rounded-lg bg-white/6 px-3 py-2.5 text-xs text-white/85"
-          >
-            <span className="truncate font-mono">{title}</span>
-            <span className="shrink-0 rounded-full border border-white/12 px-2 py-0.5 text-[11px] font-medium text-white/55">
-              {confidence}
-            </span>
+
+      <div className="divide-y divide-white/[0.06]">
+        {DRAFT_QUEUE.map((draft) => (
+          <div key={draft.title} className="py-2.5">
+            <div className="flex items-center justify-between gap-3">
+              <span className="flex min-w-0 items-center gap-2">
+                <span
+                  className={cn(
+                    "size-1.5 shrink-0 rounded-full",
+                    draft.pending ? "animate-pulse bg-[#ffd58a]" : "bg-canvas-accent",
+                  )}
+                />
+                <span className="truncate font-mono text-xs text-white/85">{draft.title}</span>
+              </span>
+              <span
+                className={cn(
+                  "shrink-0 rounded-full border px-2 py-0.5 text-[11px] font-medium",
+                  draft.pending
+                    ? "border-[#ffd58a]/25 bg-[#ffd58a]/10 text-[#ffe0a8]"
+                    : "border-white/12 text-white/55",
+                )}
+              >
+                {draft.confidence}
+              </span>
+            </div>
+            <div className="mt-1 flex items-center justify-between gap-3 pl-3.5">
+              <span className="truncate text-[11px] text-white/40">{draft.meta}</span>
+              <span className="flex shrink-0 items-center gap-1.5 font-mono text-[10px]">
+                <span className="rounded bg-white/[0.07] px-1.5 py-0.5 text-[#a9b578]">{draft.added}</span>
+                <span className="rounded bg-white/[0.07] px-1.5 py-0.5 text-[#c48b95]">{draft.removed}</span>
+              </span>
+            </div>
           </div>
         ))}
       </div>
-      <div className="mt-4 flex items-center gap-2 text-[11px] font-medium">
-        <span className="text-canvas rounded-full bg-white px-2.5 py-1">Approve</span>
-        <span className="rounded-full border border-white/15 px-2.5 py-1 text-white/70">Edit</span>
-        <span className="rounded-full border border-white/15 px-2.5 py-1 text-white/70">Dismiss</span>
+
+      <div className="flex items-center gap-2 border-t border-white/[0.08] pt-3 text-[11px] font-medium">
+        <span className="text-canvas inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5">
+          <Check className="size-3" />
+          Approve
+        </span>
+        <span className="rounded-full border border-white/15 px-3 py-1.5 text-white/70">Edit</span>
+        <span className="rounded-full px-3 py-1.5 text-white/45">Dismiss</span>
+        <span className="ml-auto text-white/35">Opens a docs PR</span>
       </div>
     </div>
   );
 }
 
+/** Metric tiles: the counts carry a delta, the shares carry what they divide. */
+const ANALYTICS_TILES = [
+  { value: "12.4k", label: "Pages read", note: "+18% vs prior 30d", trend: true },
+  { value: "38%", label: "Traffic from AI tools", note: "share of page views", trend: false },
+  { value: "1.8k", label: "Answers served", note: "+12% vs prior 30d", trend: true },
+  { value: "96%", label: "Grounded citations", note: "share of answers", trend: false },
+] as const;
+
+/** Daily people/AI-tool split for the traffic strip, as percentage heights. */
+const TRAFFIC_BARS = [
+  [34, 12],
+  [41, 14],
+  [38, 18],
+  [46, 17],
+  [52, 22],
+  [44, 20],
+  [30, 15],
+  [49, 26],
+  [56, 29],
+  [51, 27],
+  [58, 33],
+  [47, 31],
+  [61, 36],
+  [55, 38],
+] as const;
+
+const TOP_PAGES = [
+  { path: "/guides/quickstart", views: "3.2k", width: "100%" },
+  { path: "/api/tokens", views: "2.1k", width: "66%" },
+  { path: "/sdk/configuration", views: "1.4k", width: "44%" },
+] as const;
+
 /** Large-card mock: reader and agent analytics stat tiles. */
 function AnalyticsVisual() {
   return (
     <div className="mx-auto w-full max-w-md rounded-2xl border border-white/12 bg-black/45 p-5">
-      <div className="flex items-center gap-2.5">
-        <Overview className="text-canvas-accent size-5" />
-        <span className="text-sm text-white/75">Last 30 days</span>
+      <div className="flex items-center justify-between gap-3 border-b border-white/[0.08] pb-3">
+        <span className="flex items-center gap-2.5">
+          <Overview className="text-canvas-accent size-5" />
+          <span className="text-sm text-white/75">Analytics</span>
+        </span>
+        <span className="flex items-center gap-1.5 rounded-full border border-white/12 px-2.5 py-1 text-[11px] font-medium text-white/60">
+          Last 30 days
+          <ChevronDown className="size-3 text-white/40" />
+        </span>
       </div>
-      <div className="mt-4 grid grid-cols-2 gap-2">
-        {[
-          ["12.4k", "Pages read"],
-          ["38%", "Traffic from AI tools"],
-          ["1.8k", "Answers served"],
-          ["96%", "Grounded citations"],
-        ].map(([value, label]) => (
-          <div key={label} className="rounded-xl bg-white/6 px-3.5 py-3">
-            <p className="font-display text-xl font-semibold tracking-tight text-white">{value}</p>
-            <p className="mt-0.5 text-[11px] text-white/55">{label}</p>
+
+      <div className="mt-3 grid grid-cols-2 gap-2">
+        {ANALYTICS_TILES.map((tile) => (
+          <div key={tile.label} className="rounded-xl bg-white/6 px-3 py-3">
+            <p className="font-display text-xl font-semibold tracking-tight text-white tabular-nums">{tile.value}</p>
+            <p className="mt-0.5 text-[11px] text-white/55">{tile.label}</p>
+            <p className="mt-1 flex items-center gap-1 text-[10px] text-white/40">
+              {tile.trend && <ArrowUpRight className="text-canvas-accent size-3 shrink-0" />}
+              {tile.note}
+            </p>
           </div>
         ))}
       </div>
-      <div className="mt-3 flex items-center justify-between rounded-lg bg-white/6 px-3 py-2.5 text-xs">
-        <span className="truncate font-mono text-white/85">/guides/quickstart</span>
-        <span className="shrink-0 text-[11px] font-medium text-white/55">Top page</span>
+
+      <div className="mt-2 rounded-xl bg-white/6 px-3.5 py-3">
+        <div className="flex items-center justify-between gap-3">
+          <span className="text-[11px] text-white/55">Traffic over time</span>
+          <span className="flex items-center gap-2.5 text-[10px] text-white/40">
+            <span className="flex items-center gap-1">
+              <span className="size-1.5 rounded-full bg-white/45" />
+              People
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="bg-canvas-accent size-1.5 rounded-full" />
+              AI tools
+            </span>
+          </span>
+        </div>
+        <div className="mt-2.5 flex h-10 items-stretch gap-[3px]">
+          {TRAFFIC_BARS.map(([human, agent], i) => (
+            <span key={i} className="flex h-full flex-1 flex-col justify-end">
+              <span className="bg-canvas-accent w-full rounded-t-[2px]" style={{ height: `${agent}%` }} />
+              <span className="w-full bg-white/25" style={{ height: `${human}%` }} />
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-3">
+        <div className="flex items-center justify-between gap-3">
+          <span className="text-[11px] text-white/55">Top pages</span>
+          <span className="text-[10px] text-white/35">views</span>
+        </div>
+        <div className="mt-2 space-y-2">
+          {TOP_PAGES.map((page) => (
+            <div key={page.path}>
+              <div className="flex items-center justify-between gap-3 text-xs">
+                <span className="truncate font-mono text-white/85">{page.path}</span>
+                <span className="shrink-0 text-[11px] text-white/55 tabular-nums">{page.views}</span>
+              </div>
+              <div className="mt-1 h-1 overflow-hidden rounded-full bg-white/10">
+                <div className="bg-canvas-accent/70 h-full rounded-full" style={{ width: page.width }} />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -140,6 +304,7 @@ export default function CloudDashboardFeaturePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }} />
 
       <FeatureBanner
+        layout="bleed"
         title="Your knowledge ops,"
         titleAccent="one place."
         description="Every site, every pending draft, your analytics, your team, and the context you serve to AI, managed from a single dashboard. See what changed, review what's queued, and control who reads what."

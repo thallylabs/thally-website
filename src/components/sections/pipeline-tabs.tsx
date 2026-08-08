@@ -2,8 +2,9 @@
 
 import { motion, useMotionValueEvent, useReducedMotion, useScroll } from "motion/react";
 import { useRef, useState } from "react";
+import { SiGithub } from "react-icons/si";
 
-import { GitBranch, GitPullRequest, Structured, Track } from "@/components/icons";
+import { Check, GitBranch, GitPullRequest, Structured, Track } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
 import { cn } from "@/lib/utils";
@@ -190,21 +191,260 @@ export function PipelineTabs() {
   );
 }
 
-function StageVisual({ index }: { index: number }) {
-  // Stages 01 and 02 use the Thally-labeled diagrams; the rest keep
-  // the template's automate illustrations.
-  const BRANDED: Record<number, string> = {
-    0: "/template/workflow-diagram.png",
-    1: "/template/impact-analysis-diagram.png",
-  };
-  const src = BRANDED[index] ?? `/template/automate-image-0${index + 1}.webp`;
+/* --- Stage panels: static product-surface mocks ------------------------ */
+
+const PANEL_BG = "#0a0d13";
+
+type Person = { initials: string; tint: string };
+
+const PEOPLE: Record<string, Person> = {
+  ada: { initials: "AO", tint: "#8a6f52" },
+  jah: { initials: "JC", tint: "#4d5f80" },
+  bot: { initials: "TB", tint: "#5a6340" },
+};
+
+function Avatars({ people }: { people: Person[] }) {
   return (
-    <img
-      src={src}
-      alt=""
+    <span className="flex -space-x-1.5">
+      {people.map((person) => (
+        <span
+          key={person.initials}
+          className="flex size-[18px] items-center justify-center rounded-full text-[8px] font-semibold text-white/90 ring-[1.5px] ring-[#0a0d13]"
+          style={{ background: person.tint }}
+        >
+          {person.initials}
+        </span>
+      ))}
+    </span>
+  );
+}
+
+/** Section chrome: title or file path on the left, status pill on the right. */
+function Panel({
+  title,
+  icon,
+  status,
+  statusTone = "accent",
+  children,
+}: {
+  title: string;
+  icon: React.ReactNode;
+  status: string;
+  statusTone?: "accent" | "muted" | "warn";
+  children: React.ReactNode;
+}) {
+  const tones = {
+    accent: "bg-canvas-accent/15 text-canvas-accent",
+    muted: "bg-white/[0.07] text-white/55",
+    warn: "bg-[#c2a068]/15 text-[#dcc08e]",
+  } as const;
+  return (
+    <div
       aria-hidden
-      className="w-full max-w-[500px]"
-      loading={index === 0 ? "eager" : "lazy"}
-    />
+      className="w-full max-w-lg rounded-2xl border border-white/10 p-5 shadow-[0_24px_60px_rgba(0,0,0,0.45)]"
+      style={{ background: PANEL_BG }}
+    >
+      <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
+        <span className="flex min-w-0 items-center gap-2 font-mono text-[13px] text-white/80">
+          {icon}
+          <span className="truncate">{title}</span>
+        </span>
+        <span className={cn("shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium", tones[statusTone])}>
+          {status}
+        </span>
+      </div>
+      <div className="mt-3 space-y-1.5">{children}</div>
+    </div>
+  );
+}
+
+const rowBase = "flex items-center gap-2 rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5";
+
+/** The first two stages use the Thally-labeled diagrams. */
+const STAGE_DIAGRAMS: Record<number, string> = {
+  0: "/template/workflow-diagram.png",
+  1: "/template/impact-analysis-diagram.png",
+};
+
+function StageVisual({ index }: { index: number }) {
+  const diagram = STAGE_DIAGRAMS[index];
+  if (diagram) {
+    return (
+      <img
+        src={diagram}
+        alt=""
+        aria-hidden
+        className="w-full max-w-[520px]"
+        loading={index === 0 ? "eager" : "lazy"}
+      />
+    );
+  }
+
+  if (index === 0) {
+    return (
+      <Panel title="acme · Thally GitHub App" icon={<SiGithub className="size-4 text-white/45" />} status="read-only">
+        {(
+          [
+            ["acme/api", "main", "watching", "synced 2m ago"],
+            ["acme/web-app", "main", "watching", "synced 18m ago"],
+            ["acme/docs", "main", "docs target", "synced 4m ago"],
+          ] as const
+        ).map(([repo, branch, role, synced]) => (
+          <div key={repo} className={rowBase}>
+            <SiGithub className="size-3.5 shrink-0 text-white/35" />
+            <span className="truncate font-mono text-xs text-white/85">{repo}</span>
+            <span className="flex shrink-0 items-center gap-1 rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-[10px] text-white/45">
+              <GitBranch className="size-2.5" />
+              {branch}
+            </span>
+            <span className="ml-auto flex shrink-0 items-center gap-1.5 text-[10px] text-white/40">
+              <span className="bg-canvas-accent size-1.5 rounded-full" />
+              {role} · {synced}
+            </span>
+          </div>
+        ))}
+        <div className="flex items-center justify-between border-t border-white/[0.06] pt-2.5 text-[11px] text-white/40">
+          <span>Read-only access. You choose exactly what Thally can see.</span>
+          <span className="shrink-0 tabular-nums">3 repos</span>
+        </div>
+      </Panel>
+    );
+  }
+
+  if (index === 1) {
+    return (
+      <Panel
+        title="acme/api#517"
+        icon={<Track className="text-canvas-accent size-4" />}
+        status="analyzing"
+        statusTone="warn"
+      >
+        <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5">
+          <p className="truncate font-mono text-xs text-white/85">feat: per-project webhook secrets</p>
+          <div className="mt-2 flex items-center justify-between">
+            <Avatars people={[PEOPLE.jah, PEOPLE.ada]} />
+            <span className="font-mono text-[10px] text-white/40">
+              12 files · <span className="text-canvas-accent">+318</span> <span className="text-[#c48b95]">-74</span> ·
+              merged 14m ago
+            </span>
+          </div>
+        </div>
+        <div aria-hidden className="mx-auto h-4 w-px bg-gradient-to-b from-white/25 to-transparent" />
+        {(
+          [
+            ["guides/webhooks.mdx", "0.94", "update needed"],
+            ["api/projects.mdx", "0.87", "update needed"],
+            ["guides/quickstart.mdx", "0.12", "no change"],
+            ["api/webhooks.mdx", "", "scanning"],
+          ] as const
+        ).map(([page, confidence, verdict]) => (
+          <div key={page} className={rowBase}>
+            {verdict === "scanning" ? (
+              <span className="border-canvas-accent/40 border-t-canvas-accent size-3 shrink-0 animate-spin rounded-full border-2" />
+            ) : (
+              <span
+                className={cn(
+                  "size-1.5 shrink-0 rounded-full",
+                  verdict === "no change" ? "bg-white/25" : "bg-canvas-accent",
+                )}
+              />
+            )}
+            <span className="truncate font-mono text-[11px] text-white/75">{page}</span>
+            <span className="ml-auto flex shrink-0 items-center gap-2">
+              {confidence && (
+                <span className="font-mono text-[10px] text-white/35 tabular-nums">conf {confidence}</span>
+              )}
+              <span
+                className={cn(
+                  "rounded-full px-2 py-0.5 text-[10px] font-medium",
+                  verdict === "update needed" ? "bg-canvas-accent/15 text-canvas-accent" : "bg-white/[0.07] text-white/45",
+                )}
+              >
+                {verdict}
+              </span>
+            </span>
+          </div>
+        ))}
+      </Panel>
+    );
+  }
+
+  if (index === 2) {
+    return (
+      <Panel
+        title="acme/docs #292"
+        icon={<GitPullRequest className="text-canvas-accent size-4" />}
+        status="draft"
+        statusTone="warn"
+      >
+        <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5">
+          <p className="truncate text-xs font-medium text-white/85">docs: document per-project webhook secrets</p>
+          <div className="mt-2 flex items-center gap-2">
+            <Avatars people={[PEOPLE.bot]} />
+            <span className="text-[10px] text-white/40">
+              thally-bot opened 3m ago · 2 files changed · label origin: track
+            </span>
+          </div>
+        </div>
+        <div className="rounded-xl border border-white/[0.07] bg-black/45 p-3 font-mono text-[11px] leading-[1.7]">
+          <p className="text-white/25">@@ guides/webhooks.mdx +18 -6</p>
+          <p className="text-[#c48b95]">- Webhook secrets are shared across projects.</p>
+          <p className="text-canvas-accent">+ Each project now has its own webhook secret.</p>
+          <p className="text-canvas-accent">+ Rotate secrets from Project Settings.</p>
+        </div>
+        <div className="flex items-center gap-1.5 border-t border-white/[0.06] pt-2.5">
+          <span className="text-canvas-accent bg-canvas-accent/12 rounded px-1.5 py-0.5 font-mono text-[10px]">
+            +42
+          </span>
+          <span className="rounded bg-[#c48b95]/12 px-1.5 py-0.5 font-mono text-[10px] text-[#c48b95]">-11</span>
+          <span className="ml-auto text-[10px] text-white/40">every line backed by the diff</span>
+        </div>
+      </Panel>
+    );
+  }
+
+  return (
+    <Panel
+      title="acme/docs #292"
+      icon={<Structured className="text-canvas-accent size-4" />}
+      status="awaiting review"
+    >
+      <div className="flex items-center gap-2 rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5">
+        <Avatars people={[PEOPLE.ada, PEOPLE.jah]} />
+        <span className="truncate text-[11px] text-white/60">Review requested from Ada O. and Jahce C.</span>
+        <span className="ml-auto shrink-0 text-[10px] text-white/35">2m ago</span>
+      </div>
+      {(
+        [
+          ["Evidence attached", "4 diffs", true],
+          ["Preview build passed", "38s", true],
+          ["Approvals", "1 of 2", false],
+        ] as const
+      ).map(([label, meta, done]) => (
+        <div key={label} className="flex items-center gap-2 px-1 py-1.5 text-[11px]">
+          {done ? (
+            <Check className="text-canvas-accent size-3.5 shrink-0" />
+          ) : (
+            <span className="size-3.5 shrink-0 rounded-full border border-white/25" />
+          )}
+          <span className={done ? "text-white/55" : "text-white/75"}>{label}</span>
+          <span className="ml-auto font-mono text-[10px] text-white/35 tabular-nums">{meta}</span>
+        </div>
+      ))}
+      {/* Static action bar, rendered as spans so the hidden layers stay untabbable */}
+      <div className="flex items-center gap-2 border-t border-white/[0.06] pt-3">
+        <span className="bg-canvas-accent text-canvas rounded-lg px-3.5 py-2 text-xs font-semibold">
+          Approve and merge
+        </span>
+        <span className="rounded-lg border border-white/15 px-3.5 py-2 text-xs font-medium text-white/70">
+          Request changes
+        </span>
+        <span className="ml-auto flex items-center gap-1.5 text-[10px] text-white/35">
+          <Avatars people={[PEOPLE.ada]} />
+          reviewing
+        </span>
+      </div>
+      <p className="px-1 pt-1 text-[11px] text-white/40">Nothing publishes until a human approves it.</p>
+    </Panel>
   );
 }

@@ -163,6 +163,7 @@ export default function MigrationHostingFeaturePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }} />
 
       <FeatureBanner
+        layout="stage"
         title="Bring your docs."
         titleAccent="We'll host them."
         description="Import from wherever your documentation lives today: GitBook, Mintlify, Docusaurus, or a folder of Markdown. Thally converts it into a connected graph and puts it live on a global edge, all in one pass."

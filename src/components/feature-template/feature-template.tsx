@@ -43,6 +43,27 @@ const TRUSTED_LOGOS = [
   { name: "Windsurf", Icon: SiWindsurf },
 ];
 
+function TrustedMarquee() {
+  return (
+    <div className="logos-marquee mask-[linear-gradient(to_right,transparent,black_18%,black_82%,transparent)] flex overflow-hidden">
+      {[false, true].map((hidden) => (
+        <div
+          key={String(hidden)}
+          className="logos-marquee-track flex min-w-max shrink-0 items-center"
+          aria-hidden={hidden || undefined}
+        >
+          {TRUSTED_LOGOS.map((logo) => (
+            <span key={logo.name} className="mr-10 flex shrink-0 items-center gap-2 text-white/70">
+              <logo.Icon className="size-5" aria-hidden />
+              <span className="font-display text-lg font-semibold tracking-tight whitespace-nowrap">{logo.name}</span>
+            </span>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function FeatureBanner({
   title,
   titleAccent,
@@ -52,6 +73,7 @@ export function FeatureBanner({
   finePrint,
   trustedLine = "Trusted by the AI tools your readers already use",
   showTrusted = true,
+  layout = "centered",
   children,
 }: {
   title: string;
@@ -63,6 +85,8 @@ export function FeatureBanner({
   trustedLine?: string;
   /** Template banners carry a trusted-logos marquee under the CTA. */
   showTrusted?: boolean;
+  /** How the copy and the board are arranged. */
+  layout?: "centered" | "split" | "reverse" | "offset" | "stage" | "bleed";
   finePrint?: string;
   /** Visual placed inside the glass banner frame. */
   children?: ReactNode;
@@ -107,82 +131,127 @@ export function FeatureBanner({
         className="pointer-events-none absolute top-[34%] right-[6%] h-[380px] w-[3px] rounded-full bg-gradient-to-b from-transparent via-amber-200/40 to-transparent blur-[1px]"
       />
 
-      <div className="mx-auto w-full max-w-[1480px] px-5">
-        <div className="mx-auto mb-[60px] flex max-w-[1240px] flex-col items-center gap-8 text-center">
-          <h1 className="heading-hero max-w-4xl text-white">
-            <SplitReveal as="span" mode="words" onMount>
-              {title}
-            </SplitReveal>
-            {titleAccent && (
-              <>
-                <br />
-                <span className="text-white/50">
-                  <SplitReveal as="span" mode="words" onMount delay={0.25}>
-                    {titleAccent}
-                  </SplitReveal>
-                </span>
-              </>
+      <div className={cn("mx-auto w-full px-5", layout === "split" ? "max-w-[1560px]" : "max-w-[1480px]", layout === "bleed" && "lg:overflow-hidden")}>
+        <div
+          className={cn(
+            layout === "bleed"
+              ? "grid items-center gap-12 lg:grid-cols-[minmax(0,420px)_1fr]"
+              : layout === "split" || layout === "reverse"
+                ? "grid items-center gap-14 lg:grid-cols-[1fr_1fr]"
+              : layout === "offset"
+                ? "mb-[60px] grid max-w-[1240px] items-end gap-10 lg:grid-cols-[1.15fr_1fr]"
+                : layout === "stage"
+                  ? "mx-auto mb-[70px] flex max-w-[860px] flex-col items-center gap-7 text-center"
+                  : "mx-auto mb-[60px] flex max-w-[1240px] flex-col items-center gap-8 text-center",
+          )}
+        >
+          <div
+            className={cn(
+              "flex flex-col gap-8",
+              layout === "centered" || layout === "stage" ? "items-center" : "items-start text-left",
+              layout === "bleed" && "lg:pr-4",
+              layout === "reverse" && "lg:order-last",
             )}
-          </h1>
-          <Reveal delay={0.35} distance={24}>
-            <p className="mx-auto max-w-2xl text-lg text-[#afafaf]">{description}</p>
-          </Reveal>
-          <Reveal delay={0.5} distance={20} className="flex flex-col items-center gap-4">
-            <span className="flex flex-wrap items-center justify-center gap-4">
-              <a
-                href={primaryCta.href}
-                className="btn-sheen text-canvas inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 text-lg font-medium"
-              >
-                {primaryCta.label}
-                <ArrowRight className="size-5" />
-              </a>
-              {secondaryCta && (
-                <Link
-                  href={secondaryCta.href}
-                  className="inline-flex items-center gap-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
-                >
-                  {secondaryCta.label}
-                  <ArrowRight className="size-4" />
-                </Link>
+          >
+            <h1 className={cn("heading-hero text-white", layout === "centered" ? "max-w-4xl" : layout === "stage" ? "max-w-3xl" : layout === "bleed" ? "max-w-[420px]" : "max-w-[620px]")}>
+              <SplitReveal as="span" mode="words" onMount>
+                {title}
+              </SplitReveal>
+              {titleAccent && (
+                <>
+                  <br />
+                  <span className="text-white/50">
+                    <SplitReveal as="span" mode="words" onMount delay={0.25}>
+                      {titleAccent}
+                    </SplitReveal>
+                  </span>
+                </>
               )}
-            </span>
-            {finePrint && <p className="text-sm text-[#7c7b79]">{finePrint}</p>}
-          </Reveal>
-
-          {/* Trusted logo marquee, template .feature-logo-block */}
-          {showTrusted && (
-            <Reveal delay={0.65} distance={16} className="w-full max-w-[588px]">
-              <p className="mb-6 text-[15px] text-[#afafaf]">{trustedLine}</p>
-              <div className="logos-marquee mask-[linear-gradient(to_right,transparent,black_18%,black_82%,transparent)] flex overflow-hidden">
-                {[false, true].map((hidden) => (
-                  <div
-                    key={String(hidden)}
-                    className="logos-marquee-track flex min-w-max shrink-0 items-center"
-                    aria-hidden={hidden || undefined}
-                  >
-                    {TRUSTED_LOGOS.map((logo) => (
-                      <span key={logo.name} className="mr-10 flex shrink-0 items-center gap-2 text-white/70">
-                        <logo.Icon className="size-5" aria-hidden />
-                        <span className="font-display text-lg font-semibold tracking-tight whitespace-nowrap">
-                          {logo.name}
-                        </span>
-                      </span>
-                    ))}
-                  </div>
-                ))}
-              </div>
+            </h1>
+            <Reveal delay={0.35} distance={24}>
+              <p className={cn("text-lg text-[#afafaf]", layout === "centered" || layout === "stage" ? "mx-auto max-w-2xl" : "max-w-xl")}>
+                {description}
+              </p>
             </Reveal>
+            <Reveal
+              delay={0.5}
+              distance={20}
+              className={cn("flex flex-col gap-4", layout === "centered" || layout === "stage" ? "items-center" : "items-start")}
+            >
+              <span
+                className={cn(
+                  "flex flex-wrap items-center gap-4",
+                  (layout === "centered" || layout === "stage") && "justify-center",
+                )}
+              >
+                <a
+                  href={primaryCta.href}
+                  className="btn-sheen text-canvas inline-flex items-center gap-2 rounded-lg bg-white px-6 py-3 text-lg font-medium"
+                >
+                  {primaryCta.label}
+                  <ArrowRight className="size-5" />
+                </a>
+                {secondaryCta && (
+                  <Link
+                    href={secondaryCta.href}
+                    className="inline-flex items-center gap-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
+                  >
+                    {secondaryCta.label}
+                    <ArrowRight className="size-4" />
+                  </Link>
+                )}
+              </span>
+              {finePrint && <p className="text-sm text-[#7c7b79]">{finePrint}</p>}
+            </Reveal>
+
+            {/* Trusted logo marquee; the offset layout moves it beside the copy. */}
+            {showTrusted && layout !== "offset" && (
+              <Reveal delay={0.65} distance={16} className="w-full max-w-[588px]">
+                <p className="mb-6 text-[15px] text-[#afafaf]">{trustedLine}</p>
+                <TrustedMarquee />
+              </Reveal>
+            )}
+          </div>
+
+          {/* Offset layout: logos sit in the second column, board runs full width below. */}
+          {layout === "offset" && showTrusted && (
+            <Reveal delay={0.65} distance={16} className="w-full max-w-[520px] lg:justify-self-end">
+              <p className="mb-6 text-[15px] text-[#afafaf]">{trustedLine}</p>
+              <TrustedMarquee />
+            </Reveal>
+          )}
+
+          {/* Split and reverse: the board sits beside the copy. */}
+          {(layout === "split" || layout === "reverse" || layout === "bleed") && children && (
+            <div
+              ref={frameRef}
+              style={{ perspective: "100vw" }}
+              className={cn(
+                layout === "reverse" && "lg:order-first",
+                layout === "bleed" && "lg:-mr-[12vw]",
+              )}
+            >
+              <motion.div
+                style={{ rotateX, transformStyle: "preserve-3d" }}
+                className="overflow-hidden rounded-[24px] border-[0.83px] border-white/16"
+              >
+                {children}
+              </motion.div>
+            </div>
           )}
         </div>
 
-        {/* Glass banner frame with the template's perspective tilt-in */}
-        {children && (
+        {/* Full-width board for the centered, offset, and stage layouts */}
+        {layout !== "split" && layout !== "reverse" && layout !== "bleed" && children && (
           <div ref={frameRef} style={{ perspective: "100vw" }}>
             <motion.div
               style={{ rotateX, transformStyle: "preserve-3d" }}
-              className="mx-auto w-full max-w-[1318px] rounded-[24px] border-[0.83px] border-white/16 bg-[#1c1b1d]/45 p-[13px] backdrop-blur-2xl"
+              className={cn(
+                "mx-auto w-full overflow-hidden rounded-[24px] border-[0.83px] border-white/16",
+                layout === "offset" ? "max-w-[1480px]" : layout === "stage" ? "max-w-none" : "max-w-[1318px]",
+              )}
             >
-              <div className="overflow-hidden rounded-[14px]">{children}</div>
+              {children}
             </motion.div>
           </div>
         )}
@@ -421,12 +490,14 @@ function BoardCardView({ card }: { card: BoardCard }) {
  * template's floor-to-ceiling kanban collage: varied card types, dim
  * filler cards for texture, per-column offsets, clipped at the bottom.
  */
-export function BannerBoard({ columns }: { columns: BoardCard[][] }) {
+export function BannerBoard({ columns, dense = false }: { columns: BoardCard[][]; dense?: boolean }) {
   const offsets = ["translate-y-6", "-translate-y-3", "translate-y-2", "-translate-y-6"];
+  // A board beside the copy has half the width, so it drops to two columns.
+  const shown = dense ? columns.slice(0, 2) : columns;
   return (
-    <div className="max-h-[640px] overflow-hidden bg-[#07090d]">
-      <div className="grid grid-cols-2 items-start gap-3 p-4 sm:p-6 lg:grid-cols-4">
-        {columns.map((column, i) => (
+    <div className={cn("overflow-hidden bg-[#07090d]", dense ? "max-h-[520px]" : "max-h-[640px]")}>
+      <div className={cn("grid items-start gap-3 p-4 sm:p-6", dense ? "grid-cols-2" : "grid-cols-2 lg:grid-cols-4")}>
+        {shown.map((column, i) => (
           <div key={i} className={cn("flex flex-col gap-3", offsets[i % offsets.length])}>
             {column.map((card, j) => (
               <BoardCardView key={j} card={card} />

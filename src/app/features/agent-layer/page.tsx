@@ -12,7 +12,7 @@ import Link from "next/link";
 import { SiClaude, SiCursor, SiGithubcopilot, SiGooglegemini, SiPerplexity, SiWindsurf } from "react-icons/si";
 
 import { BannerBoard, FeatureBanner, PartnerStrip } from "@/components/feature-template/feature-template";
-import { ArrowRight, Check, GitBranch, Json, Lock, Mcp, RefreshCw } from "@/components/icons";
+import { ArrowRight, Check, Docs, GitBranch, Json, Lock, Mcp, RefreshCw } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
 import { DESTINATIONS, SITE_URL } from "@/lib/site";
@@ -90,10 +90,16 @@ const groundedPoints = [
   "You control what's exposed and can revoke it anytime.",
 ] as const;
 
-/** Dense agent Q&A board shown inside the banner's glass frame. */
+/**
+ * Dense agent Q&A board shown inside the banner's glass frame.
+ *
+ * BannerBoard renders only the first two columns when `dense`, so the
+ * question, the retrieval, and the cited answer all live in those two.
+ */
 function AgentBoard() {
   return (
     <BannerBoard
+      dense
       columns={[
         [
           { kind: "summary", progress: 64, avatars: 4, links: 7, comments: 3 },
@@ -105,10 +111,24 @@ function AgentBoard() {
             ],
             id: "Q-114",
             title: "What's the default request timeout?",
-            desc: "MCP tools: search · fetch, called from inside the editor",
+            desc: "search_docs called from inside the editor · 2m ago",
             avatars: 2,
             links: 1,
             comments: 6,
+          },
+          {
+            kind: "task",
+            chips: [
+              { label: "Retrieved", tone: "med" },
+              { label: "SDK", tone: "kind" },
+            ],
+            title: "/sdk/configuration",
+            desc: "evidence: bono@a1f9c2 · rank 1 of 3",
+            mono: true,
+            progress: 96,
+            avatars: 3,
+            links: 1,
+            comments: 2,
           },
           { kind: "filler", h: 120 },
         ],
@@ -122,25 +142,8 @@ function AgentBoard() {
             id: "S-201",
             icon: <Mcp className="text-canvas-accent size-9" />,
             title: "MCP endpoint connected",
-            desc: "search() and fetch(): no scraping, no stale copies.",
+            desc: "4 tools, read-only: no scraping, no stale copies.",
           },
-          {
-            kind: "task",
-            chips: [
-              { label: "Retrieved", tone: "med" },
-              { label: "SDK", tone: "kind" },
-            ],
-            title: "/sdk/configuration",
-            desc: "evidence: bono@a1f9c2 · ranked by relevance",
-            mono: true,
-            progress: 96,
-            avatars: 3,
-            links: 1,
-            comments: 2,
-          },
-          { kind: "filler", h: 140 },
-        ],
-        [
           {
             kind: "checklist",
             chips: [
@@ -149,14 +152,13 @@ function AgentBoard() {
             ],
             id: "A-117",
             title: "60 seconds before aborting",
-            desc: "Grounded, never guessed",
+            desc: "Grounded, never guessed · 2 sources",
             items: [
-              { label: "[1] /sdk/configuration evidence", done: true },
-              { label: "[2] /guides/long-running-jobs evidence", done: true },
-              { label: "Freshness checked against updated-at" },
+              { label: "[1] /sdk/configuration · a1f9c2", done: true },
+              { label: "[2] /guides/long-running-jobs", done: true },
+              { label: "Freshness checked · 4m ago" },
             ],
           },
-          { kind: "filler", h: 110 },
           {
             kind: "task",
             chips: [
@@ -164,88 +166,121 @@ function AgentBoard() {
               { label: "Guides", tone: "kind" },
             ],
             title: "/guides/long-running-jobs",
-            desc: "evidence: bono@a1f9c2",
+            desc: "evidence: bono@a1f9c2 · rank 2 of 3",
             mono: true,
             avatars: 2,
           },
-        ],
-        [
-          {
-            kind: "task",
-            chips: [
-              { label: "Fresh", tone: "low" },
-              { label: "updated-at", tone: "kind" },
-            ],
-            id: "F-301",
-            title: "Freshness signals",
-            desc: "Regenerated on every product change, so agents prefer current facts.",
-            progress: 100,
-            avatars: 3,
-            links: 4,
-            comments: 1,
-          },
-          {
-            kind: "task",
-            chips: [
-              { label: "Scoped", tone: "purple" },
-              { label: "per-surface", tone: "kind" },
-            ],
-            id: "F-302",
-            title: "Scoped access",
-            desc: "Granular, revocable, read-only surfaces.",
-            progress: 80,
-            avatars: 2,
-            links: 2,
-            comments: 2,
-          },
-          { kind: "filler", h: 130 },
+          { kind: "filler", h: 140 },
         ],
       ]}
     />
   );
 }
 
+/** The four page entries listed in the llms.txt preview, with byte sizes. */
+const LLMS_ENTRIES = [
+  { path: "/sdk/configuration", size: "4.1 KB" },
+  { path: "/sdk/errors", size: "2.7 KB" },
+  { path: "/guides/long-running-jobs", size: "6.3 KB" },
+  { path: "/api/tokens", size: "3.8 KB" },
+] as const;
+
 /** Large-card visual: a dark mono llms.txt index panel. */
 function LlmsTxtPanel() {
   return (
     <div className="mx-auto w-full max-w-lg rounded-2xl border border-white/12 bg-black/45 p-5">
-      <div className="flex items-center justify-between">
-        <span className="font-mono text-sm text-white/75">/llms.txt</span>
+      <div className="flex items-center justify-between gap-3 border-b border-white/[0.08] pb-3">
+        <span className="flex items-center gap-2">
+          <Docs className="size-4 text-white/45" />
+          <span className="font-mono text-sm text-white/75">/llms.txt</span>
+        </span>
         <span className="text-canvas-accent font-mono text-[11px]">text/plain</span>
       </div>
-      <div className="mt-4 space-y-2 font-mono text-xs leading-5">
-        <p className="text-white/50"># Facts first, layout gone</p>
-        {["/sdk/configuration", "/sdk/errors", "/guides/long-running-jobs", "/api/tokens"].map((page) => (
-          <div key={page} className="flex items-center justify-between rounded-lg border border-white/10 px-3 py-2">
-            <span className="text-white/80">{page}</span>
-            <span className="text-white/40">.md</span>
+
+      <div className="mt-2.5 flex items-center justify-between gap-3 font-mono text-[10px] text-white/35">
+        <span>128 pages indexed</span>
+        <span>one entry per page</span>
+      </div>
+
+      <div className="mt-2 space-y-1.5 font-mono text-xs leading-5">
+        <p className="flex gap-3 text-white/50">
+          <span className="w-3 shrink-0 text-right text-white/20 tabular-nums">1</span>
+          <span># Facts first, layout gone</span>
+        </p>
+        {LLMS_ENTRIES.map((entry, i) => (
+          <div key={entry.path} className="flex items-center gap-3">
+            <span className="w-3 shrink-0 text-right text-white/20 tabular-nums">{i + 2}</span>
+            <span className="flex min-w-0 flex-1 items-center justify-between gap-3 rounded-lg border border-white/10 px-3 py-2">
+              <span className="truncate text-white/80">{entry.path}</span>
+              <span className="flex shrink-0 items-center gap-2.5 text-white/40">
+                <span className="tabular-nums">{entry.size}</span>
+                <span>.md</span>
+              </span>
+            </span>
           </div>
         ))}
+        <p className="flex gap-3 text-white/25">
+          <span className="w-3 shrink-0 text-right text-white/20 tabular-nums">6</span>
+          <span>124 more pages</span>
+        </p>
       </div>
+
+      <div className="mt-3 flex items-center justify-between gap-3 border-t border-white/[0.08] pt-3 text-[11px] text-white/45">
+        <span className="flex items-center gap-1.5">
+          <RefreshCw className="text-canvas-accent size-3 shrink-0" />
+          Regenerated on every product change
+        </span>
+        <span className="shrink-0 font-mono text-white/35">4m ago</span>
+      </div>
+
       <p className="mt-3 text-center text-xs text-white/45">A compact index that fits an agent&apos;s context budget</p>
     </div>
   );
 }
 
-/** Large-card visual: the MCP endpoint with search and fetch tools. */
+/** The tools a client discovers on a deployed Thally site's MCP endpoint. */
+const MCP_TOOLS = [
+  { signature: "search_docs(query, limit)", hint: "query your docs live, ranked by relevance" },
+  { signature: "read_page(pageId)", hint: "pull the current page, cited by commit" },
+  { signature: "list_pages()", hint: "the whole site map, returned as data" },
+  { signature: "agent_readiness()", hint: "score how well the docs serve agents" },
+] as const;
+
+/** Large-card visual: the MCP endpoint with the tools a client discovers. */
 function McpToolsPanel() {
   return (
     <div className="mx-auto w-full max-w-md rounded-2xl border border-white/12 bg-black/45 p-5">
-      <div className="flex items-center justify-between">
-        <span className="font-mono text-sm text-white/75">mcp://docs.yourproduct.com</span>
-        <span className="text-canvas-accent font-mono text-[11px]">connected</span>
+      <div className="flex items-center justify-between gap-3">
+        <span className="flex items-center gap-2">
+          <Mcp className="size-4 text-white/45" />
+          <span className="text-sm text-white/75">MCP endpoint</span>
+        </span>
+        <span className="text-canvas-accent flex shrink-0 items-center gap-1.5 font-mono text-[11px]">
+          <span className="bg-canvas-accent size-1.5 rounded-full" />
+          connected
+        </span>
       </div>
-      <div className="mt-4 space-y-2">
-        {[
-          ["search", "query your docs live, ranked by relevance"],
-          ["fetch", "pull the current page, cited by commit"],
-        ].map(([tool, hint]) => (
-          <div key={tool} className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2.5">
-            <p className="text-canvas-accent font-mono text-xs">{tool}()</p>
-            <p className="mt-1 text-xs text-white/55">{hint}</p>
+      <p className="mt-1.5 truncate border-b border-white/[0.08] pb-3 font-mono text-[11px] text-white/40">
+        https://docs.yourproduct.com/api/mcp
+      </p>
+
+      <div className="mt-3 space-y-2">
+        {MCP_TOOLS.map((tool) => (
+          <div key={tool.signature} className="rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2.5">
+            <p className="text-canvas-accent truncate font-mono text-xs">{tool.signature}</p>
+            <p className="mt-1 text-xs text-white/55">{tool.hint}</p>
           </div>
         ))}
       </div>
+
+      <div className="mt-3 flex items-center justify-between gap-3 border-t border-white/[0.08] pt-3 text-[11px] text-white/45">
+        <span className="flex items-center gap-1.5">
+          <Check className="text-canvas-accent size-3 shrink-0" />
+          4 tools discovered
+        </span>
+        <span className="shrink-0 font-mono text-white/35">read-only</span>
+      </div>
+
       <p className="mt-3 text-center text-xs text-white/45">Standard Model Context Protocol, inside the editor</p>
     </div>
   );
@@ -257,6 +292,7 @@ export default function AgentLayerFeaturePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }} />
 
       <FeatureBanner
+        layout="reverse"
         title="Answers,"
         titleAccent="with receipts."
         description="Your customers now ask AI tools before they open your docs. The Agent Layer publishes your documentation in the formats those tools read best, with the evidence to back every answer, so nothing gets guessed."
@@ -317,7 +353,7 @@ export default function AgentLayerFeaturePage() {
                 <p className="subtitle-display mx-auto mt-10 max-w-[420px] text-center text-white">
                   Tools, not scraping.
                   <br />
-                  <span className="linear-text">search and fetch built in.</span>
+                  <span className="linear-text">search and read built in.</span>
                 </p>
               </Reveal>
             </div>
