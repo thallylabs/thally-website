@@ -199,7 +199,7 @@ function LlmsTxtPanel() {
 
       <div className="mt-2.5 flex items-center justify-between gap-3 font-mono text-[10px] text-white/35">
         <span>128 pages indexed</span>
-        <span className="tabular-nums">16.8 KB</span>
+        <span>one entry per page</span>
       </div>
 
       <div className="mt-2 space-y-1.5 font-mono text-xs leading-5">

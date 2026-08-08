@@ -260,7 +260,26 @@ function Panel({
 
 const rowBase = "flex items-center gap-2 rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5";
 
+/** The first two stages use the Thally-labeled diagrams. */
+const STAGE_DIAGRAMS: Record<number, string> = {
+  0: "/template/workflow-diagram.png",
+  1: "/template/impact-analysis-diagram.png",
+};
+
 function StageVisual({ index }: { index: number }) {
+  const diagram = STAGE_DIAGRAMS[index];
+  if (diagram) {
+    return (
+      <img
+        src={diagram}
+        alt=""
+        aria-hidden
+        className="w-full max-w-[520px]"
+        loading={index === 0 ? "eager" : "lazy"}
+      />
+    );
+  }
+
   if (index === 0) {
     return (
       <Panel title="acme · Thally GitHub App" icon={<SiGithub className="size-4 text-white/45" />} status="read-only">

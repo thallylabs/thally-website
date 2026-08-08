@@ -108,8 +108,8 @@ const DRAFT_QUEUE = [
   },
   {
     title: "docs: retry uses exponential backoff",
-    confidence: "medium",
-    meta: "acme/api#517 · 2 files · drafting now",
+    confidence: "drafting",
+    meta: "acme/api#517 · 2 files · started 1h ago",
     added: "+12",
     removed: "-7",
     pending: true,
@@ -156,7 +156,14 @@ function DraftsQueueVisual() {
                 />
                 <span className="truncate font-mono text-xs text-white/85">{draft.title}</span>
               </span>
-              <span className="shrink-0 rounded-full border border-white/12 px-2 py-0.5 text-[11px] font-medium text-white/55">
+              <span
+                className={cn(
+                  "shrink-0 rounded-full border px-2 py-0.5 text-[11px] font-medium",
+                  draft.pending
+                    ? "border-[#ffd58a]/25 bg-[#ffd58a]/10 text-[#ffe0a8]"
+                    : "border-white/12 text-white/55",
+                )}
+              >
                 {draft.confidence}
               </span>
             </div>
@@ -186,10 +193,10 @@ function DraftsQueueVisual() {
 
 /** Metric tiles: the counts carry a delta, the shares carry what they divide. */
 const ANALYTICS_TILES = [
-  { value: "12.4k", label: "Pages read", note: "+18% vs previous 30 days", trend: true },
+  { value: "12.4k", label: "Pages read", note: "+18% vs prior 30d", trend: true },
   { value: "38%", label: "Traffic from AI tools", note: "share of page views", trend: false },
-  { value: "1.8k", label: "Answers served", note: "+12% vs previous 30 days", trend: true },
-  { value: "96%", label: "Grounded citations", note: "share of answers served", trend: false },
+  { value: "1.8k", label: "Answers served", note: "+12% vs prior 30d", trend: true },
+  { value: "96%", label: "Grounded citations", note: "share of answers", trend: false },
 ] as const;
 
 /** Daily people/AI-tool split for the traffic strip, as percentage heights. */
@@ -233,7 +240,7 @@ function AnalyticsVisual() {
 
       <div className="mt-3 grid grid-cols-2 gap-2">
         {ANALYTICS_TILES.map((tile) => (
-          <div key={tile.label} className="rounded-xl bg-white/6 px-3.5 py-3">
+          <div key={tile.label} className="rounded-xl bg-white/6 px-3 py-3">
             <p className="font-display text-xl font-semibold tracking-tight text-white tabular-nums">{tile.value}</p>
             <p className="mt-0.5 text-[11px] text-white/55">{tile.label}</p>
             <p className="mt-1 flex items-center gap-1 text-[10px] text-white/40">
