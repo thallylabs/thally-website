@@ -509,13 +509,17 @@ export function ProcessCards({ title, steps }: { title?: string; steps: ProcessS
           {steps.map((step, i) => (
             <div
               key={step.label}
-              className="sticky top-[150px] flex items-start justify-between gap-12 rounded-[35px] border border-white/45 p-10 max-lg:flex-col max-sm:p-6"
-              style={{ backgroundColor: PROCESS_TINTS[i % PROCESS_TINTS.length], minHeight: 420 }}
+              className="sticky top-[170px] flex justify-between gap-14 rounded-[35px] border border-white/45 p-10 max-lg:flex-col max-sm:p-6"
+              style={{ backgroundColor: PROCESS_TINTS[i % PROCESS_TINTS.length], minHeight: 460 }}
             >
-              <div className="flex max-w-[560px] flex-col gap-5 text-[#2b3124]">
-                <h3 className="font-display text-4xl tracking-[-0.04em] sm:text-[2.75rem]">{step.title}</h3>
-                <p className="font-display text-2xl font-light tracking-[-0.04em] text-[#4a5040]">{step.subtitle}</p>
-                <p className="max-w-[460px] text-[15px] leading-relaxed tracking-[-0.03em] text-[#5c6350]">
+              <div className="flex max-w-[655px] flex-col justify-between gap-10">
+                <div className="flex flex-col gap-6 text-[#38332d]">
+                  <h3 className="font-display text-4xl tracking-[-0.04em] sm:text-5xl">{step.title}</h3>
+                  <p className="font-display text-2xl font-light tracking-[-0.04em] sm:text-[28px]">
+                    {step.subtitle}
+                  </p>
+                </div>
+                <p className="border-t border-black/10 pt-6 text-[15px] leading-relaxed tracking-[-0.03em] text-[#7c7b79]">
                   {step.description}
                 </p>
               </div>
