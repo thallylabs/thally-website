@@ -103,7 +103,7 @@
 
 .repoPill {
   align-items: center;
-  background: var(--auto-surface);
+  background: #0f1216;
   border: 1px solid var(--auto-border);
   border-radius: 99px;
   color: var(--auto-secondary);
@@ -328,7 +328,6 @@
   background: var(--auto-surface);
   border: 1px solid var(--auto-border-strong);
   border-radius: 2.1875rem;
-  box-shadow: 0 1.75rem 4.5rem rgb(0 0 0 / 45%);
   margin: 0 auto;
   max-width: 62.5rem;
   overflow: hidden;
@@ -675,6 +674,13 @@
   position: relative;
   transition: background-color 200ms ease;
   width: 2.625rem;
+}
+
+/* Keep the switch visually 42x24 but give touch input a 44px-tall hit area. */
+.toggle::before {
+  content: "";
+  position: absolute;
+  inset: -0.625rem -0.125rem;
 }
 
 .toggle::after {
