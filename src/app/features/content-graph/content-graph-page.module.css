@@ -105,7 +105,7 @@
 
 .surfaceChip {
   align-items: center;
-  background: var(--cg-surface);
+  background: #0f1216;
   border: 1px solid var(--cg-border);
   border-radius: 99px;
   color: var(--cg-secondary);
@@ -166,12 +166,13 @@
 }
 
 .primaryButton {
-  background: var(--primary);
-  color: var(--primary-foreground);
+  background: #ffffff;
+  color: #0b0d12;
+  font-weight: 600;
 }
 
 .primaryButton:hover {
-  background: color-mix(in oklab, var(--primary) 84%, white);
+  background: #e9ecdf;
 }
 
 .textLink {
@@ -323,10 +324,7 @@
 .studio {
   background: var(--cg-surface);
   border: 1px solid var(--cg-border-strong);
-  border-radius: 1.375rem;
-  box-shadow:
-    0 1px 2px oklch(0.235 0.05 138 / 0.04),
-    0 1.5rem 3.75rem oklch(0.235 0.05 138 / 0.06);
+  border-radius: 2.1875rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin: 0 auto;

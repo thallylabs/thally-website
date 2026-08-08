@@ -127,12 +127,13 @@
 }
 
 .primaryButton {
-  background: var(--primary);
-  color: var(--primary-foreground);
+  background: #ffffff;
+  color: #0b0d12;
+  font-weight: 600;
 }
 
 .primaryButton:hover {
-  background: color-mix(in oklab, var(--primary) 84%, white);
+  background: #e9ecdf;
 }
 
 .textLink {
@@ -197,12 +198,9 @@
 /* ── dashboard mock ── */
 
 .dashframe {
-  background: var(--cd-surface);
+  background: #0f1216;
   border: 1px solid var(--cd-border-strong);
-  border-radius: 20px;
-  box-shadow:
-    0 1px 2px oklch(0.235 0.05 138 / 0.04),
-    0 30px 70px oklch(0.235 0.05 138 / 0.08);
+  border-radius: 2.1875rem;
   margin: 0 auto;
   max-width: 1120px;
   overflow: hidden;
