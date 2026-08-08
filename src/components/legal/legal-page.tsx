@@ -40,7 +40,7 @@ function Outline({ groups }: { groups: LegalOutlineGroup[] }) {
                 <li key={item.href}>
                   <a
                     href={item.href}
-                    className="text-muted-foreground hover:border-foreground hover:text-foreground focus-visible:ring-ring focus-visible:ring-offset-background -ml-px block border-l border-transparent py-1.5 pl-4 text-sm leading-5 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                    className="text-muted-foreground hover:border-foreground hover:text-foreground focus-visible:ring-ring focus-visible:ring-offset-background -ml-px flex min-h-10 items-center border-l border-transparent py-1.5 pl-4 text-sm leading-5 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none lg:min-h-0 lg:block"
                   >
                     {item.label}
                   </a>
@@ -101,7 +101,9 @@ export function LegalPage({ documentLabel, title, description, updated, summary,
 
       <div className="container py-12 sm:py-16 lg:py-24">
         <details className="border-border bg-muted/35 mb-12 rounded-xl border p-5 lg:hidden">
-          <summary className="cursor-pointer text-sm font-semibold">Browse this document</summary>
+          <summary className="flex min-h-10 cursor-pointer items-center text-sm font-semibold">
+            Browse this document
+          </summary>
           <div className="mt-5">
             <Outline groups={outline} />
           </div>
