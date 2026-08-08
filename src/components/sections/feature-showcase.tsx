@@ -1,6 +1,6 @@
 "use client";
 
-import { DocsAgent, Mcp, Overview, Readiness, Search, Structured } from "@/components/icons";
+import { ArrowRight, DocsAgent, Mcp, Overview, Readiness, Search, Structured } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
 
@@ -156,22 +156,63 @@ function FormatProjection() {
 /** Card visual: grounded answer with citations. */
 function AnswerPreview() {
   return (
-    <div className="mx-auto w-full max-w-md rounded-2xl border border-white/12 bg-black/45 p-5">
-      <div className="flex items-center gap-2.5">
-        <DocsAgent className="text-canvas-accent size-5" />
-        <span className="text-sm text-white/75">How do I rotate an access token?</span>
-      </div>
-      <div className="mt-4 rounded-xl bg-white/6 p-4">
-        <p className="text-sm leading-relaxed text-white/85">
-          Send a POST request to <code className="text-canvas-accent font-mono">/v1/tokens/rotate</code>. The previous
-          token stays valid for 60 seconds.
-        </p>
-        <div className="mt-3 flex gap-2">
-          <span className="rounded-md border border-white/12 px-2.5 py-1 text-[11px] text-white/55">
-            api/auth.mdx §2
+    <div className="mx-auto w-full max-w-md overflow-hidden rounded-2xl border border-white/12 bg-[#0b0d12]/90 shadow-[0_24px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+      {/* Window bar */}
+      <div className="flex items-center justify-between border-b border-white/8 px-4 py-3">
+        <div className="flex items-center gap-2">
+          <span className="bg-canvas-accent/12 flex size-6 items-center justify-center rounded-full">
+            <DocsAgent className="text-canvas-accent size-3.5" />
           </span>
-          <span className="rounded-md border border-white/12 px-2.5 py-1 text-[11px] text-white/55">
-            changelog 2.4
+          <span className="text-[13px] font-medium text-white/85">Ask AI</span>
+        </div>
+        <span className="text-canvas-accent bg-canvas-accent/10 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-medium">
+          <span className="bg-canvas-accent size-1.5 rounded-full" />
+          Grounded
+        </span>
+      </div>
+
+      {/* Conversation */}
+      <div className="space-y-4 px-4 py-5">
+        {/* User message, right aligned */}
+        <div className="flex justify-end">
+          <p className="max-w-[78%] rounded-2xl rounded-br-md bg-white/10 px-3.5 py-2.5 text-[13px] leading-relaxed text-white/90">
+            How do I rotate an access token?
+          </p>
+        </div>
+
+        {/* Assistant message with avatar */}
+        <div className="flex items-start gap-2.5">
+          <span className="bg-canvas-accent/12 mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full">
+            <DocsAgent className="text-canvas-accent size-3.5" />
+          </span>
+          <div className="max-w-[85%] space-y-2.5">
+            <div className="rounded-2xl rounded-tl-md border border-white/8 bg-white/[0.04] px-3.5 py-3">
+              <p className="text-[13px] leading-relaxed text-white/85">
+                Send a POST request to <code className="text-canvas-accent font-mono text-xs">/v1/tokens/rotate</code>.
+                The previous token stays valid for 60 seconds.
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="text-[10px] tracking-wide text-white/35 uppercase">Sources</span>
+              {["api/auth.mdx §2", "changelog 2.4"].map((source) => (
+                <span
+                  key={source}
+                  className="rounded-md border border-white/10 bg-white/[0.03] px-2 py-1 font-mono text-[10px] text-white/60"
+                >
+                  {source}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Composer */}
+      <div className="border-t border-white/8 px-4 py-3">
+        <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] py-2 pr-2 pl-3.5">
+          <span className="flex-1 text-[13px] text-white/35">Ask about your docs</span>
+          <span className="bg-canvas-accent/90 flex size-7 items-center justify-center rounded-lg">
+            <ArrowRight className="text-canvas size-3.5" />
           </span>
         </div>
       </div>
