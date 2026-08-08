@@ -156,12 +156,13 @@
 }
 
 .primaryButton {
-  background: var(--primary);
-  color: var(--primary-foreground);
+  background: #ffffff;
+  color: #0b0d12;
+  font-weight: 600;
 }
 
 .primaryButton:hover {
-  background: color-mix(in oklab, var(--primary) 84%, white);
+  background: #e9ecdf;
 }
 
 .textLink {
@@ -322,10 +323,8 @@
 .agentChat {
   background: var(--al-surface);
   border: 1px solid var(--al-border-strong);
-  border-radius: 1.375rem;
-  box-shadow:
-    0 1px 2px oklch(0.235 0.05 138 / 0.04),
-    0 1.5rem 3.75rem oklch(0.235 0.05 138 / 0.06);
+  border-radius: 2.1875rem;
+  box-shadow: 0 1.75rem 4.5rem rgb(0 0 0 / 45%);
   margin: 0 auto;
   max-width: 53.75rem;
   overflow: hidden;
@@ -604,7 +603,7 @@
 .featureGrid {
   background: var(--al-surface);
   border: 1px solid var(--al-border);
-  border-radius: 1.25rem;
+  border-radius: 1.5rem;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: 0 auto;
@@ -687,7 +686,7 @@
 .comparisonColumn {
   background: var(--al-surface);
   border: 1px solid var(--al-border);
-  border-radius: 1.25rem;
+  border-radius: 1.5rem;
   overflow: hidden;
 }
 
