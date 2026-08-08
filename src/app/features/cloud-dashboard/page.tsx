@@ -265,9 +265,9 @@ function AnalyticsVisual() {
             </span>
           </span>
         </div>
-        <div className="mt-2.5 flex h-10 items-end gap-[3px]">
+        <div className="mt-2.5 flex h-10 items-stretch gap-[3px]">
           {TRAFFIC_BARS.map(([human, agent], i) => (
-            <span key={i} className="flex flex-1 flex-col justify-end">
+            <span key={i} className="flex h-full flex-1 flex-col justify-end">
               <span className="bg-canvas-accent w-full rounded-t-[2px]" style={{ height: `${agent}%` }} />
               <span className="w-full bg-white/25" style={{ height: `${human}%` }} />
             </span>
