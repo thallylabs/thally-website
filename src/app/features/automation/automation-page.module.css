@@ -171,12 +171,13 @@
 }
 
 .primaryButton {
-  background: var(--primary);
-  color: var(--primary-foreground);
+  background: #ffffff;
+  color: #0b0d12;
+  font-weight: 600;
 }
 
 .primaryButton:hover:not(:disabled) {
-  background: color-mix(in oklab, var(--primary) 84%, white);
+  background: #e9ecdf;
 }
 
 .textLink {
@@ -326,10 +327,8 @@
 .loop {
   background: var(--auto-surface);
   border: 1px solid var(--auto-border-strong);
-  border-radius: 1.375rem;
-  box-shadow:
-    0 1px 2px oklch(0.235 0.05 138 / 0.04),
-    0 1.5rem 3.75rem oklch(0.235 0.05 138 / 0.06);
+  border-radius: 2.1875rem;
+  box-shadow: 0 1.75rem 4.5rem rgb(0 0 0 / 45%);
   margin: 0 auto;
   max-width: 62.5rem;
   overflow: hidden;
@@ -600,7 +599,7 @@
 .triggerList {
   background: var(--auto-surface);
   border: 1px solid var(--auto-border);
-  border-radius: 1.25rem;
+  border-radius: 1.5rem;
   margin: 0 auto;
   max-width: 70rem;
   overflow: hidden;
@@ -704,7 +703,7 @@
 .feed {
   background: var(--auto-surface);
   border: 1px solid var(--auto-border);
-  border-radius: 1.25rem;
+  border-radius: 1.5rem;
   margin: 0 auto;
   max-width: 62.5rem;
   overflow: hidden;
@@ -809,7 +808,7 @@
 .compareColumn {
   background: var(--auto-surface);
   border: 1px solid var(--auto-border);
-  border-radius: 1.25rem;
+  border-radius: 1.5rem;
   overflow: hidden;
 }
 

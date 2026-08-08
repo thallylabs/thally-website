@@ -194,6 +194,174 @@
   }
 }
 
+/*
+ * A scope that restores the light theme's tokens inside the forced-dark
+ * site, for sections that render on the daylight illustration.
+ */
+.light-island {
+  --background: oklch(0.99 0.007 106);
+  --foreground: oklch(0.235 0.017 138);
+  --card-foreground: oklch(0.235 0.017 138);
+  --card: oklch(1 0 0);
+  --popover-foreground: oklch(0.235 0.017 138);
+  --popover: oklch(0.99 0.007 106);
+  --primary: oklch(0.235 0.017 138);
+  --primary-foreground: oklch(0.99 0.007 106);
+  --secondary: oklch(0.95 0.008 107);
+  --secondary-foreground: oklch(0.3 0.015 138);
+  --muted: oklch(0.95 0.008 107);
+  --muted-foreground: oklch(0.5 0.013 140);
+  --accent: oklch(0.955 0.009 138);
+  --accent-foreground: oklch(0.28 0.015 138);
+  --accent-2: oklch(0.55 0.14 292);
+  --destructive: oklch(0.619 0.212 20);
+  --border: oklch(0.235 0.017 138 / 0.1);
+  --input: oklch(0.89 0.008 120);
+  --ring: oklch(0.5 0.07 165);
+  --chart-1: oklch(0.8 0.19 124);
+  --chart-2: oklch(0.5 0.12 165);
+  --chart-3: oklch(0.55 0.14 292);
+  --chart-4: oklch(0.66 0.16 132);
+  --chart-5: oklch(0.54 0.1 150);
+  color: var(--foreground);
+}
+
+/*
+ * Marketing canvas tokens for the marketing design system, tuned to
+ * the Thally brand (lime primary accent instead of the template blue).
+ */
+:root {
+  --canvas: #000104;
+  --canvas-foreground: #ffffff;
+  --canvas-muted: #afafaf;
+  --canvas-muted-2: #7c7b79;
+  --canvas-stroke: #333333;
+  --canvas-card-stroke: rgba(234, 236, 237, 0.23);
+  --canvas-hairline: rgba(234, 236, 237, 0.12);
+  --canvas-glass: rgba(255, 255, 255, 0.14);
+  /* Muted olive: reads as an accent without shouting on the dark canvas. */
+  --canvas-accent: oklch(0.78 0.072 116);
+  --canvas-cream: #f4efe7;
+  --canvas-cream-foreground: #1c1a17;
+  --canvas-cream-muted: #6d675e;
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-canvas-foreground: var(--canvas-foreground);
+  --color-canvas-muted: var(--canvas-muted);
+  --color-canvas-muted-2: var(--canvas-muted-2);
+  --color-canvas-stroke: var(--canvas-stroke);
+  --color-canvas-card-stroke: var(--canvas-card-stroke);
+  --color-canvas-hairline: var(--canvas-hairline);
+  --color-canvas-glass: var(--canvas-glass);
+  --color-canvas-accent: var(--canvas-accent);
+  --color-canvas-cream: var(--canvas-cream);
+  --color-canvas-cream-foreground: var(--canvas-cream-foreground);
+  --color-canvas-cream-muted: var(--canvas-cream-muted);
+}
+
+@layer utilities {
+  /* Template type scale: h1 64/1.2/-0.06em, h2 54, h3 40, h4 32 */
+  .heading-display {
+    font-family: var(--font-display);
+    font-size: clamp(2.75rem, 6vw, 5.25rem);
+    line-height: 1.15;
+    letter-spacing: -0.05em;
+    font-weight: 500;
+  }
+  .heading-hero {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4.5vw, 4rem);
+    line-height: 1.2;
+    letter-spacing: -0.05em;
+    font-weight: 500;
+  }
+  .heading-section {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.8vw, 3.375rem);
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+    font-weight: 500;
+  }
+  .heading-card {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.8vw, 2.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+    font-weight: 500;
+  }
+  .marketing-section-pad {
+    @apply py-20 md:py-28 lg:py-[120px];
+  }
+
+  /* Template .linear-text: white-to-blue gradient display type. */
+  .linear-text {
+    background-image: linear-gradient(#fff 46%, #8bc0ff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow:
+      0 3.9px 10.4px rgba(0, 0, 0, 0.15),
+      0 2.6px 2.6px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Template .hero-subtitle: Inter Tight 40px/1.2, -0.04em, weight 400. */
+  .subtitle-display {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 2.8vw, 2.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.04em;
+    font-weight: 400;
+  }
+
+  /* Button hover: the template's cloudy iridescent panel wipes up under
+     the label (700ms outCirc), recolored to light olive. */
+  .btn-sheen {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: color 0.7s;
+  }
+  .btn-sheen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    mix-blend-mode: hard-light;
+    background-image: url("/template/primary-button.webp");
+    background-size: cover;
+    background-position: 50%;
+    transform: translateY(100%);
+    transition: transform 0.7s cubic-bezier(0, 0.55, 0.45, 1);
+  }
+  .btn-sheen:hover::after {
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn-sheen::after {
+      transition: none;
+    }
+  }
+
+  /* Template testimonial marquee: 60s linear loop, counter-directions. */
+  .guarantee-marquee-track {
+    animation: logos-marquee 60s linear infinite;
+  }
+  .guarantee-marquee-track.reverse {
+    animation-direction: reverse;
+  }
+  .guarantee-marquee:hover .guarantee-marquee-track {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .guarantee-marquee-track {
+      animation: none;
+    }
+  }
+}
+
 @layer components {
   button {
     cursor: pointer;

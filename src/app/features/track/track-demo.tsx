@@ -120,7 +120,12 @@ export function TrackDemo() {
   const stageRef = useRef<HTMLDivElement>(null);
   const findingDetailRef = useRef<HTMLElement>(null);
 
-  const loadSession = useCallback(async () => {
+  /**
+   * The initial probe runs before the reader has asked for anything, so a
+   * failure there means "not connected", not "something went wrong". Only
+   * a retry the reader triggered surfaces an error.
+   */
+  const loadSession = useCallback(async ({ userInitiated = false }: { userInitiated?: boolean } = {}) => {
     const githubStatus = new URLSearchParams(window.location.search).get("github");
     setSessionState("loading");
     setError(
@@ -148,8 +153,13 @@ export function TrackDemo() {
         window.history.replaceState({}, "", `${window.location.pathname}#demo`);
       }
     } catch {
-      setError("Could not reach the Track service. Please try again.");
-      setSessionState("error");
+      if (userInitiated) {
+        setError("Could not reach the Track service. Please try again.");
+        setSessionState("error");
+        return;
+      }
+      setSession(null);
+      setSessionState("disconnected");
     }
   }, []);
 
@@ -250,9 +260,7 @@ export function TrackDemo() {
   return (
     <div className={`${styles.stage} ${step === 4 ? styles.stageWide : ""}`} ref={stageRef}>
       <div className={styles.progressHeader}>
-        <p className={styles.progressLabel}>
-          Step {step + 1} of 5 <span>· {STEP_NAMES[step]}</span>
-        </p>
+        <p className={styles.progressLabel}>{STEP_NAMES[step]}</p>
         <div
           aria-label={`Step ${step + 1} of 5`}
           aria-valuemax={5}

@@ -28,25 +28,6 @@ const FORMAT_TABS: { icon: ThallyIcon; id: FormatId; label: string }[] = [
   { icon: Mcp, id: "llms", label: "llms.txt" },
 ];
 
-const CAPTIONS: Record<FormatId, { text: string; url: string }> = {
-  html: {
-    text: "Rendered for people: typography, code highlighting, and navigation.",
-    url: "GET /sdk/sending-jobs",
-  },
-  md: {
-    text: "Portable Markdown: the same source, projected as plain text.",
-    url: "GET /sdk/sending-jobs.md",
-  },
-  json: {
-    text: "Structured data: every block and concept reference as JSON.",
-    url: "GET /sdk/sending-jobs.json",
-  },
-  llms: {
-    text: "Machine-first context: compact, grounded, with source evidence.",
-    url: "GET /sdk/sending-jobs · llms.txt",
-  },
-};
-
 function HtmlProjection() {
   return (
     <div className={styles.renderView}>
@@ -168,11 +149,32 @@ const PROJECTIONS: Record<FormatId, () => ReactElement> = {
 
 export function FormatStudio() {
   const [format, setFormat] = useState<FormatId>("html");
+  const [isHovered, setIsHovered] = useState(false);
+  /** Timestamp until which the rotation stays paused after a click. */
+  const [pausedUntil, setPausedUntil] = useState(0);
+
+  // The studio demonstrates itself by rotating through the projections.
+  // Hovering pauses it, and picking a tab pauses it briefly before the
+  // rotation resumes, so it never latches into a stopped state.
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const order = FORMAT_TABS.map((tab) => tab.id);
+    const timer = window.setInterval(() => {
+      if (isHovered || Date.now() < pausedUntil) return;
+      setFormat((current) => order[(order.indexOf(current) + 1) % order.length]);
+    }, 2000);
+    return () => window.clearInterval(timer);
+  }, [isHovered, pausedUntil]);
+
   const Projection = PROJECTIONS[format];
-  const caption = CAPTIONS[format];
 
   return (
-    <div className={styles.studio}>
+    <div
+      className={styles.studio}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <div className={styles.studioSource}>
         <div className={styles.studioBar}>
           <span aria-hidden="true" className={styles.barDots}>
@@ -221,7 +223,10 @@ export function FormatStudio() {
                 aria-pressed={format === tab.id}
                 className={`${styles.formatTab} ${format === tab.id ? styles.formatTabActive : ""}`}
                 key={tab.id}
-                onClick={() => setFormat(tab.id)}
+                onClick={() => {
+                  setPausedUntil(Date.now() + 10000);
+                  setFormat(tab.id);
+                }}
                 type="button"
               >
                 <TabIcon /> {tab.label}
@@ -231,11 +236,6 @@ export function FormatStudio() {
         </div>
         <div className={styles.studioView}>
           <Projection />
-        </div>
-        <div aria-live="polite" className={styles.studioCaption}>
-          <Check />
-          <span>{caption.text}</span>
-          <span className={styles.captionUrl}>{caption.url}</span>
         </div>
       </div>
     </div>
@@ -357,10 +357,17 @@ export function GraphExplorer() {
           observer.disconnect();
         }
       },
-      { threshold: 0.3 },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.1 },
     );
     observer.observe(element);
-    return () => observer.disconnect();
+
+    // The graph is taller than some viewports, so a strict threshold can
+    // never be met. Reveal it anyway once it has had a chance to scroll in.
+    const safety = window.setTimeout(() => setIsInView(true), 1200);
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(safety);
+    };
   }, []);
 
   return (
@@ -382,13 +389,22 @@ export function GraphExplorer() {
       <div className={`${styles.graph} ${isInView ? styles.graphIn : ""}`} ref={graphRef}>
         <svg aria-hidden="true" className={styles.edges} preserveAspectRatio="none" viewBox="0 0 1000 520">
           {GRAPH_NODES.map((node, index) => (
-            <path
-              className={`${styles.edgePath} ${activeNodeId === node.id ? styles.edgeActive : ""}`}
-              d={edgePath(node.x, node.y)}
-              key={node.id}
-              pathLength={1}
-              style={{ "--edge-delay": `${80 + index * 70}ms` } as CSSProperties}
-            />
+            <g key={node.id}>
+              <path
+                className={`${styles.edgePath} ${activeNodeId === node.id ? styles.edgeActive : ""}`}
+                d={edgePath(node.x, node.y)}
+                pathLength={1}
+                style={{ "--edge-delay": `${80 + index * 70}ms` } as CSSProperties}
+              />
+              {/* Pulse travelling from the source out to this node, so the
+                  graph reads as continuous projection rather than a still. */}
+              <path
+                className={styles.edgePulse}
+                d={edgePath(node.x, node.y)}
+                pathLength={1}
+                style={{ "--pulse-delay": `${index * 420}ms` } as CSSProperties}
+              />
+            </g>
           ))}
         </svg>
         <div className={`${styles.gnode} ${styles.gnodeSrc}`} style={{ left: "50%", top: "50%" }}>

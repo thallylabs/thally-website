@@ -6,6 +6,7 @@ import Script from "next/script";
 
 import { ConditionalFooter } from "@/components/layout/conditional-footer";
 import Navbar from "@/components/layout/navbar";
+import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { ThemeProvider } from "@/components/theme-provider";
 import {
   LEGAL_ENTITY_NAME,
@@ -175,13 +176,16 @@ export default function RootLayout({
         </Script>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
+        {/* The rebuilt marketing design is dark-first, matching the template. */}
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="dark"
+          enableSystem={false}
+          forcedTheme="dark"
           storageKey="thally-theme"
           disableTransitionOnChange
         >
+          <SmoothScroll />
           <Navbar />
           <main className="flex flex-1 flex-col">{children}</main>
           <ConditionalFooter />
