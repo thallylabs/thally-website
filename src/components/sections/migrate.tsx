@@ -32,7 +32,10 @@ const STEPS = [
 ];
 
 /* Orbit ring radius as a percentage of the container, per-chip nudged for organic rhythm. */
-const ORBIT_RADIUS = 40;
+/** Percent of the orbit box. Drives both the dashed ring and the chip
+ *  positions, so they stay aligned. Kept under 40 so the widest labelled
+ *  chip clears the wrapper's clip edge. */
+const ORBIT_RADIUS = 37;
 
 const SOURCES = [
   { name: "Mintlify", Icon: SiMintlify, color: "#0D9373", angle: -90, r: 1 },
