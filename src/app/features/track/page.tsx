@@ -301,7 +301,9 @@ export default function TrackFeaturePage() {
           </Reveal>
         </div>
         <div className="mx-auto w-full max-w-[1100px] px-5">
-          <TrackDemo />
+          <div className="rounded-[24px] border-[0.83px] border-white/16 bg-[#1c1b1d]/45 p-[13px] backdrop-blur-2xl">
+            <TrackDemo />
+          </div>
         </div>
       </section>
 

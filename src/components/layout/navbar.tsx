@@ -114,17 +114,13 @@ const Navbar = () => {
         <motion.div
           style={scrub ? { width: pillWidth, backgroundColor: pillBg } : undefined}
           className={cn(
-            "border-canvas-hairline relative mx-auto w-full rounded-2xl border shadow-[0_1px_0_0_rgba(255,255,255,0.04)_inset] backdrop-blur-xl lg:min-w-[860px]",
+            "border-canvas-hairline relative mx-auto min-w-[860px] rounded-2xl border shadow-[0_1px_0_0_rgba(255,255,255,0.04)_inset] backdrop-blur-xl max-lg:w-full",
             !scrub && "bg-canvas/80",
           )}
         >
           <div className="flex items-center justify-between px-4 py-2.5 sm:px-5">
             {/* Logo */}
-            <Link
-              href="/"
-              aria-label="Thally home"
-              className="-my-1 flex min-h-10 shrink-0 items-center gap-2 lg:my-0 lg:min-h-0"
-            >
+            <Link href="/" aria-label="Thally home" className="flex shrink-0 items-center gap-2">
               <ThallyMark inverted />
               <motion.span
                 style={scrub ? { opacity: wordmarkOpacity, width: wordmarkWidth } : undefined}
@@ -203,11 +199,10 @@ const Navbar = () => {
 
               {/* Hamburger Menu Button (Mobile Only) */}
               <button
-                className="text-canvas-muted relative -my-1 -mr-1.5 flex size-10 lg:hidden"
+                className="text-canvas-muted relative flex size-8 lg:hidden"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                aria-expanded={isMenuOpen}
               >
-                <span className="sr-only">{isMenuOpen ? "Close main menu" : "Open main menu"}</span>
+                <span className="sr-only">Open main menu</span>
                 <div className="absolute top-1/2 left-1/2 block w-[18px] -translate-x-1/2 -translate-y-1/2">
                   <span
                     aria-hidden="true"
@@ -231,7 +226,7 @@ const Navbar = () => {
       {/* Mobile Menu Overlay */}
       <div
         className={cn(
-          "bg-canvas absolute inset-x-0 top-full bottom-auto flex h-[calc(100dvh-64px)] flex-col overflow-y-auto px-5 transition-all duration-300 ease-in-out lg:hidden",
+          "bg-canvas absolute inset-0 top-full flex h-[calc(100vh-64px)] flex-col px-5 transition-all duration-300 ease-in-out lg:hidden",
           isMenuOpen ? "visible translate-x-0 opacity-100" : "invisible translate-x-full opacity-0",
         )}
       >

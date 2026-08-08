@@ -276,8 +276,10 @@ export default function CloudDashboardFeaturePage() {
           </Reveal>
         </div>
         <div className="mx-auto w-full max-w-[1180px] px-5">
-          <div className={cn(styles.page, "overflow-hidden rounded-[14px] py-4")}>
-            <DashboardDemo />
+          <div className="rounded-[24px] border-[0.83px] border-white/16 bg-[#1c1b1d]/45 p-[13px] backdrop-blur-2xl">
+            <div className={cn(styles.page, "overflow-hidden rounded-[14px] py-4")}>
+              <DashboardDemo />
+            </div>
           </div>
         </div>
       </section>
@@ -316,7 +318,7 @@ export default function CloudDashboardFeaturePage() {
             </a>
             <Link
               href="/features/automation"
-              className="inline-flex min-h-11 items-center gap-2 px-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
+              className="inline-flex items-center gap-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
             >
               See how drafts arrive
               <ArrowRight className="size-4" />

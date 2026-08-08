@@ -195,7 +195,7 @@ const PlanHeaders = ({
         <Collapsible open={isOpen} onOpenChange={setIsOpen}>
           <div className="flex items-center justify-between py-4">
             <CollapsibleTrigger
-              className="text-canvas-foreground flex min-h-11 items-center gap-2"
+              className="text-canvas-foreground flex items-center gap-2"
               aria-label="Toggle pricing plans"
             >
               <h3 className="text-2xl font-medium tracking-tight">{pricingPlans[selectedPlan].name}</h3>

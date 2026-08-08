@@ -314,10 +314,11 @@
 }
 
 .stage {
-  background: #0f1216;
+  background: var(--track-surface);
   border: 1px solid var(--track-border-strong);
   /* Match the marketing cards: generous radius, hairline edge, depth. */
   border-radius: 2.1875rem;
+  box-shadow: 0 1.75rem 4.5rem rgb(0 0 0 / 45%);
   margin: 0 auto;
   max-width: 51.25rem;
   overflow: hidden;

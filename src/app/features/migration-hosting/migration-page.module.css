@@ -300,9 +300,10 @@
 /* ── migrate console ── */
 
 .console {
-  background: #0f1216;
+  background: var(--mh-surface);
   border: 1px solid var(--mh-border-strong);
   border-radius: 2.1875rem;
+  box-shadow: 0 1.75rem 4.5rem rgb(0 0 0 / 45%);
   margin: 0 auto;
   max-width: 62.5rem;
   overflow: hidden;
