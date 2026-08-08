@@ -230,7 +230,7 @@ function statusPillClass(tone: (typeof feedItems)[number]["statusTone"]) {
 /** One dark bordered card in the activity marquee. */
 function FeedCard({ item }: { item: (typeof feedItems)[number] }) {
   return (
-    <div className="border-canvas-card-stroke w-[340px] shrink-0 rounded-2xl border bg-white/[0.03] p-5 sm:w-[420px]">
+    <div className="border-canvas-card-stroke w-[min(340px,calc(100vw-2.5rem))] shrink-0 rounded-2xl border bg-white/[0.03] p-5 sm:w-[420px]">
       <div className="flex items-center gap-2.5">
         <span
           aria-hidden
@@ -430,7 +430,7 @@ export default function AutomationFeaturePage() {
             </a>
             <Link
               href="/features/track"
-              className="inline-flex items-center gap-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
+              className="inline-flex min-h-11 items-center gap-2 px-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
             >
               See what Track detects
               <ArrowRight className="size-4" />

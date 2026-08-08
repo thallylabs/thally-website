@@ -231,8 +231,8 @@ function LlmsTxtPanel() {
 function McpToolsPanel() {
   return (
     <div className="mx-auto w-full max-w-md rounded-2xl border border-white/12 bg-black/45 p-5">
-      <div className="flex items-center justify-between">
-        <span className="font-mono text-sm text-white/75">mcp://docs.yourproduct.com</span>
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+        <span className="min-w-0 font-mono text-sm break-all text-white/75">mcp://docs.yourproduct.com</span>
         <span className="text-canvas-accent font-mono text-[11px]">connected</span>
       </div>
       <div className="mt-4 space-y-2">
@@ -464,7 +464,7 @@ export default function AgentLayerFeaturePage() {
             </a>
             <Link
               href="/features/content-graph"
-              className="inline-flex items-center gap-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
+              className="inline-flex min-h-11 items-center gap-2 px-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
             >
               See where the formats come from
               <ArrowRight className="size-4" />
