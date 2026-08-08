@@ -1,6 +1,20 @@
 "use client";
 
-import { ArrowRight, DocsAgent, Mcp, Overview, Readiness, Search, Structured } from "@/components/icons";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  ChevronDown,
+  Copy,
+  Leaf,
+  Mcp,
+  Overview,
+  PanelLeft,
+  Plus,
+  Readiness,
+  RefreshCw,
+  Search,
+  Structured,
+} from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
 
@@ -128,7 +142,7 @@ function FormatProjection() {
     <div className="mx-auto w-full max-w-lg">
       <div className="rounded-2xl border border-white/12 bg-black/45 p-5">
         <div className="flex items-center gap-2.5">
-          <Structured className="text-canvas-accent size-5" />
+          <Structured className="size-5 text-white/55" />
           <span className="font-mono text-sm text-white/75">guides/quickstart.mdx</span>
         </div>
         <div className="mt-4 space-y-2">
@@ -156,63 +170,73 @@ function FormatProjection() {
 /** Card visual: grounded answer with citations. */
 function AnswerPreview() {
   return (
-    <div className="mx-auto w-full max-w-md overflow-hidden rounded-2xl border border-white/12 bg-[#0b0d12]/90 shadow-[0_24px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl">
-      {/* Window bar */}
-      <div className="flex items-center justify-between border-b border-white/8 px-4 py-3">
-        <div className="flex items-center gap-2">
-          <span className="bg-canvas-accent/12 flex size-6 items-center justify-center rounded-full">
-            <DocsAgent className="text-canvas-accent size-3.5" />
-          </span>
-          <span className="text-[13px] font-medium text-white/85">Ask AI</span>
-        </div>
-        <span className="text-canvas-accent bg-canvas-accent/10 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-medium">
-          <span className="bg-canvas-accent size-1.5 rounded-full" />
-          Grounded
+    <div className="mx-auto w-full max-w-md overflow-hidden rounded-2xl border border-white/12 bg-[#0b0d12]/92 shadow-[0_24px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl">
+      {/* Window chrome */}
+      <div className="flex items-center justify-between px-4 py-3">
+        <PanelLeft className="size-4 text-white/40" />
+        <span className="flex items-center gap-1.5 text-[13px] font-medium text-white/80">
+          Thally Ask AI
+          <ChevronDown className="size-3.5 text-white/40" />
+        </span>
+        <span className="text-white/40">
+          <span className="block text-[15px] leading-none tracking-[0.15em]">&#183;&#183;&#183;</span>
         </span>
       </div>
 
-      {/* Conversation */}
-      <div className="space-y-4 px-4 py-5">
-        {/* User message, right aligned */}
+      <div className="px-4 pb-4">
+        {/* User turn */}
         <div className="flex justify-end">
-          <p className="max-w-[78%] rounded-2xl rounded-br-md bg-white/10 px-3.5 py-2.5 text-[13px] leading-relaxed text-white/90">
+          <p className="max-w-[80%] rounded-[20px] bg-white/[0.09] px-4 py-2.5 text-[13px] leading-relaxed text-white/90">
             How do I rotate an access token?
           </p>
         </div>
+        <div className="mt-1.5 flex justify-end gap-3 pr-1 text-white/30">
+          <Copy className="size-3.5" />
+          <ArrowUpRight className="size-3.5" />
+        </div>
 
-        {/* Assistant message with avatar */}
-        <div className="flex items-start gap-2.5">
-          <span className="bg-canvas-accent/12 mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full">
-            <DocsAgent className="text-canvas-accent size-3.5" />
+        {/* Reasoning trace */}
+        <button type="button" className="mt-4 flex items-center gap-1 text-[13px] text-white/40">
+          Searched 3 pages for 2s
+          <ChevronDown className="size-3.5 -rotate-90" />
+        </button>
+
+        {/* Assistant turn: plain text, no bubble */}
+        <p className="mt-3 text-[13px] leading-[1.7] text-white/85">
+          Send a POST request to <code className="font-mono text-xs text-[#a9b578]">/v1/tokens/rotate</code> with
+          your current token. The previous token stays valid for <strong className="font-semibold text-white">60
+          seconds</strong> so in-flight requests keep working.
+        </p>
+
+        {/* Source chip with favicon */}
+        <span className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-white/[0.06] py-1 pr-2.5 pl-1.5 text-[11px] text-white/60">
+          <span className="flex size-4 items-center justify-center rounded-full bg-white/10">
+            <Leaf className="size-2.5 text-[#9aa35a]" />
           </span>
-          <div className="max-w-[85%] space-y-2.5">
-            <div className="rounded-2xl rounded-tl-md border border-white/8 bg-white/[0.04] px-3.5 py-3">
-              <p className="text-[13px] leading-relaxed text-white/85">
-                Send a POST request to <code className="text-canvas-accent font-mono text-xs">/v1/tokens/rotate</code>.
-                The previous token stays valid for 60 seconds.
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center gap-1.5">
-              <span className="text-[10px] tracking-wide text-white/35 uppercase">Sources</span>
-              {["api/auth.mdx §2", "changelog 2.4"].map((source) => (
-                <span
-                  key={source}
-                  className="rounded-md border border-white/10 bg-white/[0.03] px-2 py-1 font-mono text-[10px] text-white/60"
-                >
-                  {source}
-                </span>
-              ))}
-            </div>
-          </div>
+          api/auth.mdx
+        </span>
+
+        {/* Response actions */}
+        <div className="mt-3 flex items-center gap-3.5 text-white/30">
+          <Copy className="size-3.5" />
+          <RefreshCw className="size-3.5" />
+          <ArrowUpRight className="size-3.5" />
         </div>
       </div>
 
+      <p className="px-4 pb-2.5 text-center text-[11px] text-white/30">
+        Every answer cites your docs. Thally never guesses.
+      </p>
+
       {/* Composer */}
-      <div className="border-t border-white/8 px-4 py-3">
-        <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] py-2 pr-2 pl-3.5">
+      <div className="px-3 pb-3">
+        <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] py-1.5 pr-1.5 pl-2">
+          <span className="flex size-7 items-center justify-center rounded-full bg-white/[0.06]">
+            <Plus className="size-3.5 text-white/50" />
+          </span>
           <span className="flex-1 text-[13px] text-white/35">Ask about your docs</span>
-          <span className="bg-canvas-accent/90 flex size-7 items-center justify-center rounded-lg">
-            <ArrowRight className="text-canvas size-3.5" />
+          <span className="flex size-7 items-center justify-center rounded-full bg-white/85">
+            <ArrowRight className="size-3.5 -rotate-90 text-[#0b0d12]" />
           </span>
         </div>
       </div>
