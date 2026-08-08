@@ -449,6 +449,44 @@
     border-radius: 0.3rem;
     padding: 0.125rem 0.35rem;
     font-weight: 500;
+    overflow-wrap: break-word;
+  }
+
+  /* Comparison tables are wider than a phone; scroll them instead of
+     pushing the whole page sideways. The paired local/scroll gradients are
+     the standard CSS scroll shadow: the cover layers travel with the content
+     so the shadow only shows on the side that still has more table. */
+  .prose :where(table) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    background:
+      linear-gradient(to right, var(--canvas) 40%, transparent) left center / 2.5rem 100%
+        no-repeat local,
+      linear-gradient(to left, var(--canvas) 40%, transparent) right center / 2.5rem 100% no-repeat
+        local,
+      linear-gradient(to right, rgba(255, 255, 255, 0.22), transparent) left center / 1rem 100%
+        no-repeat scroll,
+      linear-gradient(to left, rgba(255, 255, 255, 0.22), transparent) right center / 1rem 100%
+        no-repeat scroll;
+  }
+
+  .prose :where(table) :where(th, td) {
+    /* block display drops the table's own min sizing, so keep cells legible */
+    min-width: 8rem;
+  }
+
+  .prose :where(pre) {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  /* Long compound headings ("Agent-Readiness Methodology") outrun a 320px
+     viewport at prose heading sizes. */
+  .prose :where(h1, h2, h3, h4),
+  .legal-prose :where(h1, h2, h3, h4) {
+    overflow-wrap: break-word;
   }
 }
 
@@ -541,6 +579,22 @@ html.theme-transition::view-transition-new(root) {
   .motion-safe-only {
     display: none !important;
   }
+  /* Safety net: the reveals start hidden and are brought in by JS. When the
+     animation is suppressed the content would stay invisible, so force the
+     resting state here rather than trusting the animation to land. */
+  .motion-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  .split-reveal-mask {
+    overflow: visible !important;
+  }
+  .split-reveal-unit {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
   .logos-marquee {
     mask-image: none;
     overflow: visible;

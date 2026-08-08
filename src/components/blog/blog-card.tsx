@@ -58,7 +58,9 @@ export function BlogCard({
                 <span
                   aria-hidden
                   className={cn(
-                    "font-display absolute -bottom-2 left-5 max-w-full leading-[1.05] tracking-[-0.04em] text-white/20 select-none",
+                    // right-5 as well as left-5: with only left set, max-w-full
+                    // measures the full card and the watermark ran past the edge
+                    "font-display absolute -bottom-2 left-5 max-w-full leading-[1.05] tracking-[-0.04em] text-white/20 select-none right-5",
                     featured ? "text-[clamp(2.5rem,6vw,4.5rem)]" : "text-[clamp(2rem,4vw,3rem)]",
                   )}
                 >
