@@ -607,6 +607,7 @@ html.theme-transition::view-transition-new(root) {
     flex-shrink: 1;
     flex-wrap: wrap;
     justify-content: center;
+    row-gap: 0.5rem;
     animation: none !important;
   }
   .logos-marquee-track[aria-hidden="true"] {

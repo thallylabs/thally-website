@@ -306,7 +306,10 @@ const Hero = () => {
         <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/25 to-black/20" />
         <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent" />
 
-        <div className="relative grid min-h-[inherit] lg:grid-cols-[48fr_52fr]">
+        {/* minmax(0,…) so the columns keep the 48/52 split: bare fr tracks
+            floor at min-content, and the split heading's inline-block words
+            inflate that enough to squeeze the collage column in half. */}
+        <div className="relative grid min-h-[inherit] lg:grid-cols-[minmax(0,48fr)_minmax(0,52fr)]">
           {/* Left: headline, capture form, trusted marquee */}
           <div className="flex flex-col justify-between p-6 sm:p-10 lg:p-[70px]">
             <div className="max-w-[560px]">
