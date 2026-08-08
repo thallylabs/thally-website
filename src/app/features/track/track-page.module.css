@@ -146,12 +146,13 @@
 }
 
 .primaryButton {
-  background: var(--primary);
-  color: var(--primary-foreground);
+  background: #ffffff;
+  color: #0b0d12;
+  font-weight: 600;
 }
 
 .primaryButton:hover:not(:disabled) {
-  background: color-mix(in oklab, var(--primary) 84%, white);
+  background: #e9ecdf;
 }
 
 .ghostButton {
@@ -315,10 +316,9 @@
 .stage {
   background: var(--track-surface);
   border: 1px solid var(--track-border-strong);
-  border-radius: 1.375rem;
-  box-shadow:
-    0 1px 2px oklch(0.235 0.05 138 / 0.04),
-    0 1.5rem 3.75rem oklch(0.235 0.05 138 / 0.06);
+  /* Match the marketing cards: generous radius, hairline edge, depth. */
+  border-radius: 2.1875rem;
+  box-shadow: 0 1.75rem 4.5rem rgb(0 0 0 / 45%);
   margin: 0 auto;
   max-width: 51.25rem;
   overflow: hidden;
@@ -335,21 +335,16 @@
   display: flex;
   gap: 1rem;
   justify-content: space-between;
-  padding: 1.625rem 2.25rem 1.375rem;
+  padding: 1.75rem 2.5rem 1.5rem;
 }
 
 .progressLabel {
-  color: var(--track-faint);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  margin: 0;
-  text-transform: uppercase;
-}
-
-.progressLabel span {
   color: var(--foreground);
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0;
 }
 
 .progressSegments {
@@ -360,9 +355,15 @@
 .progressSegments > span {
   background: var(--muted);
   border-radius: 99px;
-  height: 0.1875rem;
-  transition: background-color 300ms ease;
-  width: 1.625rem;
+  height: 0.25rem;
+  transition:
+    background-color 300ms ease,
+    width 300ms ease;
+  width: 1.25rem;
+}
+
+.progressSegments > .progressSegmentActive {
+  width: 2.25rem;
 }
 
 .progressSegments > .progressSegmentActive {
@@ -371,7 +372,7 @@
 
 .pane {
   min-height: 22.5rem;
-  padding: 2.125rem 2.25rem 2.25rem;
+  padding: 2.5rem 2.5rem 2.5rem;
 }
 
 .findingsPane {
@@ -380,9 +381,9 @@
 
 .pane h3 {
   font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 700;
-  letter-spacing: -0.028em;
+  font-size: 1.875rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
   margin: 0 0 0.5rem;
 }
 

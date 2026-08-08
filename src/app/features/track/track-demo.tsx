@@ -260,9 +260,7 @@ export function TrackDemo() {
   return (
     <div className={`${styles.stage} ${step === 4 ? styles.stageWide : ""}`} ref={stageRef}>
       <div className={styles.progressHeader}>
-        <p className={styles.progressLabel}>
-          Step {step + 1} of 5 <span>· {STEP_NAMES[step]}</span>
-        </p>
+        <p className={styles.progressLabel}>{STEP_NAMES[step]}</p>
         <div
           aria-label={`Step ${step + 1} of 5`}
           aria-valuemax={5}
