@@ -679,7 +679,8 @@
 
 .edgePath {
   fill: none;
-  stroke: var(--cg-border-strong);
+  opacity: 0.55;
+  stroke: #6f7a52;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
   stroke-width: 1.5;
@@ -694,8 +695,59 @@
 }
 
 .edgeActive {
-  stroke: var(--cg-forest);
+  opacity: 1;
+  stroke: #a9b578;
   stroke-width: 2;
+}
+
+/* A short lit segment runs the length of each edge, source to node. */
+.edgePulse {
+  fill: none;
+  opacity: 0;
+  stroke: #c3d06e;
+  stroke-dasharray: 0.12 0.88;
+  stroke-linecap: round;
+  stroke-width: 2.5;
+}
+
+.graphIn .edgePulse {
+  animation: edgeFlow 2.6s linear infinite var(--pulse-delay, 0ms);
+  opacity: 1;
+}
+
+@keyframes edgeFlow {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: -0.12;
+  }
+}
+
+/* The source node breathes so the origin of the projection is obvious. */
+.graphIn .gnodeSrc .chip {
+  animation: sourcePulse 2.6s ease-in-out infinite;
+}
+
+@keyframes sourcePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgb(169 181 120 / 0%);
+  }
+  45% {
+    box-shadow: 0 0 0 6px rgb(169 181 120 / 14%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .graphIn .edgePulse,
+  .graphIn .gnodeSrc .chip {
+    animation: none;
+  }
+
+  .graphIn .edgePulse {
+    opacity: 0;
+  }
 }
 
 .gnode {

@@ -3,7 +3,6 @@
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { useRef } from "react";
 
-import { ThallyMark } from "@/components/layout/logo";
 import { Reveal } from "@/components/motion/reveal";
 import { Migrate } from "@/components/sections/migrate";
 
@@ -28,13 +27,10 @@ export function Daybreak() {
 
   const width = useTransform(smooth, [0.4, 0.96], reduced ? ["100%", "100%"] : ["34%", "100%"]);
   const height = useTransform(smooth, [0.4, 0.96], reduced ? ["100vh", "100vh"] : ["44vh", "100vh"]);
-  const captionOpacity = useTransform(smooth, [0.5, 0.85], reduced ? [1, 1] : [1, 0]);
 
   return (
     <section ref={ref} className="bg-canvas relative">
-      {/* Pinned stage: card + caption. The card grows into the backdrop.
-          The caption is absolutely positioned so the card can fill the
-          full viewport without leaving a band behind. */}
+      {/* Pinned stage: the card grows to fill the viewport. */}
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
         <motion.div
           style={{ width, height }}
@@ -48,20 +44,6 @@ export function Daybreak() {
           />
         </motion.div>
 
-        <motion.div
-          style={{ opacity: captionOpacity }}
-          className="absolute inset-x-0 top-[calc(50%+24vh)] px-6 text-center"
-        >
-          <ThallyMark inverted className="mx-auto mb-5 size-6 opacity-80" />
-          <h2 className="heading-section text-white">
-            Migrate in minutes.
-            <br />
-            Publish everywhere.
-          </h2>
-          <p className="mx-auto mt-4 max-w-md text-xl text-white/70">
-            Your existing docs become an editable Thally project you control.
-          </p>
-        </motion.div>
       </div>
 
 

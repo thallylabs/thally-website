@@ -150,21 +150,24 @@ const PROJECTIONS: Record<FormatId, () => ReactElement> = {
 export function FormatStudio() {
   const [format, setFormat] = useState<FormatId>("html");
   const [isHovered, setIsHovered] = useState(false);
-  const [isTaken, setIsTaken] = useState(false);
-  const Projection = PROJECTIONS[format];
+  /** Timestamp until which the rotation stays paused after a click. */
+  const [pausedUntil, setPausedUntil] = useState(0);
 
-  // Cycle the projections so the section demonstrates itself; picking a
-  // tab or hovering stops the rotation and hands control to the reader.
+  // The studio demonstrates itself by rotating through the projections.
+  // Hovering pauses it, and picking a tab pauses it briefly before the
+  // rotation resumes, so it never latches into a stopped state.
   useEffect(() => {
-    if (isHovered || isTaken) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const order = FORMAT_TABS.map((tab) => tab.id);
     const timer = window.setInterval(() => {
+      if (isHovered || Date.now() < pausedUntil) return;
       setFormat((current) => order[(order.indexOf(current) + 1) % order.length]);
     }, 2000);
     return () => window.clearInterval(timer);
-  }, [isHovered, isTaken]);
+  }, [isHovered, pausedUntil]);
+
+  const Projection = PROJECTIONS[format];
 
   return (
     <div
@@ -221,7 +224,7 @@ export function FormatStudio() {
                 className={`${styles.formatTab} ${format === tab.id ? styles.formatTabActive : ""}`}
                 key={tab.id}
                 onClick={() => {
-                  setIsTaken(true);
+                  setPausedUntil(Date.now() + 10000);
                   setFormat(tab.id);
                 }}
                 type="button"
@@ -354,10 +357,17 @@ export function GraphExplorer() {
           observer.disconnect();
         }
       },
-      { threshold: 0.3 },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.1 },
     );
     observer.observe(element);
-    return () => observer.disconnect();
+
+    // The graph is taller than some viewports, so a strict threshold can
+    // never be met. Reveal it anyway once it has had a chance to scroll in.
+    const safety = window.setTimeout(() => setIsInView(true), 1200);
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(safety);
+    };
   }, []);
 
   return (
@@ -379,13 +389,22 @@ export function GraphExplorer() {
       <div className={`${styles.graph} ${isInView ? styles.graphIn : ""}`} ref={graphRef}>
         <svg aria-hidden="true" className={styles.edges} preserveAspectRatio="none" viewBox="0 0 1000 520">
           {GRAPH_NODES.map((node, index) => (
-            <path
-              className={`${styles.edgePath} ${activeNodeId === node.id ? styles.edgeActive : ""}`}
-              d={edgePath(node.x, node.y)}
-              key={node.id}
-              pathLength={1}
-              style={{ "--edge-delay": `${80 + index * 70}ms` } as CSSProperties}
-            />
+            <g key={node.id}>
+              <path
+                className={`${styles.edgePath} ${activeNodeId === node.id ? styles.edgeActive : ""}`}
+                d={edgePath(node.x, node.y)}
+                pathLength={1}
+                style={{ "--edge-delay": `${80 + index * 70}ms` } as CSSProperties}
+              />
+              {/* Pulse travelling from the source out to this node, so the
+                  graph reads as continuous projection rather than a still. */}
+              <path
+                className={styles.edgePulse}
+                d={edgePath(node.x, node.y)}
+                pathLength={1}
+                style={{ "--pulse-delay": `${index * 420}ms` } as CSSProperties}
+              />
+            </g>
           ))}
         </svg>
         <div className={`${styles.gnode} ${styles.gnodeSrc}`} style={{ left: "50%", top: "50%" }}>
