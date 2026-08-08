@@ -58,11 +58,8 @@ export function BlogCard({
                 <span
                   aria-hidden
                   className={cn(
-                    // right-5 as well as left-5: with only left set, max-w-full
-                    // measures the whole card and the watermark ran past the
-                    // edge. break-words covers cards narrower than one word.
-                    "font-display absolute -bottom-2 right-5 left-5 max-w-full leading-[1.05] tracking-[-0.04em] break-words text-white/20 select-none",
-                    featured ? "text-[clamp(1.75rem,8vw,4.5rem)]" : "text-[clamp(1.5rem,7vw,3rem)]",
+                    "font-display absolute -bottom-2 left-5 max-w-full leading-[1.05] tracking-[-0.04em] text-white/20 select-none",
+                    featured ? "text-[clamp(2.5rem,6vw,4.5rem)]" : "text-[clamp(2rem,4vw,3rem)]",
                   )}
                 >
                   {post.cardTitle}

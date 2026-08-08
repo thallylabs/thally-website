@@ -19,7 +19,7 @@ export function PostShell({ post, children }: { post: BlogPost; children: ReactN
         <div className="mx-auto max-w-3xl">
           <header>
             <nav aria-label="Breadcrumb" className="text-canvas-muted-2 mb-5 flex items-center gap-2 text-sm">
-              <Link className="hover:text-canvas-foreground -my-2 flex min-h-10 items-center transition-colors" href="/blog">
+              <Link className="hover:text-canvas-foreground transition-colors" href="/blog">
                 Blog
               </Link>
               <span aria-hidden>/</span>

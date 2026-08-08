@@ -367,7 +367,7 @@ export default function Contact() {
                   href={`${SOCIAL.github}/issues`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group text-canvas-muted flex min-h-11 w-fit items-center gap-2 text-[0.94rem] font-semibold transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                  className="group text-canvas-muted flex w-fit items-center gap-2 text-[0.94rem] font-semibold transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                 >
                   Open an issue on GitHub
                   <ArrowRight

@@ -342,8 +342,10 @@ export default function ContentGraphFeaturePage() {
           </Reveal>
         </div>
         <div className="mx-auto w-full max-w-[1180px] px-5">
-          <div className="overflow-hidden rounded-[14px]">
-            <FormatStudio />
+          <div className="rounded-[24px] border-[0.83px] border-white/16 bg-[#1c1b1d]/45 p-[13px] backdrop-blur-2xl">
+            <div className="overflow-hidden rounded-[14px]">
+              <FormatStudio />
+            </div>
           </div>
         </div>
       </section>
@@ -363,8 +365,10 @@ export default function ContentGraphFeaturePage() {
           </Reveal>
         </div>
         <div className="mx-auto w-full max-w-[1180px] px-5">
-          <div className="overflow-hidden rounded-[14px]">
-            <GraphExplorer />
+          <div className="rounded-[24px] border-[0.83px] border-white/16 bg-[#1c1b1d]/45 p-[13px] backdrop-blur-2xl">
+            <div className="overflow-hidden rounded-[14px]">
+              <GraphExplorer />
+            </div>
           </div>
           <p className="mx-auto mt-6 max-w-2xl text-center text-sm text-[#7c7b79]">
             The graph gets sharper the longer it runs. Every accepted review, correction, and release teaches it more

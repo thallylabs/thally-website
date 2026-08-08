@@ -108,7 +108,7 @@ export function PricingCards({ headerTag = "h2" }: { headerTag?: "h1" | "h2" }) 
                   onClick={() => setAnnual(isAnnual)}
                   aria-pressed={selected}
                   className={cn(
-                    "inline-flex min-h-10 items-center rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
+                    "rounded-full px-4 py-1.5 text-sm font-medium transition-colors",
                     selected ? "text-canvas bg-white" : "text-canvas-muted hover:text-canvas-foreground",
                   )}
                 >

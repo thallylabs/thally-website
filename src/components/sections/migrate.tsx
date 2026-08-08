@@ -32,10 +32,7 @@ const STEPS = [
 ];
 
 /* Orbit ring radius as a percentage of the container, per-chip nudged for organic rhythm. */
-/** Percent of the orbit box. Drives both the dashed ring and the chip
- *  positions, so they stay aligned. Kept under 40 so the widest labelled
- *  chip clears the wrapper's clip edge. */
-const ORBIT_RADIUS = 37;
+const ORBIT_RADIUS = 40;
 
 const SOURCES = [
   { name: "Mintlify", Icon: SiMintlify, color: "#0D9373", angle: -90, r: 1 },
@@ -231,10 +228,7 @@ function MigrationOrbit() {
 
   return (
     <div
-      // overflow-hidden: the ring below rotates, and a rotated square's
-      // bounding box is up to 1.41x its width, which pushed the page sideways
-      // on phones. The corners it clips are empty; the chips ride a circle.
-      className="group relative mx-auto mt-4 aspect-square w-full max-w-[26rem] overflow-hidden"
+      className="group relative mx-auto mt-4 aspect-square w-full max-w-[26rem]"
       role="img"
       aria-label="Mintlify, Docusaurus, GitBook, Nextra, VitePress, Starlight, and plain Markdown orbiting the Thally logo"
     >
