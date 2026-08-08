@@ -57,7 +57,7 @@ export const Footer = () => {
 
       <div className="relative mx-auto w-full max-w-[1480px] px-5 pb-2">
         <div className="mb-6 rounded-[30px] bg-[#19181b] p-8 sm:p-14 lg:mt-[150px] lg:mb-10 lg:p-20">
-          <h2 className="heading-section max-w-3xl text-white">Docs that keep up with the product.</h2>
+          <h2 className="heading-section max-w-3xl text-white">Docs that keep up with your products.</h2>
 
           <div className="mt-20 flex flex-col justify-between gap-12 lg:mt-28 lg:flex-row">
             <div className="flex flex-col justify-end gap-5">

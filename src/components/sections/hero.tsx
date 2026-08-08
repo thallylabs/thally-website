@@ -315,7 +315,7 @@ const Hero = () => {
             </SplitReveal>
 
             <Reveal delay={0.5} distance={30} className="mt-6">
-              <p className="text-xl tracking-[-0.04em] text-white">Docs that keep up with the product</p>
+              <p className="text-xl tracking-[-0.04em] text-white">Docs that keep up with your products</p>
               <div className="mt-5">
                 <HeroCtas />
               </div>
