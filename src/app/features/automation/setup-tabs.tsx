@@ -159,7 +159,7 @@ function StepVisual({ index }: { index: number }) {
         {REPOS.map((repo) => (
           <div
             key={repo.name}
-            className="flex items-center gap-2 rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5"
+            className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5"
           >
             <SiGithub className="size-3.5 shrink-0 text-white/35" />
             <span className="truncate font-mono text-xs text-white/85">{repo.name}</span>
@@ -167,7 +167,7 @@ function StepVisual({ index }: { index: number }) {
               <GitBranch className="size-2.5" />
               {repo.branch}
             </span>
-            <span className="ml-auto flex shrink-0 items-center gap-1.5 text-[10px] text-white/40">
+            <span className="flex shrink-0 items-center gap-1.5 text-[10px] text-white/40 sm:ml-auto">
               <span className="bg-canvas-accent size-1.5 rounded-full" />
               {repo.role} · {repo.meta}
             </span>

@@ -181,13 +181,13 @@ function FormatProjection() {
     <div className="mx-auto w-full max-w-lg">
       {/* Editor pane */}
       <div className="overflow-hidden rounded-2xl border border-white/12 bg-black/45">
-        <div className="flex items-center justify-between border-b border-white/[0.08] px-4 py-2.5">
-          <span className="flex items-center gap-2 font-mono text-[13px] text-white/75">
-            <Structured className="size-4 text-white/45" />
-            guides/quickstart.mdx
-            <span className="size-1.5 rounded-full bg-[#c2a068]" />
+        <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 border-b border-white/[0.08] px-4 py-2.5">
+          <span className="flex min-w-0 items-center gap-2 font-mono text-[13px] text-white/75">
+            <Structured className="size-4 shrink-0 text-white/45" />
+            <span className="truncate">guides/quickstart.mdx</span>
+            <span className="size-1.5 shrink-0 rounded-full bg-[#c2a068]" />
           </span>
-          <span className="rounded-full bg-[#c2a068]/15 px-2 py-0.5 text-[10px] font-medium text-[#dcc08e]">
+          <span className="shrink-0 rounded-full bg-[#c2a068]/15 px-2 py-0.5 text-[10px] font-medium text-[#dcc08e]">
             modified
           </span>
         </div>

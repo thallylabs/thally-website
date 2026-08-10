@@ -178,14 +178,14 @@ function DraftsQueueVisual() {
         ))}
       </div>
 
-      <div className="flex items-center gap-2 border-t border-white/[0.08] pt-3 text-[11px] font-medium">
+      <div className="flex flex-wrap items-center gap-2 border-t border-white/[0.08] pt-3 text-[11px] font-medium">
         <span className="text-canvas inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5">
           <Check className="size-3" />
           Approve
         </span>
         <span className="rounded-full border border-white/15 px-3 py-1.5 text-white/70">Edit</span>
         <span className="rounded-full px-3 py-1.5 text-white/45">Dismiss</span>
-        <span className="ml-auto text-white/35">Opens a docs PR</span>
+        <span className="text-white/35 sm:ml-auto">Opens a docs PR</span>
       </div>
     </div>
   );

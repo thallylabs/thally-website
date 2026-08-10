@@ -258,7 +258,7 @@ function Panel({
   );
 }
 
-const rowBase = "flex items-center gap-2 rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5";
+const rowBase = "flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5";
 
 /** The first two stages use the Thally-labeled diagrams. */
 const STAGE_DIAGRAMS: Record<number, string> = {
@@ -297,7 +297,7 @@ function StageVisual({ index }: { index: number }) {
               <GitBranch className="size-2.5" />
               {branch}
             </span>
-            <span className="ml-auto flex shrink-0 items-center gap-1.5 text-[10px] text-white/40">
+            <span className="flex shrink-0 items-center gap-1.5 text-[10px] text-white/40 sm:ml-auto">
               <span className="bg-canvas-accent size-1.5 rounded-full" />
               {role} · {synced}
             </span>
@@ -432,14 +432,14 @@ function StageVisual({ index }: { index: number }) {
         </div>
       ))}
       {/* Static action bar, rendered as spans so the hidden layers stay untabbable */}
-      <div className="flex items-center gap-2 border-t border-white/[0.06] pt-3">
+      <div className="flex flex-wrap items-center gap-2 border-t border-white/[0.06] pt-3">
         <span className="bg-canvas-accent text-canvas rounded-lg px-3.5 py-2 text-xs font-semibold">
           Approve and merge
         </span>
         <span className="rounded-lg border border-white/15 px-3.5 py-2 text-xs font-medium text-white/70">
           Request changes
         </span>
-        <span className="ml-auto flex items-center gap-1.5 text-[10px] text-white/35">
+        <span className="flex items-center gap-1.5 text-[10px] text-white/35 sm:ml-auto">
           <Avatars people={[PEOPLE.ada]} />
           reviewing
         </span>
