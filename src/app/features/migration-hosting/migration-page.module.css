@@ -397,6 +397,9 @@
 .logColumn {
   border-right: 1px solid var(--mh-border);
   min-height: 17.5rem;
+  /* grid items floor at min-content, and the log's max-content lines pushed
+     that to 500px, clipping the console on phones. The log scrolls instead. */
+  min-width: 0;
   padding: 1.375rem 1.625rem;
 }
 
@@ -455,6 +458,7 @@
 .sidebar {
   background: var(--mh-panel);
   padding: 1.5rem;
+  min-width: 0;
 }
 
 .sidebarHeading {
