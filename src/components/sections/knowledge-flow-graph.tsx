@@ -17,10 +17,19 @@ import { cn } from "@/lib/utils";
 
 import styles from "./knowledge-flow-graph.module.css";
 
-const STAGE_WIDTH = 1500;
-const STAGE_HEIGHT = 960;
-/** Smallest the 1500px stage may be scaled before its labels stop reading. */
-const MIN_SCALE = 0.46;
+/**
+ * Two stage geometries. The wide one fans left to right; below
+ * VERTICAL_BREAKPOINT there is no width to fan across, so the stage switches
+ * to a taller top-to-bottom arrangement rather than shrinking past legibility.
+ */
+const STAGE = {
+  horizontal: { width: 1500, height: 960 },
+  vertical: { width: 420, height: 1040 },
+} as const;
+
+type Orientation = keyof typeof STAGE;
+
+const VERTICAL_BREAKPOINT = 720;
 
 const sources = [
   { name: "GitHub", color: "#181717", Icon: SiGithub },
@@ -86,6 +95,8 @@ function KnowledgeFlowGraph({ className }: { className?: string }) {
   const scaleRef = useRef(1);
   const animationFrameRef = useRef<number | null>(null);
   const [edges, setEdges] = useState<FlowEdge[]>([]);
+  const [orientation, setOrientation] = useState<Orientation>("horizontal");
+  const orientationRef = useRef<Orientation>("horizontal");
 
   const buildEdges = useCallback(() => {
     const stage = stageRef.current;
@@ -124,12 +135,15 @@ function KnowledgeFlowGraph({ className }: { className?: string }) {
     };
 
     const nextEdges: FlowEdge[] = [];
+    const isVertical = orientationRef.current === "vertical";
 
     sourceRefs.current.forEach((source, index) => {
       if (!source) return;
       nextEdges.push({
         color: sources[index].color,
-        d: horizontalPath(rightCenter(source), leftCenter(product)),
+        d: isVertical
+          ? verticalPath(bottomCenter(source), topCenter(product))
+          : horizontalPath(rightCenter(source), leftCenter(product)),
         group: 0,
         id: `knowledge-source-${index}`,
         position: index,
@@ -138,7 +152,10 @@ function KnowledgeFlowGraph({ className }: { className?: string }) {
 
     nextEdges.push({
       color: "#4A7C59",
-      d: verticalPath(topCenter(product), bottomCenter(thally)),
+      // vertical reads product then Thally down the page; wide keeps Thally above
+      d: isVertical
+        ? verticalPath(bottomCenter(product), topCenter(thally))
+        : verticalPath(topCenter(product), bottomCenter(thally)),
       group: 1,
       id: "knowledge-product-thally",
       position: 0,
@@ -148,7 +165,9 @@ function KnowledgeFlowGraph({ className }: { className?: string }) {
       if (!surface) return;
       nextEdges.push({
         color: surfaces[index].color,
-        d: horizontalPath(rightCenter(thally), leftCenter(surface)),
+        d: isVertical
+          ? verticalPath(bottomCenter(thally), leftCenter(surface))
+          : horizontalPath(rightCenter(thally), leftCenter(surface)),
         group: 2,
         id: `knowledge-surface-${index}`,
         position: index,
@@ -166,15 +185,20 @@ function KnowledgeFlowGraph({ className }: { className?: string }) {
     let active = true;
 
     const resize = () => {
-      // Below MIN_SCALE the labels stop being readable, so the frame scrolls
-      // horizontally instead of shrinking the diagram any further.
-      const scale = Math.max(MIN_SCALE, Math.min(1, frame.clientWidth / STAGE_WIDTH));
+      const next: Orientation = frame.clientWidth < VERTICAL_BREAKPOINT ? "vertical" : "horizontal";
+      if (next !== orientationRef.current) {
+        orientationRef.current = next;
+        setOrientation(next);
+      }
+
+      const { width, height } = STAGE[next];
+      const scale = Math.min(1, frame.clientWidth / width);
       scaleRef.current = scale;
       stage.style.transform = `scale(${scale})`;
-      // scale() paints smaller but still occupies STAGE_WIDTH of layout, which
-      // would let the frame scroll far past the diagram into empty space.
-      stage.style.marginRight = `${-STAGE_WIDTH * (1 - scale)}px`;
-      frame.style.height = `${STAGE_HEIGHT * scale}px`;
+      // scale() paints smaller but still occupies the full stage width in
+      // layout, which would leave dead space to the right of the diagram.
+      stage.style.marginRight = `${-width * (1 - scale)}px`;
+      frame.style.height = `${height * scale}px`;
 
       if (animationFrameRef.current !== null) {
         window.cancelAnimationFrame(animationFrameRef.current);
@@ -203,6 +227,13 @@ function KnowledgeFlowGraph({ className }: { className?: string }) {
     };
   }, [buildEdges]);
 
+  // Flipping orientation moves every node, so the edges have to be remeasured
+  // once React has painted the new positions.
+  useEffect(() => {
+    const id = window.requestAnimationFrame(buildEdges);
+    return () => window.cancelAnimationFrame(id);
+  }, [orientation, buildEdges]);
+
   return (
     <figure
       ref={frameRef}
@@ -214,12 +245,12 @@ function KnowledgeFlowGraph({ className }: { className?: string }) {
         guides, changelogs, migration notes, MCP skills, AI knowledge bundles, and API references in sync.
       </figcaption>
 
-      <div ref={stageRef} className={styles.stage}>
+      <div ref={stageRef} className={styles.stage} data-orientation={orientation}>
         <svg
           className={styles.edges}
-          viewBox={`0 0 ${STAGE_WIDTH} ${STAGE_HEIGHT}`}
-          width={STAGE_WIDTH}
-          height={STAGE_HEIGHT}
+          viewBox={`0 0 ${STAGE[orientation].width} ${STAGE[orientation].height}`}
+          width={STAGE[orientation].width}
+          height={STAGE[orientation].height}
           preserveAspectRatio="none"
           aria-hidden="true"
         >
