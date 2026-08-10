@@ -312,10 +312,14 @@ export default function CloudDashboardFeaturePage() {
         secondaryCta={{ label: "What you can manage", href: "#manage" }}
         finePrint="Nothing hidden, nothing published that you didn't approve."
       >
+        {/* Intrinsic size is declared so the banner reserves the right box
+            before the capture loads, and so it is never upscaled. */}
         <img
-          src="/images/admin-dashboard-1600.webp"
-          alt="Thally Cloud dashboard showing sites, pending drafts, analytics, and agent context in one view"
-          className="w-full"
+          src="/images/cloud-dashboard-home-2358.webp"
+          alt="Thally Cloud Home: agent readiness, changes checked, publish activity, and reader questions, above site details and recent activity"
+          width={2358}
+          height={1978}
+          className="h-auto w-full"
         />
       </FeatureBanner>
 
