@@ -26,6 +26,7 @@ import {
 } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
+import KnowledgeFlowGraph from "@/components/sections/knowledge-flow-graph";
 import { SITE_URL } from "@/lib/site";
 
 import { FormatStudio, GraphExplorer } from "./content-graph-demo";
@@ -310,19 +311,7 @@ export default function ContentGraphFeaturePage() {
 
       <QuotePanels
         title="Author once. Let the graph do the rest."
-        media={
-          <div className="relative h-full min-h-[420px]">
-            <img
-              src="/images/admin-dashboard-1600.webp"
-              alt="Thally Cloud dashboard with the Content Graph"
-              className="absolute inset-0 h-full w-full object-cover object-left-top"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-            <p className="absolute bottom-6 left-8 text-lg font-medium text-white">
-              The Content Graph inside Thally Cloud
-            </p>
-          </div>
-        }
+        media={<KnowledgeFlowGraph className="h-full w-full" />}
         quote="One MDX source is the truth; every format is derived, never duplicated. Fix a fact once and the graph propagates it to every connected surface"
         quoteAttribution="Write once, or maintain forever"
         wideQuote="The graph is not another place to store knowledge; it is the pipeline that keeps every surface synchronized as your product evolves, so machines and humans always read the same thing"

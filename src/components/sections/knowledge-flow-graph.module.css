@@ -10,7 +10,10 @@
   position: relative;
   width: 100%;
   max-width: 1500px;
-  overflow: hidden;
+  /* the stage stops shrinking at MIN_SCALE, so narrow frames pan instead */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
   background: var(--flow-background);
   color: var(--flow-foreground);
   -webkit-font-smoothing: antialiased;

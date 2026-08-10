@@ -19,6 +19,8 @@ import styles from "./knowledge-flow-graph.module.css";
 
 const STAGE_WIDTH = 1500;
 const STAGE_HEIGHT = 960;
+/** Smallest the 1500px stage may be scaled before its labels stop reading. */
+const MIN_SCALE = 0.46;
 
 const sources = [
   { name: "GitHub", color: "#181717", Icon: SiGithub },
@@ -164,9 +166,14 @@ function KnowledgeFlowGraph({ className }: { className?: string }) {
     let active = true;
 
     const resize = () => {
-      const scale = Math.min(1, frame.clientWidth / STAGE_WIDTH);
+      // Below MIN_SCALE the labels stop being readable, so the frame scrolls
+      // horizontally instead of shrinking the diagram any further.
+      const scale = Math.max(MIN_SCALE, Math.min(1, frame.clientWidth / STAGE_WIDTH));
       scaleRef.current = scale;
       stage.style.transform = `scale(${scale})`;
+      // scale() paints smaller but still occupies STAGE_WIDTH of layout, which
+      // would let the frame scroll far past the diagram into empty space.
+      stage.style.marginRight = `${-STAGE_WIDTH * (1 - scale)}px`;
       frame.style.height = `${STAGE_HEIGHT * scale}px`;
 
       if (animationFrameRef.current !== null) {
