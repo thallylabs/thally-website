@@ -325,10 +325,9 @@
 /* ── Merge-to-draft loop ──────────────────────────────────────────────── */
 
 .loop {
-  background: var(--auto-surface);
+  background: #0f1216;
   border: 1px solid var(--auto-border-strong);
   border-radius: 2.1875rem;
-  box-shadow: 0 1.75rem 4.5rem rgb(0 0 0 / 45%);
   margin: 0 auto;
   max-width: 62.5rem;
   overflow: hidden;

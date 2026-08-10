@@ -321,10 +321,9 @@
 /* ── agent chat demo ── */
 
 .agentChat {
-  background: var(--al-surface);
+  background: #0f1216;
   border: 1px solid var(--al-border-strong);
   border-radius: 2.1875rem;
-  box-shadow: 0 1.75rem 4.5rem rgb(0 0 0 / 45%);
   margin: 0 auto;
   max-width: 53.75rem;
   overflow: hidden;
