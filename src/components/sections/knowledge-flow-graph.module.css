@@ -10,7 +10,10 @@
   position: relative;
   width: 100%;
   max-width: 1500px;
-  overflow: hidden;
+  /* the stage stops shrinking at MIN_SCALE, so narrow frames pan instead */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
   background: var(--flow-background);
   color: var(--flow-foreground);
   -webkit-font-smoothing: antialiased;
@@ -107,7 +110,7 @@
 .product {
   position: absolute;
   top: 520px;
-  left: 620px;
+  left: 699px;
   transform: translate(-50%, -50%);
 }
 
@@ -135,7 +138,7 @@
 .thally {
   position: absolute;
   top: 428px;
-  left: 620px;
+  left: 699px;
   color: var(--flow-foreground);
   text-align: center;
   transform: translate(-50%, -50%);
@@ -207,4 +210,63 @@
   .pulse {
     display: none;
   }
+}
+
+/* ------------------------------------------------------------------ */
+/* Vertical stage: narrow frames read top to bottom instead of panning */
+/* ------------------------------------------------------------------ */
+
+.stage[data-orientation="vertical"] {
+  width: 420px;
+  height: 1040px;
+}
+
+.stage[data-orientation="vertical"] .heading {
+  top: 28px;
+  left: 24px;
+}
+
+.stage[data-orientation="vertical"] .sourceCaption {
+  top: 62px;
+  left: 24px;
+}
+
+/* sources become a row of icons across the top, anchors pointing down */
+.stage[data-orientation="vertical"] .sources {
+  top: 104px;
+  left: 24px;
+  width: 372px;
+  height: auto;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.stage[data-orientation="vertical"] .source {
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stage[data-orientation="vertical"] .product {
+  top: 336px;
+  left: 210px;
+}
+
+.stage[data-orientation="vertical"] .thally {
+  top: 452px;
+  left: 210px;
+}
+
+.stage[data-orientation="vertical"] .surfaceCaption {
+  top: 548px;
+  left: 24px;
+  right: auto;
+}
+
+.stage[data-orientation="vertical"] .surfaces {
+  top: 588px;
+  left: 44px;
+  width: 356px;
+  height: 416px;
+  align-items: flex-start;
 }

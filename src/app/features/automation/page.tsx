@@ -231,7 +231,7 @@ function statusPillClass(tone: (typeof feedItems)[number]["statusTone"]) {
 /** One dark bordered card in the activity marquee. */
 function FeedCard({ item }: { item: (typeof feedItems)[number] }) {
   return (
-    <div className="border-canvas-card-stroke w-[340px] shrink-0 rounded-2xl border bg-white/[0.03] p-5 sm:w-[420px]">
+    <div className="border-canvas-card-stroke w-[min(340px,calc(100vw-2.5rem))] shrink-0 rounded-2xl border bg-white/[0.03] p-5 sm:w-[420px]">
       <div className="flex items-center gap-2.5">
         <span
           aria-hidden
@@ -285,9 +285,7 @@ export default function AutomationFeaturePage() {
           </Reveal>
         </div>
         <div className="mx-auto w-full max-w-[1100px] px-5">
-          <div className="rounded-[24px] border-[0.83px] border-white/16 bg-[#1c1b1d]/45 p-[13px] backdrop-blur-2xl">
-            <AutomationDemo />
-          </div>
+          <AutomationDemo />
         </div>
       </section>
 
@@ -305,9 +303,7 @@ export default function AutomationFeaturePage() {
           </Reveal>
         </div>
         <div className="mx-auto w-full max-w-[860px] px-5">
-          <div className="rounded-[24px] border-[0.83px] border-white/16 bg-[#1c1b1d]/45 p-[13px] backdrop-blur-2xl">
-            <AutomationTriggers />
-          </div>
+          <AutomationTriggers />
         </div>
       </section>
 
@@ -347,7 +343,7 @@ export default function AutomationFeaturePage() {
       <section className="bg-canvas px-5 py-[120px]">
         <div className="mx-auto grid w-full max-w-[1480px] gap-4 lg:grid-cols-2">
           <Reveal
-            className="relative flex min-h-[420px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
+            className="art-scrim relative flex min-h-[420px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
             style={{
               borderColor: "rgba(234,236,237,0.23)",
               backgroundImage: "url(/template/card-bg-1.webp)",
@@ -356,10 +352,10 @@ export default function AutomationFeaturePage() {
             }}
           >
             <div>
-              <p className="text-[11px] tracking-wider text-white/45 uppercase">Without automation</p>
+              <p className="text-[11px] tracking-wider text-white/70 uppercase">Without automation</p>
               <ul className="mt-5 space-y-3">
                 {withoutAutomation.map((item) => (
-                  <li key={item} className="text-[15px] leading-relaxed tracking-[-0.03em] text-[#afafaf]">
+                  <li key={item} className="text-[15px] leading-relaxed tracking-[-0.03em] text-white/80">
                     {item}
                   </li>
                 ))}
@@ -374,7 +370,7 @@ export default function AutomationFeaturePage() {
 
           <Reveal
             delay={0.3}
-            className="relative flex min-h-[420px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
+            className="art-scrim relative flex min-h-[420px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
             style={{
               borderColor: "rgba(234,236,237,0.23)",
               backgroundImage: "url(/template/text-container-1.webp)",
@@ -383,7 +379,7 @@ export default function AutomationFeaturePage() {
             }}
           >
             <div>
-              <p className="text-[11px] tracking-wider text-white/60 uppercase">With Automation</p>
+              <p className="text-[11px] tracking-wider text-white/70 uppercase">With Automation</p>
               <ul className="mt-5 space-y-3">
                 {withAutomation.map((item) => (
                   <li key={item} className="flex gap-2.5 text-[15px] leading-relaxed tracking-[-0.03em] text-white/85">
@@ -436,7 +432,7 @@ export default function AutomationFeaturePage() {
             </a>
             <Link
               href="/features/track"
-              className="inline-flex items-center gap-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
+              className="inline-flex min-h-11 items-center gap-2 px-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
             >
               See what Track detects
               <ArrowRight className="size-4" />

@@ -1,382 +1,483 @@
 "use client";
 
 /**
- * Cloud Dashboard mock: a tabbed dashboard frame with deterministic data.
- * No network calls; every panel renders fixed mock content from the handoff.
+ * Cloud Dashboard mock.
+ *
+ * A visual stand-in for Thally Cloud, mirroring the real app's shell: the
+ * site switcher and Site nav from app-sidebar, and the Home layout of
+ * greeting, metric row, "Site at a glance", and "Recent activity". Every
+ * value is fabricated and no request is made; the sidebar is clickable so a
+ * visitor can feel their way around the product.
  */
 
-import { useId, useRef, useState } from "react";
+import { useState } from "react";
 
 import {
+  ArrowUpRight,
+  Bell,
   Check,
+  Cloud,
   Data,
-  GitPullRequest,
-  Json,
+  DocsAgent,
+  ExternalLink,
   Leaf,
-  Mcp,
+  Moon,
   Overview,
   Plus,
-  RefreshCw,
+  Readiness,
+  Search,
   Settings,
-  Team,
+  type ThallyIcon,
+  Track,
+  Trust,
 } from "@/components/icons";
+import { cn } from "@/lib/utils";
 
-import styles from "./cloud-dashboard-page.module.css";
+/* ------------------------------------------------------------------ */
+/* Shell                                                               */
+/* ------------------------------------------------------------------ */
 
-const TABS = [
-  { icon: Overview, id: "overview", label: "Overview" },
-  { badge: "5", icon: GitPullRequest, id: "drafts", label: "Drafts" },
+const NAV: { icon: ThallyIcon; id: ViewId; label: string }[] = [
+  { icon: Overview, id: "home", label: "Home" },
+  { icon: Readiness, id: "readiness", label: "Readiness" },
   { icon: Data, id: "analytics", label: "Analytics" },
-  { icon: Mcp, id: "agent", label: "Agent context" },
-  { icon: Team, id: "team", label: "Team" },
-] as const;
-
-type TabId = (typeof TABS)[number]["id"];
-
-const OVERVIEW_STATS = [
-  { dotClass: styles.statDotSuccess, label: "Live sites", meta: "all healthy", value: "3" },
-  { dotClass: styles.statDotWarn, label: "Pending drafts", meta: "2 high confidence", value: "5" },
-  { dotClass: styles.statDotForest, delta: "+6", label: "Agent-readiness", meta: "this week", value: "82" },
-  { dotClass: styles.statDotFaint, label: "Pages", meta: "across all sites", value: "341" },
+  { icon: DocsAgent, id: "questions", label: "Reader questions" },
+  { icon: Track, id: "track", label: "Track" },
+  { icon: Trust, id: "knowledge", label: "Knowledge" },
+  { icon: Cloud, id: "deployments", label: "Deployments" },
+  { icon: Settings, id: "settings", label: "Settings" },
 ];
 
-const OVERVIEW_ACTIVITY = [
-  { dotClass: styles.rowDotRev, mono: "docs: default timeout is now 60s", prefix: "Drafted ", time: "2m" },
-  { dotClass: styles.rowDotOk, mono: "docs: document TimeoutError", prefix: "Published ", time: "4m" },
-  { dotClass: styles.rowDotOk, mono: "jahce.thally.site", prefix: "Deployed ", suffix: " to 6 regions", time: "1h" },
-  { dotClass: styles.rowDotNeutral, mono: "llms.txt", prefix: "Refreshed ", suffix: " for 128 pages", time: "1h" },
-];
+type ViewId =
+  | "home"
+  | "readiness"
+  | "analytics"
+  | "questions"
+  | "track"
+  | "knowledge"
+  | "deployments"
+  | "settings";
 
-const DRAFTS = [
-  { meta: "from bono #482 · /sdk/configuration · high", time: "2m", title: "docs: default timeout is now 60s" },
-  { meta: "from bono #482 · /sdk/errors · high", time: "2m", title: "docs: document TimeoutError class" },
-  { meta: "from bono #482 · /guides/retries · medium", time: "2m", title: "docs: retry uses exponential backoff" },
-  { meta: "from leaflet #77 · /cli/export · high", time: "1h", title: "docs: new --json flag on export" },
-  { meta: "from homesend #310 · /api/webhooks · medium", time: "3h", title: "docs: webhook payload adds retry_count" },
-];
-
-const CHART_BARS = [
-  { height: 40 },
-  { height: 58 },
-  { height: 47 },
-  { height: 72, highlighted: true },
-  { height: 63 },
-  { height: 80 },
-  { height: 95, highlighted: true },
-  { height: 70 },
-];
-
-const CHART_LABELS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon"];
-
-const TOP_PAGES = [
-  { meta: "4,281 reads · 38% via agents", path: "/sdk/configuration" },
-  { meta: "3,904 reads · 12% via agents", path: "/guides/quickstart" },
-  { meta: "2,157 reads · 51% via agents", path: "/sdk/errors" },
-];
-
-const AGENT_CONTEXT = [
-  { icon: Mcp, mono: "jahce.thally.site/api/mcp", status: "live", statusLabel: "Live", title: "MCP endpoint" },
-  { icon: Mcp, mono: "jahce.thally.site/llms.txt · 128 pages", status: "live", statusLabel: "Live", title: "llms.txt" },
-  {
-    icon: Json,
-    mono: "exposed on every page · read-only",
-    status: "live",
-    statusLabel: "Live",
-    title: "Structured JSON",
-  },
-  {
-    icon: RefreshCw,
-    mono: "re-generating after bono #482",
-    status: "sync",
-    statusLabel: "Syncing",
-    title: "Freshness sync",
-  },
-] as const;
-
-const TEAM_MEMBERS = [
-  { dotClass: styles.rowDotOk, meta: "kenny@jahce.dev", name: "Kenny Ihenacho", role: "Owner" },
-  { dotClass: styles.rowDotOk, meta: "ada@jahce.dev", name: "Ada Nwosu", role: "Maintainer · approves drafts" },
-  { dotClass: styles.rowDotOk, meta: "diego@jahce.dev", name: "Diego Martín", role: "Editor" },
-  { dotClass: styles.rowDotNeutral, meta: "automation · opens drafts", name: "thally-bot", role: "Service account" },
-];
+const CARD = "rounded-2xl border border-white/10 bg-white/[0.03]";
+const MUTED = "text-white/55";
 
 export function DashboardDemo() {
-  const [activeTab, setActiveTab] = useState<TabId>("overview");
-  const tabRefs = useRef<Partial<Record<TabId, HTMLButtonElement | null>>>({});
-  const baseId = useId();
-
-  const tabId = (id: TabId) => `${baseId}-tab-${id}`;
-  const panelId = (id: TabId) => `${baseId}-panel-${id}`;
-
-  const selectTab = (id: TabId) => {
-    setActiveTab(id);
-    tabRefs.current[id]?.focus();
-  };
-
-  const handleTabKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    const currentIndex = TABS.findIndex((tab) => tab.id === activeTab);
-    if (event.key === "ArrowDown" || event.key === "ArrowRight") {
-      event.preventDefault();
-      selectTab(TABS[(currentIndex + 1) % TABS.length].id);
-    } else if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
-      event.preventDefault();
-      selectTab(TABS[(currentIndex - 1 + TABS.length) % TABS.length].id);
-    } else if (event.key === "Home") {
-      event.preventDefault();
-      selectTab(TABS[0].id);
-    } else if (event.key === "End") {
-      event.preventDefault();
-      selectTab(TABS[TABS.length - 1].id);
-    }
-  };
-
-  const panelProps = (id: TabId) => ({
-    "aria-labelledby": tabId(id),
-    className: styles.panel,
-    id: panelId(id),
-    role: "tabpanel" as const,
-  });
+  const [view, setView] = useState<ViewId>("home");
+  const active = NAV.find((item) => item.id === view) ?? NAV[0];
 
   return (
-    <div className={styles.dashframe}>
-      <div className={styles.frameBar}>
-        <span aria-hidden="true" className={styles.frameDots}>
-          <i />
-          <i />
-          <i />
+    <div className="overflow-hidden rounded-[26px] border border-white/12 bg-[#0a0c0a]">
+      {/* Browser chrome */}
+      <div className="flex items-center gap-2 border-b border-white/10 px-5 py-3">
+        <span aria-hidden className="size-2.5 rounded-full bg-white/15" />
+        <span aria-hidden className="size-2.5 rounded-full bg-white/15" />
+        <span aria-hidden className="size-2.5 rounded-full bg-white/15" />
+        <span className="mx-auto rounded-md bg-white/[0.06] px-3 py-1 font-mono text-[11px] text-white/55">
+          app.thally.io/jahce
         </span>
-        <span className={styles.frameUrl}>app.thally.io/jahce</span>
       </div>
-      <div className={styles.dash}>
-        <div className={styles.sidebar}>
-          <div className={styles.workspace}>
-            <span aria-hidden="true" className={styles.workspaceLogo}>
-              <Leaf />
-            </span>
-            <span className={styles.workspaceText}>
-              <b>jahce</b>
-              <span>Team plan</span>
+
+      <div className="md:grid md:grid-cols-[minmax(0,13.5rem)_minmax(0,1fr)]">
+        {/* Sidebar: a left rail on desktop, a scrolling tab strip on phones */}
+        <div className="border-white/10 max-md:border-b md:border-r">
+          <div className="flex items-center gap-2.5 border-b border-white/10 px-4 py-3.5">
+            <Leaf className="text-canvas-accent size-4 shrink-0" />
+            <span className="min-w-0">
+              <span className="block truncate text-[13px] font-semibold text-white">jahce</span>
+              <span className={cn("block truncate font-mono text-[11px]", MUTED)}>Team plan</span>
             </span>
           </div>
-          <div aria-label="Dashboard views" aria-orientation="vertical" role="tablist">
-            {TABS.map((tab) => {
-              const TabIcon = tab.icon;
-              const isActive = tab.id === activeTab;
+
+          <nav
+            aria-label="Dashboard sections"
+            className="flex gap-1 overflow-x-auto p-2 [-ms-overflow-style:none] [scrollbar-width:none] md:flex-col [&::-webkit-scrollbar]:hidden"
+          >
+            {NAV.map((item) => {
+              const Icon = item.icon;
+              const isActive = item.id === view;
               return (
                 <button
-                  aria-controls={panelId(tab.id)}
-                  aria-selected={isActive}
-                  className={`${styles.navTab} ${isActive ? styles.navTabActive : ""}`}
-                  id={tabId(tab.id)}
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  onKeyDown={handleTabKeyDown}
-                  ref={(element) => {
-                    tabRefs.current[tab.id] = element;
-                  }}
-                  role="tab"
-                  tabIndex={isActive ? 0 : -1}
+                  key={item.id}
                   type="button"
+                  aria-current={isActive ? "page" : undefined}
+                  onClick={() => setView(item.id)}
+                  className={cn(
+                    "flex min-h-10 shrink-0 items-center gap-2.5 rounded-lg px-3 text-[13px] whitespace-nowrap transition-colors md:w-full",
+                    isActive
+                      ? "bg-white/[0.07] font-medium text-white"
+                      : "text-white/60 hover:bg-white/[0.04] hover:text-white",
+                  )}
                 >
-                  <TabIcon /> {tab.label}
-                  {"badge" in tab ? <span className={styles.navBadge}>{tab.badge}</span> : null}
+                  <Icon className={cn("size-4 shrink-0", isActive && "text-canvas-accent")} />
+                  {item.label}
+                  {item.id === "track" && (
+                    <span className="text-canvas-accent ml-auto hidden font-mono text-[11px] md:inline">3</span>
+                  )}
                 </button>
               );
             })}
-          </div>
+          </nav>
         </div>
-        <div className={styles.main}>
-          {activeTab === "overview" ? (
-            <div {...panelProps("overview")}>
-              <div className={styles.panelHeader}>
-                <div>
-                  <h3>Overview</h3>
-                  <div className={styles.panelSub}>Across 3 sites · last sync 2 minutes ago</div>
-                </div>
-                <span className={styles.spacer} />
-                <span className={styles.mockButton}>
-                  <Plus /> New site
-                </span>
-              </div>
-              <div className={styles.stats}>
-                {OVERVIEW_STATS.map((stat) => (
-                  <div className={styles.stat} key={stat.label}>
-                    <div className={styles.statLabel}>
-                      <span aria-hidden="true" className={`${styles.statDot} ${stat.dotClass}`} />
-                      {stat.label}
-                    </div>
-                    <div className={styles.statValue}>{stat.value}</div>
-                    <div className={styles.statMeta}>
-                      {stat.delta ? <span className={styles.statUp}>{stat.delta}</span> : null}
-                      {stat.delta ? " " : null}
-                      {stat.meta}
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className={styles.mlist}>
-                <div className={styles.mlistTitle}>Recent activity</div>
-                {OVERVIEW_ACTIVITY.map((item) => (
-                  <div className={styles.mrow} key={item.prefix + item.mono}>
-                    <span aria-hidden="true" className={`${styles.rowDot} ${item.dotClass}`} />
-                    <span className={styles.rowText}>
-                      {item.prefix}
-                      <span className={styles.rowMono}>{item.mono}</span>
-                      {item.suffix ?? null}
-                    </span>
-                    <span className={styles.rowTime}>{item.time}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : null}
 
-          {activeTab === "drafts" ? (
-            <div {...panelProps("drafts")}>
-              <div className={styles.panelHeader}>
-                <div>
-                  <h3>Drafts</h3>
-                  <div className={styles.panelSub}>5 pending review · opened by Thally</div>
-                </div>
-                <span className={styles.spacer} />
-                <span className={styles.mockButton}>
-                  <Check /> Review all
-                </span>
-              </div>
-              <div className={styles.mlist}>
-                <div className={styles.mlistTitle}>Awaiting your review</div>
-                {DRAFTS.map((draft) => (
-                  <div className={styles.mrow} key={draft.title}>
-                    <span aria-hidden="true" className={`${styles.rowDot} ${styles.rowDotRev}`} />
-                    <span className={styles.rowText}>
-                      <span className={styles.rowMono}>{draft.title}</span>
-                      <div className={styles.rowMeta}>{draft.meta}</div>
-                    </span>
-                    <span className={styles.rowTime}>{draft.time}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : null}
+        {/* Main */}
+        <div className="min-w-0">
+          <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3 sm:px-6">
+            <p className={cn("truncate text-[13px]", MUTED)}>
+              Thally Cloud <span className="text-white/30">/</span>{" "}
+              <span className="text-white">{active.label}</span>
+            </p>
+            <span className="ml-auto flex items-center gap-2 text-white/45">
+              <span className="hidden items-center gap-1.5 rounded-md border border-white/10 px-2 py-1 font-mono text-[11px] sm:flex">
+                <Search className="size-3" /> ⌘K
+              </span>
+              <Bell className="size-4" />
+              <Moon className="size-4" />
+            </span>
+          </div>
 
-          {activeTab === "analytics" ? (
-            <div {...panelProps("analytics")}>
-              <div className={styles.panelHeader}>
-                <div>
-                  <h3>Analytics</h3>
-                  <div className={styles.panelSub}>Page + agent reads · last 8 days</div>
-                </div>
-                <span className={styles.spacer} />
-                <span className={styles.mockButton}>Last 8 days</span>
-              </div>
-              <div className={styles.chart}>
-                <div aria-hidden="true" className={styles.chartBars}>
-                  {CHART_BARS.map((bar, index) => (
-                    <div
-                      className={`${styles.chartBar} ${"highlighted" in bar ? styles.chartBarHi : ""}`}
-                      key={`bar-${CHART_LABELS[index]}-${bar.height}`}
-                      style={{ height: `${bar.height}%` }}
-                    />
-                  ))}
-                </div>
-                <div className={styles.chartLabels}>
-                  {CHART_LABELS.map((label, index) => (
-                    <span key={`day-${index + 1}-${label}`}>{label}</span>
-                  ))}
-                </div>
-              </div>
-              <div className={styles.mlist}>
-                <div className={styles.mlistTitle}>Top pages</div>
-                {TOP_PAGES.map((page) => (
-                  <div className={styles.mrow} key={page.path}>
-                    <span className={styles.rowText}>
-                      <span className={styles.rowMono}>{page.path}</span>
-                    </span>
-                    <span className={styles.rowMeta}>{page.meta}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : null}
-
-          {activeTab === "agent" ? (
-            <div {...panelProps("agent")}>
-              <div className={styles.panelHeader}>
-                <div>
-                  <h3>Agent context</h3>
-                  <div className={styles.panelSub}>What AI tools can read from your docs</div>
-                </div>
-                <span className={styles.spacer} />
-                <span className={styles.mockButton}>
-                  <Settings /> Scopes
-                </span>
-              </div>
-              <div className={styles.readiness}>
-                <div className={styles.readinessTop}>
-                  <span className={styles.readinessScore}>82</span>
-                  <span className={styles.readinessLabel}>
-                    Agent-readiness · <b>Good</b>: 3 pages missing evidence links
-                  </span>
-                </div>
-                <div aria-hidden="true" className={styles.readinessBar}>
-                  <i style={{ width: "82%" }} />
-                </div>
-              </div>
-              <div className={styles.contextList}>
-                {AGENT_CONTEXT.map((item) => {
-                  const ContextIcon = item.icon;
-                  return (
-                    <div className={styles.contextRow} key={item.title}>
-                      <span aria-hidden="true" className={styles.contextIcon}>
-                        <ContextIcon />
-                      </span>
-                      <span className={styles.contextText}>
-                        <b>{item.title}</b>
-                        <span className={styles.contextMono}>{item.mono}</span>
-                      </span>
-                      <span
-                        className={`${styles.contextStatus} ${
-                          item.status === "sync" ? styles.contextStatusSync : styles.contextStatusLive
-                        }`}
-                      >
-                        {item.statusLabel}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ) : null}
-
-          {activeTab === "team" ? (
-            <div {...panelProps("team")}>
-              <div className={styles.panelHeader}>
-                <div>
-                  <h3>Team</h3>
-                  <div className={styles.panelSub}>4 members · role-based review</div>
-                </div>
-                <span className={styles.spacer} />
-                <span className={styles.mockButton}>
-                  <Plus /> Invite
-                </span>
-              </div>
-              <div className={styles.mlist}>
-                <div className={styles.mlistTitle}>Members</div>
-                {TEAM_MEMBERS.map((member) => (
-                  <div className={styles.mrow} key={member.name}>
-                    <span aria-hidden="true" className={`${styles.rowDot} ${member.dotClass}`} />
-                    <span className={styles.rowText}>
-                      {member.name}
-                      <div className={styles.rowMeta}>{member.meta}</div>
-                    </span>
-                    <span className={styles.rowMeta}>{member.role}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : null}
+          <div className="min-h-[26rem] p-4 sm:p-6">
+            <View id={view} />
+          </div>
         </div>
       </div>
     </div>
+  );
+}
+
+function View({ id }: { id: ViewId }) {
+  if (id === "home") return <HomeView />;
+  if (id === "readiness") return <ReadinessView />;
+  if (id === "analytics") return <AnalyticsView />;
+  if (id === "questions") return <QuestionsView />;
+  if (id === "track") return <TrackView />;
+  if (id === "knowledge") return <KnowledgeView />;
+  if (id === "deployments") return <DeploymentsView />;
+  return <SettingsView />;
+}
+
+/* ------------------------------------------------------------------ */
+/* Shared pieces                                                       */
+/* ------------------------------------------------------------------ */
+
+function PageHead({ action, sub, title }: { action?: string; sub: string; title: string }) {
+  return (
+    <header className="mb-5 flex flex-wrap items-start justify-between gap-3">
+      <div className="min-w-0">
+        <h3 className="font-display text-xl font-bold tracking-[-0.02em] text-white sm:text-2xl">{title}</h3>
+        <p className={cn("mt-1 text-[13px]", MUTED)}>{sub}</p>
+      </div>
+      {action && (
+        <span className="text-canvas inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-lg bg-white px-3.5 text-[13px] font-semibold">
+          <Plus className="size-3.5" />
+          {action}
+        </span>
+      )}
+    </header>
+  );
+}
+
+function Panel({ children, link, title }: { children: React.ReactNode; link?: string; title: string }) {
+  return (
+    <section className={cn(CARD, "overflow-hidden")}>
+      <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-3">
+        <h4 className="font-display text-[13px] font-bold text-white">{title}</h4>
+        {link && <span className="text-canvas-accent text-[12px] font-semibold">{link}</span>}
+      </div>
+      {children}
+    </section>
+  );
+}
+
+/** One label/value line, the shape the real Site-at-a-glance list uses. */
+function Row({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-white/[0.07] py-2.5 last:border-b-0">
+      {/* the label column is fixed only once there is room for it */}
+      <dt className={cn("w-full text-[12px] sm:w-[8.5rem] sm:shrink-0", MUTED)}>{label}</dt>
+      <dd className="min-w-0 flex-1 text-[13px] font-medium break-words text-white">{children}</dd>
+    </div>
+  );
+}
+
+function List({ items }: { items: { meta: string; right?: string; title: string }[] }) {
+  return (
+    <ul className="divide-y divide-white/[0.07]">
+      {items.map((item) => (
+        <li key={item.title} className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-3">
+          <span className="min-w-0 flex-1">
+            <span className="block truncate text-[13px] font-medium text-white">{item.title}</span>
+            <span className={cn("mt-0.5 block truncate text-[12px]", MUTED)}>{item.meta}</span>
+          </span>
+          {item.right && (
+            <span className={cn("shrink-0 font-mono text-[11px]", MUTED)}>{item.right}</span>
+          )}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Views                                                               */
+/* ------------------------------------------------------------------ */
+
+const METRICS = [
+  { hint: "Grade A · live report", label: "Agent readiness", suffix: "/ 100", value: "90" },
+  { hint: "12 product changes checked this week", label: "Changes checked · 7 days", value: "12" },
+  { hint: "6 successful", label: "Publish activity · 7 days", value: "6" },
+  { hint: "Reader questions completed by Ask AI", label: "Reader questions · month", value: "248" },
+];
+
+function HomeView() {
+  return (
+    <>
+      <PageHead
+        action="Create a site"
+        sub="See what's live, what changed, and what needs attention across jahce."
+        title="Morning, Ada."
+      />
+
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {METRICS.map((metric) => (
+          <article key={metric.label} className={cn(CARD, "flex min-h-[6.5rem] flex-col p-3.5")}>
+            <div className="flex items-start justify-between gap-2">
+              <p className={cn("text-[12px] font-medium", MUTED)}>{metric.label}</p>
+              <ArrowUpRight className="size-3.5 shrink-0 text-white/25" />
+            </div>
+            <p className="font-display mt-2.5 text-[1.5rem] leading-none font-extrabold tracking-[-0.03em] text-white tabular-nums">
+              {metric.value}
+              {metric.suffix && <span className={cn("ml-1 text-sm font-semibold", MUTED)}>{metric.suffix}</span>}
+            </p>
+            <p className={cn("mt-auto pt-2 text-[11px] leading-4", MUTED)}>{metric.hint}</p>
+          </article>
+        ))}
+      </div>
+
+      <div className="mt-3 grid gap-3 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+        <Panel title="Site at a glance" link="Site settings">
+          <div className="px-4 py-3.5">
+            <div className="flex items-center gap-3">
+              <span className="bg-canvas-accent/15 flex size-10 shrink-0 items-center justify-center rounded-xl">
+                <Leaf className="text-canvas-accent size-5" />
+              </span>
+              <span className="min-w-0">
+                <span className="flex items-center gap-2">
+                  <span className="font-display truncate text-[15px] font-bold text-white">jahce</span>
+                  <span className="text-canvas-accent flex items-center gap-1.5 text-[11px] font-semibold">
+                    <span className="bg-canvas-accent size-1.5 rounded-full" />
+                    Live
+                  </span>
+                </span>
+                <span className={cn("mt-0.5 flex items-center gap-1.5 font-mono text-[11px]", MUTED)}>
+                  jahce.thally.site
+                  <ExternalLink className="size-3 shrink-0" />
+                </span>
+              </span>
+            </div>
+
+            <dl className="mt-3">
+              <Row label="Last deployment">
+                23h ago <span className={cn("ml-1 font-mono text-[11px]", MUTED)}>main@5e10685</span>
+              </Row>
+              <Row label="Primary domain">
+                <span className={MUTED}>Not configured</span>
+              </Row>
+              <Row label="Repository">
+                <span className="font-mono text-[12px]">thallylabs/jahce</span>
+              </Row>
+              <Row label="Endpoints">
+                <span className="font-mono text-[12px]">JSON · MD · JSON-LD</span>
+              </Row>
+            </dl>
+          </div>
+        </Panel>
+
+        <Panel title="Recent activity" link="View deployments">
+          <List
+            items={[
+              { meta: "Readiness check analyzed 15 published pages · just now", title: "Agent readiness scored 90 / 100" },
+              { meta: "Successful · 5e10685 · 23h ago", title: "docs: generate managed translations" },
+              { meta: "Successful · 5a0318f · 1d ago", title: "docs: initialize Thally site" },
+            ]}
+          />
+        </Panel>
+      </div>
+    </>
+  );
+}
+
+const READINESS_CHECKS = [
+  { meta: "Every page resolves without JavaScript", right: "pass", title: "Crawlable HTML" },
+  { meta: "128 entries, refreshed on publish", right: "pass", title: "llms.txt published" },
+  { meta: "Served at /api/mcp, read-only", right: "pass", title: "MCP endpoint" },
+  { meta: "JSON and Markdown on every route", right: "pass", title: "Content negotiation" },
+  { meta: "6 pages missing a canonical source ref", right: "warn", title: "Provenance coverage" },
+];
+
+function ReadinessView() {
+  return (
+    <>
+      <PageHead sub="How well your docs serve human and machine readers." title="Readiness" />
+      <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)]">
+        <article className={cn(CARD, "flex flex-col justify-center p-5")}>
+          <p className={cn("text-[12px] font-medium", MUTED)}>Overall score</p>
+          <p className="font-display mt-2 text-[2.75rem] leading-none font-extrabold tracking-[-0.03em] text-white tabular-nums">
+            90<span className={cn("ml-1 text-lg font-semibold", MUTED)}>/ 100</span>
+          </p>
+          <p className="text-canvas-accent mt-2 text-[13px] font-semibold">Grade A</p>
+          <p className={cn("mt-1 text-[12px]", MUTED)}>Gate your CI on this score.</p>
+        </article>
+        <Panel title="Checks" link="Full report">
+          <List items={READINESS_CHECKS} />
+        </Panel>
+      </div>
+    </>
+  );
+}
+
+const ANALYTICS_TILES = [
+  { label: "Total page views", note: "across the selected range", value: "12.4k" },
+  { label: "People", note: "62% of views", value: "7.7k" },
+  { label: "AI tools", note: "38% of views", value: "4.7k" },
+  { label: "AI discovery requests", note: "llms.txt · ai.txt · mcp", value: "1.1k" },
+];
+
+function AnalyticsView() {
+  return (
+    <>
+      <PageHead sub="Traffic and engagement across people and AI tools." title="Audience" />
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {ANALYTICS_TILES.map((tile) => (
+          <article key={tile.label} className={cn(CARD, "p-3.5")}>
+            <p className={cn("text-[12px] font-medium", MUTED)}>{tile.label}</p>
+            <p className="font-display mt-2 text-[1.5rem] leading-none font-extrabold tracking-[-0.03em] text-white tabular-nums">
+              {tile.value}
+            </p>
+            <p className={cn("mt-2 text-[11px]", MUTED)}>{tile.note}</p>
+          </article>
+        ))}
+      </div>
+      <div className="mt-3 grid gap-3 lg:grid-cols-2">
+        <Panel title="Top pages · people">
+          <List
+            items={[
+              { meta: "/customization", right: "1,204", title: "Customization" },
+              { meta: "/quickstart", right: "1,109", title: "Quickstart" },
+              { meta: "/components", right: "947", title: "Components" },
+            ]}
+          />
+        </Panel>
+        <Panel title="Top pages · AI tools">
+          <List
+            items={[
+              { meta: "/llms.txt", right: "2,318", title: "Agent index" },
+              { meta: "/quickstart.md", right: "1,880", title: "Quickstart (Markdown)" },
+              { meta: "/api/mcp", right: "1,412", title: "MCP endpoint" },
+            ]}
+          />
+        </Panel>
+      </div>
+    </>
+  );
+}
+
+function QuestionsView() {
+  return (
+    <>
+      <PageHead sub="What readers asked Ask AI, and what it answered from." title="Reader questions" />
+      <Panel title="This month" link="Export">
+        <List
+          items={[
+            { meta: "Answered from /sdk/configuration · 2 sources", right: "48", title: "What's the default request timeout?" },
+            { meta: "Answered from /sdk/errors · 1 source", right: "31", title: "How do I catch a timeout error?" },
+            { meta: "Answered from /guides/retries · 3 sources", right: "27", title: "Does the client retry failed requests?" },
+            { meta: "No grounded answer · gap flagged", right: "12", title: "Can I self-host the search index?" },
+          ]}
+        />
+      </Panel>
+    </>
+  );
+}
+
+function TrackView() {
+  return (
+    <>
+      <PageHead sub="Product changes Thally checked, and the drafts they produced." title="Track" />
+      <Panel title="Awaiting your review" link="Review all">
+        <List
+          items={[
+            { meta: "from bono #482 · /sdk/configuration · high", right: "2m", title: "docs: default timeout is now 60s" },
+            { meta: "from bono #482 · /sdk/errors · high", right: "2m", title: "docs: document TimeoutError class" },
+            { meta: "from leaflet #77 · /cli/export · medium", right: "1h", title: "docs: new --json flag on export" },
+          ]}
+        />
+      </Panel>
+      <p className={cn("mt-3 text-[12px]", MUTED)}>Nothing publishes until a human approves it.</p>
+    </>
+  );
+}
+
+function KnowledgeView() {
+  return (
+    <>
+      <PageHead sub="The internal sources Thally reads when it drafts." title="Knowledge" />
+      <Panel title="Connected sources" link="Connect">
+        <List
+          items={[
+            { meta: "thallylabs/jahce · default branch", right: "synced", title: "GitHub" },
+            { meta: "Product spec space", right: "synced", title: "Notion" },
+            { meta: "#product-releases", right: "synced", title: "Slack" },
+            { meta: "Support macros", right: "paused", title: "Zendesk" },
+          ]}
+        />
+      </Panel>
+    </>
+  );
+}
+
+function DeploymentsView() {
+  return (
+    <>
+      <PageHead sub="Every publish, with the commit behind it." title="Deployments" />
+      <Panel title="Recent" link="View all">
+        <List
+          items={[
+            { meta: "Successful · main@5e10685 · 23h ago", right: "18s", title: "docs: generate managed translations" },
+            { meta: "Successful · main@5a0318f · 1d ago", right: "22s", title: "docs: initialize Thally site" },
+            { meta: "Successful · main@c81f0a4 · 3d ago", right: "17s", title: "docs: add API reference tab" },
+          ]}
+        />
+      </Panel>
+    </>
+  );
+}
+
+const SETTINGS_ROWS = [
+  { label: "Site name", value: "jahce" },
+  { label: "Primary domain", value: "Not configured" },
+  { label: "Plan", value: "Team · 3 members included" },
+  { label: "Agent access", value: "Public · llms.txt, MCP, JSON" },
+];
+
+function SettingsView() {
+  return (
+    <>
+      <PageHead sub="Workspace, domain, plan, and what agents may read." title="Settings" />
+      <Panel title="Workspace">
+        <div className="px-4 py-2">
+          <dl>
+            {SETTINGS_ROWS.map((row) => (
+              <Row key={row.label} label={row.label}>
+                {row.value}
+              </Row>
+            ))}
+          </dl>
+        </div>
+      </Panel>
+      <p className={cn("mt-3 flex items-center gap-2 text-[12px]", MUTED)}>
+        <Check className="text-canvas-accent size-3.5 shrink-0" />
+        Your content stays in your repository.
+      </p>
+    </>
   );
 }

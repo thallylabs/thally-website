@@ -178,14 +178,14 @@ function DraftsQueueVisual() {
         ))}
       </div>
 
-      <div className="flex items-center gap-2 border-t border-white/[0.08] pt-3 text-[11px] font-medium">
+      <div className="flex flex-wrap items-center gap-2 border-t border-white/[0.08] pt-3 text-[11px] font-medium">
         <span className="text-canvas inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5">
           <Check className="size-3" />
           Approve
         </span>
         <span className="rounded-full border border-white/15 px-3 py-1.5 text-white/70">Edit</span>
         <span className="rounded-full px-3 py-1.5 text-white/45">Dismiss</span>
-        <span className="ml-auto text-white/35">Opens a docs PR</span>
+        <span className="text-white/35 sm:ml-auto">Opens a docs PR</span>
       </div>
     </div>
   );
@@ -339,7 +339,7 @@ export default function CloudDashboardFeaturePage() {
           <div className="flex flex-col gap-2.5">
             <div className="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
               <Reveal
-                className="relative flex min-h-[520px] flex-col justify-between gap-8 overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
+                className="art-scrim relative flex min-h-[520px] flex-col justify-between gap-8 overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
                 style={{
                   borderColor: "rgba(234,236,237,0.23)",
                   backgroundImage: "url(/template/card-bg-1.webp)",
@@ -360,7 +360,7 @@ export default function CloudDashboardFeaturePage() {
 
               <Reveal
                 delay={0.3}
-                className="relative flex min-h-[520px] flex-col justify-between gap-8 overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
+                className="art-scrim relative flex min-h-[520px] flex-col justify-between gap-8 overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
                 style={{
                   borderColor: "rgba(234,236,237,0.23)",
                   backgroundImage: "url(/template/text-container-1.webp)",
@@ -394,7 +394,7 @@ export default function CloudDashboardFeaturePage() {
                     <cell.icon className="text-canvas-accent size-7" />
                     <div className="flex max-w-[340px] flex-col gap-1.5">
                       <h3 className="font-display text-xl font-semibold tracking-tight text-white">{cell.title}</h3>
-                      <p className="text-[15px] leading-relaxed tracking-[-0.03em] text-[#afafaf]">{cell.body}</p>
+                      <p className="text-[15px] leading-relaxed tracking-[-0.03em] text-white/80">{cell.body}</p>
                     </div>
                   </div>
                 ))}
@@ -441,11 +441,7 @@ export default function CloudDashboardFeaturePage() {
           </Reveal>
         </div>
         <div className="mx-auto w-full max-w-[1180px] px-5">
-          <div className="rounded-[24px] border-[0.83px] border-white/16 bg-[#1c1b1d]/45 p-[13px] backdrop-blur-2xl">
-            <div className={cn(styles.page, "overflow-hidden rounded-[14px] py-4")}>
-              <DashboardDemo />
-            </div>
-          </div>
+          <DashboardDemo />
         </div>
       </section>
 
@@ -483,7 +479,7 @@ export default function CloudDashboardFeaturePage() {
             </a>
             <Link
               href="/features/automation"
-              className="inline-flex items-center gap-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
+              className="inline-flex min-h-11 items-center gap-2 px-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
             >
               See how drafts arrive
               <ArrowRight className="size-4" />

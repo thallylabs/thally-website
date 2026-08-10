@@ -121,27 +121,28 @@ const softwareJsonLd = {
 /** Static terminal log shown inside the banner's glass frame. */
 function MigrationTerminal() {
   return (
-    <div className="bg-[#101410]">
+    // A terminal, not a tinted panel: true black ground, white monospace type.
+    <div className="bg-black">
       <div className="flex items-center gap-2 border-b border-white/10 px-5 py-3.5 sm:px-7">
         <span aria-hidden className="size-2.5 rounded-full bg-white/15" />
         <span aria-hidden className="size-2.5 rounded-full bg-white/15" />
         <span aria-hidden className="size-2.5 rounded-full bg-white/15" />
         <p className="ml-3 font-mono text-xs text-white/45">thally migrate · jahce/legacy-docs</p>
-        <span className="text-canvas-accent bg-canvas-accent/10 ml-auto rounded-full px-2.5 py-1 text-[11px] font-medium">
+        <span className="ml-auto rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-medium text-white/70">
           Non-destructive import
         </span>
       </div>
-      <div className="px-5 py-6 font-mono text-[13px] leading-8 sm:px-7 sm:py-8 sm:text-[15px] sm:leading-9">
-        <p className="text-white/85">
-          <span className="text-canvas-accent">$</span> thally migrate --source gitbook jahce/legacy-docs
+      <div className="px-5 py-6 font-mono text-[13px] leading-8 text-white sm:px-7 sm:py-8 sm:text-[15px] sm:leading-9">
+        <p>
+          <span className="text-white/45">$</span> thally migrate --source gitbook jahce/legacy-docs
         </p>
-        <p className="text-white/50">· Fetching GitBook space · 128 pages found</p>
-        <p className="text-canvas-accent">✓ Imported 128 pages · structure, links, and redirects preserved</p>
-        <p className="text-white/50">· Converting to MDX and resolving cross-references</p>
-        <p className="text-white/50">· Building Content Graph · indexing code samples</p>
-        <p className="text-canvas-accent">✓ Machine formats · HTML, Markdown, JSON, llms.txt</p>
-        <p className="text-white/50">· Deploying to edge · iad sfo lhr fra sin syd</p>
-        <p className="text-canvas-accent">✓ Live at jahce.thally.site · SSL, previews, and rollback included</p>
+        <p className="text-white/55">· Fetching GitBook space · 128 pages found</p>
+        <p>✓ Imported 128 pages · structure, links, and redirects preserved</p>
+        <p className="text-white/55">· Converting to MDX and resolving cross-references</p>
+        <p className="text-white/55">· Building Content Graph · indexing code samples</p>
+        <p>✓ Machine formats · HTML, Markdown, JSON, llms.txt</p>
+        <p className="text-white/55">· Deploying to edge · iad sfo lhr fra sin syd</p>
+        <p>✓ Live at jahce.thally.site · SSL, previews, and rollback included</p>
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 px-5 py-3.5 sm:px-7">
         <p className="font-mono text-xs text-white/50">One pass: fetch, convert, build, deploy</p>
@@ -241,10 +242,8 @@ export default function MigrationHostingFeaturePage() {
           </Reveal>
         </div>
         <div className="mx-auto w-full max-w-[1100px] px-5">
-          <div className="rounded-[24px] border-[0.83px] border-white/16 bg-[#1c1b1d]/45 p-[13px] backdrop-blur-2xl">
-            <div className="overflow-hidden rounded-[14px]">
-              <MigrationDemo />
-            </div>
+          <div className="overflow-hidden rounded-[14px]">
+            <MigrationDemo />
           </div>
         </div>
       </section>

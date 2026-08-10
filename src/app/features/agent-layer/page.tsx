@@ -250,9 +250,9 @@ const MCP_TOOLS = [
 function McpToolsPanel() {
   return (
     <div className="mx-auto w-full max-w-md rounded-2xl border border-white/12 bg-black/45 p-5">
-      <div className="flex items-center justify-between gap-3">
-        <span className="flex items-center gap-2">
-          <Mcp className="size-4 text-white/45" />
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+        <span className="flex min-w-0 items-center gap-2">
+          <Mcp className="size-4 shrink-0 text-white/45" />
           <span className="text-sm text-white/75">MCP endpoint</span>
         </span>
         <span className="text-canvas-accent flex shrink-0 items-center gap-1.5 font-mono text-[11px]">
@@ -323,7 +323,7 @@ export default function AgentLayerFeaturePage() {
           <div className="flex flex-col gap-2.5">
             <div className="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
               <Reveal
-                className="relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
+                className="art-scrim relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
                 style={{
                   borderColor: "rgba(234,236,237,0.23)",
                   backgroundImage: "url(/template/card-bg-1.webp)",
@@ -341,7 +341,7 @@ export default function AgentLayerFeaturePage() {
 
               <Reveal
                 delay={0.3}
-                className="relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
+                className="art-scrim relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
                 style={{
                   borderColor: "rgba(234,236,237,0.23)",
                   backgroundImage: "url(/template/text-container-1.webp)",
@@ -462,9 +462,7 @@ export default function AgentLayerFeaturePage() {
           </Reveal>
         </div>
         <div className="mx-auto w-full max-w-[1100px] px-5">
-          <div className="rounded-[24px] border-[0.83px] border-white/16 bg-[#1c1b1d]/45 p-[13px] backdrop-blur-2xl">
-            <AgentLayerDemo />
-          </div>
+          <AgentLayerDemo />
         </div>
       </section>
 
@@ -502,7 +500,7 @@ export default function AgentLayerFeaturePage() {
             </a>
             <Link
               href="/features/content-graph"
-              className="inline-flex items-center gap-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
+              className="inline-flex min-h-11 items-center gap-2 px-2 text-lg font-medium text-white/80 transition-colors hover:text-white"
             >
               See where the formats come from
               <ArrowRight className="size-4" />

@@ -74,7 +74,7 @@ export function FeatureShowcase() {
           {/* Two large showcase cards on the template bitmap art */}
           <div className="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
             <Reveal
-              className="relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:min-h-[640px] sm:p-[60px]"
+              className="art-scrim relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:min-h-[640px] sm:p-[60px]"
               style={{
                 borderColor: "rgba(234,236,237,0.23)",
                 backgroundImage: "url(/template/card-bg-1.webp)",
@@ -92,7 +92,7 @@ export function FeatureShowcase() {
 
             <Reveal
               delay={0.3}
-              className="relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:min-h-[640px] sm:p-[60px]"
+              className="art-scrim relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:min-h-[640px] sm:p-[60px]"
               style={{
                 borderColor: "rgba(234,236,237,0.23)",
                 backgroundImage: "url(/template/text-container-1.webp)",
@@ -181,13 +181,13 @@ function FormatProjection() {
     <div className="mx-auto w-full max-w-lg">
       {/* Editor pane */}
       <div className="overflow-hidden rounded-2xl border border-white/12 bg-black/45">
-        <div className="flex items-center justify-between border-b border-white/[0.08] px-4 py-2.5">
-          <span className="flex items-center gap-2 font-mono text-[13px] text-white/75">
-            <Structured className="size-4 text-white/45" />
-            guides/quickstart.mdx
-            <span className="size-1.5 rounded-full bg-[#c2a068]" />
+        <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 border-b border-white/[0.08] px-4 py-2.5">
+          <span className="flex min-w-0 items-center gap-2 font-mono text-[13px] text-white/75">
+            <Structured className="size-4 shrink-0 text-white/45" />
+            <span className="truncate">guides/quickstart.mdx</span>
+            <span className="size-1.5 shrink-0 rounded-full bg-[#c2a068]" />
           </span>
-          <span className="rounded-full bg-[#c2a068]/15 px-2 py-0.5 text-[10px] font-medium text-[#dcc08e]">
+          <span className="shrink-0 rounded-full bg-[#c2a068]/15 px-2 py-0.5 text-[10px] font-medium text-[#dcc08e]">
             modified
           </span>
         </div>
@@ -267,7 +267,7 @@ function AnswerPreview() {
         </div>
 
         {/* Reasoning trace */}
-        <button type="button" className="mt-4 flex items-center gap-1 text-[13px] text-white/40">
+        <button type="button" className="mt-2 flex min-h-10 items-center gap-1 text-[13px] text-white/40">
           Searched 3 pages for 2s
           <ChevronDown className="size-3.5 -rotate-90" />
         </button>

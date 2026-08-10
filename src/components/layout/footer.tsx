@@ -96,9 +96,7 @@ export const Footer = () => {
           </div>
 
           <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center">
-            <p className="text-sm text-[#afafaf]">
-              © {LEGAL_ENTITY_NAME}. Thally is a Fairspleet product. All rights reserved.
-            </p>
+            <p className="text-sm text-[#afafaf]">© Thally. All rights reserved.</p>
             <p className="text-sm text-[#afafaf]">
               <a href={DESTINATIONS.signup} className="text-white underline-offset-4 hover:underline">
                 Create your docs site

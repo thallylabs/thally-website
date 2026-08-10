@@ -300,10 +300,9 @@
 /* ── migrate console ── */
 
 .console {
-  background: var(--mh-surface);
+  background: #0f1216;
   border: 1px solid var(--mh-border-strong);
   border-radius: 2.1875rem;
-  box-shadow: 0 1.75rem 4.5rem rgb(0 0 0 / 45%);
   margin: 0 auto;
   max-width: 62.5rem;
   overflow: hidden;
@@ -398,14 +397,17 @@
 .logColumn {
   border-right: 1px solid var(--mh-border);
   min-height: 17.5rem;
+  /* grid items floor at min-content, and the log's max-content lines pushed
+     that to 500px, clipping the console on phones. The log scrolls instead. */
+  min-width: 0;
   padding: 1.375rem 1.625rem;
 }
 
 .log {
-  background: var(--mh-ink);
+  background: #000000;
   border: 1px solid var(--mh-border);
   border-radius: 0.875rem;
-  color: oklch(0.86 0.02 130);
+  color: #f4f4f5;
   font-family: var(--font-mono);
   font-size: 0.8rem;
   line-height: 2;
@@ -435,11 +437,11 @@
 }
 
 .logOk {
-  color: oklch(0.82 0.15 135);
+  color: #ffffff;
 }
 
 .logDim {
-  color: oklch(0.6 0.02 130);
+  color: rgba(244, 244, 245, 0.55);
 }
 
 .logMarker {
@@ -450,12 +452,13 @@
 }
 
 .logIdle {
-  color: oklch(0.6 0.02 130);
+  color: rgba(244, 244, 245, 0.55);
 }
 
 .sidebar {
   background: var(--mh-panel);
   padding: 1.5rem;
+  min-width: 0;
 }
 
 .sidebarHeading {

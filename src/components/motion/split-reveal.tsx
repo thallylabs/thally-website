@@ -80,7 +80,10 @@ export function SplitReveal({
 
 function MaskedUnit({ text, delay }: { text: string; delay: number }) {
   return (
+    // The two class hooks let globals.css un-hide the text if the reveal
+    // never runs; otherwise the mask keeps it permanently off-screen.
     <span
+      className="split-reveal-mask"
       style={{
         display: "inline-block",
         overflow: "hidden",
@@ -88,6 +91,7 @@ function MaskedUnit({ text, delay }: { text: string; delay: number }) {
       }}
     >
       <motion.span
+        className="split-reveal-unit"
         style={{ display: "inline-block" }}
         variants={{
           hidden: { y: "100%" },

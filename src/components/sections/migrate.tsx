@@ -32,7 +32,10 @@ const STEPS = [
 ];
 
 /* Orbit ring radius as a percentage of the container, per-chip nudged for organic rhythm. */
-const ORBIT_RADIUS = 40;
+/** Percent of the orbit box. Drives both the dashed ring and the chip
+ *  positions, so they stay aligned. Kept under 40 so the widest labelled
+ *  chip clears the wrapper's clip edge. */
+const ORBIT_RADIUS = 37;
 
 const SOURCES = [
   { name: "Mintlify", Icon: SiMintlify, color: "#0D9373", angle: -90, r: 1 },
@@ -138,7 +141,7 @@ function MigrationTerminal() {
 
   return (
     <div ref={cardRef} className="border-border bg-secondary/50 rounded-[1.25rem] border p-1.5 shadow-sm">
-      <div className="overflow-hidden rounded-[calc(1.25rem-6px)] border border-white/10 bg-[oklch(0.23_0.02_155)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)]">
+      <div className="overflow-hidden rounded-[calc(1.25rem-6px)] border border-white/10 bg-black">
         <div className="flex items-center gap-1.5 border-b border-white/[0.07] bg-white/[0.03] px-4 py-3">
           <span className="size-2.5 rounded-full bg-white/15" />
           <span className="size-2.5 rounded-full bg-white/15" />
@@ -162,7 +165,7 @@ function MigrationTerminal() {
         <div className="min-h-[232px] space-y-2.5 p-5 font-mono text-[12px] leading-relaxed sm:text-[13px]">
           <p className="flex items-start gap-2">
             <span className="text-white/40 select-none">$</span>
-            <span className="font-semibold break-all text-white/90">
+            <span className="font-semibold break-all text-white">
               {COMMAND.slice(0, typedCount)}
               {!showFinal && <Caret blink={!isTyping} />}
             </span>
@@ -176,12 +179,11 @@ function MigrationTerminal() {
                     initial={reduce ? false : { scale: 0.4, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
                     transition={{ type: "spring", stiffness: 420, damping: 22 }}
-                    className="w-4 shrink-0 select-none"
-                    style={{ color: "var(--chart-1)" }}
+                    className="w-4 shrink-0 select-none text-white"
                   >
                     ✓
                   </motion.span>
-                  <span className="text-white/70">{step.done}</span>
+                  <span className="text-white">{step.done}</span>
                 </p>
               );
             }
@@ -195,7 +197,7 @@ function MigrationTerminal() {
                   transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
                 >
                   <Spinner />
-                  <span className="text-white/50">{step.running}…</span>
+                  <span className="text-white/55">{step.running}…</span>
                 </motion.p>
               );
             }
@@ -204,11 +206,10 @@ function MigrationTerminal() {
 
           {showFinal && (
             <motion.p
-              className="flex items-start gap-2"
+              className="flex items-start gap-2 text-white"
               initial={reduce ? false : { opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              style={{ color: "var(--chart-1)" }}
             >
               <span className="w-4 shrink-0 select-none">→</span>
               <span>
@@ -228,7 +229,10 @@ function MigrationOrbit() {
 
   return (
     <div
-      className="group relative mx-auto mt-4 aspect-square w-full max-w-[26rem]"
+      // overflow-hidden: the ring below rotates, and a rotated square's
+      // bounding box is up to 1.41x its width, which pushed the page sideways
+      // on phones. The corners it clips are empty; the chips ride a circle.
+      className="group relative mx-auto mt-4 aspect-square w-full max-w-[26rem] overflow-hidden"
       role="img"
       aria-label="Mintlify, Docusaurus, GitBook, Nextra, VitePress, Starlight, and plain Markdown orbiting the Thally logo"
     >

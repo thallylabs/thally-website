@@ -10,7 +10,7 @@
  */
 
 import type { ReactNode } from "react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Check, Docs, GitBranch, GitPullRequest, Json, Negotiation, RefreshCw, Track } from "@/components/icons";
 
@@ -55,8 +55,8 @@ export function AutomationDemo() {
   const [activeStage, setActiveStage] = useState<number | null>(null);
   const [doneCount, setDoneCount] = useState(0);
   const [cardState, setCardState] = useState<PrCardState>("hidden");
-  const [isRunning, setIsRunning] = useState(false);
   const timersRef = useRef<number[]>([]);
+  const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timers = timersRef.current;
@@ -71,13 +71,12 @@ export function AutomationDemo() {
     return () => window.clearTimeout(timer);
   }, [cardState]);
 
-  const runSimulation = () => {
+  const runSimulation = useCallback(() => {
     for (const timer of timersRef.current) window.clearTimeout(timer);
     timersRef.current.length = 0;
     setActiveStage(null);
     setDoneCount(0);
     setCardState("hidden");
-    setIsRunning(true);
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const stepMs = reducedMotion ? 40 : 900;
@@ -100,28 +99,42 @@ export function AutomationDemo() {
           setActiveStage(null);
           setDoneCount(PIPELINE_STAGES.length);
           setCardState("entering");
-          setIsRunning(false);
         },
         PIPELINE_STAGES.length * stepMs + startMs + (reducedMotion ? 0 : 150),
       ),
     );
-  };
+  }, []);
+
+  // The simulation plays itself the first time the card scrolls into view,
+  // then the observer disconnects so it runs exactly once.
+  useEffect(() => {
+    const node = rootRef.current;
+    if (!node) return;
+
+    if (typeof IntersectionObserver === "undefined") {
+      const timer = window.setTimeout(runSimulation, 0);
+      return () => window.clearTimeout(timer);
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting)) return;
+        observer.disconnect();
+        runSimulation();
+      },
+      { threshold: 0.35 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [runSimulation]);
 
   return (
-    <div className={styles.loop}>
+    <div className={styles.loop} ref={rootRef}>
       <div className={styles.loopBar}>
         <span className={styles.loopLabel}>
           <GitPullRequest /> Merged: <span className={styles.loopLabelMono}>jahce/bono #482</span> · Raise default
           request timeout
         </span>
-        <button
-          className={`${styles.button} ${styles.primaryButton}`}
-          disabled={isRunning}
-          onClick={runSimulation}
-          type="button"
-        >
-          <RefreshCw /> Simulate a merge
-        </button>
       </div>
       <div className={styles.loopBody}>
         <div className={styles.pipeline}>
@@ -150,7 +163,7 @@ export function AutomationDemo() {
           <div className={styles.sideHead}>Result</div>
           {cardState === "hidden" ? (
             <p className={styles.idleNote}>
-              <b>No draft yet.</b> Run the simulation to see the pull request Thally opens on your docs repository.
+              <b>No draft yet.</b> Thally opens a pull request on your docs repository once the analysis finishes.
             </p>
           ) : (
             <div className={`${styles.prCard} ${cardState === "shown" ? styles.prCardShown : ""}`}>

@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 
 import type { ThallyIcon } from "@/components/icons";
 import { Cloud, Code, Docs, GitBranch, Globe, Guide } from "@/components/icons";
+import { usePlayOnView } from "@/components/motion/use-play-on-view";
 
 import styles from "./migration-page.module.css";
 
@@ -139,8 +140,13 @@ export function MigrationDemo() {
     );
   };
 
+  // Most visitors never pressed the button, so the console only ever showed
+  // its idle line. It now runs itself once; the button stays for a replay
+  // after switching source.
+  const playRef = usePlayOnView<HTMLDivElement>(runMigration);
+
   return (
-    <div className={styles.console}>
+    <div className={styles.console} ref={playRef}>
       <div className={styles.consoleTop}>
         <p className={styles.sourceLabel}>Import from</p>
         <div className={styles.sources}>
