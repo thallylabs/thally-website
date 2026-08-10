@@ -295,6 +295,30 @@
     @apply py-20 md:py-28 lg:py-[120px];
   }
 
+  /* The template art carries bright cyan and violet blooms that white body
+     copy disappears into. Lay a scrim between the art and the content so
+     every card keeps the same text contrast wherever the bloom happens to
+     fall. Applied to the dark art surfaces only; the cream ones read dark
+     text on light art and need no help. */
+  .art-scrim::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      rgba(0, 1, 4, 0.66) 0%,
+      rgba(0, 1, 4, 0.42) 45%,
+      rgba(0, 1, 4, 0.72) 100%
+    );
+  }
+
+  .art-scrim > * {
+    position: relative;
+    z-index: 1;
+  }
+
   /* Template .linear-text: white-to-blue gradient display type. */
   .linear-text {
     background-image: linear-gradient(#fff 46%, #8bc0ff);

@@ -646,7 +646,7 @@ export function QuotePanels({
 
         <Reveal
           delay={0.2}
-          className="border-canvas-card-stroke flex min-h-[420px] flex-col justify-between gap-14 rounded-[32px] border p-8"
+          className="art-scrim border-canvas-card-stroke relative flex min-h-[420px] flex-col justify-between gap-14 overflow-hidden rounded-[32px] border p-8"
           style={{
             backgroundImage: "url(/template/text-container-2.webp)",
             backgroundSize: "cover",
@@ -659,7 +659,7 @@ export function QuotePanels({
 
         <Reveal
           delay={0.3}
-          className="border-canvas-card-stroke flex flex-col items-center gap-6 rounded-[50px] border p-12 text-center sm:p-[100px] lg:col-span-2"
+          className="art-scrim border-canvas-card-stroke relative flex flex-col items-center gap-6 overflow-hidden rounded-[50px] border p-12 text-center sm:p-[100px] lg:col-span-2"
           style={{
             backgroundImage: "url(/template/bg-2.webp)",
             backgroundSize: "cover",

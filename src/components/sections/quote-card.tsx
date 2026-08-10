@@ -12,7 +12,7 @@ export function QuoteCard() {
   return (
     <section className="bg-canvas px-2.5 pb-[120px] sm:px-5">
       <Reveal
-        className="border-canvas-card-stroke relative mx-auto w-full max-w-[1480px] overflow-hidden rounded-[50px] border px-6 py-20 sm:px-[160px] sm:py-[80px]"
+        className="art-scrim border-canvas-card-stroke relative mx-auto w-full max-w-[1480px] overflow-hidden rounded-[50px] border px-6 py-20 sm:px-[160px] sm:py-[80px]"
         style={{
           backgroundImage: "url(/template/card-bg-2.webp)",
           backgroundSize: "cover",

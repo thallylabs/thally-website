@@ -347,7 +347,7 @@ export default function AutomationFeaturePage() {
       <section className="bg-canvas px-5 py-[120px]">
         <div className="mx-auto grid w-full max-w-[1480px] gap-4 lg:grid-cols-2">
           <Reveal
-            className="relative flex min-h-[420px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
+            className="art-scrim relative flex min-h-[420px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
             style={{
               borderColor: "rgba(234,236,237,0.23)",
               backgroundImage: "url(/template/card-bg-1.webp)",
@@ -356,10 +356,10 @@ export default function AutomationFeaturePage() {
             }}
           >
             <div>
-              <p className="text-[11px] tracking-wider text-white/45 uppercase">Without automation</p>
+              <p className="text-[11px] tracking-wider text-white/70 uppercase">Without automation</p>
               <ul className="mt-5 space-y-3">
                 {withoutAutomation.map((item) => (
-                  <li key={item} className="text-[15px] leading-relaxed tracking-[-0.03em] text-[#afafaf]">
+                  <li key={item} className="text-[15px] leading-relaxed tracking-[-0.03em] text-white/80">
                     {item}
                   </li>
                 ))}
@@ -374,7 +374,7 @@ export default function AutomationFeaturePage() {
 
           <Reveal
             delay={0.3}
-            className="relative flex min-h-[420px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
+            className="art-scrim relative flex min-h-[420px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
             style={{
               borderColor: "rgba(234,236,237,0.23)",
               backgroundImage: "url(/template/text-container-1.webp)",
@@ -383,7 +383,7 @@ export default function AutomationFeaturePage() {
             }}
           >
             <div>
-              <p className="text-[11px] tracking-wider text-white/60 uppercase">With Automation</p>
+              <p className="text-[11px] tracking-wider text-white/70 uppercase">With Automation</p>
               <ul className="mt-5 space-y-3">
                 {withAutomation.map((item) => (
                   <li key={item} className="flex gap-2.5 text-[15px] leading-relaxed tracking-[-0.03em] text-white/85">

@@ -74,7 +74,7 @@ export function FeatureShowcase() {
           {/* Two large showcase cards on the template bitmap art */}
           <div className="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
             <Reveal
-              className="relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:min-h-[640px] sm:p-[60px]"
+              className="art-scrim relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:min-h-[640px] sm:p-[60px]"
               style={{
                 borderColor: "rgba(234,236,237,0.23)",
                 backgroundImage: "url(/template/card-bg-1.webp)",
@@ -92,7 +92,7 @@ export function FeatureShowcase() {
 
             <Reveal
               delay={0.3}
-              className="relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:min-h-[640px] sm:p-[60px]"
+              className="art-scrim relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:min-h-[640px] sm:p-[60px]"
               style={{
                 borderColor: "rgba(234,236,237,0.23)",
                 backgroundImage: "url(/template/text-container-1.webp)",

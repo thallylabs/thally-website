@@ -339,7 +339,7 @@ export default function CloudDashboardFeaturePage() {
           <div className="flex flex-col gap-2.5">
             <div className="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
               <Reveal
-                className="relative flex min-h-[520px] flex-col justify-between gap-8 overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
+                className="art-scrim relative flex min-h-[520px] flex-col justify-between gap-8 overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
                 style={{
                   borderColor: "rgba(234,236,237,0.23)",
                   backgroundImage: "url(/template/card-bg-1.webp)",
@@ -360,7 +360,7 @@ export default function CloudDashboardFeaturePage() {
 
               <Reveal
                 delay={0.3}
-                className="relative flex min-h-[520px] flex-col justify-between gap-8 overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
+                className="art-scrim relative flex min-h-[520px] flex-col justify-between gap-8 overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
                 style={{
                   borderColor: "rgba(234,236,237,0.23)",
                   backgroundImage: "url(/template/text-container-1.webp)",
@@ -394,7 +394,7 @@ export default function CloudDashboardFeaturePage() {
                     <cell.icon className="text-canvas-accent size-7" />
                     <div className="flex max-w-[340px] flex-col gap-1.5">
                       <h3 className="font-display text-xl font-semibold tracking-tight text-white">{cell.title}</h3>
-                      <p className="text-[15px] leading-relaxed tracking-[-0.03em] text-[#afafaf]">{cell.body}</p>
+                      <p className="text-[15px] leading-relaxed tracking-[-0.03em] text-white/80">{cell.body}</p>
                     </div>
                   </div>
                 ))}
