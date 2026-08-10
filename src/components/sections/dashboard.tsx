@@ -68,7 +68,7 @@ export const Dashboard = () => {
                 </span>
               </div>
               <Image
-                src="/images/admin-dashboard-1600.webp"
+                src="/images/cloud-dashboard-home-2358.webp"
                 alt="Thally Cloud analytics showing traffic from people and AI tools, engagement, and top pages"
                 width={1600}
                 height={900}
