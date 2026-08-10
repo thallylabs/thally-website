@@ -192,8 +192,9 @@ function Panel({ children, link, title }: { children: React.ReactNode; link?: st
 function Row({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 border-b border-white/[0.07] py-2.5 last:border-b-0">
-      <dt className={cn("w-[8.5rem] shrink-0 text-[12px]", MUTED)}>{label}</dt>
-      <dd className="min-w-0 flex-1 text-[13px] font-medium text-white">{children}</dd>
+      {/* the label column is fixed only once there is room for it */}
+      <dt className={cn("w-full text-[12px] sm:w-[8.5rem] sm:shrink-0", MUTED)}>{label}</dt>
+      <dd className="min-w-0 flex-1 text-[13px] font-medium break-words text-white">{children}</dd>
     </div>
   );
 }
