@@ -401,10 +401,10 @@
 }
 
 .log {
-  background: var(--mh-ink);
+  background: #000000;
   border: 1px solid var(--mh-border);
   border-radius: 0.875rem;
-  color: oklch(0.86 0.02 130);
+  color: #f4f4f5;
   font-family: var(--font-mono);
   font-size: 0.8rem;
   line-height: 2;
@@ -434,11 +434,11 @@
 }
 
 .logOk {
-  color: oklch(0.82 0.15 135);
+  color: #ffffff;
 }
 
 .logDim {
-  color: oklch(0.6 0.02 130);
+  color: rgba(244, 244, 245, 0.55);
 }
 
 .logMarker {
@@ -449,7 +449,7 @@
 }
 
 .logIdle {
-  color: oklch(0.6 0.02 130);
+  color: rgba(244, 244, 245, 0.55);
 }
 
 .sidebar {
