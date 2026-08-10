@@ -441,9 +441,7 @@ export default function CloudDashboardFeaturePage() {
           </Reveal>
         </div>
         <div className="mx-auto w-full max-w-[1180px] px-5">
-          <div className={cn(styles.page, "overflow-hidden rounded-[14px] py-4")}>
-            <DashboardDemo />
-          </div>
+          <DashboardDemo />
         </div>
       </section>
 
