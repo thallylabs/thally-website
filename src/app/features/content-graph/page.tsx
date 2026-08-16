@@ -114,6 +114,14 @@ const softwareJsonLd = {
 function ProjectionBoard() {
   return (
     <BannerBoard
+      title="Content graph"
+      context="docs/sdk · production"
+      columnLabels={[
+        { title: "Sources", detail: "1 changed" },
+        { title: "Graph", detail: "5 links" },
+        { title: "Projections", detail: "4 ready" },
+        { title: "Evidence", detail: "verified" },
+      ]}
       columns={[
         [
           { kind: "summary", progress: 76, avatars: 4, links: 9, comments: 2 },
@@ -131,7 +139,6 @@ function ProjectionBoard() {
             links: 3,
             comments: 4,
           },
-          { kind: "filler", h: 120 },
         ],
         [
           {
@@ -144,6 +151,8 @@ function ProjectionBoard() {
             icon: <Structured className="text-canvas-accent size-9" />,
             title: "Typed content graph",
             desc: "Pages, concepts, and code linked as one graph.",
+            status: "Built",
+            meta: "5 typed links",
           },
           {
             kind: "task",
@@ -158,7 +167,6 @@ function ProjectionBoard() {
             links: 2,
             comments: 3,
           },
-          { kind: "filler", h: 140 },
         ],
         [
           {
@@ -177,7 +185,6 @@ function ProjectionBoard() {
               { label: "llms.txt", done: true },
             ],
           },
-          { kind: "filler", h: 110 },
           {
             kind: "task",
             chips: [
@@ -219,7 +226,6 @@ function ProjectionBoard() {
             links: 2,
             comments: 2,
           },
-          { kind: "filler", h: 130 },
         ],
       ]}
     />

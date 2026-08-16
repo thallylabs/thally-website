@@ -287,9 +287,22 @@ export type BoardCard =
       desc?: string;
       items: Array<{ label: string; done?: boolean }>;
     }
-  | { kind: "visual"; chips?: BoardChip[]; id?: string; icon: ReactNode; title: string; desc?: string }
-  | { kind: "summary"; progress: number; avatars?: number; links?: number; comments?: number }
-  | { kind: "filler"; h?: number };
+  | {
+      kind: "visual";
+      chips?: BoardChip[];
+      id?: string;
+      icon: ReactNode;
+      title: string;
+      desc?: string;
+      status?: string;
+      meta?: string;
+    }
+  | { kind: "summary"; progress: number; avatars?: number; links?: number; comments?: number };
+
+export type BoardColumn = {
+  title: string;
+  detail?: string;
+};
 
 const CHIP_TONES: Record<BoardChip["tone"], string> = {
   high: "bg-[#ff8da1]/20 text-[#ffb3c0]",
@@ -309,11 +322,11 @@ const BOARD_PEOPLE = [
 
 function BoardAvatars({ count = 3 }: { count?: number }) {
   return (
-    <span className="flex -space-x-1.5">
+    <span className="flex -space-x-1">
       {BOARD_PEOPLE.slice(0, count).map((person) => (
         <span
           key={person.initials}
-          className="flex size-[18px] items-center justify-center rounded-full text-[8px] font-semibold text-white/90 ring-[1.5px] ring-[#101318]"
+          className="flex size-5 items-center justify-center rounded-[6px] text-[8px] font-semibold text-white/90 ring-2 ring-[#13171d]"
           style={{ background: person.tint }}
         >
           {person.initials}
@@ -344,37 +357,20 @@ function BoardMeta({ links, comments }: { links?: number; comments?: number }) {
 }
 
 function BoardCardView({ card }: { card: BoardCard }) {
-  const base = "rounded-xl border border-white/[0.08] bg-[#0f1216]/95 p-3";
-
-  if (card.kind === "filler") {
-    return (
-      <div
-        className="flex flex-col gap-2.5 rounded-xl border border-white/[0.06] bg-[#0f1216]/70 p-3.5"
-        style={{ height: card.h ?? 160 }}
-        aria-hidden
-      >
-        <div className="flex gap-1.5">
-          <span className="h-3 w-10 rounded bg-white/[0.07]" />
-          <span className="h-3 w-12 rounded bg-white/[0.05]" />
-        </div>
-        <span className="h-2.5 w-3/4 rounded bg-white/[0.06]" />
-        <span className="h-2 w-1/2 rounded bg-white/[0.04]" />
-        <span className="mt-auto h-[3px] w-full rounded-full bg-white/[0.05]" />
-      </div>
-    );
-  }
+  const base =
+    "rounded-[11px] border border-white/[0.09] bg-[#13171d] p-3 shadow-[0_1px_1px_rgba(0,0,0,0.24),0_8px_24px_rgba(0,0,0,0.12)] transition-colors duration-200 hover:border-white/[0.15]";
 
   if (card.kind === "summary") {
     return (
       <div className={base}>
         <div className="flex items-center justify-between text-[10px] text-white/45">
-          <span>Progress</span>
-          <span>{card.progress}%</span>
+          <span>Board coverage</span>
+          <span className="font-mono tabular-nums">{card.progress}%</span>
         </div>
-        <div className="mt-1.5 h-1 overflow-hidden rounded-full bg-white/10">
+        <div className="mt-2 h-1 overflow-hidden rounded-full bg-white/10">
           <div className="bg-canvas-accent h-full rounded-full" style={{ width: `${card.progress}%` }} />
         </div>
-        <div className="mt-2 flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
+        <div className="mt-3 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 border-t border-white/[0.06] pt-2.5">
           <BoardAvatars count={card.avatars ?? 4} />
           <BoardMeta links={card.links} comments={card.comments} />
         </div>
@@ -391,7 +387,7 @@ function BoardCardView({ card }: { card: BoardCard }) {
               {card.chips.map((chip) => (
                 <span
                   key={chip.label}
-                  className={cn("rounded-full px-2 py-0.5 text-[10px] font-medium", CHIP_TONES[chip.tone])}
+                  className={cn("rounded-[5px] px-2 py-0.5 text-[10px] font-medium", CHIP_TONES[chip.tone])}
                 >
                   {chip.label}
                 </span>
@@ -400,12 +396,24 @@ function BoardCardView({ card }: { card: BoardCard }) {
             {card.id && <span className="text-[10px] text-white/40">{card.id}</span>}
           </div>
         )}
-        <div className="mt-2.5 flex flex-col items-center justify-center gap-2 rounded-lg border border-white/[0.06] bg-black/60 py-6">
-          {card.icon}
-          <span className="font-mono text-[9px] tracking-wide text-white/30">preview</span>
+        <div className="mt-3 flex items-start gap-3">
+          <span className="flex size-10 shrink-0 items-center justify-center rounded-[9px] border border-white/[0.08] bg-black/30">
+            {card.icon}
+          </span>
+          <span className="min-w-0 pt-0.5">
+            <span className="block text-[13px] font-semibold break-words text-white">{card.title}</span>
+            {card.desc && (
+              <span className="mt-1 block text-[11px] leading-relaxed break-words text-white/50">{card.desc}</span>
+            )}
+          </span>
         </div>
-        <p className="mt-2.5 text-[13px] font-semibold break-words text-white">{card.title}</p>
-        {card.desc && <p className="mt-0.5 text-[11px] break-words text-white/50">{card.desc}</p>}
+        <div className="mt-3 flex items-center justify-between border-t border-white/[0.06] pt-2.5 text-[10px] text-white/38">
+          <span className="flex items-center gap-1.5">
+            <span className="bg-canvas-accent size-1.5 rounded-full" />
+            {card.status ?? "System run"}
+          </span>
+          <span className="font-mono">{card.meta ?? "evidence linked"}</span>
+        </div>
       </div>
     );
   }
@@ -418,7 +426,7 @@ function BoardCardView({ card }: { card: BoardCard }) {
             {card.chips.map((chip) => (
               <span
                 key={chip.label}
-                className={cn("rounded-full px-2 py-0.5 text-[10px] font-medium", CHIP_TONES[chip.tone])}
+                className={cn("rounded-[5px] px-2 py-0.5 text-[10px] font-medium", CHIP_TONES[chip.tone])}
               >
                 {chip.label}
               </span>
@@ -432,15 +440,17 @@ function BoardCardView({ card }: { card: BoardCard }) {
           {card.items.map((item) => (
             <p key={item.label} className="flex items-center gap-2 text-[11px] break-words text-white/60">
               {item.done ? (
-                <span className="text-canvas-accent text-[11px] leading-none">&#10003;</span>
+                <span className="text-canvas-accent flex size-3 shrink-0 items-center justify-center rounded-[3px] bg-[#a9b578]/15 text-[9px] leading-none">
+                  &#10003;
+                </span>
               ) : (
-                <span className="size-3 shrink-0 rounded-full border border-white/30" />
+                <span className="size-3 shrink-0 rounded-[3px] border border-white/25" />
               )}
               {item.label}
             </p>
           ))}
-          <p className="flex items-center gap-2 text-[11px] text-white/40">
-            <Plus className="size-3" /> Add subtask
+          <p className="flex items-center gap-2 border-t border-white/[0.05] pt-1.5 text-[10px] text-white/35">
+            <Plus className="size-3" /> Add checklist item
           </p>
         </div>
       </div>
@@ -454,7 +464,7 @@ function BoardCardView({ card }: { card: BoardCard }) {
           {card.chips.map((chip) => (
             <span
               key={chip.label}
-              className={cn("rounded-full px-2 py-0.5 text-[10px] font-medium", CHIP_TONES[chip.tone])}
+              className={cn("rounded-[5px] px-2 py-0.5 text-[10px] font-medium", CHIP_TONES[chip.tone])}
             >
               {chip.label}
             </span>
@@ -462,27 +472,22 @@ function BoardCardView({ card }: { card: BoardCard }) {
         </span>
         {card.id && <span className="text-[10px] text-white/40">{card.id}</span>}
       </div>
-      <p
-        className={cn(
-          "mt-2 text-[13px] font-semibold break-words text-white",
-          card.mono && "font-mono font-normal",
-        )}
-      >
+      <p className={cn("mt-2 text-[13px] font-semibold break-words text-white", card.mono && "font-mono font-normal")}>
         {card.title}
       </p>
-      {card.desc && <p className="mt-0.5 text-[11px] break-words text-white/50">{card.desc}</p>}
+      {card.desc && <p className="mt-1 text-[11px] leading-relaxed break-words text-white/50">{card.desc}</p>}
       {card.progress !== undefined && (
         <div className="mt-2.5">
           <div className="flex items-center justify-between text-[10px] text-white/45">
-            <span>Progress</span>
-            <span>{card.progress}%</span>
+            <span>Evidence coverage</span>
+            <span className="font-mono tabular-nums">{card.progress}%</span>
           </div>
           <div className="mt-1 h-1 overflow-hidden rounded-full bg-white/10">
             <div className="bg-canvas-accent h-full rounded-full" style={{ width: `${card.progress}%` }} />
           </div>
         </div>
       )}
-      <div className="mt-2.5 flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 border-t border-white/[0.06] pt-2.5">
         {card.avatars !== undefined && <BoardAvatars count={card.avatars} />}
         <BoardMeta links={card.links} comments={card.comments} />
       </div>
@@ -490,25 +495,75 @@ function BoardCardView({ card }: { card: BoardCard }) {
   );
 }
 
-/**
- * Dense four-column masonry board for the banner frame, matching the
- * template's floor-to-ceiling kanban collage: varied card types, dim
- * filler cards for texture, per-column offsets, clipped at the bottom.
- */
-export function BannerBoard({ columns, dense = false }: { columns: BoardCard[][]; dense?: boolean }) {
-  const offsets = ["translate-y-6", "-translate-y-3", "translate-y-2", "-translate-y-6"];
-  // A board beside the copy has half the width, so it drops to two columns.
+/** A product-like work board that preserves readable card widths at every breakpoint. */
+export function BannerBoard({
+  columns,
+  dense = false,
+  title = "Knowledge operations",
+  context = "default workspace",
+  columnLabels = [],
+}: {
+  columns: BoardCard[][];
+  dense?: boolean;
+  title?: string;
+  context?: string;
+  columnLabels?: BoardColumn[];
+}) {
+  // A board beside the copy has half the width, so it uses two columns.
   const shown = dense ? columns.slice(0, 2) : columns;
+
   return (
-    <div className={cn("overflow-hidden bg-[#07090d]", dense ? "max-h-[520px]" : "max-h-[640px]")}>
-      <div className={cn("grid items-start gap-3 p-4 sm:p-6", dense ? "grid-cols-2" : "grid-cols-2 lg:grid-cols-4")}>
-        {shown.map((column, i) => (
-          <div key={i} className={cn("flex flex-col gap-3", offsets[i % offsets.length])}>
-            {column.map((card, j) => (
-              <BoardCardView key={j} card={card} />
-            ))}
-          </div>
-        ))}
+    <div
+      className={cn(
+        "[scrollbar-width:thin] [scrollbar-color:rgba(255,255,255,.16)_transparent] overflow-x-auto overflow-y-hidden bg-[#090b0f]",
+        dense ? "max-h-[520px]" : "max-h-[640px]",
+      )}
+    >
+      <div className={dense ? "min-w-[680px]" : "min-w-[1080px]"}>
+        <div className="flex h-12 items-center border-b border-white/[0.08] bg-[#0c0f14] px-4">
+          <span className="flex size-6 items-center justify-center rounded-[7px] bg-[#e9eddd] text-[10px] font-bold text-[#151a13]">
+            T
+          </span>
+          <span className="ml-2.5 text-xs font-medium text-white/78">{title}</span>
+          <span className="mx-2 text-white/18">/</span>
+          <span className="truncate font-mono text-[10px] text-white/36">{context}</span>
+          <span className="ml-auto flex shrink-0 items-center gap-1.5 text-[10px] text-white/42">
+            <span className="bg-canvas-accent size-1.5 rounded-full" />
+            Synced just now
+          </span>
+        </div>
+
+        <div className={cn("grid", dense ? "grid-cols-2" : "grid-cols-4")}>
+          {shown.map((column, i) => {
+            const visibleCards = column;
+            const label = columnLabels[i];
+
+            return (
+              <section
+                key={i}
+                className={cn(
+                  "border-r border-white/[0.07] bg-[#0b0e13] last:border-r-0",
+                  dense ? "min-h-[420px]" : "min-h-[510px]",
+                )}
+              >
+                <header className="flex h-11 items-center gap-2 border-b border-white/[0.07] px-3.5">
+                  <span className="size-1.5 rounded-full bg-white/30" />
+                  <h3 className="text-[11px] font-medium text-white/68">{label?.title ?? `Stage ${i + 1}`}</h3>
+                  <span className="rounded-[5px] bg-white/[0.06] px-1.5 py-0.5 font-mono text-[9px] text-white/38 tabular-nums">
+                    {visibleCards.length}
+                  </span>
+                  {label?.detail && <span className="ml-auto text-[9px] text-white/30">{label.detail}</span>}
+                </header>
+
+                <div className="flex flex-col gap-2.5 p-3">
+                  {visibleCards.map((card, j) => (
+                    <BoardCardView key={j} card={card} />
+                  ))}
+                </div>
+              </section>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

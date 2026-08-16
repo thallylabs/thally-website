@@ -55,6 +55,14 @@ const softwareJsonLd = {
 function ImpactBoard() {
   return (
     <BannerBoard
+      title="Impact queue"
+      context="acme/api · main"
+      columnLabels={[
+        { title: "Merged", detail: "1 new" },
+        { title: "Analysis", detail: "2 affected" },
+        { title: "Draft", detail: "1 open" },
+        { title: "Review", detail: "1 waiting" },
+      ]}
       columns={[
         [
           { kind: "summary", progress: 72, avatars: 4, links: 8, comments: 3 },
@@ -72,7 +80,6 @@ function ImpactBoard() {
             links: 2,
             comments: 5,
           },
-          { kind: "filler", h: 120 },
         ],
         [
           {
@@ -85,6 +92,8 @@ function ImpactBoard() {
             icon: <GitPullRequest className="text-canvas-accent size-9" />,
             title: "Impact analysis",
             desc: "Track maps the bounded change to affected knowledge.",
+            status: "Complete",
+            meta: "2 pages affected",
           },
           {
             kind: "task",
@@ -100,7 +109,6 @@ function ImpactBoard() {
             links: 1,
             comments: 4,
           },
-          { kind: "filler", h: 140 },
         ],
         [
           {
@@ -118,7 +126,6 @@ function ImpactBoard() {
               { label: "Changelog entry drafted" },
             ],
           },
-          { kind: "filler", h: 110 },
           {
             kind: "task",
             chips: [
@@ -160,7 +167,6 @@ function ImpactBoard() {
             links: 2,
             comments: 3,
           },
-          { kind: "filler", h: 130 },
         ],
       ]}
     />
