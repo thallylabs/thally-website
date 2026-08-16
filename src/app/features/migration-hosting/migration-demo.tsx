@@ -36,7 +36,7 @@ const SOURCES: readonly MigrationSource[] = [
     monoLabel: false,
     name: "GitBook",
     pages: 128,
-    repo: "jahce/legacy-docs",
+    repo: "northstar-labs/legacy-docs",
     time: "8.4s",
   },
   {
@@ -46,7 +46,7 @@ const SOURCES: readonly MigrationSource[] = [
     monoLabel: false,
     name: "Mintlify",
     pages: 96,
-    repo: "jahce/mint-docs",
+    repo: "northstar-labs/mint-docs",
     time: "6.1s",
   },
   {
@@ -56,7 +56,7 @@ const SOURCES: readonly MigrationSource[] = [
     monoLabel: false,
     name: "Docusaurus",
     pages: 143,
-    repo: "jahce/site-v2",
+    repo: "northstar-labs/docs-site",
     time: "9.7s",
   },
   {
@@ -66,7 +66,7 @@ const SOURCES: readonly MigrationSource[] = [
     monoLabel: true,
     name: "Markdown repo",
     pages: 74,
-    repo: "jahce/handbook",
+    repo: "northstar-labs/handbook",
     time: "4.8s",
   },
 ] as const;
@@ -86,7 +86,7 @@ function buildLogLines(source: MigrationSource): LogLine[] {
     { text: "Building Content Graph · indexing code samples", tone: "dim" },
     { text: "Generating machine formats · HTML, Markdown, JSON, llms.txt", tone: "ok" },
     { text: "Deploying to edge · iad sfo lhr fra sin syd", tone: "dim" },
-    { text: `Live at jahce.thally.site in ${source.time}`, tone: "ok" },
+    { text: `Live at docs.northstar.dev in ${source.time}`, tone: "ok" },
   ];
 }
 
@@ -209,7 +209,7 @@ export function MigrationDemo() {
             <div className={styles.deployCard}>
               <div className={styles.deployTop}>
                 <Globe aria-hidden="true" />
-                <span className={styles.deployUrl}>jahce.thally.site</span>
+                <span className={styles.deployUrl}>docs.northstar.dev</span>
                 <span className={styles.liveLabel}>Live</span>
               </div>
               <div className={styles.deployBody}>

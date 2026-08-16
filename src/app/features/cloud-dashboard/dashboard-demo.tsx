@@ -6,7 +6,7 @@
  * A visual stand-in for Thally Cloud, mirroring the real app's shell: the
  * site switcher and Site nav from app-sidebar, and the Home layout of
  * greeting, metric row, "Site at a glance", and "Recent activity". Every
- * value is fabricated and no request is made; the sidebar is clickable so a
+ * value is representative and no request is made; the sidebar is clickable so a
  * visitor can feel their way around the product.
  */
 
@@ -48,15 +48,7 @@ const NAV: { icon: ThallyIcon; id: ViewId; label: string }[] = [
   { icon: Settings, id: "settings", label: "Settings" },
 ];
 
-type ViewId =
-  | "home"
-  | "readiness"
-  | "analytics"
-  | "questions"
-  | "track"
-  | "knowledge"
-  | "deployments"
-  | "settings";
+type ViewId = "home" | "readiness" | "analytics" | "questions" | "track" | "knowledge" | "deployments" | "settings";
 
 const CARD = "rounded-2xl border border-white/10 bg-white/[0.03]";
 const MUTED = "text-white/55";
@@ -73,7 +65,7 @@ export function DashboardDemo() {
         <span aria-hidden className="size-2.5 rounded-full bg-white/15" />
         <span aria-hidden className="size-2.5 rounded-full bg-white/15" />
         <span className="mx-auto rounded-md bg-white/[0.06] px-3 py-1 font-mono text-[11px] text-white/55">
-          app.thally.io/jahce
+          app.thally.io/northstar
         </span>
       </div>
 
@@ -83,14 +75,14 @@ export function DashboardDemo() {
           <div className="flex items-center gap-2.5 border-b border-white/10 px-4 py-3.5">
             <Leaf className="text-canvas-accent size-4 shrink-0" />
             <span className="min-w-0">
-              <span className="block truncate text-[13px] font-semibold text-white">jahce</span>
+              <span className="block truncate text-[13px] font-semibold text-white">Northstar</span>
               <span className={cn("block truncate font-mono text-[11px]", MUTED)}>Team plan</span>
             </span>
           </div>
 
           <nav
             aria-label="Dashboard sections"
-            className="flex gap-1 overflow-x-auto p-2 [-ms-overflow-style:none] [scrollbar-width:none] md:flex-col [&::-webkit-scrollbar]:hidden"
+            className="flex [scrollbar-width:none] gap-1 overflow-x-auto p-2 [-ms-overflow-style:none] md:flex-col [&::-webkit-scrollbar]:hidden"
           >
             {NAV.map((item) => {
               const Icon = item.icon;
@@ -123,8 +115,7 @@ export function DashboardDemo() {
         <div className="min-w-0">
           <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3 sm:px-6">
             <p className={cn("truncate text-[13px]", MUTED)}>
-              Thally Cloud <span className="text-white/30">/</span>{" "}
-              <span className="text-white">{active.label}</span>
+              Thally Cloud <span className="text-white/30">/</span> <span className="text-white">{active.label}</span>
             </p>
             <span className="ml-auto flex items-center gap-2 text-white/45">
               <span className="hidden items-center gap-1.5 rounded-md border border-white/10 px-2 py-1 font-mono text-[11px] sm:flex">
@@ -208,9 +199,7 @@ function List({ items }: { items: { meta: string; right?: string; title: string 
             <span className="block truncate text-[13px] font-medium text-white">{item.title}</span>
             <span className={cn("mt-0.5 block truncate text-[12px]", MUTED)}>{item.meta}</span>
           </span>
-          {item.right && (
-            <span className={cn("shrink-0 font-mono text-[11px]", MUTED)}>{item.right}</span>
-          )}
+          {item.right && <span className={cn("shrink-0 font-mono text-[11px]", MUTED)}>{item.right}</span>}
         </li>
       ))}
     </ul>
@@ -222,10 +211,10 @@ function List({ items }: { items: { meta: string; right?: string; title: string 
 /* ------------------------------------------------------------------ */
 
 const METRICS = [
-  { hint: "Grade A · live report", label: "Agent readiness", suffix: "/ 100", value: "90" },
-  { hint: "12 product changes checked this week", label: "Changes checked · 7 days", value: "12" },
-  { hint: "6 successful", label: "Publish activity · 7 days", value: "6" },
-  { hint: "Reader questions completed by Ask AI", label: "Reader questions · month", value: "248" },
+  { hint: "Grade A · live report", label: "Agent readiness", suffix: "/ 100", value: "93" },
+  { hint: "17 product changes checked this week", label: "Changes checked · 7 days", value: "17" },
+  { hint: "5 successful · 1 awaiting review", label: "Publish activity · 7 days", value: "6" },
+  { hint: "Reader questions completed by Ask AI", label: "Reader questions · month", value: "263" },
 ];
 
 function HomeView() {
@@ -233,8 +222,8 @@ function HomeView() {
     <>
       <PageHead
         action="Create a site"
-        sub="See what's live, what changed, and what needs attention across jahce."
-        title="Morning, Ada."
+        sub="See what's live, what changed, and what needs attention across Northstar."
+        title="Morning, Lina."
       />
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -262,14 +251,14 @@ function HomeView() {
               </span>
               <span className="min-w-0">
                 <span className="flex items-center gap-2">
-                  <span className="font-display truncate text-[15px] font-bold text-white">jahce</span>
+                  <span className="font-display truncate text-[15px] font-bold text-white">Northstar Docs</span>
                   <span className="text-canvas-accent flex items-center gap-1.5 text-[11px] font-semibold">
                     <span className="bg-canvas-accent size-1.5 rounded-full" />
                     Live
                   </span>
                 </span>
                 <span className={cn("mt-0.5 flex items-center gap-1.5 font-mono text-[11px]", MUTED)}>
-                  jahce.thally.site
+                  docs.northstar.dev
                   <ExternalLink className="size-3 shrink-0" />
                 </span>
               </span>
@@ -277,13 +266,13 @@ function HomeView() {
 
             <dl className="mt-3">
               <Row label="Last deployment">
-                23h ago <span className={cn("ml-1 font-mono text-[11px]", MUTED)}>main@5e10685</span>
+                8m ago <span className={cn("ml-1 font-mono text-[11px]", MUTED)}>main@6f3a91c</span>
               </Row>
               <Row label="Primary domain">
-                <span className={MUTED}>Not configured</span>
+                <span className="font-mono text-[12px]">docs.northstar.dev</span>
               </Row>
               <Row label="Repository">
-                <span className="font-mono text-[12px]">thallylabs/jahce</span>
+                <span className="font-mono text-[12px]">northstar-labs/docs</span>
               </Row>
               <Row label="Endpoints">
                 <span className="font-mono text-[12px]">JSON · MD · JSON-LD</span>
@@ -295,9 +284,12 @@ function HomeView() {
         <Panel title="Recent activity" link="View deployments">
           <List
             items={[
-              { meta: "Readiness check analyzed 15 published pages · just now", title: "Agent readiness scored 90 / 100" },
-              { meta: "Successful · 5e10685 · 23h ago", title: "docs: generate managed translations" },
-              { meta: "Successful · 5a0318f · 1d ago", title: "docs: initialize Thally site" },
+              {
+                meta: "Readiness check analyzed 128 published pages · just now",
+                title: "Agent readiness scored 93 / 100",
+              },
+              { meta: "Successful · 6f3a91c · 8m ago", title: "docs: document token rotation" },
+              { meta: "Successful · 14c82ad · yesterday", title: "docs: add webhook signature guide" },
             ]}
           />
         </Panel>
@@ -322,7 +314,7 @@ function ReadinessView() {
         <article className={cn(CARD, "flex flex-col justify-center p-5")}>
           <p className={cn("text-[12px] font-medium", MUTED)}>Overall score</p>
           <p className="font-display mt-2 text-[2.75rem] leading-none font-extrabold tracking-[-0.03em] text-white tabular-nums">
-            90<span className={cn("ml-1 text-lg font-semibold", MUTED)}>/ 100</span>
+            93<span className={cn("ml-1 text-lg font-semibold", MUTED)}>/ 100</span>
           </p>
           <p className="text-canvas-accent mt-2 text-[13px] font-semibold">Grade A</p>
           <p className={cn("mt-1 text-[12px]", MUTED)}>Gate your CI on this score.</p>
@@ -336,10 +328,10 @@ function ReadinessView() {
 }
 
 const ANALYTICS_TILES = [
-  { label: "Total page views", note: "across the selected range", value: "12.4k" },
-  { label: "People", note: "62% of views", value: "7.7k" },
-  { label: "AI tools", note: "38% of views", value: "4.7k" },
-  { label: "AI discovery requests", note: "llms.txt · ai.txt · mcp", value: "1.1k" },
+  { label: "Total page views", note: "across the selected range", value: "12.7k" },
+  { label: "People", note: "63.4% of views", value: "8.1k" },
+  { label: "AI tools", note: "36.6% of views", value: "4.6k" },
+  { label: "AI discovery requests", note: "llms.txt · ai.txt · mcp", value: "1.3k" },
 ];
 
 function AnalyticsView() {
@@ -388,9 +380,17 @@ function QuestionsView() {
       <Panel title="This month" link="Export">
         <List
           items={[
-            { meta: "Answered from /sdk/configuration · 2 sources", right: "48", title: "What's the default request timeout?" },
+            {
+              meta: "Answered from /sdk/configuration · 2 sources",
+              right: "48",
+              title: "What's the default request timeout?",
+            },
             { meta: "Answered from /sdk/errors · 1 source", right: "31", title: "How do I catch a timeout error?" },
-            { meta: "Answered from /guides/retries · 3 sources", right: "27", title: "Does the client retry failed requests?" },
+            {
+              meta: "Answered from /guides/retries · 3 sources",
+              right: "27",
+              title: "Does the client retry failed requests?",
+            },
             { meta: "No grounded answer · gap flagged", right: "12", title: "Can I self-host the search index?" },
           ]}
         />
@@ -406,9 +406,17 @@ function TrackView() {
       <Panel title="Awaiting your review" link="Review all">
         <List
           items={[
-            { meta: "from bono #482 · /sdk/configuration · high", right: "2m", title: "docs: default timeout is now 60s" },
-            { meta: "from bono #482 · /sdk/errors · high", right: "2m", title: "docs: document TimeoutError class" },
-            { meta: "from leaflet #77 · /cli/export · medium", right: "1h", title: "docs: new --json flag on export" },
+            {
+              meta: "from platform #482 · /sdk/configuration · high",
+              right: "2m",
+              title: "docs: default timeout is now 60s",
+            },
+            {
+              meta: "from platform #482 · /sdk/errors · high",
+              right: "2m",
+              title: "docs: document TimeoutError class",
+            },
+            { meta: "from cli #77 · /cli/export · medium", right: "1h", title: "docs: new --json flag on export" },
           ]}
         />
       </Panel>
@@ -424,7 +432,7 @@ function KnowledgeView() {
       <Panel title="Connected sources" link="Connect">
         <List
           items={[
-            { meta: "thallylabs/jahce · default branch", right: "synced", title: "GitHub" },
+            { meta: "northstar-labs/docs · default branch", right: "synced", title: "GitHub" },
             { meta: "Product spec space", right: "synced", title: "Notion" },
             { meta: "#product-releases", right: "synced", title: "Slack" },
             { meta: "Support macros", right: "paused", title: "Zendesk" },
@@ -442,9 +450,9 @@ function DeploymentsView() {
       <Panel title="Recent" link="View all">
         <List
           items={[
-            { meta: "Successful · main@5e10685 · 23h ago", right: "18s", title: "docs: generate managed translations" },
-            { meta: "Successful · main@5a0318f · 1d ago", right: "22s", title: "docs: initialize Thally site" },
-            { meta: "Successful · main@c81f0a4 · 3d ago", right: "17s", title: "docs: add API reference tab" },
+            { meta: "Successful · main@6f3a91c · 8m ago", right: "18s", title: "docs: document token rotation" },
+            { meta: "Successful · main@14c82ad · yesterday", right: "22s", title: "docs: add webhook signature guide" },
+            { meta: "Successful · main@90b6e32 · 3d ago", right: "17s", title: "docs: add API reference tab" },
           ]}
         />
       </Panel>
@@ -453,8 +461,8 @@ function DeploymentsView() {
 }
 
 const SETTINGS_ROWS = [
-  { label: "Site name", value: "jahce" },
-  { label: "Primary domain", value: "Not configured" },
+  { label: "Site name", value: "Northstar Docs" },
+  { label: "Primary domain", value: "docs.northstar.dev" },
   { label: "Plan", value: "Team · 3 members included" },
   { label: "Agent access", value: "Public · llms.txt, MCP, JSON" },
 ];

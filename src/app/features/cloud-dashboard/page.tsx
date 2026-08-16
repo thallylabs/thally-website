@@ -93,7 +93,7 @@ const DRAFT_QUEUE = [
   {
     title: "docs: default timeout is now 60s",
     confidence: "high",
-    meta: "acme/sdk#812 · sdk/configuration.mdx · 12m ago",
+    meta: "northstar-labs/platform#482 · sdk/configuration.mdx · 12m ago",
     added: "+18",
     removed: "-4",
     pending: false,
@@ -101,7 +101,7 @@ const DRAFT_QUEUE = [
   {
     title: "docs: document TimeoutError class",
     confidence: "high",
-    meta: "acme/sdk#812 · sdk/errors.mdx · 26m ago",
+    meta: "northstar-labs/platform#482 · sdk/errors.mdx · 26m ago",
     added: "+31",
     removed: "-0",
     pending: false,
@@ -109,7 +109,7 @@ const DRAFT_QUEUE = [
   {
     title: "docs: retry uses exponential backoff",
     confidence: "drafting",
-    meta: "acme/api#517 · 2 files · started 1h ago",
+    meta: "northstar-labs/cli#77 · 2 files · started 1h ago",
     added: "+12",
     removed: "-7",
     pending: true,
@@ -193,10 +193,10 @@ function DraftsQueueVisual() {
 
 /** Metric tiles: the counts carry a delta, the shares carry what they divide. */
 const ANALYTICS_TILES = [
-  { value: "12.4k", label: "Pages read", note: "+18% vs prior 30d", trend: true },
-  { value: "38%", label: "Traffic from AI tools", note: "share of page views", trend: false },
-  { value: "1.8k", label: "Answers served", note: "+12% vs prior 30d", trend: true },
-  { value: "96%", label: "Grounded citations", note: "share of answers", trend: false },
+  { value: "12.7k", label: "Pages read", note: "+17.6% vs prior 30d", trend: true },
+  { value: "36.6%", label: "Traffic from AI tools", note: "share of page views", trend: false },
+  { value: "1.9k", label: "Answers served", note: "+11.8% vs prior 30d", trend: true },
+  { value: "96.4%", label: "Grounded citations", note: "share of answers", trend: false },
 ] as const;
 
 /** Daily people/AI-tool split for the traffic strip, as percentage heights. */
@@ -323,7 +323,7 @@ export default function CloudDashboardFeaturePage() {
         />
       </FeatureBanner>
 
-      {/* Manage bento: two large template-art cards over a 2x2 hairline grid */}
+      {/* One dashboard view, followed by the supporting controls. */}
       <section id="manage" className="bg-canvas pt-[120px]">
         <div className="mb-[60px] border-b border-white/18 pb-[60px]">
           <div className="mx-auto max-w-[746px] px-5 text-center">
@@ -339,72 +339,64 @@ export default function CloudDashboardFeaturePage() {
           </div>
         </div>
 
-        <div className="mx-auto w-full max-w-[1480px] px-5">
-          <div className="flex flex-col gap-2.5">
-            <div className="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
-              <Reveal
-                className="art-scrim relative flex min-h-[520px] flex-col justify-between gap-8 overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
-                style={{
-                  borderColor: "rgba(234,236,237,0.23)",
-                  backgroundImage: "url(/template/card-bg-1.webp)",
-                  backgroundSize: "100% 100%",
-                  backgroundRepeat: "no-repeat",
-                }}
-              >
-                <p className="mx-auto max-w-md text-center text-[15px] leading-relaxed text-white/70">
-                  Every change Thally proposes, queued with evidence. Approve, edit, or dismiss. You decide what ships.
-                </p>
-                <DraftsQueueVisual />
-                <p className="subtitle-display mx-auto max-w-[500px] text-center text-white">
-                  Review every draft.
-                  <br />
-                  <span className="linear-text">You decide what ships.</span>
-                </p>
-              </Reveal>
+        <div className="mx-auto w-full max-w-[1320px] px-5">
+          <Reveal distance={32}>
+            <div className="overflow-hidden rounded-[20px] border border-white/[0.12] bg-[#07090d] shadow-[0_36px_100px_rgba(0,0,0,0.32)]">
+              <div className="flex flex-wrap items-center gap-3 border-b border-white/[0.08] bg-[#0b0e13] px-5 py-3.5">
+                <span className="flex size-6 items-center justify-center rounded-md bg-white text-[10px] font-bold text-black">
+                  T
+                </span>
+                <span className="text-xs text-white/75">Northstar Docs</span>
+                <span className="font-mono text-[11px] text-white/35">Operations overview</span>
+                <span className="text-canvas-accent ml-auto flex items-center gap-1.5 text-[11px]">
+                  <span className="bg-canvas-accent size-1.5 rounded-full" />
+                  Site healthy
+                </span>
+              </div>
 
-              <Reveal
-                delay={0.3}
-                className="art-scrim relative flex min-h-[520px] flex-col justify-between gap-8 overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
-                style={{
-                  borderColor: "rgba(234,236,237,0.23)",
-                  backgroundImage: "url(/template/text-container-1.webp)",
-                  backgroundSize: "100% 100%",
-                  backgroundRepeat: "no-repeat",
-                }}
-              >
-                <p className="mx-auto max-w-sm text-center text-[15px] leading-relaxed text-white/70">
-                  See what readers and agents actually reach, including the share of traffic that comes from AI tools.
-                </p>
-                <AnalyticsVisual />
-                <p className="subtitle-display mx-auto max-w-[420px] text-center text-white">
-                  See who reads.
-                  <br />
-                  <span className="linear-text">including the AI tools.</span>
-                </p>
-              </Reveal>
-            </div>
+              <div className="grid lg:grid-cols-[1.12fr_0.88fr]">
+                <div className="border-white/[0.08] p-6 sm:p-9 lg:border-r">
+                  <div className="mb-5">
+                    <p className="text-sm font-medium text-white">Drafts awaiting review</p>
+                    <p className="mt-1 text-xs text-white/45">
+                      Each proposal includes the source merge, affected page, and diff.
+                    </p>
+                  </div>
+                  <DraftsQueueVisual />
+                </div>
+                <div className="border-t border-white/[0.08] p-6 sm:p-9 lg:border-t-0">
+                  <div className="mb-5">
+                    <p className="text-sm font-medium text-white">Audience and grounding</p>
+                    <p className="mt-1 text-xs text-white/45">
+                      Human and agent traffic from the same reporting window.
+                    </p>
+                  </div>
+                  <AnalyticsVisual />
+                </div>
+              </div>
 
-            <Reveal delay={0.2} distance={40}>
-              <div className="border-canvas-card-stroke grid overflow-hidden rounded-[32px] border sm:grid-cols-2">
+              <div className="grid border-t border-white/[0.08] sm:grid-cols-2 lg:grid-cols-4">
                 {manageCells.map((cell, i) => (
                   <div
                     key={cell.title}
                     className={cn(
-                      "border-canvas-card-stroke flex flex-col items-center gap-5 px-8 py-11 text-center",
-                      i % 2 === 0 && "sm:border-r",
-                      i < 2 && "border-b",
+                      "border-white/[0.08] px-5 py-5",
+                      i > 0 && "max-sm:border-t",
+                      i > 1 && "max-lg:border-t",
+                      i % 2 === 1 && "sm:border-l",
+                      i > 0 && "lg:border-l",
                     )}
                   >
-                    <cell.icon className="text-canvas-accent size-7" />
-                    <div className="flex max-w-[340px] flex-col gap-1.5">
-                      <h3 className="font-display text-xl font-semibold tracking-tight text-white">{cell.title}</h3>
-                      <p className="text-[15px] leading-relaxed tracking-[-0.03em] text-white/80">{cell.body}</p>
+                    <div className="flex items-center gap-2.5">
+                      <cell.icon className="text-canvas-accent size-4" />
+                      <h3 className="text-sm font-medium text-white">{cell.title}</h3>
                     </div>
+                    <p className="mt-2 text-xs leading-relaxed text-white/45">{cell.body}</p>
                   </div>
                 ))}
               </div>
-            </Reveal>
-          </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 

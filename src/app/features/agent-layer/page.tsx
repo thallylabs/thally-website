@@ -2,8 +2,7 @@
  * Public Thally Agent Layer product page.
  *
  * Distinct architecture on the shared marketing design language: glass banner
- * with an agent Q&A board, a machine-surfaces bento (two large template-art
- * cards plus a hairline 2x2 grid), a light grounded-vs-ungrounded band, the
+ * with an agent Q&A board, a unified machine-surface workspace, a light grounded-vs-ungrounded band, the
  * interactive Q&A demo, and the partner strip.
  */
 
@@ -100,9 +99,21 @@ function AgentBoard() {
   return (
     <BannerBoard
       dense
+      title="Agent answer · request timeout"
+      imageSrc="/images/hero3-1600.webp"
+      imageAlt="A deployed Thally documentation site describing agent readiness and MCP tools"
+      imagePosition="38% center"
       columns={[
         [
-          { kind: "summary", progress: 64, avatars: 4, links: 7, comments: 3 },
+          {
+            kind: "summary",
+            progress: 96,
+            label: "Grounding score",
+            detail: "2 current sources, no unsupported claims",
+            avatars: 3,
+            links: 2,
+            comments: 3,
+          },
           {
             kind: "task",
             chips: [
@@ -123,7 +134,7 @@ function AgentBoard() {
               { label: "SDK", tone: "kind" },
             ],
             title: "/sdk/configuration",
-            desc: "evidence: bono@a1f9c2 · rank 1 of 3",
+            desc: "evidence: platform@6f3a91c · rank 1 of 3",
             mono: true,
             progress: 96,
             avatars: 3,
@@ -154,7 +165,7 @@ function AgentBoard() {
             title: "60 seconds before aborting",
             desc: "Grounded, never guessed · 2 sources",
             items: [
-              { label: "[1] /sdk/configuration · a1f9c2", done: true },
+              { label: "[1] /sdk/configuration · 6f3a91c", done: true },
               { label: "[2] /guides/long-running-jobs", done: true },
               { label: "Freshness checked · 4m ago" },
             ],
@@ -166,7 +177,7 @@ function AgentBoard() {
               { label: "Guides", tone: "kind" },
             ],
             title: "/guides/long-running-jobs",
-            desc: "evidence: bono@a1f9c2 · rank 2 of 3",
+            desc: "evidence: platform@6f3a91c · rank 2 of 3",
             mono: true,
             avatars: 2,
           },
@@ -261,7 +272,7 @@ function McpToolsPanel() {
         </span>
       </div>
       <p className="mt-1.5 truncate border-b border-white/[0.08] pb-3 font-mono text-[11px] text-white/40">
-        https://docs.yourproduct.com/api/mcp
+        https://docs.northstar.dev/api/mcp
       </p>
 
       <div className="mt-3 space-y-2">
@@ -275,8 +286,7 @@ function McpToolsPanel() {
 
       <div className="mt-3 flex items-center justify-between gap-3 border-t border-white/[0.08] pt-3 text-[11px] text-white/45">
         <span className="flex items-center gap-1.5">
-          <Check className="text-canvas-accent size-3 shrink-0" />
-          4 tools discovered
+          <Check className="text-canvas-accent size-3 shrink-0" />4 tools discovered
         </span>
         <span className="shrink-0 font-mono text-white/35">read-only</span>
       </div>
@@ -319,69 +329,63 @@ export default function AgentLayerFeaturePage() {
           </div>
         </div>
 
-        <div className="mx-auto w-full max-w-[1480px] px-5 pb-[120px]">
-          <div className="flex flex-col gap-2.5">
-            <div className="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
-              <Reveal
-                className="art-scrim relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
-                style={{
-                  borderColor: "rgba(234,236,237,0.23)",
-                  backgroundImage: "url(/template/card-bg-1.webp)",
-                  backgroundSize: "100% 100%",
-                  backgroundRepeat: "no-repeat",
-                }}
-              >
-                <LlmsTxtPanel />
-                <p className="subtitle-display mx-auto mt-10 max-w-[500px] text-center text-white">
-                  Docs an agent can
-                  <br />
-                  <span className="linear-text">actually read.</span>
-                </p>
-              </Reveal>
+        <div className="mx-auto w-full max-w-[1320px] px-5 pb-[120px]">
+          <Reveal distance={32}>
+            <div className="overflow-hidden rounded-[20px] border border-white/[0.12] bg-[#07090d] shadow-[0_36px_100px_rgba(0,0,0,0.32)]">
+              <div className="flex flex-wrap items-center gap-3 border-b border-white/[0.08] bg-[#0b0e13] px-5 py-3.5">
+                <span className="flex size-6 items-center justify-center rounded-md bg-white text-[10px] font-bold text-black">
+                  T
+                </span>
+                <span className="text-xs text-white/75">Agent access</span>
+                <span className="font-mono text-[11px] text-white/35">docs.northstar.dev</span>
+                <span className="text-canvas-accent ml-auto flex items-center gap-1.5 text-[11px]">
+                  <span className="bg-canvas-accent size-1.5 rounded-full" />
+                  All surfaces current
+                </span>
+              </div>
 
-              <Reveal
-                delay={0.3}
-                className="art-scrim relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:p-[60px]"
-                style={{
-                  borderColor: "rgba(234,236,237,0.23)",
-                  backgroundImage: "url(/template/text-container-1.webp)",
-                  backgroundSize: "100% 100%",
-                  backgroundRepeat: "no-repeat",
-                }}
-              >
-                <McpToolsPanel />
-                <p className="subtitle-display mx-auto mt-10 max-w-[420px] text-center text-white">
-                  Tools, not scraping.
-                  <br />
-                  <span className="linear-text">search and read built in.</span>
-                </p>
-              </Reveal>
-            </div>
+              <div className="grid lg:grid-cols-[1.12fr_0.88fr]">
+                <div className="border-white/[0.08] p-6 sm:p-9 lg:border-r">
+                  <div className="mb-6">
+                    <p className="text-sm font-medium text-white">Machine-readable index</p>
+                    <p className="mt-1 text-xs text-white/45">Generated from 128 published pages at commit 6f3a91c.</p>
+                  </div>
+                  <LlmsTxtPanel />
+                </div>
+                <div className="border-t border-white/[0.08] p-6 sm:p-9 lg:border-t-0">
+                  <div className="mb-6">
+                    <p className="text-sm font-medium text-white">Connected tools</p>
+                    <p className="mt-1 text-xs text-white/45">
+                      Read-only access with source evidence on every response.
+                    </p>
+                  </div>
+                  <McpToolsPanel />
+                </div>
+              </div>
 
-            <Reveal delay={0.2} distance={40}>
-              <div className="border-canvas-card-stroke grid overflow-hidden rounded-[32px] border sm:grid-cols-2">
+              <div className="grid border-t border-white/[0.08] sm:grid-cols-2 lg:grid-cols-4">
                 {smallSurfaces.map((surface, i) => (
                   <div
                     key={surface.title}
                     className={cn(
-                      "border-canvas-card-stroke flex flex-col items-center gap-5 px-8 py-11 text-center",
-                      i % 2 === 0 && "sm:border-r",
-                      i < 2 && "border-b",
+                      "border-white/[0.08] px-5 py-5",
+                      i > 0 && "max-sm:border-t",
+                      i > 1 && "max-lg:border-t",
+                      i % 2 === 1 && "sm:border-l",
+                      i > 0 && "lg:border-l",
                     )}
                   >
-                    <surface.icon className="text-canvas-foreground size-7" />
-                    <div className="flex max-w-[305px] flex-col gap-1.5">
-                      <h3 className="text-canvas-foreground text-xl tracking-[-0.04em]">{surface.title}</h3>
-                      <p className="text-canvas-muted text-[15px] leading-relaxed tracking-[-0.03em]">
-                        {surface.description}
-                      </p>
+                    <div className="flex items-center gap-2.5">
+                      <surface.icon className="text-canvas-accent size-4" />
+                      <h3 className="text-sm font-medium text-white">{surface.title}</h3>
                     </div>
-                    <span className="font-mono text-[11px] text-white/45">{surface.format}</span>
+                    <p className="mt-2 text-xs leading-relaxed text-white/45">{surface.description}</p>
+                    <span className="mt-3 block font-mono text-[10px] text-white/30">{surface.format}</span>
                   </div>
                 ))}
               </div>
-            </Reveal>
-          </div>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -428,10 +432,7 @@ export default function AgentLayerFeaturePage() {
                 <h3 className="text-canvas-cream-foreground text-xl tracking-[-0.04em]">Sourced and current</h3>
                 <ul className="mt-5 space-y-3">
                   {groundedPoints.map((point) => (
-                    <li
-                      key={point}
-                      className="text-canvas-cream-foreground flex gap-2.5 text-[15px] leading-relaxed"
-                    >
+                    <li key={point} className="text-canvas-cream-foreground flex gap-2.5 text-[15px] leading-relaxed">
                       <Check className="text-canvas-cream-foreground mt-1 size-3.5 shrink-0" />
                       {point}
                     </li>
@@ -456,8 +457,8 @@ export default function AgentLayerFeaturePage() {
           </SplitReveal>
           <Reveal delay={0.15} distance={20}>
             <p className="mt-5 text-lg text-[#afafaf]">
-              This is your documentation answering through the Agent Layer. Pick a question, then watch it retrieve
-              from the graph, answer in plain terms, and show exactly where each fact came from.
+              This is your documentation answering through the Agent Layer. Pick a question, then watch it retrieve from
+              the graph, answer in plain terms, and show exactly where each fact came from.
             </p>
           </Reveal>
         </div>
@@ -486,8 +487,8 @@ export default function AgentLayerFeaturePage() {
           </SplitReveal>
           <Reveal delay={0.15} distance={20}>
             <p className="mt-5 text-lg text-[#afafaf]">
-              Turn on the Agent Layer and your documentation becomes an MCP endpoint and llms.txt feed: current,
-              cited, and scoped exactly how you want.
+              Turn on the Agent Layer and your documentation becomes an MCP endpoint and llms.txt feed: current, cited,
+              and scoped exactly how you want.
             </p>
           </Reveal>
           <Reveal delay={0.3} distance={16} className="mt-8 flex flex-wrap items-center justify-center gap-4">

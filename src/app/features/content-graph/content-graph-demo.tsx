@@ -119,7 +119,7 @@ function JsonProjection() {
       {"] }\n  ],\n  "}
       <span className={styles.panelKey}>{'"evidence"'}</span>
       {": "}
-      <span className={styles.panelString}>{'"jahce/bono@a1f9c2"'}</span>
+      <span className={styles.panelString}>{'"northstar-labs/platform@6f3a91c"'}</span>
       {"\n}"}
     </div>
   );
@@ -132,7 +132,7 @@ function LlmsProjection() {
       {"\n"}
       <span className={styles.panelDim}>{"> surface: sdk · concepts: client, timeout, retries"}</span>
       {"\n"}
-      <span className={styles.panelDim}>{"> source: jahce/bono@a1f9c2 · updated: 2026-07-18"}</span>
+      <span className={styles.panelDim}>{"> source: northstar-labs/platform@6f3a91c · synced: 4m ago"}</span>
       {
         "\n\nSend a job with client.send(job, options). Requests\ntime out after 60 seconds by default (timeout option,\nmilliseconds). Failed requests retry with exponential\nbackoff by default; configure via retry.backoff.\n\nRelated: /sdk/configuration, /sdk/errors, /guides/retries"
       }
@@ -170,11 +170,7 @@ export function FormatStudio() {
   const Projection = PROJECTIONS[format];
 
   return (
-    <div
-      className={styles.studio}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <div className={styles.studio} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <div className={styles.studioSource}>
         <div className={styles.studioBar}>
           <span aria-hidden="true" className={styles.barDots}>
@@ -323,7 +319,7 @@ const GRAPH_NODES: GraphNode[] = [
     icon: GitBranch,
     id: "evidence",
     kind: "surface",
-    label: "jahce/bono",
+    label: "platform@6f3a91c",
     left: "84%",
     mono: true,
     tier: "Evidence",
@@ -370,10 +366,12 @@ export function GraphExplorer() {
     };
   }, []);
 
+  const activeNode = GRAPH_NODES.find((node) => node.id === activeNodeId);
+
   return (
     <div className={styles.graphWrap}>
       <div className={styles.graphBar}>
-        <span>Product Knowledge Graph · sending-jobs.mdx</span>
+        <span>Northstar Knowledge Graph · guides/sending-jobs.mdx</span>
         <span className={styles.graphLegend}>
           <span>
             <i className={styles.legendSource} /> Source
@@ -429,6 +427,19 @@ export function GraphExplorer() {
             </div>
           );
         })}
+      </div>
+      <div className="grid gap-3 border-t border-white/[0.08] bg-[#0b0e13] px-4 py-3 text-[10px] text-white/40 sm:grid-cols-[1fr_auto] sm:items-center">
+        <span className="truncate">
+          {activeNode
+            ? `Selected: ${activeNode.label} · ${activeNode.tier.toLowerCase()} linked to guides/sending-jobs.mdx`
+            : "Hover a node to inspect its relationship to the source page."}
+        </span>
+        <span className="flex flex-wrap gap-x-4 gap-y-1 font-mono">
+          <span>1 source</span>
+          <span>3 concepts</span>
+          <span>4 outputs</span>
+          <span className="text-canvas-accent">commit 6f3a91c</span>
+        </span>
       </div>
     </div>
   );

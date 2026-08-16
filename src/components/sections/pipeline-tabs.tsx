@@ -91,7 +91,10 @@ export function PipelineTabs() {
                     initial={false}
                     animate={{ opacity: active === i ? 1 : 0 }}
                     transition={{ duration: reduced ? 0 : 0.5 }}
-                    className={cn("absolute inset-0 flex max-w-[513px] flex-col gap-6", active !== i && "pointer-events-none")}
+                    className={cn(
+                      "absolute inset-0 flex max-w-[513px] flex-col gap-6",
+                      active !== i && "pointer-events-none",
+                    )}
                   >
                     <h3 className="heading-card text-left text-white">{stage.title}</h3>
                     <p className="text-lg tracking-[-0.04em] text-[#afafaf]">{stage.body}</p>
@@ -258,7 +261,8 @@ function Panel({
   );
 }
 
-const rowBase = "flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5";
+const rowBase =
+  "flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5";
 
 /** The first two stages use the Thally-labeled diagrams. */
 const STAGE_DIAGRAMS: Record<number, string> = {
@@ -270,24 +274,22 @@ function StageVisual({ index }: { index: number }) {
   const diagram = STAGE_DIAGRAMS[index];
   if (diagram) {
     return (
-      <img
-        src={diagram}
-        alt=""
-        aria-hidden
-        className="w-full max-w-[520px]"
-        loading={index === 0 ? "eager" : "lazy"}
-      />
+      <img src={diagram} alt="" aria-hidden className="w-full max-w-[520px]" loading={index === 0 ? "eager" : "lazy"} />
     );
   }
 
   if (index === 0) {
     return (
-      <Panel title="acme · Thally GitHub App" icon={<SiGithub className="size-4 text-white/45" />} status="read-only">
+      <Panel
+        title="Northstar · Thally GitHub App"
+        icon={<SiGithub className="size-4 text-white/45" />}
+        status="read-only"
+      >
         {(
           [
-            ["acme/api", "main", "watching", "synced 2m ago"],
-            ["acme/web-app", "main", "watching", "synced 18m ago"],
-            ["acme/docs", "main", "docs target", "synced 4m ago"],
+            ["northstar-labs/platform", "main", "watching", "synced 2m ago"],
+            ["northstar-labs/cli", "main", "watching", "synced 18m ago"],
+            ["northstar-labs/docs", "main", "docs target", "synced 4m ago"],
           ] as const
         ).map(([repo, branch, role, synced]) => (
           <div key={repo} className={rowBase}>
@@ -314,7 +316,7 @@ function StageVisual({ index }: { index: number }) {
   if (index === 1) {
     return (
       <Panel
-        title="acme/api#517"
+        title="northstar-labs/platform#517"
         icon={<Track className="text-canvas-accent size-4" />}
         status="analyzing"
         statusTone="warn"
@@ -357,7 +359,9 @@ function StageVisual({ index }: { index: number }) {
               <span
                 className={cn(
                   "rounded-full px-2 py-0.5 text-[10px] font-medium",
-                  verdict === "update needed" ? "bg-canvas-accent/15 text-canvas-accent" : "bg-white/[0.07] text-white/45",
+                  verdict === "update needed"
+                    ? "bg-canvas-accent/15 text-canvas-accent"
+                    : "bg-white/[0.07] text-white/45",
                 )}
               >
                 {verdict}
@@ -372,7 +376,7 @@ function StageVisual({ index }: { index: number }) {
   if (index === 2) {
     return (
       <Panel
-        title="acme/docs #292"
+        title="northstar-labs/docs #292"
         icon={<GitPullRequest className="text-canvas-accent size-4" />}
         status="draft"
         statusTone="warn"
@@ -405,7 +409,7 @@ function StageVisual({ index }: { index: number }) {
 
   return (
     <Panel
-      title="acme/docs #292"
+      title="northstar-labs/docs #292"
       icon={<Structured className="text-canvas-accent size-4" />}
       status="awaiting review"
     >

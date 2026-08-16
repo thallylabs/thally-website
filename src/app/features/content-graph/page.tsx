@@ -8,22 +8,9 @@
 import type { Metadata } from "next";
 import { SiCloudflare, SiGithub, SiMarkdown, SiNetlify, SiVercel } from "react-icons/si";
 
-import {
-  BannerBoard,
-  FeatureBanner,
-  PartnerStrip,
-  QuotePanels,
-} from "@/components/feature-template/feature-template";
+import { BannerBoard, FeatureBanner, PartnerStrip, QuotePanels } from "@/components/feature-template/feature-template";
 import type { ThallyIcon } from "@/components/icons";
-import {
-  Docs,
-  GitBranch,
-  Globe,
-  Json,
-  Mcp,
-  Search,
-  Structured,
-} from "@/components/icons";
+import { Docs, GitBranch, Globe, Json, Mcp, Search, Structured } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
 import KnowledgeFlowGraph from "@/components/sections/knowledge-flow-graph";
@@ -114,9 +101,21 @@ const softwareJsonLd = {
 function ProjectionBoard() {
   return (
     <BannerBoard
+      title="Source projection · quickstart.mdx"
+      imageSrc="/images/hero2-1600.webp"
+      imageAlt="A Thally documentation page returned as structured JSON through content negotiation"
+      imagePosition="18% center"
       columns={[
         [
-          { kind: "summary", progress: 76, avatars: 4, links: 9, comments: 2 },
+          {
+            kind: "summary",
+            progress: 97,
+            label: "Projection health",
+            detail: "6 outputs current at commit 6f3a91c",
+            avatars: 3,
+            links: 6,
+            comments: 2,
+          },
           {
             kind: "task",
             chips: [
@@ -198,7 +197,7 @@ function ProjectionBoard() {
               { label: "Evidence", tone: "kind" },
             ],
             id: "E-410",
-            title: "evidence: bono@a1f9c2",
+            title: "evidence: platform@6f3a91c",
             desc: "Each node carries the commit and symbol it describes.",
             mono: true,
             progress: 100,
@@ -299,9 +298,7 @@ export default function ContentGraphFeaturePage() {
                   </p>
                   <step.icon className="text-canvas-foreground size-7" />
                   <h3 className="text-xl tracking-[-0.04em] text-white">{step.title}</h3>
-                  <p className="text-canvas-muted text-[15px] leading-relaxed tracking-[-0.03em]">
-                    {step.description}
-                  </p>
+                  <p className="text-canvas-muted text-[15px] leading-relaxed tracking-[-0.03em]">{step.description}</p>
                 </div>
               </Reveal>
             ))}
@@ -347,8 +344,8 @@ export default function ContentGraphFeaturePage() {
           <Reveal delay={0.15} distance={20}>
             <p className="mt-5 text-lg text-[#afafaf]">
               Every page you write joins a graph unique to your product. Thally learns how one source connects to the
-              concepts it defines, the surfaces it publishes to, and the code that proves it, so a single change
-              ripples exactly where it should.
+              concepts it defines, the surfaces it publishes to, and the code that proves it, so a single change ripples
+              exactly where it should.
             </p>
           </Reveal>
         </div>

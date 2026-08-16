@@ -55,14 +55,26 @@ const softwareJsonLd = {
 function ImpactBoard() {
   return (
     <BannerBoard
+      title="Impact analysis · PR #517"
+      imageSrc="/images/track-cloud-2000.webp"
+      imageAlt="Thally Cloud Track showing setup progress and connected product repositories"
+      imagePosition="center 34%"
       columns={[
         [
-          { kind: "summary", progress: 72, avatars: 4, links: 8, comments: 3 },
+          {
+            kind: "summary",
+            progress: 94,
+            label: "Evidence confidence",
+            detail: "8 claims traced across 3 changed symbols",
+            avatars: 3,
+            links: 5,
+            comments: 3,
+          },
           {
             kind: "task",
             chips: [
               { label: "Merged", tone: "low" },
-              { label: "acme/api", tone: "kind" },
+              { label: "northstar-labs/platform", tone: "kind" },
             ],
             id: "#517",
             title: "feat: per-project webhook secrets",
@@ -180,7 +192,7 @@ function DocsIndexVisual() {
       <div className="flex items-center justify-between border-b border-black/[0.06] pb-3">
         <span className="flex items-center gap-2 font-mono text-xs text-[#2b3124]">
           <SiGithub className="size-3.5" />
-          acme/docs
+          northstar-labs/docs
         </span>
         <span className="rounded-full bg-[#2b3124]/[0.06] px-2 py-0.5 text-[10px] font-medium text-[#4a5040]">
           indexing
@@ -226,7 +238,7 @@ function SurfacesVisual() {
       <div className="flex items-center justify-between border-b border-black/[0.06] pb-3">
         <span className="flex items-center gap-2 font-mono text-xs text-[#2b3124]">
           <SiGithub className="size-3.5" />
-          acme/api
+          northstar-labs/platform
         </span>
         <span className="rounded-full bg-[#5f6b3f]/12 px-2 py-0.5 text-[10px] font-medium text-[#4a5528]">
           read-only
@@ -273,7 +285,7 @@ function CandidateVisual() {
         </div>
       </div>
       <div className="mt-3 flex items-center justify-between border-t border-black/[0.06] pt-3">
-        <span className="font-mono text-[11px] text-[#6d7360]">evidence: acme/api#517</span>
+        <span className="font-mono text-[11px] text-[#6d7360]">evidence: northstar-labs/platform#517</span>
         <span className="text-[11px] font-medium text-[#2b3124]">Awaiting review</span>
       </div>
     </div>

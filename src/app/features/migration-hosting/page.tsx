@@ -12,15 +12,7 @@ import { SiDocusaurus, SiGitbook, SiMarkdown, SiMintlify, SiNextra, SiVitepress 
 
 import { FeatureBanner, PartnerStrip } from "@/components/feature-template/feature-template";
 import type { ThallyIcon } from "@/components/icons";
-import {
-  Check,
-  Data,
-  GitPullRequest,
-  Globe,
-  RefreshCw,
-  Trust,
-  Workspace,
-} from "@/components/icons";
+import { Check, Data, GitPullRequest, Globe, RefreshCw, Trust, Workspace } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
 import { CTA } from "@/components/sections/cta";
@@ -127,14 +119,14 @@ function MigrationTerminal() {
         <span aria-hidden className="size-2.5 rounded-full bg-white/15" />
         <span aria-hidden className="size-2.5 rounded-full bg-white/15" />
         <span aria-hidden className="size-2.5 rounded-full bg-white/15" />
-        <p className="ml-3 font-mono text-xs text-white/45">thally migrate · jahce/legacy-docs</p>
+        <p className="ml-3 font-mono text-xs text-white/45">thally migrate · northstar-labs/legacy-docs</p>
         <span className="ml-auto rounded-full bg-white/10 px-2.5 py-1 text-[11px] font-medium text-white/70">
           Non-destructive import
         </span>
       </div>
       <div className="px-5 py-6 font-mono text-[13px] leading-8 text-white sm:px-7 sm:py-8 sm:text-[15px] sm:leading-9">
         <p>
-          <span className="text-white/45">$</span> thally migrate --source gitbook jahce/legacy-docs
+          <span className="text-white/45">$</span> thally migrate --source gitbook northstar-labs/legacy-docs
         </p>
         <p className="text-white/55">· Fetching GitBook space · 128 pages found</p>
         <p>✓ Imported 128 pages · structure, links, and redirects preserved</p>
@@ -142,13 +134,13 @@ function MigrationTerminal() {
         <p className="text-white/55">· Building Content Graph · indexing code samples</p>
         <p>✓ Machine formats · HTML, Markdown, JSON, llms.txt</p>
         <p className="text-white/55">· Deploying to edge · iad sfo lhr fra sin syd</p>
-        <p>✓ Live at jahce.thally.site · SSL, previews, and rollback included</p>
+        <p>✓ Live at docs.northstar.dev · SSL, previews, and rollback included</p>
       </div>
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 px-5 py-3.5 sm:px-7">
         <p className="font-mono text-xs text-white/50">One pass: fetch, convert, build, deploy</p>
         <p className="flex items-center gap-2 font-mono text-xs text-white/60">
           <Globe className="text-canvas-accent size-3.5 shrink-0" />
-          jahce.thally.site
+          docs.northstar.dev
           <span className="text-canvas-accent bg-canvas-accent/10 rounded-full px-2.5 py-1 text-[11px] font-medium">
             Live
           </span>
@@ -183,8 +175,8 @@ export default function MigrationHostingFeaturePage() {
           </SplitReveal>
           <Reveal delay={0.15} distance={20}>
             <p className="mt-5 text-lg text-[#afafaf]">
-              Not a dreaded rewrite: weeks of copy-paste become one import. Structure, links, and redirects carried
-              over automatically. A preview URL to check before you point your domain. Live on the edge in minutes,
+              Not a dreaded rewrite: weeks of copy-paste become one import. Structure, links, and redirects carried over
+              automatically. A preview URL to check before you point your domain. Live on the edge in minutes,
               reversible if you change your mind.
             </p>
           </Reveal>
@@ -194,9 +186,7 @@ export default function MigrationHostingFeaturePage() {
             <Reveal distance={24}>
               <div className="border-canvas-hairline grid grid-cols-2 border-b px-6 py-5 sm:grid-cols-[2fr_1fr_1fr] sm:px-9">
                 <p aria-hidden className="hidden sm:block" />
-                <p className="text-canvas-muted-2 text-xs font-medium tracking-widest uppercase">
-                  The usual migration
-                </p>
+                <p className="text-canvas-muted-2 text-xs font-medium tracking-widest uppercase">The usual migration</p>
                 <p className="text-xs font-medium tracking-widest text-white uppercase">With Thally</p>
               </div>
             </Reveal>
@@ -220,8 +210,8 @@ export default function MigrationHostingFeaturePage() {
           </div>
           <Reveal delay={0.2} distance={16}>
             <p className="text-canvas-muted-2 mx-auto mt-8 max-w-[860px] text-center text-[15px] leading-relaxed">
-              No lock-in, in either direction. Your repository, your renderer, and your domain stay yours: the engine
-              is MIT licensed and hosting is optional. If you ever stop paying, the site can keep running on the
+              No lock-in, in either direction. Your repository, your renderer, and your domain stay yours: the engine is
+              MIT licensed and hosting is optional. If you ever stop paying, the site can keep running on the
               open-source engine, hosted wherever you choose. Pay for the service. Keep the site.
             </p>
           </Reveal>

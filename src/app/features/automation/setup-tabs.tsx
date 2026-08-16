@@ -128,9 +128,9 @@ export function SetupTabs() {
 }
 
 const REPOS = [
-  { name: "jahce/bono", role: "product", branch: "main", meta: "synced 2m ago" },
-  { name: "jahce/leaflet", role: "product", branch: "main", meta: "synced 21m ago" },
-  { name: "jahce/dabs", role: "docs target", branch: "main", meta: "synced 6m ago" },
+  { name: "northstar-labs/platform", role: "product", branch: "main", meta: "synced 2m ago" },
+  { name: "northstar-labs/cli", role: "product", branch: "main", meta: "synced 21m ago" },
+  { name: "northstar-labs/docs", role: "docs target", branch: "main", meta: "synced 6m ago" },
 ] as const;
 
 const TRIGGERS = [
@@ -152,7 +152,7 @@ function StepVisual({ index }: { index: number }) {
   if (index === 0) {
     return (
       <Panel
-        title="jahce · Thally GitHub App"
+        title="Northstar · Thally GitHub App"
         icon={<SiGithub className="size-4 text-white/45" />}
         status="read-only"
       >
@@ -220,7 +220,7 @@ function StepVisual({ index }: { index: number }) {
 
   return (
     <Panel
-      title="jahce/dabs #291"
+      title="northstar-labs/docs #291"
       icon={<GitPullRequest className="text-canvas-accent size-4" />}
       status="awaiting review"
     >

@@ -42,7 +42,7 @@ const PIPELINE_STAGES = [
     title: "Update drafted",
   },
   {
-    detail: "jahce/dabs #291 · awaiting review",
+    detail: "northstar-labs/docs #291 · awaiting review",
     icon: Check,
     sub: "A pull request lands on your docs repo, assigned to a human.",
     title: "Draft PR opened for review",
@@ -132,8 +132,8 @@ export function AutomationDemo() {
     <div className={styles.loop} ref={rootRef}>
       <div className={styles.loopBar}>
         <span className={styles.loopLabel}>
-          <GitPullRequest /> Merged: <span className={styles.loopLabelMono}>jahce/bono #482</span> · Raise default
-          request timeout
+          <GitPullRequest /> Merged: <span className={styles.loopLabelMono}>northstar-labs/platform #482</span> · Raise
+          default request timeout
         </span>
       </div>
       <div className={styles.loopBody}>
@@ -169,7 +169,7 @@ export function AutomationDemo() {
             <div className={`${styles.prCard} ${cardState === "shown" ? styles.prCardShown : ""}`}>
               <div className={styles.prTop}>
                 <GitPullRequest />
-                <b>jahce/dabs #291</b>
+                <b>northstar-labs/docs #291</b>
                 <span className={styles.prStatus}>Draft</span>
               </div>
               <div className={styles.prBody}>

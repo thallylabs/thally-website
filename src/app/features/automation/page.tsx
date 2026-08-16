@@ -54,7 +54,7 @@ const feedItems = [
   {
     label: "Drafted",
     title: "docs: default timeout is now 60s",
-    detail: "from jahce/bono #482 · 2 pages · high confidence",
+    detail: "from northstar-labs/platform #482 · 2 pages · high confidence",
     time: "2m ago",
     status: "Awaiting review",
     statusTone: "review",
@@ -62,7 +62,7 @@ const feedItems = [
   {
     label: "Merged",
     title: "docs: document TimeoutError",
-    detail: "from jahce/bono #482 · approved by jahce",
+    detail: "from northstar-labs/platform #482 · approved by Lina Park",
     time: "4m ago",
     status: "Published",
     statusTone: "ok",
@@ -70,7 +70,7 @@ const feedItems = [
   {
     label: "Merged",
     title: "docs: new --json flag on export",
-    detail: "from jahce/leaflet #77 · approved by ada",
+    detail: "from northstar-labs/cli #77 · approved by Amir Cole",
     time: "1h ago",
     status: "Published",
     statusTone: "ok",
@@ -78,7 +78,7 @@ const feedItems = [
   {
     label: "Dismissed",
     title: "docs: internal refactor note",
-    detail: "from jahce/homesend #310 · no public surface change",
+    detail: "from northstar-labs/platform #310 · no public surface change",
     time: "3h ago",
     status: "Dismissed",
     statusTone: "neutral",
@@ -104,14 +104,26 @@ function MergeBoard() {
   return (
     <BannerBoard
       dense
+      title="Merge #482 · docs impact"
+      imageSrc="/images/track-cloud-2000.webp"
+      imageAlt="Thally Cloud Track showing setup progress and the product repositories it watches"
+      imagePosition="43% center"
       columns={[
         [
-          { kind: "summary", progress: 68, avatars: 4, links: 10, comments: 2 },
+          {
+            kind: "summary",
+            progress: 92,
+            label: "Evidence coverage",
+            detail: "11 of 12 claims traced to the merged diff",
+            avatars: 3,
+            links: 4,
+            comments: 2,
+          },
           {
             kind: "task",
             chips: [
               { label: "Merged", tone: "low" },
-              { label: "jahce/bono", tone: "kind" },
+              { label: "northstar-labs/platform", tone: "kind" },
             ],
             id: "#517",
             title: "DEFAULT_TIMEOUT_MS 30000 to 60000",
@@ -228,10 +240,10 @@ function statusPillClass(tone: (typeof feedItems)[number]["statusTone"]) {
   );
 }
 
-/** One dark bordered card in the activity marquee. */
-function FeedCard({ item }: { item: (typeof feedItems)[number] }) {
+/** One traceable row in the automation activity log. */
+function FeedRow({ item }: { item: (typeof feedItems)[number] }) {
   return (
-    <div className="border-canvas-card-stroke w-[min(340px,calc(100vw-2.5rem))] shrink-0 rounded-2xl border bg-white/[0.03] p-5 sm:w-[420px]">
+    <div className="grid gap-3 border-b border-white/[0.07] px-4 py-4 last:border-b-0 sm:grid-cols-[110px_minmax(0,1fr)_130px_70px] sm:items-center sm:px-5">
       <div className="flex items-center gap-2.5">
         <span
           aria-hidden
@@ -241,13 +253,15 @@ function FeedCard({ item }: { item: (typeof feedItems)[number] }) {
           )}
         />
         <span className="text-[11px] tracking-wider text-white/45 uppercase">{item.label}</span>
-        <span className="ml-auto text-xs text-white/40">{item.time}</span>
       </div>
-      <p className="mt-3 truncate font-mono text-sm text-white/90">{item.title}</p>
-      <p className="mt-1 truncate text-xs text-white/45">{item.detail}</p>
-      <div className="mt-4 border-t border-white/10 pt-3.5">
+      <div className="min-w-0">
+        <p className="truncate font-mono text-sm text-white/90">{item.title}</p>
+        <p className="mt-1 truncate text-xs text-white/45">{item.detail}</p>
+      </div>
+      <div>
         <span className={statusPillClass(item.statusTone)}>{item.status}</span>
       </div>
+      <span className="text-xs text-white/40 sm:text-right">{item.time}</span>
     </div>
   );
 }
@@ -307,11 +321,11 @@ export default function AutomationFeaturePage() {
         </div>
       </section>
 
-      {/* Activity marquee band */}
+      {/* Activity log */}
       <section id="activity" className="border-y border-white/10 bg-[#0a0d13]/60 py-[100px]">
         <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
           <p className="text-sm font-medium tracking-widest text-white/45 uppercase">
-            Recent automation · jahce/dabs
+            Northstar Docs · automation activity
           </p>
           <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
             A running log of what Thally drafted.
@@ -324,18 +338,31 @@ export default function AutomationFeaturePage() {
           </Reveal>
         </div>
 
-        <div className="guarantee-marquee flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-          {[false, true].map((hidden) => (
-            <div
-              key={String(hidden)}
-              aria-hidden={hidden || undefined}
-              className="guarantee-marquee-track flex min-w-max shrink-0 gap-2.5 pr-2.5"
-            >
+        <div className="mx-auto w-full max-w-[1100px] px-5">
+          <Reveal distance={24}>
+            <div className="overflow-hidden rounded-[16px] border border-white/[0.1] bg-[#07090d] shadow-[0_28px_80px_rgba(0,0,0,0.28)]">
+              <div className="flex flex-wrap items-center gap-3 border-b border-white/[0.08] bg-[#0b0e13] px-5 py-3.5">
+                <span className="flex size-6 items-center justify-center rounded-md bg-white text-[10px] font-bold text-black">
+                  T
+                </span>
+                <span className="text-xs text-white/75">Automation log</span>
+                <span className="font-mono text-[11px] text-white/35">northstar-labs/docs</span>
+                <span className="ml-auto flex items-center gap-1.5 text-[11px] text-white/45">
+                  <span className="bg-canvas-accent size-1.5 rounded-full" />
+                  Watching 3 repositories
+                </span>
+              </div>
+              <div className="hidden grid-cols-[110px_minmax(0,1fr)_130px_70px] border-b border-white/[0.07] px-5 py-2 text-[10px] font-medium tracking-[0.12em] text-white/25 uppercase sm:grid">
+                <span>Event</span>
+                <span>Draft and evidence</span>
+                <span>Status</span>
+                <span className="text-right">When</span>
+              </div>
               {feedItems.map((item) => (
-                <FeedCard key={item.title} item={item} />
+                <FeedRow key={item.title} item={item} />
               ))}
             </div>
-          ))}
+          </Reveal>
         </div>
       </section>
 

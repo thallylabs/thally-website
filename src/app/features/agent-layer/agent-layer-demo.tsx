@@ -43,8 +43,8 @@ const QA: QaItem[] = [
       </>,
     ],
     cards: [
-      { path: "/sdk/configuration", title: "Default timeout & overrides", evidence: "bono@a1f9c2" },
-      { path: "/guides/long-running-jobs", title: "Tuning timeouts for slow jobs", evidence: "bono@a1f9c2" },
+      { path: "/sdk/configuration", title: "Default timeout & overrides", evidence: "platform@6f3a91c" },
+      { path: "/guides/long-running-jobs", title: "Tuning timeouts for slow jobs", evidence: "platform@6f3a91c" },
     ],
   },
   {
@@ -60,7 +60,7 @@ const QA: QaItem[] = [
         <code>Error</code>, so a generic handler still works.<span className={styles.cite}>[1]</span>
       </>,
     ],
-    cards: [{ path: "/sdk/errors", title: "TimeoutError reference", evidence: "bono@a1f9c2" }],
+    cards: [{ path: "/sdk/errors", title: "TimeoutError reference", evidence: "platform@6f3a91c" }],
   },
   {
     question: "Does the client retry failed requests?",
@@ -76,8 +76,8 @@ const QA: QaItem[] = [
       </>,
     ],
     cards: [
-      { path: "/guides/retries", title: "Retry & backoff behaviour", evidence: "bono@a1f9c2" },
-      { path: "/sdk/configuration", title: "retry options", evidence: "bono@a1f9c2" },
+      { path: "/guides/retries", title: "Retry & backoff behaviour", evidence: "platform@6f3a91c" },
+      { path: "/sdk/configuration", title: "retry options", evidence: "platform@6f3a91c" },
     ],
   },
 ];
@@ -193,7 +193,7 @@ export function AgentLayerDemo() {
     <div className={styles.agentChat}>
       <div className={styles.chatBar}>
         <Mcp aria-hidden="true" />
-        <span className={styles.chatEndpoint}>jahce.thally.site/api/mcp</span>
+        <span className={styles.chatEndpoint}>docs.northstar.dev/api/mcp</span>
         <span className={styles.chatStatus}>Connected</span>
       </div>
       <div aria-live="polite" className={styles.thread}>
