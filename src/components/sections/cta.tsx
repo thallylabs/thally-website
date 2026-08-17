@@ -6,12 +6,12 @@ import { SplitReveal } from "@/components/motion/split-reveal";
 import { DESTINATIONS } from "@/lib/site";
 
 /**
- * Template cta-section: night sky with an olive bloom, centered heading,
- * white CTA, and a large product frame that overhangs into the footer.
+ * Closing CTA section: subtle night sky background with olive bloom,
+ * tightened vertical padding for seamless transition from the Dashboard visual.
  */
 export function CTA() {
   return (
-    <section className="relative z-[1] overflow-hidden pt-[120px]">
+    <section className="relative z-[1] overflow-hidden pt-12 sm:pt-16 pb-16 sm:pb-24">
       {/* Background: blurred dusk sky under a night -> olive gradient */}
       <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden rounded-b-[52px]">
         <img
@@ -26,14 +26,14 @@ export function CTA() {
       </div>
 
       <div className="mx-auto w-full max-w-[1260px] px-5">
-        <div className="mx-auto mb-20 max-w-[800px] text-center">
+        <div className="mx-auto max-w-[800px] text-center">
           <SplitReveal as="h2" mode="chars" className="heading-section text-white">
-            Ship the code. Docs follow.
+            Ready to keep your docs in sync?
           </SplitReveal>
           <Reveal delay={0.2} distance={24}>
             <p className="mt-4 text-lg text-white/85">
-              Keep shipping without letting your docs fall behind. Thally drafts the updates; your team approves what
-              ships.
+              Start for free with MIT-licensed open source, or let Thally Cloud handle hosting, AI answers, and
+              automated updates.
             </p>
           </Reveal>
           <Reveal delay={0.35} distance={16} className="mt-8">
@@ -46,17 +46,6 @@ export function CTA() {
             </a>
           </Reveal>
         </div>
-
-        {/* Product frame overhanging into the footer */}
-        <Reveal delay={0.2} className="border-canvas-card-stroke -mb-[200px] rounded-[40px] border p-3">
-          <div className="overflow-hidden rounded-[28px] bg-black/40 backdrop-blur-xl">
-            <img
-              src="/images/cloud-dashboard-dark-2000.webp"
-              alt="Thally Cloud dashboard home showing readiness, activity, and site status"
-              className="w-full"
-            />
-          </div>
-        </Reveal>
       </div>
     </section>
   );

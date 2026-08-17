@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { CTA } from "@/components/sections/cta";
+import { Dashboard } from "@/components/sections/dashboard";
 import { Daybreak } from "@/components/sections/daybreak";
 import { FAQ } from "@/components/sections/faq";
 import { FeatureShowcase } from "@/components/sections/feature-showcase";
@@ -112,6 +113,7 @@ export default function Home() {
       <Guarantees />
       <PricingCards />
       <FAQ context="home" />
+      <Dashboard />
       <CTA />
     </>
   );

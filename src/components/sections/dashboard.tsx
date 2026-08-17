@@ -1,162 +1,71 @@
 "use client";
 
-import { Palette } from "lucide-react";
-import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
-import { GitPullRequest, Sites as BarChart3, Team as Users } from "@/components/icons";
-import { SectionGrid, SectionHeader } from "@/components/section-decor";
-
-const POINTS = [
-  {
-    icon: Palette,
-    title: "Update your brand without rebuilding.",
-    description:
-      "Themes, accent colors, and per-mode logos apply to the live site the moment an Owner saves them. No merge, no redeploy.",
-    accent: "var(--chart-1)",
-  },
-  {
-    icon: BarChart3,
-    title: "Find the gaps in your docs.",
-    description:
-      "See first-party traffic, top pages, and searches with no results, so your team knows which documentation to write next.",
-    accent: "var(--chart-2)",
-  },
-  {
-    icon: GitPullRequest,
-    title: "Review every docs task in one queue.",
-    description:
-      "Review updates from merged product changes, drift sweeps, and @thally mentions before anything merges.",
-    accent: "var(--chart-5)",
-  },
-  {
-    icon: Users,
-    title: "Give each teammate the right access.",
-    description: "Invite teammates and assign Owner, Editor, or Viewer access from the Cloud workspace.",
-    accent: "var(--chart-4)",
-  },
-];
+import { Reveal } from "@/components/motion/reveal";
+import { SplitReveal } from "@/components/motion/split-reveal";
+import { DESTINATIONS } from "@/lib/site";
 
 export const Dashboard = () => {
-  const reduce = useReducedMotion();
-
   return (
-    <section id="dashboard" className="bg-accent relative py-16 md:py-24 lg:py-32">
-      <SectionGrid className="opacity-20" mask="radial-gradient(ellipse_at_top,black,transparent_75%)" />
+    <section id="operate" className="bg-canvas relative overflow-hidden pt-20 sm:pt-28 pb-0">
+      <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6">
+        {/* Header (no eyebrow, matching requested headline and subhead) */}
+        <div className="mx-auto max-w-4xl text-center">
+          <SplitReveal as="h2" mode="words" className="heading-section text-white">
+            Ship the code. Docs follow.
+          </SplitReveal>
+          <Reveal delay={0.15} distance={20}>
+            <p className="mx-auto mt-5 max-w-2xl text-lg text-white/80 sm:text-xl">
+              See what is live, what changed, and what needs attention across every documentation site.
+            </p>
+          </Reveal>
 
-      <div className="relative container">
-        <SectionHeader
-          title="Manage your sites, analytics, and docs updates in one place"
-          description="Use Thally Cloud to manage your sites, deployments, analytics, team access, and docs updates drafted by Thally."
-        />
+          {/* Action CTAs using consistent site button styles */}
+          <Reveal delay={0.25} distance={15} className="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <a
+              href={DESTINATIONS.signup}
+              className="btn-sheen text-canvas inline-flex items-center gap-2 rounded-lg bg-white px-7 py-3.5 text-lg font-medium"
+            >
+              Create your docs site
+              <ArrowRight className="size-5" />
+            </a>
+            <Link
+              href="/features/cloud-dashboard"
+              className="btn-sheen inline-flex items-center justify-center gap-2 rounded-lg border border-[#606060] px-7 py-3.5 text-lg font-medium text-white transition-colors hover:border-white"
+            >
+              <span>Explore Thally Cloud</span>
+              <ArrowRight className="size-4" />
+            </Link>
+          </Reveal>
+        </div>
 
-        <div className="relative mt-10 lg:mt-16" style={{ perspective: 1400 }}>
-          <motion.div
-            className="border-border bg-secondary/50 rounded-[1.25rem] border p-1.5 shadow-sm"
-            initial={reduce ? undefined : { opacity: 0, y: 40, rotateX: 7, scale: 0.97 }}
-            whileInView={reduce ? undefined : { opacity: 1, y: 0, rotateX: 0, scale: 1 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="overflow-hidden rounded-[calc(1.25rem-6px)] border border-white/10 bg-[oklch(0.16_0.015_260)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.07)]">
-              <div className="relative flex items-center gap-1.5 border-b border-white/[0.07] px-4 py-3">
-                <span className="size-2.5 rounded-full bg-white/15" />
-                <span className="size-2.5 rounded-full bg-white/15" />
-                <span className="size-2.5 rounded-full bg-white/15" />
-                <span className="absolute left-1/2 -translate-x-1/2 rounded-md bg-white/5 px-3 py-1 font-mono text-[10px] text-white/50">
-                  app.thally.io/sites/acme-docs
-                </span>
-              </div>
+        {/* Large, expansive Dashboard mock visual with Linear-style black gradient fade */}
+        <Reveal delay={0.35} distance={30} className="relative mt-12 sm:mt-16">
+          <div className="relative mx-auto w-full max-w-[1500px]">
+            {/* Linear-style smooth gradient mask */}
+            <div
+              className="relative overflow-hidden"
+              style={{
+                WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%)",
+                maskImage: "linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%)",
+              }}
+            >
               <Image
-                src="/images/cloud-dashboard-home-2358.webp"
-                alt="Thally Cloud analytics showing traffic from people and AI tools, engagement, and top pages"
-                width={1600}
-                height={900}
-                className="w-full"
-                sizes="(max-width: 1400px) 100vw, 1400px"
+                src="/images/dashboard-operate-mock.png"
+                alt="Thally Cloud Dashboard showing oba workspace, Agent readiness score, changes checked, publish activity, site at a glance, and recent activity"
+                width={1800}
+                height={1000}
+                className="h-auto w-full object-contain"
+                sizes="(max-width: 1600px) 100vw, 1500px"
               />
             </div>
-          </motion.div>
-
-          <motion.div
-            aria-hidden
-            className="border-border bg-card absolute -bottom-8 -left-4 z-10 w-60 rounded-xl border p-3.5 shadow-lg shadow-black/10 max-lg:hidden xl:-left-8"
-            initial={reduce ? undefined : { opacity: 0, y: 16, scale: 0.92 }}
-            whileInView={reduce ? undefined : { opacity: 1, y: 0, scale: 1, rotate: -2 }}
-            viewport={{ once: true, amount: 0.6 }}
-            transition={{ type: "spring", stiffness: 240, damping: 24, delay: 0.45 }}
-          >
-            <div className="text-muted-foreground flex items-center gap-1.5 text-[10px] font-medium tracking-wide uppercase">
-              <GitPullRequest className="size-3" style={{ color: "var(--chart-5)" }} />
-              Docs task
-            </div>
-            <p className="mt-2 text-[11px] leading-snug font-medium">docs: reverify auth guide after drift sweep</p>
-            <div className="mt-2 flex items-center justify-between">
-              <span
-                className="rounded-full px-1.5 py-0.5 font-mono text-[9px]"
-                style={{
-                  background: "color-mix(in oklab, var(--chart-5) 14%, transparent)",
-                  color: "var(--chart-5)",
-                }}
-              >
-                origin: drift
-              </span>
-              <span className="text-muted-foreground text-[9px]">awaiting review</span>
-            </div>
-          </motion.div>
-
-          <motion.div
-            aria-hidden
-            className="border-border bg-card absolute -top-6 -right-4 z-10 w-52 rounded-xl border p-3.5 shadow-lg shadow-black/10 max-lg:hidden xl:-right-8"
-            initial={reduce ? undefined : { opacity: 0, y: -12, scale: 0.92 }}
-            whileInView={reduce ? undefined : { opacity: 1, y: 0, scale: 1, rotate: 2 }}
-            viewport={{ once: true, amount: 0.6 }}
-            transition={{ type: "spring", stiffness: 240, damping: 24, delay: 0.65 }}
-          >
-            <div className="text-muted-foreground flex items-center gap-1.5 text-[10px] font-medium tracking-wide uppercase">
-              <Palette className="size-3" style={{ color: "var(--chart-1)" }} />
-              Branding saved
-            </div>
-            <div className="mt-2.5 flex items-center gap-1.5">
-              {["var(--chart-1)", "var(--chart-2)", "var(--chart-5)"].map((swatch) => (
-                <span
-                  key={swatch}
-                  className="border-border size-4 rounded-full border"
-                  style={{ background: swatch }}
-                />
-              ))}
-            </div>
-            <p className="text-muted-foreground mt-2 text-[10px] leading-snug">
-              Applied to the live site. No redeploy.
-            </p>
-          </motion.div>
-        </div>
-
-        <div className="mt-14 grid gap-x-10 gap-y-7 sm:grid-cols-2 lg:mt-20">
-          {POINTS.map((point, i) => {
-            const Icon = point.icon;
-            return (
-              <motion.div
-                key={point.title}
-                className="flex items-start gap-3.5"
-                initial={reduce ? undefined : { opacity: 0, y: 14 }}
-                whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <span
-                  className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg"
-                  style={{ background: `color-mix(in oklab, ${point.accent} 15%, transparent)` }}
-                >
-                  <Icon className="size-4" style={{ color: point.accent }} strokeWidth={2.25} />
-                </span>
-                <p className="leading-snug font-semibold text-balance">
-                  {point.title} <span className="text-muted-foreground text-sm font-medium">{point.description}</span>
-                </p>
-              </motion.div>
-            );
-          })}
-        </div>
+            {/* Soft gradient blend at bottom edge */}
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-canvas via-canvas/60 to-transparent" />
+          </div>
+        </Reveal>
       </div>
     </section>
   );
