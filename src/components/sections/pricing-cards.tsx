@@ -52,6 +52,7 @@ const TIERS: Tier[] = [
     features: [
       "Everything in Free",
       "Managed hosting for your Thally sites",
+      "10,000 AI credits per month",
       "AI answers with links to the source",
       "Thally-drafted updates for relevant merged changes",
       "Documentation analytics and quality checks",

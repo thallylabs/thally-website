@@ -58,6 +58,12 @@ const comparisonFeatures: FeatureSection[] = [
         cloud: "Unlimited",
         enterprise: "Unlimited",
       },
+      {
+        name: "AI credits per month",
+        free: "Bring your own key",
+        cloud: "10,000",
+        enterprise: "Custom",
+      },
     ],
   },
   {

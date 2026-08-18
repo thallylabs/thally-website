@@ -53,7 +53,7 @@ const pricingQuestions = [
   {
     question: "How much does Thally Cloud cost?",
     answer:
-      "Thally Cloud costs $60 per workspace each month, or $50 per workspace each month on an annual subscription billed monthly. Both options include three team members and a 14-day trial.",
+      "Thally Cloud costs $60 per workspace each month, or $50 per workspace each month on an annual subscription billed monthly. Both options include 10,000 AI credits per month, three team members, and a 14-day trial.",
   },
   {
     question: "Are documentation readers billed?",

@@ -69,7 +69,7 @@ const productJsonLd = {
       price: "60",
       priceCurrency: "USD",
       description:
-        "Thally Cloud is $60 per workspace per month with three team members included. Additional active members or pending invitations are $20 per month each. Adds managed hosting, AI answers, Thally-drafted updates, documentation analytics, and workspace roles.",
+        "Thally Cloud is $60 per workspace per month with 10,000 AI credits and three team members included. Additional active members or pending invitations are $20 per month each. Adds managed hosting, AI answers, Thally-drafted updates, documentation analytics, and workspace roles.",
     },
     {
       "@type": "Offer",

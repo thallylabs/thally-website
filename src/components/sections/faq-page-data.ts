@@ -47,7 +47,7 @@ export const faqItems: FAQItem[] = [
     category: "Account",
     question: "How does billing work?",
     answer:
-      "Thally Cloud costs $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly. Three team members are included, and each additional member adds $20 to the monthly bill.",
+      "Thally Cloud costs $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include 10,000 AI credits per month. Three team members are included, and each additional member adds $20 to the monthly bill.",
   },
   {
     category: "Account",

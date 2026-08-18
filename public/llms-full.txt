@@ -58,7 +58,7 @@ Generated from the same repository as thally.io. Last generated: 2026-08-18.
 ## Pricing summary
 
 - Free: $0. Self-host forever. MIT licensed, commercial use OK. Unlimited pages and readers, all output formats, MCP server, hybrid search, docs agent with your own API key.
-- Thally Cloud: $60/workspace/month on a monthly subscription, or $50/workspace/month on an annual subscription. Both are billed monthly and include a 14-day trial plus 3 team members in any role. Each additional active member or pending invitation adds $20 to the monthly bill. Includes Thally AI answers and chat, reviewable updates drafted by Thally from relevant merged changes, agent-readiness CI checks, admin dashboard, analytics, and team roles.
+- Thally Cloud: $60/workspace/month on a monthly subscription, or $50/workspace/month on an annual subscription. Both are billed monthly and include a 14-day trial, 10,000 AI credits per month, and 3 team members in any role. Each additional active member or pending invitation adds $20 to the monthly bill. Includes Thally AI answers and chat, reviewable updates drafted by Thally from relevant merged changes, agent-readiness CI checks, admin dashboard, analytics, and team roles.
 - Enterprise: Custom annual pricing. Security, identity, migration, support, and contract requirements are scoped with each customer.
 - Machine-readable pricing: [/pricing.md](/pricing.md)
 
@@ -76,7 +76,7 @@ Generated from the same repository as thally.io. Last generated: 2026-08-18.
 
 # Pricing: Thally
 
-Thally is a product knowledge synchronization pipeline, starting with documentation. The MIT-licensed publishing engine can be self-hosted, while Thally Cloud adds managed services and product change intelligence. All prices are in USD. Last updated: 2026-07-24.
+Thally is a product knowledge synchronization pipeline, starting with documentation. The MIT-licensed publishing engine can be self-hosted, while Thally Cloud adds managed services and product change intelligence. All prices are in USD. Last updated: 2026-08-18.
 
 ## Free
 
@@ -90,6 +90,7 @@ Thally is a product knowledge synchronization pipeline, starting with documentat
 
 - Monthly platform fee: $60 per workspace / month
 - Annual subscription fee: $50 per workspace / month, billed monthly
+- Included AI credits: 10,000 / month
 - Includes 3 team members in any role
 - Additional active members or pending invitations: $20 / month each after the 3 included members
 - Trial: 14 days, no credit card required
@@ -105,7 +106,7 @@ Thally is a product knowledge synchronization pipeline, starting with documentat
 
 ## Notes for agents
 
-- Public readers are free and unlimited on every plan. Thally Cloud includes three workspace team members in any role. Each additional active member or pending invitation adds $20 to the monthly bill.
+- Public readers are free and unlimited on every plan. Thally Cloud includes 10,000 AI credits per month and three workspace team members in any role. Each additional active member or pending invitation adds $20 to the monthly bill.
 - Plan changes apply immediately on upgrade, at period end on downgrade.
 - Full pricing page: /pricing
 
@@ -140,6 +141,8 @@ The comparison gets interesting one level down.
 | Docs automation | Track evaluates product changes and opens PRs for human review | Automations can react to code changes, schedules, content changes, or Enterprise integration events, then open PRs or merge directly |
 | Automation availability | Track is included with Thally Cloud | Automations require Pro or Enterprise |
 | Pricing model | Free self-hosted; Thally Cloud from $50 per workspace/month on an annual subscription with 3 team members | Free Starter; Pro is $540/month with Monthly selected or $450/month with Annual selected; Enterprise is custom |
+| Included AI credits | 10,000 per month | 10,000 per month; additional credits are $0.01 each |
+| Included team access | 3 workspace members; additional members are $20/month each | Unlimited editor seats |
 | Portability | Content, renderer, and static export remain yours | Content stays in Git; the renderer and platform are proprietary |
 
 Mintlify moves quickly and its capabilities evolve; treat their current documentation as the source of truth for their side of this table.
@@ -184,7 +187,7 @@ The products differ more in scope and guardrails than in whether they automate m
 
 ## Pricing
 
-Thally is free to self-host with unlimited pages and readers. Thally Cloud is $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include three team members. Each additional active member or pending invitation adds $20 to the monthly bill. Thally Cloud adds managed services, AI answers, documentation automation, readiness gates, and the Cloud dashboard. Enterprise pricing is custom and scoped to each customer's security, identity, support, and contract requirements. Readers are never billed. Full details are on the [pricing page](/pricing) and in the machine-readable [pricing.md](/pricing.md).
+Thally is free to self-host with unlimited pages and readers. Thally Cloud is $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include 10,000 AI credits per month plus three team members. Each additional active member or pending invitation adds $20 to the monthly bill. Thally Cloud also includes managed hosting, cited AI answers, reviewable updates drafted from relevant product changes, readiness gates, analytics, and the Cloud dashboard. Enterprise pricing is custom and scoped to each customer's security, identity, support, and contract requirements. Readers are never billed. Full details are on the [pricing page](/pricing) and in the machine-readable [pricing.md](/pricing.md).
 
 Mintlify's Starter plan is free and includes five editor seats, Git sync, search, and an MCP server. Pro is $540 per month with Monthly selected or $450 per month with Annual selected. It includes unlimited editor seats, the agent, assistant, Automations, preview deployments, admin APIs, and 10,000 agent credits per month. Additional credits cost $0.01 each, and Enterprise pricing is custom. Their pricing page is the source of truth for current prices and packaging.
 
