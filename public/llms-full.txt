@@ -2,7 +2,7 @@
 
 > Expanded first-party content for retrieval and citation. Canonical HTML pages remain the source of truth.
 
-Generated from the same repository as thally.io. Last generated: 2026-07-24.
+Generated from the same repository as thally.io. Last generated: 2026-08-18.
 # Thally
 
 > Thally is the product knowledge synchronization pipeline. It understands what changed, finds the customer-facing knowledge affected, and prepares evidence-backed updates for human review. Documentation is the first surface, and the publishing engine is open source under the MIT license.
@@ -116,11 +116,13 @@ Thally is a product knowledge synchronization pipeline, starting with documentat
 
 Canonical URL: https://thally.io/blog/thally-vs-mintlify
 
-**The short answer:** choose Thally if you want a product-change pipeline that connects your repositories to reviewable knowledge updates while keeping the docs infrastructure under your control. Choose Mintlify if you want a fully managed, hosted documentation platform and never want to think about deployment. Both render polished MDX documentation. The deeper differences are ownership, machine readability, and what happens when your product changes.
+**The short answer:** Mintlify and Thally both publish polished MDX documentation, serve agent-readable content, and can turn code changes into documentation pull requests. Choose Thally if you want an MIT-licensed engine you can self-host for free, structured JSON and JSON-LD output, and mandatory human review for automated changes. Choose Mintlify if you want a proprietary managed platform that can generate a first site from a code repository and run broader automations from repository changes, schedules, or connected tools.
 
 ## What both platforms do well
 
-Mintlify and Thally both solve the surface problem of publishing developer documentation in MDX, with API references generated from OpenAPI specs, full-text search, and AI chat over your content. If your only requirement is "good-looking docs, fast," either can get you there. Thally's distinct position begins one level deeper: it is building the synchronization pipeline between product changes and customer-facing knowledge.
+Mintlify and Thally both publish developer documentation from MDX, generate API references from OpenAPI specifications, provide search and AI answers, expose MCP servers, generate `llms.txt`, and serve Markdown versions of published pages.
+
+Both platforms also address documentation drift. Mintlify Automations can read connected code repositories, identify documentation affected by merged changes, and open pull requests. Thally Track evaluates merged product changes against the current documentation and prepares an evidence-backed pull request when an update is needed.
 
 The comparison gets interesting one level down.
 
@@ -128,29 +130,39 @@ The comparison gets interesting one level down.
 
 | | Thally | Mintlify |
 | --- | --- | --- |
-| Source model | Docs-as-code in a deployable Next.js project | Docs-as-code on a hosted platform |
+| Source model | Docs-as-code in a deployable Next.js project | Docs-as-code on a proprietary platform |
 | License | MIT, open source | Proprietary platform |
-| Self-hosting | Yes, free forever | No, platform is hosted |
-| Machine output | JSON, JSON-LD, Markdown, and HTML from the same URL | HTML-first; AI features via the hosted platform |
-| MCP server | Built into every deploy at `/api/mcp` | Available through the hosted platform |
-| llms.txt | Generated on every build | Supported |
-| Docs automation | Docs agent opens reviewed PRs from product changes | AI-assisted writing in the editor |
-| Pricing model | Free self-hosted; Thally Cloud from $50 per workspace/month on an annual subscription with 3 team members | Tiered hosted plans; see their pricing page |
-| Portability | Content, renderer, and static export remain yours | Content is portable; the hosted platform is vendor-operated |
+| Self-hosting | Yes, free forever | Listed as an Enterprise option |
+| Machine output | JSON, JSON-LD, Markdown, and HTML from each page URL | Markdown and HTML from each page URL |
+| MCP server | Search and readiness tools at `/api/mcp` on every deploy | Hosted search MCP per site, plus an authenticated admin MCP |
+| llms.txt | `llms.txt` and `llms-full.txt` generated on every build | `llms.txt` and `llms-full.txt` generated automatically |
+| Starting point | Migrate supported existing documentation into an editable Thally project | Generate a first documentation site directly from a GitHub code repository |
+| Docs automation | Track evaluates product changes and opens PRs for human review | Automations can react to code changes, schedules, content changes, or Enterprise integration events, then open PRs or merge directly |
+| Automation availability | Track is included with Thally Cloud | Automations require Pro or Enterprise |
+| Pricing model | Free self-hosted; Thally Cloud from $50 per workspace/month on an annual subscription with 3 team members | Free Starter; paid Pro and Enterprise tiers |
+| Portability | Content, renderer, and static export remain yours | Content stays in Git; the renderer and platform are proprietary |
 
 Mintlify moves quickly and its capabilities evolve; treat their current documentation as the source of truth for their side of this table.
 
+## Starting from zero
+
+Mintlify can generate a first documentation site directly from a GitHub code repository. Its announced workflow reads the codebase and produces a publishable draft with API references, getting-started guides, and configuration pages. You review the result, publish it, and then configure Automations to maintain it. If you have working code but no documentation, Mintlify offers the more direct built-in starting point.
+
+Thally's automated starting path is migration rather than code-to-site generation. It converts supported existing documentation into an editable MDX project, rebuilds the navigation, and detects an OpenAPI specification when available. It is designed for teams moving an existing docs site while taking the publishing engine with them.
+
 ## Ownership: a repo versus a platform
 
-A Thally site is a Next.js repository. You can read every line that serves your docs, deploy it to Vercel, Netlify, Cloudflare, Docker, or a static bucket, and leave whenever you want with a working site in hand. The engine is MIT licensed, so self-hosting is free forever, commercial use included.
+A Thally site is a Next.js repository. You can read every line that serves your docs, deploy it to Vercel, Netlify, Cloudflare, Docker, or a static bucket, and leave with a working site. The engine is MIT licensed, so self-hosting is free forever, commercial use included.
 
-Mintlify hosts and maintains the platform for you. That removes infrastructure and upgrade work from your team. The tradeoff is that the vendor controls the rendering pipeline, hosting, and roadmap. Your content remains portable, but the hosted product does not move with it.
+Mintlify hosts and maintains Starter and Pro deployments, which removes infrastructure and upgrade work from your team. Its current pricing page also lists self-hosting as an Enterprise option. Your MDX content stays in Git in either model, but Mintlify's renderer and platform remain proprietary.
 
-Which tradeoff is right depends on your team. Choose the repository when control and deployment flexibility matter most. Choose the hosted platform when reducing infrastructure ownership matters more.
+Which tradeoff is right depends on your team. Choose Thally when open-source ownership and deployment flexibility matter most. Choose Mintlify when a vendor-operated platform, or a supported Enterprise deployment, matters more than owning the publishing engine.
 
 ## Machine readability
 
-This is the axis where the two products differ most. Every page a Thally site publishes is available in four formats from the same URL: rendered HTML for people, and JSON, JSON-LD, or Markdown for machines, selected by an `Accept` header or a `?format=` parameter. There is no scraping step. An agent asks for structure and receives structure.
+Both platforms now publish content specifically for machine readers. Mintlify automatically generates Markdown for every page, supports the `Accept: text/markdown` header, publishes `llms.txt` and `llms-full.txt`, and provides a hosted search MCP at `/mcp`. Its authenticated admin MCP can also edit content, change settings, create automations, and open pull requests.
+
+Every page on a Thally site is available as rendered HTML, JSON, JSON-LD, or Markdown from the same URL, selected by an `Accept` header or a `?format=` parameter. An agent can request typed structure instead of extracting it from presentation markup.
 
 On top of that, every deploy ships:
 
@@ -158,36 +170,40 @@ On top of that, every deploy ships:
 - **llms.txt** and per-page agent manifests for discovery
 - an **agent-readiness score**, a deterministic 0 to 100 grade you can gate CI on
 
-Mintlify has been adding AI capabilities to its hosted platform as well, including assistant features and agent-facing improvements. The structural difference is that Thally's machine layer is part of the open-source engine itself, so it works identically on a self-hosted deploy behind your firewall.
+Mintlify also offers an Agent Score that tests whether an agent can find, parse, and use a documentation site. Thally runs its agent-readiness score as a deterministic build check that can gate CI. The remaining structural difference is the output and deployment model: Thally adds JSON and JSON-LD, and its machine layer is part of the open-source engine on self-hosted and managed deployments.
 
 ## When the product changes
 
 Documentation starts drifting when the product changes. The two platforms address that problem differently.
 
-Thally treats drift as a product-understanding problem, not a writing prompt. After a Thally docs repository is connected, mention `@thally document this` on a GitHub issue or PR to request a documentation pull request. Once a site is live and product repositories are mapped, Track evaluates merged product PRs, gathers evidence, and can draft a docs PR when the documentation needs to change. No change is a valid result, and nothing merges without a human.
+Thally treats drift as a product-understanding problem. After a Thally docs repository is connected, mention `@thally document this` on a GitHub issue or PR to request a documentation pull request. Once a site is live and product repositories are mapped, Track evaluates merged product PRs, gathers evidence, and can draft a docs PR when the documentation needs to change. No change is a valid result, and nothing merges without a human.
 
-Mintlify's AI helps you write and edit within the platform. It is a strong authoring assistant; it is not a pipeline from your product repo to a reviewed docs PR.
+Mintlify now has a comparable code-to-docs loop. Its Automations can run when a code pull request merges, on a schedule, after a content update, or, on Enterprise, from an integration event. The agent reads the documentation and connected repositories, then opens or updates a pull request with a summary and citations to source changes. For GitHub, it can assign reviewers based on who authored the triggering code changes. A run can also finish with no action needed.
+
+The products differ more in scope and guardrails than in whether they automate maintenance. Thally centers on evaluating product changes and always leaves the merge to a person. Mintlify offers a broader configurable automation system for code updates, changelogs, translations, broken links, style checks, support feedback, and other recurring work. Teams can require review or allow some automations to merge directly.
 
 ## Pricing
 
 Thally is free to self-host with unlimited pages and readers. Thally Cloud is $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include three team members. Each additional active member or pending invitation adds $20 to the monthly bill. Thally Cloud adds managed services, AI answers, documentation automation, readiness gates, and the Cloud dashboard. Enterprise pricing is custom and scoped to each customer's security, identity, support, and contract requirements. Readers are never billed. Full details are on the [pricing page](/pricing) and in the machine-readable [pricing.md](/pricing.md).
 
-Mintlify prices its hosted tiers separately; their pricing page is the source of truth.
+Mintlify's Starter plan is free and includes five editor seats, Git sync, search, and an MCP server. Automations and its writing agent require Pro or Enterprise. Their pricing page is the source of truth for current prices, credit allowances, and Enterprise options.
 
 ## Which should you choose?
 
 **Choose Thally if:**
 
-- you want AI agents to read your docs natively, without scraping
-- self-hosting, MIT licensing, or data residency matters to you
-- you want product changes evaluated against customer-facing knowledge, with reviewable docs PRs when an update is supported
+- you want the publishing engine to be MIT licensed and free to self-host
+- you need JSON or JSON-LD in addition to HTML and Markdown
+- you want automated documentation changes to require human review
 - you want to gate CI on documentation quality
 
 **Choose Mintlify if:**
 
-- you want a fully managed platform with no infrastructure at all
-- your team prefers a vendor-operated editor and support relationship
-- self-hosting is a non-goal
+- you want a managed platform with a browser editor and vendor support
+- you want to generate a first documentation site from an existing code repository
+- you want configurable automations across GitHub or GitLab, schedules, and, on Enterprise, connected tools
+- you want the option to merge selected automation results directly
+- an Enterprise self-hosting arrangement meets your deployment requirements
 
 ## Migrating takes one command
 
@@ -201,7 +217,7 @@ It detects supported source platforms, converts the docs to MDX, rebuilds naviga
 
 ## Sources and verification
 
-Mintlify capabilities were checked against its [AI-native documentation](https://www.mintlify.com/docs/ai-native) and [official documentation](https://www.mintlify.com/docs). Thally capabilities and prices were checked against the current product repository, [documentation](https://docs.thally.io), and [machine-readable pricing](/pricing.md). Sources were last verified July 24, 2026. Read our [editorial policy](/editorial-policy) for the comparison process.
+Mintlify capabilities were checked against [Docs on autopilot](https://www.mintlify.com/blog/docs-on-autopilot), its [Automations documentation](https://www.mintlify.com/docs/automations/index), [agent-ready content documentation](https://www.mintlify.com/docs/ai/markdown-export), [MCP documentation](https://www.mintlify.com/docs/ai/model-context-protocol), [Agent Score](https://www.mintlify.com/score), and [pricing page](https://www.mintlify.com/pricing). Thally capabilities and prices were checked against the current product repository, [documentation](https://docs.thally.io), and [machine-readable pricing](/pricing.md). Sources were last verified August 18, 2026. Read our [editorial policy](/editorial-policy) for the comparison process.
 
 ---
 

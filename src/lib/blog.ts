@@ -61,12 +61,12 @@ export const blogPosts: BlogPost[] = [
     seoTitle: "Thally vs Mintlify for AI Documentation",
     cardTitle: "Thally vs Mintlify",
     description:
-      "Compare Thally's product-change synchronization pipeline with Mintlify's hosted docs platform across ownership, AI-readable output, automation, migration, and pricing.",
+      "Compare Thally and Mintlify across ownership, machine-readable output, code-to-docs automation, deployment, migration, and pricing.",
     date: "2026-07-11",
-    updated: "2026-07-24",
-    verified: "2026-07-24",
+    updated: "2026-08-18",
+    verified: "2026-08-18",
     category: "Comparison",
-    readingTime: 7,
+    readingTime: 8,
     accent: "var(--chart-1)",
     faq: [
       {
@@ -82,7 +82,12 @@ export const blogPosts: BlogPost[] = [
       {
         question: "Does Mintlify support MCP or llms.txt?",
         answer:
-          "Mintlify has been adding AI features to its hosted platform, and support evolves quickly. Check their current documentation. Thally ships an MCP server, llms.txt, and per-page JSON on every deploy, self-hosted included, by default.",
+          "Yes. Mintlify automatically generates llms.txt and llms-full.txt, serves Markdown versions of pages, and provides hosted search and admin MCP servers. Thally also ships llms.txt and an MCP server, plus per-page JSON and JSON-LD, as part of its open-source engine on every deploy.",
+      },
+      {
+        question: "Can Mintlify generate documentation from a code repository?",
+        answer:
+          "Yes. Mintlify can read a GitHub repository and generate a first documentation site with API references, getting-started guides, and configuration pages. Teams can review and publish that draft, then configure Automations to maintain it as the code changes.",
       },
     ],
   },
