@@ -7,18 +7,17 @@ import { Migrate } from "@/components/sections/migrate";
 
 /**
  * Template "ready-made-section", faithful mechanics: a sticky viewport
- * holds a small pastel card with a caption below it. The card scrolls
+ * holds a small scenic card with a caption below it. The card scrolls
  * into view first, then grows to full-bleed as it reaches its pinned
- * position (IX2 keyframes 21-30 with heavy smoothing). The light
- * content then scrolls up OVER the pinned image.
+ * position (IX2 keyframes 21-30 with heavy smoothing). The migration
+ * visual then scrolls up OVER the pinned image.
  */
 export function Daybreak() {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
   // Progress hits 1 exactly when the section pins, so the card holds
   // small while scrolling in, then finishes growing to full-bleed right
-  // at the pin. A spacer below keeps the full-screen image alone for a
-  // stretch of scroll before content arrives over it.
+  // at the pin.
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "start start"] });
 
   // Template smoothing: a damped spring trailing the scroll.
@@ -41,12 +40,13 @@ export function Daybreak() {
             aria-hidden
             className="absolute inset-0 h-full w-full object-cover"
           />
+          {/* Subtle contrast wash */}
+          <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/25 to-black/70" />
         </motion.div>
       </div>
 
-      {/* The original migration section on a light token island, kept
-          transparent so it rides directly on the pinned pastel scene. */}
-      <div className="light-island relative z-10">
+      {/* Migration section with the new high-res visual riding directly over the pinned scene */}
+      <div className="relative z-10">
         <Migrate />
       </div>
     </section>
