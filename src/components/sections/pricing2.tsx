@@ -24,8 +24,8 @@ interface FeatureSection {
 const pricingPlans = [
   {
     name: "Free",
-    href: DESTINATIONS.docsQuickstart,
-    buttonText: "Read the quickstart",
+    href: DESTINATIONS.signup,
+    buttonText: "Start free",
     recommended: false,
   },
   {
@@ -54,9 +54,15 @@ const comparisonFeatures: FeatureSection[] = [
       },
       {
         name: "Documentation sites",
-        free: "Self-hosted",
+        free: "1 managed",
         cloud: "Unlimited",
         enterprise: "Unlimited",
+      },
+      {
+        name: "AI credits per month",
+        free: "Bring your own key",
+        cloud: "10,000",
+        enterprise: "Custom",
       },
     ],
   },
@@ -113,7 +119,13 @@ const comparisonFeatures: FeatureSection[] = [
       },
       {
         name: "Managed hosting",
-        free: false,
+        free: true,
+        cloud: true,
+        enterprise: true,
+      },
+      {
+        name: "Custom domains",
+        free: true,
         cloud: true,
         enterprise: true,
       },

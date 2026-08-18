@@ -7,8 +7,8 @@ export const alt = "Thally pricing";
 
 export default function Image() {
   return renderOgImage({
-    title: "Free to self-host, simple to scale",
-    description: "Run Thally yourself for free, or choose managed Cloud and Enterprise plans.",
+    title: "Start managed for free, scale when ready",
+    description: "Launch one managed site for free, or self-host the MIT-licensed engine.",
     url: "thally.io/pricing",
   });
 }
