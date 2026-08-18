@@ -9,13 +9,7 @@ import Hero from "@/components/sections/hero";
 import { PipelineTabs } from "@/components/sections/pipeline-tabs";
 import { PricingCards } from "@/components/sections/pricing-cards";
 import { QuoteCard } from "@/components/sections/quote-card";
-import {
-  SITE_NAME,
-  SITE_TITLE,
-  SITE_URL,
-  SOCIAL_PREVIEW_DESCRIPTION,
-  SOCIAL_PREVIEW_TITLE,
-} from "@/lib/site";
+import { SITE_NAME, SITE_TITLE, SITE_URL, SOCIAL_PREVIEW_DESCRIPTION, SOCIAL_PREVIEW_TITLE } from "@/lib/site";
 import { socialPreviewImage } from "@/lib/social-preview";
 
 export const metadata: Metadata = {
@@ -61,7 +55,8 @@ const productJsonLd = {
       name: "Free",
       price: "0",
       priceCurrency: "USD",
-      description: "MIT licensed and free to self-host forever, commercial use included.",
+      description:
+        "Includes one managed documentation site per workspace, free hosting, a custom domain, agent-readiness checks, and unlimited readers. The MIT-licensed engine can also be self-hosted for free, including commercial use.",
     },
     {
       "@type": "Offer",
@@ -69,7 +64,7 @@ const productJsonLd = {
       price: "60",
       priceCurrency: "USD",
       description:
-        "Thally Cloud is $60 per workspace per month with 10,000 AI credits and three team members included. Additional active members or pending invitations are $20 per month each. Adds managed hosting, AI answers, Thally-drafted updates, documentation analytics, and workspace roles.",
+        "Thally Cloud is $60 per workspace per month with unlimited managed sites, 10,000 AI credits, and three team members included. Additional active members are $20 per month each. Adds AI answers, Thally-drafted updates, documentation analytics, and workspace roles.",
     },
     {
       "@type": "Offer",
@@ -77,7 +72,7 @@ const productJsonLd = {
       price: "50",
       priceCurrency: "USD",
       description:
-        "$50 per workspace per month with an annual subscription, billed monthly. Three team members are included. Each additional active member or pending invitation adds $20 to the monthly bill.",
+        "$50 per workspace per month with an annual subscription, billed monthly. Includes unlimited managed sites, 10,000 AI credits, and three team members. Each additional active member adds $20 to the monthly bill.",
     },
   ],
   featureList: [

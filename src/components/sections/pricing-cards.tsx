@@ -24,19 +24,20 @@ type Tier = {
 const TIERS: Tier[] = [
   {
     name: "Free",
-    tagline: "Run Thally on your infrastructure",
+    tagline: "Launch one managed documentation site",
     monthly: "$0",
     annual: "$0",
     monthlyNote: "MIT licensed · no card required",
     annualNote: "MIT licensed · no card required",
     priceSuffix: "forever",
-    cta: { label: "Read the quickstart", href: DESTINATIONS.docsQuickstart },
+    cta: { label: "Start free", href: DESTINATIONS.signup },
     features: [
+      "1 managed site per workspace",
+      "Free managed hosting and a custom domain",
+      "Agent-readiness checks",
       "Unlimited pages and readers",
       "Pages built for people and AI tools",
-      "Fast search across all your docs",
-      "Deploy to any hosting provider",
-      "Commercial use under the MIT license",
+      "Optional MIT-licensed self-hosting",
     ],
   },
   {
@@ -51,7 +52,7 @@ const TIERS: Tier[] = [
     recommended: true,
     features: [
       "Everything in Free",
-      "Managed hosting for your Thally sites",
+      "Unlimited managed sites per workspace",
       "10,000 AI credits per month",
       "AI answers with links to the source",
       "Thally-drafted updates for relevant merged changes",
@@ -89,8 +90,9 @@ export function PricingCards({ headerTag = "h2" }: { headerTag?: "h1" | "h2" }) 
           </SplitReveal>
           <Reveal delay={0.15} distance={24}>
             <p className="text-canvas-muted mx-auto mt-5 max-w-2xl text-lg">
-              Run Thally&apos;s MIT-licensed engine on your infrastructure for $0. Choose Thally Cloud for managed
-              hosting, cited AI answers, drafted updates, analytics, and a shared workspace.
+              Start with one managed site, hosting, a custom domain, and readiness checks for $0. Choose Thally Cloud
+              for unlimited managed sites, 10,000 AI credits, cited answers, drafted updates, analytics, and a shared
+              workspace.
             </p>
           </Reveal>
 

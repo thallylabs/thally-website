@@ -11,7 +11,7 @@ export const faqItems: FAQItem[] = [
     category: "Support",
     question: "Is there a free version?",
     answer:
-      "Yes. Thally is open source under the MIT license and free to self-host forever. The free version includes unlimited pages and readers, all four output formats, and the MCP server. Cloud and Enterprise add managed services, AI answers, and team controls.",
+      "Yes. The Free plan includes one managed documentation site per workspace, free hosting, a custom domain, agent-readiness checks, unlimited pages and readers, all four output formats, and the MCP server. The engine is also open source under the MIT license and free to self-host forever. Thally Cloud adds unlimited managed sites, AI answers, and team controls.",
   },
   {
     category: "Support",
@@ -35,7 +35,7 @@ export const faqItems: FAQItem[] = [
     category: "Account",
     question: "How do I invite teammates?",
     answer:
-      "Owners and Editors can invite teammates by email from the admin dashboard. Thally Cloud includes three team members in any role. Each additional active member or pending invitation adds $20 to the monthly bill.",
+      "Owners and Editors can invite teammates by email from the admin dashboard. Thally Cloud includes three team members in any role. Each additional active member adds $20 to the monthly bill.",
   },
   {
     category: "Account",

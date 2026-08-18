@@ -29,7 +29,7 @@
 - [Agent Layer](/features/agent-layer): llms.txt, MCP server, and grounded answers with cited sources
 - [Migration & Hosting](/features/migration-hosting): migrate from GitBook, Mintlify, Docusaurus, or Markdown and let Thally host
 - [Cloud Dashboard](/features/cloud-dashboard): sites, drafts, analytics, team, and AI context in one workspace
-- [Pricing](/pricing): Free (self-host, MIT), Cloud (workspace platform fee), Enterprise (SSO, SLA)
+- [Pricing](/pricing): Free (1 managed site per workspace plus MIT self-hosting), Cloud (unlimited managed sites and 10,000 AI credits), Enterprise (SSO, SLA)
 - [Blog](/blog): comparisons, guides, and product deep dives (RSS at /rss.xml)
 - [About](/about): the problem, position, product principles, and long-term mission
 - [FAQ](/faq): common questions on migration, automation, agents, self-hosting
@@ -52,8 +52,8 @@
 
 ## Pricing summary
 
-- Free: $0. Self-host forever. MIT licensed, commercial use OK. Unlimited pages and readers, all output formats, MCP server, hybrid search, docs agent with your own API key.
-- Thally Cloud: $60/workspace/month on a monthly subscription, or $50/workspace/month on an annual subscription. Both are billed monthly and include a 14-day trial, 10,000 AI credits per month, and 3 team members in any role. Each additional active member or pending invitation adds $20 to the monthly bill. Includes Thally AI answers and chat, reviewable updates drafted by Thally from relevant merged changes, agent-readiness CI checks, admin dashboard, analytics, and team roles.
+- Free: $0. Includes 1 managed documentation site per workspace, free hosting, a custom domain, agent-readiness checks, unlimited pages and readers, all output formats, an MCP server, hybrid search, and a docs agent with your own API key. The MIT-licensed engine can also be self-hosted for free, including commercial use.
+- Thally Cloud: $60/workspace/month on a monthly subscription, or $50/workspace/month on an annual subscription. Both are billed monthly and include a 14-day trial, unlimited managed sites, 10,000 AI credits per month, and 3 team members in any role. Each additional active member adds $20 to the monthly bill. Includes Thally AI answers and chat, reviewable updates drafted by Thally from relevant merged changes, agent-readiness CI checks, admin dashboard, analytics, and team roles.
 - Enterprise: Custom annual pricing. Security, identity, migration, support, and contract requirements are scoped with each customer.
 - Machine-readable pricing: [/pricing.md](/pricing.md)
 

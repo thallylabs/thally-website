@@ -48,7 +48,7 @@ const pricingQuestions = [
   {
     question: "Is there a free plan?",
     answer:
-      "Yes. Thally is MIT licensed and free to self-host forever, including commercial use, with unlimited documentation pages and readers.",
+      "Yes. The Free plan includes one managed documentation site per workspace, free hosting, a custom domain, agent-readiness checks, and unlimited pages and readers. You can also self-host the MIT-licensed engine for free, including commercial use.",
   },
   {
     question: "How much does Thally Cloud cost?",
@@ -63,7 +63,7 @@ const pricingQuestions = [
   {
     question: "Can I use my own hosting?",
     answer:
-      "Yes. The open-source engine can run on Vercel, Netlify, Cloudflare, Docker, or another compatible host. Thally Cloud is the managed-hosting path and does not take ownership of your repository or domain.",
+      "Yes. The open-source engine can run on Vercel, Netlify, Cloudflare, Docker, or another compatible host. The Free plan also includes managed hosting for one site per workspace. Thally does not take ownership of your repository or domain.",
   },
   {
     question: "What happens if I cancel Thally Cloud?",
