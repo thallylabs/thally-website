@@ -104,6 +104,12 @@ function MergeBoard() {
   return (
     <BannerBoard
       dense
+      title="Automation queue"
+      context="jahce/bono · main"
+      columnLabels={[
+        { title: "Merged changes", detail: "2 queued" },
+        { title: "Analysis", detail: "1 running" },
+      ]}
       columns={[
         [
           { kind: "summary", progress: 68, avatars: 4, links: 10, comments: 2 },
@@ -121,7 +127,6 @@ function MergeBoard() {
             links: 2,
             comments: 13,
           },
-          { kind: "filler", h: 120 },
         ],
         [
           {
@@ -134,6 +139,8 @@ function MergeBoard() {
             icon: <GitPullRequest className="text-canvas-accent size-9" />,
             title: "Thally analyzes the change",
             desc: "The Content Graph matches the diff to affected docs.",
+            status: "Analyzing",
+            meta: "12 files scanned",
           },
           {
             kind: "task",
@@ -149,7 +156,6 @@ function MergeBoard() {
             links: 1,
             comments: 8,
           },
-          { kind: "filler", h: 140 },
         ],
         [
           {
@@ -167,7 +173,6 @@ function MergeBoard() {
               { label: "Changelog entry drafted" },
             ],
           },
-          { kind: "filler", h: 110 },
           {
             kind: "task",
             chips: [
@@ -209,7 +214,6 @@ function MergeBoard() {
             links: 10,
             comments: 2,
           },
-          { kind: "filler", h: 130 },
         ],
       ]}
     />

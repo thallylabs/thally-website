@@ -100,6 +100,12 @@ function AgentBoard() {
   return (
     <BannerBoard
       dense
+      title="Agent answers"
+      context="live MCP · read only"
+      columnLabels={[
+        { title: "Questions", detail: "1 active" },
+        { title: "Grounding", detail: "2 sources" },
+      ]}
       columns={[
         [
           { kind: "summary", progress: 64, avatars: 4, links: 7, comments: 3 },
@@ -130,7 +136,6 @@ function AgentBoard() {
             links: 1,
             comments: 2,
           },
-          { kind: "filler", h: 120 },
         ],
         [
           {
@@ -143,6 +148,8 @@ function AgentBoard() {
             icon: <Mcp className="text-canvas-accent size-9" />,
             title: "MCP endpoint connected",
             desc: "4 tools, read-only: no scraping, no stale copies.",
+            status: "Connected",
+            meta: "4 MCP tools",
           },
           {
             kind: "checklist",
@@ -170,7 +177,6 @@ function AgentBoard() {
             mono: true,
             avatars: 2,
           },
-          { kind: "filler", h: 140 },
         ],
       ]}
     />
