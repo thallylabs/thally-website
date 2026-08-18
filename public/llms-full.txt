@@ -139,7 +139,7 @@ The comparison gets interesting one level down.
 | Starting point | Migrate supported existing documentation into an editable Thally project | Generate a first documentation site directly from a GitHub code repository |
 | Docs automation | Track evaluates product changes and opens PRs for human review | Automations can react to code changes, schedules, content changes, or Enterprise integration events, then open PRs or merge directly |
 | Automation availability | Track is included with Thally Cloud | Automations require Pro or Enterprise |
-| Pricing model | Free self-hosted; Thally Cloud from $50 per workspace/month on an annual subscription with 3 team members | Free Starter; paid Pro and Enterprise tiers |
+| Pricing model | Free self-hosted; Thally Cloud from $50 per workspace/month on an annual subscription with 3 team members | Free Starter; Pro is $540/month with Monthly selected or $450/month with Annual selected; Enterprise is custom |
 | Portability | Content, renderer, and static export remain yours | Content stays in Git; the renderer and platform are proprietary |
 
 Mintlify moves quickly and its capabilities evolve; treat their current documentation as the source of truth for their side of this table.
@@ -186,7 +186,7 @@ The products differ more in scope and guardrails than in whether they automate m
 
 Thally is free to self-host with unlimited pages and readers. Thally Cloud is $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include three team members. Each additional active member or pending invitation adds $20 to the monthly bill. Thally Cloud adds managed services, AI answers, documentation automation, readiness gates, and the Cloud dashboard. Enterprise pricing is custom and scoped to each customer's security, identity, support, and contract requirements. Readers are never billed. Full details are on the [pricing page](/pricing) and in the machine-readable [pricing.md](/pricing.md).
 
-Mintlify's Starter plan is free and includes five editor seats, Git sync, search, and an MCP server. Automations and its writing agent require Pro or Enterprise. Their pricing page is the source of truth for current prices, credit allowances, and Enterprise options.
+Mintlify's Starter plan is free and includes five editor seats, Git sync, search, and an MCP server. Pro is $540 per month with Monthly selected or $450 per month with Annual selected. It includes unlimited editor seats, the agent, assistant, Automations, preview deployments, admin APIs, and 10,000 agent credits per month. Additional credits cost $0.01 each, and Enterprise pricing is custom. Their pricing page is the source of truth for current prices and packaging.
 
 ## Which should you choose?
 
