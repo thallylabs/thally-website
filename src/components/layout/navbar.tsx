@@ -5,7 +5,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-import { Cloud, GitPullRequest, Mcp, Overview, Structured, Track } from "@/components/icons";
+import {
+  Account,
+  Cloud,
+  Docs,
+  GitBranch,
+  GitPullRequest,
+  Guide,
+  Mcp,
+  Overview,
+  Structured,
+  Team,
+  Terminal,
+  Track,
+} from "@/components/icons";
 import { ThallyMark } from "@/components/layout/logo";
 import { Button } from "@/components/ui/button";
 import {
@@ -61,51 +74,104 @@ const Navbar = () => {
     {
       label: "Features",
       href: "/#features",
+      eyebrow: "Explore the platform",
       dropdownItems: [
         {
           title: "Thally Track",
           href: "/features/track",
-          description: "See which documentation may be affected when your product changes.",
+          description: "See what a product change affects.",
           icon: Track,
         },
         {
           title: "Automation",
           href: "/features/automation",
-          description: "Connect repos so Thally can draft updates on every merge.",
+          description: "Draft doc updates on every merge.",
           icon: GitPullRequest,
         },
         {
           title: "Content Graph",
           href: "/features/content-graph",
-          description: "Write once in MDX and publish HTML, JSON, and machine formats.",
+          description: "One MDX source, every output format.",
           icon: Structured,
         },
         {
           title: "Agent Layer",
           href: "/features/agent-layer",
-          description: "Make your docs easier for AI tools to read and reason about.",
+          description: "Built to be read by AI tools.",
           icon: Mcp,
         },
         {
           title: "Migration & Hosting",
           href: "/features/migration-hosting",
-          description: "Start a new site, connect a repo, and let Thally host it.",
+          description: "Move your docs over, hosted by Thally.",
           icon: Cloud,
         },
         {
           title: "Cloud Dashboard",
           href: "/features/cloud-dashboard",
-          description: "Manage your sites, analytics, team, and AI context in one place.",
+          description: "Analytics, theming, roles, AI context.",
           icon: Overview,
         },
       ],
     },
     { label: "Pricing", href: "/pricing" },
-    { label: "Docs", href: DESTINATIONS.docs },
-    { label: "Blog", href: "/blog" },
-    { label: "About", href: "/about" },
-    { label: "FAQ", href: "/faq" },
-    { label: "Contact", href: "/contact" },
+    {
+      label: "Resources",
+      href: "/blog",
+      eyebrow: "Read, learn, and reach us",
+      // Column order, not row order: the panel fills top to bottom, so the
+      // documentation entries stack on the left and the company ones on the right.
+      dropdownItems: [
+        {
+          title: "Documentation",
+          href: DESTINATIONS.docs,
+          description: "Everything, from install to MCP.",
+          icon: Docs,
+        },
+        {
+          title: "Quickstart",
+          href: DESTINATIONS.docsQuickstart,
+          description: "Publish your first site in minutes.",
+          icon: Terminal,
+        },
+        {
+          title: "Guides",
+          href: DESTINATIONS.docsGuides,
+          description: "Configuration, theming, and CI.",
+          icon: Guide,
+        },
+        {
+          title: "Components",
+          href: DESTINATIONS.docsComponents,
+          description: "The blocks your pages are built from.",
+          icon: Structured,
+        },
+        {
+          title: "Changelog",
+          href: DESTINATIONS.docsChangelog,
+          description: "What shipped, release by release.",
+          icon: GitBranch,
+        },
+        {
+          title: "Blog",
+          href: "/blog",
+          description: "Product notes and docs practice.",
+          icon: Docs,
+        },
+        {
+          title: "About",
+          href: "/about",
+          description: "Who is building Thally, and why.",
+          icon: Team,
+        },
+        {
+          title: "Contact",
+          href: "/contact",
+          description: "Talk to us about your rollout.",
+          icon: Account,
+        },
+      ],
+    },
   ];
 
   return (
@@ -143,31 +209,44 @@ const Navbar = () => {
                       <NavigationMenuTrigger className="text-canvas-muted hover:text-canvas-foreground data-[state=open]:text-canvas-foreground rounded-lg bg-transparent text-[15px] font-medium tracking-[-0.02em] hover:bg-white/5 focus:bg-white/5 data-[state=open]:bg-white/5">
                         {link.label}
                       </NavigationMenuTrigger>
-                      <NavigationMenuContent className="border-canvas-hairline bg-canvas text-canvas-foreground border">
-                        <ul className="grid w-[460px] grid-cols-2 gap-1 p-3">
-                          {link.dropdownItems.map((item) => (
-                            <li key={item.title}>
-                              <NavigationMenuLink asChild>
-                                <Link
-                                  href={item.href}
-                                  className="flex flex-row items-start gap-3 rounded-lg p-3 leading-none no-underline outline-hidden transition-colors select-none hover:bg-white/5 focus:bg-white/5"
-                                >
-                                  <span className="bg-canvas-accent/10 text-canvas-accent flex size-8 shrink-0 items-center justify-center rounded-md">
-                                    <item.icon className="size-4" />
-                                  </span>
-                                  <div className="space-y-1">
-                                    <div className="text-canvas-foreground text-sm leading-none font-semibold">
-                                      {item.title}
-                                    </div>
-                                    <p className="text-canvas-muted line-clamp-2 text-sm leading-snug">
-                                      {item.description}
-                                    </p>
-                                  </div>
-                                </Link>
-                              </NavigationMenuLink>
-                            </li>
-                          ))}
-                        </ul>
+                      {/* Centred on the menu, not the trigger, and sized in px:
+                          the pill animates its own width on scroll, so a
+                          percentage-width panel would shrink along with it. */}
+                      <NavigationMenuContent className="left-1/2 mt-3 w-[680px] -translate-x-1/2">
+                        <div className="border-canvas-hairline rounded-[20px] border bg-[#0a0c10]/85 p-8 shadow-[0_32px_80px_-24px_rgba(0,0,0,0.9)] backdrop-blur-2xl">
+                          <p className="text-canvas-muted-2 mb-6 text-[11px] font-medium tracking-[0.14em] uppercase">
+                            {link.eyebrow}
+                          </p>
+                          {/* Column-major so each column is a coherent group,
+                              rather than the two alternating down the rows. */}
+                          <ul
+                            className="grid grid-flow-col gap-x-12 gap-y-1"
+                            style={{
+                              gridTemplateRows: `repeat(${Math.ceil(link.dropdownItems.length / 2)}, minmax(0, auto))`,
+                            }}
+                          >
+                            {link.dropdownItems.map((item) => (
+                              <li key={item.title}>
+                                <NavigationMenuLink asChild>
+                                  <Link
+                                    href={item.href}
+                                    className="group/item -mx-3 flex items-start gap-3.5 rounded-xl px-3 py-3 no-underline outline-hidden select-none"
+                                  >
+                                    <item.icon className="mt-0.5 size-[18px] shrink-0 text-white/30 transition-colors duration-200 group-hover/item:text-white/70" />
+                                    <span className="block">
+                                      <span className="block text-[15px] font-medium tracking-[-0.01em] text-white/85 transition-colors duration-200 group-hover/item:text-white">
+                                        {item.title}
+                                      </span>
+                                      <span className="text-canvas-muted-2 mt-1 block text-[13px] leading-snug transition-colors duration-200 group-hover/item:text-white/55">
+                                        {item.description}
+                                      </span>
+                                    </span>
+                                  </Link>
+                                </NavigationMenuLink>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       </NavigationMenuContent>
                     </NavigationMenuItem>
                   ) : (
@@ -273,18 +352,16 @@ const Navbar = () => {
                     <Link
                       key={item.title}
                       href={item.href}
-                      className="flex items-start gap-3 rounded-md p-2 hover:bg-white/5"
+                      className="flex items-start gap-3.5 rounded-xl p-2"
                       onClick={() => {
                         setIsMenuOpen(false);
                         setOpenDropdown(null);
                       }}
                     >
-                      <span className="bg-canvas-accent/10 text-canvas-accent flex size-8 shrink-0 items-center justify-center rounded-md">
-                        <item.icon className="size-4" />
-                      </span>
+                      <item.icon className="mt-0.5 size-[18px] shrink-0 text-white/30" />
                       <div>
-                        <div className="text-canvas-foreground font-medium">{item.title}</div>
-                        <p className="text-canvas-muted text-sm">{item.description}</p>
+                        <div className="font-medium text-white/85">{item.title}</div>
+                        <p className="text-canvas-muted-2 mt-1 text-sm leading-snug">{item.description}</p>
                       </div>
                     </Link>
                   ))}

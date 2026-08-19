@@ -91,7 +91,10 @@ export function PipelineTabs() {
                     initial={false}
                     animate={{ opacity: active === i ? 1 : 0 }}
                     transition={{ duration: reduced ? 0 : 0.5 }}
-                    className={cn("absolute inset-0 flex max-w-[513px] flex-col gap-6", active !== i && "pointer-events-none")}
+                    className={cn(
+                      "absolute inset-0 flex max-w-[513px] flex-col gap-6",
+                      active !== i && "pointer-events-none",
+                    )}
                   >
                     <h3 className="heading-card text-left text-white">{stage.title}</h3>
                     <p className="text-lg tracking-[-0.04em] text-[#afafaf]">{stage.body}</p>
@@ -195,30 +198,6 @@ export function PipelineTabs() {
 
 const PANEL_BG = "#0a0d13";
 
-type Person = { initials: string; tint: string };
-
-const PEOPLE: Record<string, Person> = {
-  ada: { initials: "AO", tint: "#8a6f52" },
-  jah: { initials: "JC", tint: "#4d5f80" },
-  bot: { initials: "TB", tint: "#5a6340" },
-};
-
-function Avatars({ people }: { people: Person[] }) {
-  return (
-    <span className="flex -space-x-1.5">
-      {people.map((person) => (
-        <span
-          key={person.initials}
-          className="flex size-[18px] items-center justify-center rounded-full text-[8px] font-semibold text-white/90 ring-[1.5px] ring-[#0a0d13]"
-          style={{ background: person.tint }}
-        >
-          {person.initials}
-        </span>
-      ))}
-    </span>
-  );
-}
-
 /** Section chrome: title or file path on the left, status pill on the right. */
 function Panel({
   title,
@@ -258,7 +237,8 @@ function Panel({
   );
 }
 
-const rowBase = "flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5";
+const rowBase =
+  "flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5";
 
 /** The first two stages use the Thally-labeled diagrams. */
 const STAGE_DIAGRAMS: Record<number, string> = {
@@ -270,13 +250,7 @@ function StageVisual({ index }: { index: number }) {
   const diagram = STAGE_DIAGRAMS[index];
   if (diagram) {
     return (
-      <img
-        src={diagram}
-        alt=""
-        aria-hidden
-        className="w-full max-w-[520px]"
-        loading={index === 0 ? "eager" : "lazy"}
-      />
+      <img src={diagram} alt="" aria-hidden className="w-full max-w-[520px]" loading={index === 0 ? "eager" : "lazy"} />
     );
   }
 
@@ -321,8 +295,7 @@ function StageVisual({ index }: { index: number }) {
       >
         <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5">
           <p className="truncate font-mono text-xs text-white/85">feat: per-project webhook secrets</p>
-          <div className="mt-2 flex items-center justify-between">
-            <Avatars people={[PEOPLE.jah, PEOPLE.ada]} />
+          <div className="mt-2 flex items-center justify-end">
             <span className="font-mono text-[10px] text-white/40">
               12 files · <span className="text-canvas-accent">+318</span> <span className="text-[#c48b95]">-74</span> ·
               merged 14m ago
@@ -357,7 +330,9 @@ function StageVisual({ index }: { index: number }) {
               <span
                 className={cn(
                   "rounded-full px-2 py-0.5 text-[10px] font-medium",
-                  verdict === "update needed" ? "bg-canvas-accent/15 text-canvas-accent" : "bg-white/[0.07] text-white/45",
+                  verdict === "update needed"
+                    ? "bg-canvas-accent/15 text-canvas-accent"
+                    : "bg-white/[0.07] text-white/45",
                 )}
               >
                 {verdict}
@@ -380,7 +355,6 @@ function StageVisual({ index }: { index: number }) {
         <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5">
           <p className="truncate text-xs font-medium text-white/85">docs: document per-project webhook secrets</p>
           <div className="mt-2 flex items-center gap-2">
-            <Avatars people={[PEOPLE.bot]} />
             <span className="text-[10px] text-white/40">
               thally-bot opened 3m ago · 2 files changed · label origin: track
             </span>
@@ -404,14 +378,9 @@ function StageVisual({ index }: { index: number }) {
   }
 
   return (
-    <Panel
-      title="acme/docs #292"
-      icon={<Structured className="text-canvas-accent size-4" />}
-      status="awaiting review"
-    >
+    <Panel title="acme/docs #292" icon={<Structured className="text-canvas-accent size-4" />} status="awaiting review">
       <div className="flex items-center gap-2 rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5">
-        <Avatars people={[PEOPLE.ada, PEOPLE.jah]} />
-        <span className="truncate text-[11px] text-white/60">Review requested from Ada O. and Jahce C.</span>
+        <span className="truncate text-[11px] text-white/60">Review requested from two maintainers</span>
         <span className="ml-auto shrink-0 text-[10px] text-white/35">2m ago</span>
       </div>
       {(
@@ -439,10 +408,7 @@ function StageVisual({ index }: { index: number }) {
         <span className="rounded-lg border border-white/15 px-3.5 py-2 text-xs font-medium text-white/70">
           Request changes
         </span>
-        <span className="flex items-center gap-1.5 text-[10px] text-white/35 sm:ml-auto">
-          <Avatars people={[PEOPLE.ada]} />
-          reviewing
-        </span>
+        <span className="flex items-center gap-1.5 text-[10px] text-white/35 sm:ml-auto">awaiting review</span>
       </div>
       <p className="px-1 pt-1 text-[11px] text-white/40">Nothing publishes until a human approves it.</p>
     </Panel>

@@ -182,10 +182,6 @@ export function PricingCards({ headerTag = "h2" }: { headerTag?: "h1" | "h2" }) 
             </Reveal>
           ))}
         </div>
-
-        <p className="text-canvas-muted-2 mt-8 text-center text-sm">
-          Prices are in USD per workspace. Documentation readers are always free.
-        </p>
       </div>
     </section>
   );

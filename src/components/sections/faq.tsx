@@ -10,37 +10,37 @@ const homeQuestions = [
   {
     question: "What is Thally?",
     answer:
-      "Thally is a product knowledge synchronization pipeline. It connects product changes to customer-facing knowledge, identifies what needs to change, and prepares reviewable updates. Documentation is the first surface.",
+      "Thally keeps your documentation in step with your product. It watches the changes your team merges, works out which pages they affect, and opens the update as a pull request with the evidence attached. You review and merge, the same way you ship code.",
   },
   {
     question: "How is Thally different from other docs tools?",
     answer:
-      "Most docs tools are destinations where teams write and store knowledge. Thally adds the pipeline between the product and those destinations. It understands what changed, finds the affected documentation, and drafts only the updates that evidence supports.",
+      "Other docs tools give you somewhere to write. Thally does the work that keeps what you wrote true. It reads merged product changes, finds the pages they contradict, and drafts the fix alongside the diff that caused it. Your docs stop drifting between releases without anyone having to chase them.",
   },
   {
     question: "How do I migrate from Mintlify, Docusaurus, or GitBook?",
     answer:
-      "In Thally Cloud, provide your public docs URL to start a migration. To migrate locally, run the create-thally-docs CLI against a GitHub repository. Thally converts supported pages to MDX and rebuilds the navigation.",
+      "Give Thally Cloud your public docs URL, or run the create-thally-docs CLI against your repository. Thally converts your pages to MDX, rebuilds the navigation, and hands back a project you own. Nextra, VitePress, and Starlight migrate the same way.",
   },
   {
     question: "How does Thally keep my docs up to date?",
     answer:
-      "First publish or connect a Thally docs site. Then choose the product repositories Track should watch. When a relevant pull request merges, Track evaluates the change, identifies affected pages, and can draft an update for review. No change is a valid result, and Thally never merges by itself.",
+      "Publish or connect a docs site, then pick the product repositories Thally Track should watch. Every relevant merge gets read, mapped to the pages it affects, and turned into a reviewable documentation PR. Track tells you when nothing needs changing, and nothing reaches your readers without your approval.",
   },
   {
     question: "How does Thally check documentation quality?",
     answer:
-      "Every build receives a 0 to 100 quality score. Thally checks whether people and AI tools can find, read, and understand each page, then shows you what needs attention. You can prevent lower-quality changes from publishing and ask Thally to draft the fixes.",
+      "Every build gets a 0 to 100 agent readiness score for whether people and AI tools can find, read, and understand each page. Gate your CI on it to stop regressions at the pull request, and ask Thally to open the PR that fixes whatever it flagged.",
   },
   {
     question: "How can AI assistants read my docs?",
     answer:
-      "Every Thally page can return HTML, JSON, JSON-LD, or Markdown from the same source. AI assistants can search your docs, open pages, and follow your navigation without scraping the visual website.",
+      "Directly, with no scraping. Every deployed site ships a remote MCP server at /api/mcp, so assistants can search your docs, open pages, and follow your navigation as a tool. The same URLs also serve Markdown and JSON for anything that simply fetches.",
   },
   {
-    question: "Does Thally update every knowledge surface today?",
+    question: "What does Thally cover today?",
     answer:
-      "Not yet. Documentation is the first surface, including the guides, API references, examples, and release notes maintained in your docs repository. The product is designed to expand from that wedge into the wider knowledge ecosystem around your product.",
+      "Documentation, end to end: the guides, API references, examples, and release notes in your docs repository. That is where drift costs you the most, so it is where Thally goes deepest. The wider knowledge surfaces around your product are next on the same pipeline.",
   },
 ];
 
@@ -105,7 +105,7 @@ export const FAQ = ({ context = "home" }: { context?: "home" | "pricing" }) => {
             <p className="text-canvas-muted mt-5 text-lg">
               {context === "pricing"
                 ? "Find answers about plans, billing, hosting, cancellation, and Enterprise support."
-                : "Find answers about product change intelligence, documentation automation, migration, AI tools, and how Thally fits your stack."}
+                : "What Thally does, how it keeps your docs current, what migration takes, and how it fits the stack you already have."}
             </p>
           </Reveal>
         </div>

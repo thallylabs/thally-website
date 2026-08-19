@@ -198,6 +198,8 @@
  * A scope that restores the light theme's tokens inside the forced-dark
  * site, for sections that render on the daylight illustration.
  */
+/* The island rides on the darkened pastel scene rather than a white page,
+   so its muted text needs more weight than the light theme's default. */
 .light-island {
   --background: oklch(0.99 0.007 106);
   --foreground: oklch(0.235 0.017 138);
@@ -210,7 +212,7 @@
   --secondary: oklch(0.95 0.008 107);
   --secondary-foreground: oklch(0.3 0.015 138);
   --muted: oklch(0.95 0.008 107);
-  --muted-foreground: oklch(0.5 0.013 140);
+  --muted-foreground: oklch(0.34 0.016 140);
   --accent: oklch(0.955 0.009 138);
   --accent-foreground: oklch(0.28 0.015 138);
   --accent-2: oklch(0.55 0.14 292);
@@ -306,12 +308,7 @@
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    background: linear-gradient(
-      180deg,
-      rgba(0, 1, 4, 0.66) 0%,
-      rgba(0, 1, 4, 0.42) 45%,
-      rgba(0, 1, 4, 0.72) 100%
-    );
+    background: linear-gradient(180deg, rgba(0, 1, 4, 0.66) 0%, rgba(0, 1, 4, 0.42) 45%, rgba(0, 1, 4, 0.72) 100%);
   }
 
   .art-scrim > * {
@@ -486,14 +483,10 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     background:
-      linear-gradient(to right, var(--canvas) 40%, transparent) left center / 2.5rem 100%
-        no-repeat local,
-      linear-gradient(to left, var(--canvas) 40%, transparent) right center / 2.5rem 100% no-repeat
-        local,
-      linear-gradient(to right, rgba(255, 255, 255, 0.22), transparent) left center / 1rem 100%
-        no-repeat scroll,
-      linear-gradient(to left, rgba(255, 255, 255, 0.22), transparent) right center / 1rem 100%
-        no-repeat scroll;
+      linear-gradient(to right, var(--canvas) 40%, transparent) left center / 2.5rem 100% no-repeat local,
+      linear-gradient(to left, var(--canvas) 40%, transparent) right center / 2.5rem 100% no-repeat local,
+      linear-gradient(to right, rgba(255, 255, 255, 0.22), transparent) left center / 1rem 100% no-repeat scroll,
+      linear-gradient(to left, rgba(255, 255, 255, 0.22), transparent) right center / 1rem 100% no-repeat scroll;
   }
 
   .prose :where(table) :where(th, td) {

@@ -42,17 +42,19 @@ export function Daybreak() {
             aria-hidden
             className="absolute inset-0 h-full w-full object-cover"
           />
+          {/* The scene's sky blows out almost to white, which reads as a hole
+              in the page between two dark sections. Weight the scrim toward
+              the top so the sky settles without muddying the meadow the light
+              migration content sits on. */}
+          <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/42 via-black/24 to-black/15" />
         </motion.div>
-
       </div>
-
 
       {/* The original migration section on a light token island, kept
           transparent so it rides directly on the pinned pastel scene. */}
       <div className="light-island relative z-10">
         <Migrate />
       </div>
-
     </section>
   );
 }
