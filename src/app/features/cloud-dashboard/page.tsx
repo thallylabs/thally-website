@@ -82,12 +82,6 @@ const manageCells = [
   },
 ] as const;
 
-/** Reviewers shown on the queue header, initials on tinted circles. */
-const QUEUE_REVIEWERS = [
-  { initials: "AO", tint: "#8a6f52" },
-  { initials: "JC", tint: "#4d5f80" },
-] as const;
-
 /** The three drafts sitting in the review queue, with their evidence. */
 const DRAFT_QUEUE = [
   {
@@ -125,21 +119,8 @@ function DraftsQueueVisual() {
           <Track className="text-canvas-accent size-5" />
           <span className="text-sm text-white/75">Awaiting your review</span>
         </span>
-        <span className="flex items-center gap-2.5">
-          <span className="flex -space-x-1.5">
-            {QUEUE_REVIEWERS.map((person) => (
-              <span
-                key={person.initials}
-                className="flex size-[18px] items-center justify-center rounded-full text-[8px] font-semibold text-white/90 ring-[1.5px] ring-[#0b0d12]"
-                style={{ background: person.tint }}
-              >
-                {person.initials}
-              </span>
-            ))}
-          </span>
-          <span className="rounded-full border border-white/12 px-2 py-0.5 text-[11px] font-medium text-white/60">
-            3 drafts
-          </span>
+        <span className="rounded-full border border-white/12 px-2 py-0.5 text-[11px] font-medium text-white/60">
+          3 drafts
         </span>
       </div>
 

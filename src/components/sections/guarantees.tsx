@@ -93,15 +93,18 @@ export function Guarantees() {
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: "url(/template/ready-made-bg.webp)" }}
         />
-        <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-white/60 to-white/10" />
+        {/* The band used to sit under a white wash, which read as a hole in a
+            dark page. Scrim it down instead, weighted toward the bright sky at
+            the top; the cream cards carry their own light. */}
+        <div aria-hidden className="absolute inset-0 bg-gradient-to-b from-black/62 via-black/50 to-black/44" />
 
         <div className="marketing-section-pad relative">
           <div className="mx-auto max-w-3xl px-5 text-center">
-            <SplitReveal as="h2" mode="chars" className="heading-section text-canvas-cream-foreground">
+            <SplitReveal as="h2" mode="chars" className="heading-section text-white">
               Proof over promises
             </SplitReveal>
             <Reveal delay={0.15} distance={24}>
-              <p className="text-canvas-cream-foreground/75 mx-auto mt-5 max-w-xl text-lg">
+              <p className="mx-auto mt-5 max-w-xl text-lg text-white/85">
                 Pay for the service. Keep the source. Thally Cloud never takes ownership of your content, repository,
                 engine, or domain.
               </p>

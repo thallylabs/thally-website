@@ -140,22 +140,10 @@ const TRIGGERS = [
   { label: "Scheduled sweep", detail: "Weekly drift check across every page", state: "off" },
 ] as const;
 
-function BotAvatar() {
-  return (
-    <span className="flex size-[18px] shrink-0 items-center justify-center rounded-full bg-[#5a6340] text-[8px] font-semibold text-white/90 ring-[1.5px] ring-[#0a0d13]">
-      TB
-    </span>
-  );
-}
-
 function StepVisual({ index }: { index: number }) {
   if (index === 0) {
     return (
-      <Panel
-        title="jahce · Thally GitHub App"
-        icon={<SiGithub className="size-4 text-white/45" />}
-        status="read-only"
-      >
+      <Panel title="jahce · Thally GitHub App" icon={<SiGithub className="size-4 text-white/45" />} status="read-only">
         {REPOS.map((repo) => (
           <div
             key={repo.name}
@@ -227,7 +215,6 @@ function StepVisual({ index }: { index: number }) {
       <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5">
         <p className="truncate text-[13px] font-medium text-white/85">docs: document the new request timeout</p>
         <div className="mt-2 flex items-center gap-2">
-          <BotAvatar />
           <span className="text-[10px] text-white/40">
             thally-bot opened 6m ago · 1 file changed · label origin: track
           </span>
