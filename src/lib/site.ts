@@ -27,6 +27,11 @@ export const DESTINATIONS = {
   app: "https://app.thally.io",
   docs: "https://docs.thally.io",
   docsQuickstart: "https://docs.thally.io/quickstart",
+  docsChangelog: "https://docs.thally.io/changelog",
+  // The docs site has no /guides or /components index, so these point at the
+  // first page of each section.
+  docsGuides: "https://docs.thally.io/guides/getting-started",
+  docsComponents: "https://docs.thally.io/components/badge",
   email: "mailto:team@thally.io",
   login: "https://app.thally.io/login",
   sales: "mailto:team@thally.io?subject=Thally%20Enterprise",
