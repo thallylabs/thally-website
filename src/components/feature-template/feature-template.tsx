@@ -605,8 +605,15 @@ export function QuotePanels({
             backgroundPosition: "50%",
           }}
         >
-          <p className="subtitle-display linear-text">&ldquo;{quote}&rdquo;</p>
-          {quoteAttribution && <p className="text-sm text-white/70">{quoteAttribution}</p>}
+          {/* The caption is a kicker, not a speaker: it belongs above the
+              claim, where it frames what follows instead of trailing it like
+              an attribution nobody gave. */}
+          <div className="flex flex-col gap-4">
+            {quoteAttribution && (
+              <p className="text-[13px] font-medium tracking-[0.14em] text-white/40 uppercase">{quoteAttribution}</p>
+            )}
+            <p className="subtitle-display linear-text">{quote}</p>
+          </div>
         </Reveal>
 
         <Reveal
@@ -618,8 +625,10 @@ export function QuotePanels({
             backgroundPosition: "50%",
           }}
         >
-          <p className="subtitle-display max-w-3xl text-white">&ldquo;{wideQuote}&rdquo;</p>
-          {wideAttribution && <p className="text-sm text-white/60">{wideAttribution}</p>}
+          {wideAttribution && (
+            <p className="text-[13px] font-medium tracking-[0.14em] text-white/40 uppercase">{wideAttribution}</p>
+          )}
+          <p className="subtitle-display max-w-3xl text-white">{wideQuote}</p>
         </Reveal>
       </div>
     </section>

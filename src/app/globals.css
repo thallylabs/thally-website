@@ -316,9 +316,10 @@
     z-index: 1;
   }
 
-  /* Template .linear-text: white-to-blue gradient display type. */
+  /* Display type fading from white into the accent. Reads from the token, so
+     the gradient follows the palette instead of carrying a one-off colour. */
   .linear-text {
-    background-image: linear-gradient(#fff 46%, #8bc0ff);
+    background-image: linear-gradient(#fff 46%, var(--canvas-accent));
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

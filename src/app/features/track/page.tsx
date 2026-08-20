@@ -341,9 +341,9 @@ export default function TrackFeaturePage() {
             <p className="absolute bottom-6 left-8 text-lg font-medium text-white">Track inside Thally Cloud</p>
           </div>
         }
-        quote="A no-change result is valid. Thally never pushes to main"
+        quote="A no-change result is valid. Thally never pushes to main."
         quoteAttribution="How Track behaves, by design"
-        wideQuote="A repository is evidence about implementation; documentation is evidence about communicated behaviour. Track surfaces candidates backed by specific diffs, and every draft is reviewed by a human before it ships"
+        wideQuote="A repository is evidence about implementation; documentation is evidence about communicated behaviour. Track surfaces candidates backed by specific diffs, and every draft is reviewed by a human before it ships."
         wideAttribution="What Track won't do: claim certainty"
       />
 
