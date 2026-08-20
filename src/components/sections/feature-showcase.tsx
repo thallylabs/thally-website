@@ -1,15 +1,12 @@
 "use client";
 
+import type { ReactNode } from "react";
+
 import {
   ArrowRight,
   ArrowUpRight,
-  Check,
   ChevronDown,
   Copy,
-  Data,
-  Docs,
-  Globe,
-  Json,
   Leaf,
   Mcp,
   Overview,
@@ -18,7 +15,6 @@ import {
   Readiness,
   RefreshCw,
   Search,
-  Structured,
 } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
@@ -47,9 +43,9 @@ const SMALL_FEATURES = [
 ];
 
 /**
- * Template "feature-section": bordered section header, two large cards
- * (1.2fr / 1fr) on the template's bitmap art with gradient captions,
- * then a hairline 2x2 grid of small features.
+ * The showcase below the hero: a bordered section header, two equal cards
+ * carrying a real product surface each, then a hairline 2x2 grid of the
+ * smaller claims.
  */
 export function FeatureShowcase() {
   return (
@@ -62,71 +58,49 @@ export function FeatureShowcase() {
           </SplitReveal>
           <Reveal delay={0.15} distance={24}>
             <p className="text-canvas-muted mx-auto mt-6 max-w-xl text-lg">
-              Write once in MDX. Thally projects HTML, JSON, Markdown, and machine formats from the same content
-              source.
+              Your team maintains one set of pages. Everyone who reads them, person or agent, gets the version they can
+              actually use.
             </p>
           </Reveal>
         </div>
       </div>
 
       <div className="mx-auto w-full max-w-[1480px] px-5 pb-[120px]">
-        <div className="flex flex-col gap-2.5">
-          {/* Two large showcase cards on the template bitmap art */}
-          <div className="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
-            <Reveal
-              className="art-scrim relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:min-h-[640px] sm:p-[60px]"
-              style={{
-                borderColor: "rgba(234,236,237,0.23)",
-                backgroundImage: "url(/template/card-bg-1.webp)",
-                backgroundSize: "100% 100%",
-                backgroundRepeat: "no-repeat",
-              }}
+        <div className="flex flex-col gap-4">
+          <div className="grid gap-4 lg:grid-cols-2">
+            <ShowcaseCard
+              caption="Write once."
+              accent="Thally creates every format."
+              glow="radial-gradient(70% 55% at 18% 8%, color-mix(in oklab, var(--chart-2) 16%, transparent), transparent 70%)"
             >
               <FormatProjection />
-              <p className="subtitle-display mx-auto mt-10 max-w-[500px] text-center text-white">
-                Write once.
-                <br />
-                <span className="linear-text">Thally creates every format.</span>
-              </p>
-            </Reveal>
+            </ShowcaseCard>
 
-            <Reveal
+            <ShowcaseCard
               delay={0.3}
-              className="art-scrim relative flex min-h-[520px] flex-col justify-between overflow-hidden rounded-[32px] border-[0.5px] p-8 sm:min-h-[640px] sm:p-[60px]"
-              style={{
-                borderColor: "rgba(234,236,237,0.23)",
-                backgroundImage: "url(/template/text-container-1.webp)",
-                backgroundSize: "100% 100%",
-                backgroundRepeat: "no-repeat",
-              }}
+              caption="Answers with receipts."
+              accent="Grounded chat cites your docs."
+              glow="radial-gradient(70% 55% at 82% 8%, color-mix(in oklab, var(--chart-3) 16%, transparent), transparent 70%)"
             >
               <AnswerPreview />
-              <p className="subtitle-display mx-auto mt-10 max-w-[420px] text-center text-white">
-                Answers with receipts.
-                <br />
-                <span className="linear-text">Grounded chat cites your docs.</span>
-              </p>
-            </Reveal>
+            </ShowcaseCard>
           </div>
 
-          {/* 2x2 hairline grid, template .feature-small-card-wrap */}
           <Reveal delay={0.2} distance={40}>
-            <div className="border-canvas-card-stroke grid overflow-hidden rounded-[32px] border sm:grid-cols-2">
+            <div className="grid overflow-hidden rounded-[20px] border border-white/[0.09] sm:grid-cols-2">
               {SMALL_FEATURES.map((feature, i) => (
                 <div
                   key={feature.title}
                   className={[
-                    "border-canvas-card-stroke flex flex-col items-center gap-5 px-8 py-11 text-center",
-                    i % 2 === 0 ? "sm:border-r" : "",
-                    i < 2 ? "border-b" : "",
+                    "flex flex-col gap-4 p-8 sm:p-10",
+                    i % 2 === 0 ? "sm:border-r sm:border-white/[0.09]" : "",
+                    i < 2 ? "border-b border-white/[0.09]" : "",
                   ].join(" ")}
                 >
-                  <feature.icon className="text-canvas-foreground size-7" />
-                  <div className="flex max-w-[305px] flex-col gap-1.5">
-                    <h3 className="text-canvas-foreground text-xl tracking-[-0.04em]">{feature.title}</h3>
-                    <p className="text-canvas-muted text-[15px] leading-relaxed tracking-[-0.03em]">
-                      {feature.description}
-                    </p>
+                  <feature.icon className="text-canvas-accent size-6" />
+                  <div className="flex max-w-[38ch] flex-col gap-2">
+                    <h3 className="text-[17px] font-medium tracking-[-0.02em] text-white">{feature.title}</h3>
+                    <p className="text-[15px] leading-relaxed text-white/45">{feature.description}</p>
                   </div>
                 </div>
               ))}
@@ -138,7 +112,44 @@ export function FeatureShowcase() {
   );
 }
 
-
+/**
+ * A showcase card: the product surface itself, then the claim it supports.
+ *
+ * The two cards used to stretch a bitmap to fill whatever aspect they landed
+ * at, so the same artwork distorted differently in each one, and the caption
+ * floated centre under a left-aligned mock with a dead gap between them. The
+ * mock is the interesting part, so it now sits on the surface used across the
+ * nav menu and the feature pages, over a glow built from design tokens, which
+ * rescales at any aspect instead of skewing.
+ */
+function ShowcaseCard({
+  caption,
+  accent,
+  glow,
+  delay,
+  children,
+}: {
+  caption: string;
+  /** Second line, carrying the gradient. */
+  accent: string;
+  glow: string;
+  delay?: number;
+  children: ReactNode;
+}) {
+  return (
+    <Reveal
+      delay={delay}
+      className="relative isolate flex flex-col justify-between gap-12 overflow-hidden rounded-[20px] border border-white/[0.09] bg-[#0a0c10]/85 p-8 shadow-[0_32px_80px_-24px_rgba(0,0,0,0.9)] backdrop-blur-2xl sm:p-12"
+    >
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10" style={{ background: glow }} />
+      {children}
+      <p className="subtitle-display max-w-[19ch] text-white">
+        {caption}
+        <span className="linear-text block">{accent}</span>
+      </p>
+    </Reveal>
+  );
+}
 
 /** Syntax-tinted line of the MDX source pane. */
 const SOURCE_LINES: Array<Array<[string, string]>> = [
@@ -166,70 +177,63 @@ const SOURCE_LINES: Array<Array<[string, string]>> = [
   ],
 ];
 
-const ARTIFACTS: Array<{ icon: typeof Globe; format: string; path: string; meta: string }> = [
-  { icon: Globe, format: "HTML", path: "/guides/quickstart", meta: "18.4 KB" },
-  { icon: Docs, format: "Markdown", path: "/guides/quickstart.md", meta: "6.2 KB" },
-  { icon: Json, format: "JSON", path: "/guides/quickstart.json", meta: "9.1 KB" },
-  { icon: Structured, format: "llms.txt", path: "/llms.txt", meta: "3.4 KB" },
-  { icon: Data, format: "RSS", path: "/rss.xml", meta: "2.1 KB" },
-  { icon: Mcp, format: "MCP", path: "/api/mcp", meta: "live" },
+const ARTIFACTS: Array<{ format: string; path: string }> = [
+  { format: "HTML", path: "/guides/quickstart" },
+  { format: "Markdown", path: "/guides/quickstart.md" },
+  { format: "JSON", path: "/guides/quickstart.json" },
+  { format: "llms.txt", path: "/llms.txt" },
+  { format: "RSS", path: "/rss.xml" },
+  { format: "MCP", path: "/api/mcp" },
 ];
 
 /** Card visual: one MDX source projecting into output formats. */
 function FormatProjection() {
   return (
     <div className="mx-auto w-full max-w-lg">
-      {/* Editor pane */}
-      <div className="overflow-hidden rounded-2xl border border-white/12 bg-black/45">
-        <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1 border-b border-white/[0.08] px-4 py-2.5">
-          <span className="flex min-w-0 items-center gap-2 font-mono text-[13px] text-white/75">
-            <Structured className="size-4 shrink-0 text-white/45" />
-            <span className="truncate">guides/quickstart.mdx</span>
-            <span className="size-1.5 shrink-0 rounded-full bg-[#c2a068]" />
-          </span>
-          <span className="shrink-0 rounded-full bg-[#c2a068]/15 px-2 py-0.5 text-[10px] font-medium text-[#dcc08e]">
-            modified
-          </span>
-        </div>
-        <div className="px-4 py-3 font-mono text-[11px] leading-[1.9]">
-          {SOURCE_LINES.map((line, i) => (
-            <p key={i} className="flex gap-3">
-              <span className="w-4 shrink-0 text-right text-white/20 tabular-nums">{i + 1}</span>
-              <span className="truncate">
-                {line.map(([text, tone], j) => (
-                  <span key={j} className={tone}>
-                    {text}
-                  </span>
-                ))}
-              </span>
-            </p>
-          ))}
+      {/* Editor window. The bezel around true black is what separates a real
+          window from a code block with a border drawn on it. */}
+      <div className="rounded-[1.25rem] border border-white/[0.09] bg-white/[0.04] p-1.5">
+        <div className="overflow-hidden rounded-[calc(1.25rem-6px)] border border-white/10 bg-black">
+          <div className="flex items-center gap-1.5 border-b border-white/[0.07] bg-white/[0.03] px-4 py-3">
+            <span className="size-2.5 rounded-full bg-white/15" />
+            <span className="size-2.5 rounded-full bg-white/15" />
+            <span className="size-2.5 rounded-full bg-white/15" />
+            <span className="ml-2 truncate font-mono text-[11px] text-white/50">guides/quickstart.mdx</span>
+          </div>
+          <div className="space-y-1.5 p-5 font-mono text-[12px] leading-relaxed sm:text-[13px]">
+            {SOURCE_LINES.map((line, i) => (
+              <p key={i} className="flex gap-4">
+                <span className="w-3 shrink-0 text-right text-white/20 tabular-nums select-none">{i + 1}</span>
+                <span className="truncate">
+                  {line.map(([text, tone], j) => (
+                    <span key={j} className={tone}>
+                      {text}
+                    </span>
+                  ))}
+                </span>
+              </p>
+            ))}
+          </div>
         </div>
       </div>
 
-      <div aria-hidden className="mx-auto h-7 w-px bg-gradient-to-b from-white/35 to-transparent" />
+      <div aria-hidden className="mx-auto h-8 w-px bg-gradient-to-b from-white/25 to-transparent" />
 
-      {/* Generated artifacts */}
-      <div className="rounded-2xl border border-white/12 bg-black/45 p-3">
-        <div className="flex items-center justify-between px-1 pb-2.5 text-[11px]">
-          <span className="text-white/50">Generated artifacts</span>
-          <span className="flex items-center gap-1.5 text-white/35 tabular-nums">
-            <Check className="size-3 text-[#a9b578]" />
-            6 of 6 · 240 ms
-          </span>
+      {/* Two columns, three rows: six full-width rows stretched the card into a
+          proportion the mock above it could not carry. */}
+      <div className="px-1">
+        <div className="flex items-center justify-between border-b border-white/[0.09] pb-2.5 text-[12px]">
+          <span className="text-white/50">Generated</span>
+          <span className="text-white/35 tabular-nums">6 formats · 240 ms</span>
         </div>
-        <div className="grid gap-1.5 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-x-6 sm:grid-cols-2">
           {ARTIFACTS.map((artifact) => (
             <div
               key={artifact.format}
-              className="flex items-center gap-2 rounded-lg border border-white/[0.06] bg-white/[0.03] px-2.5 py-2"
+              className="flex items-baseline justify-between gap-3 border-b border-white/[0.06] py-2.5"
             >
-              <artifact.icon className="size-3.5 shrink-0 text-white/40" />
-              <span className="min-w-0 flex-1">
-                <span className="block text-[11px] font-medium text-white/80">{artifact.format}</span>
-                <span className="block truncate font-mono text-[10px] text-white/40">{artifact.path}</span>
-              </span>
-              <span className="shrink-0 font-mono text-[10px] text-white/45 tabular-nums">{artifact.meta}</span>
+              <span className="shrink-0 text-[13px] text-white/85">{artifact.format}</span>
+              <span className="truncate font-mono text-[11px] text-white/35">{artifact.path}</span>
             </div>
           ))}
         </div>
@@ -274,9 +278,9 @@ function AnswerPreview() {
 
         {/* Assistant turn: plain text, no bubble */}
         <p className="mt-3 text-[13px] leading-[1.7] text-white/85">
-          Send a POST request to <code className="font-mono text-xs text-[#a9b578]">/v1/tokens/rotate</code> with
-          your current token. The previous token stays valid for <strong className="font-semibold text-white">60
-          seconds</strong> so in-flight requests keep working.
+          Send a POST request to <code className="font-mono text-xs text-[#a9b578]">/v1/tokens/rotate</code> with your
+          current token. The previous token stays valid for{" "}
+          <strong className="font-semibold text-white">60 seconds</strong> so in-flight requests keep working.
         </p>
 
         {/* Source chip with favicon */}
@@ -294,10 +298,6 @@ function AnswerPreview() {
           <ArrowUpRight className="size-3.5" />
         </div>
       </div>
-
-      <p className="px-4 pb-2.5 text-center text-[11px] text-white/30">
-        Every answer cites your docs. Thally never guesses.
-      </p>
 
       {/* Composer */}
       <div className="px-3 pb-3">

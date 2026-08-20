@@ -312,9 +312,9 @@ export default function ContentGraphFeaturePage() {
       <QuotePanels
         title="Author once. Let the graph do the rest."
         media={<KnowledgeFlowGraph className="h-full w-full" />}
-        quote="One MDX source is the truth; every format is derived, never duplicated. Fix a fact once and the graph propagates it to every connected surface"
+        quote="One MDX source is the truth; every format is derived, never duplicated. Fix a fact once and the graph propagates it to every connected surface."
         quoteAttribution="Write once, or maintain forever"
-        wideQuote="The graph is not another place to store knowledge; it is the pipeline that keeps every surface synchronized as your product evolves, so machines and humans always read the same thing"
+        wideQuote="The graph is not another place to store knowledge; it is the pipeline that keeps every surface synchronized as your product evolves, so machines and humans always read the same thing."
         wideAttribution="The product is the source of truth"
       />
 
