@@ -11,7 +11,7 @@ import { SITE_URL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Thally Pricing: Open Source and Cloud Plans",
   description:
-    "Launch one managed documentation site per workspace for free, self-host the MIT-licensed engine, or upgrade to Thally Cloud for unlimited managed sites and 10,000 AI credits.",
+    "Create one managed documentation site with previews and analytics for free, self-host the MIT-licensed engine, or upgrade for automation, scale, and team controls.",
   alternates: {
     canonical: "/pricing",
   },
@@ -30,7 +30,7 @@ const pricingJsonLd = {
   operatingSystem: "Web",
   license: "https://opensource.org/license/mit",
   description:
-    "Product knowledge synchronization pipeline with one managed documentation site per workspace for free, a free MIT-licensed self-hosting option, paid Thally Cloud services, and custom Enterprise plans.",
+    "Product knowledge synchronization pipeline with one managed documentation site, pull-request previews, and analytics for free, plus paid automation, scale, and team controls.",
   publisher: { "@id": `${SITE_URL}/#organization` },
   mainEntityOfPage: `${SITE_URL}/pricing`,
   offers: {
@@ -46,7 +46,7 @@ const pricingJsonLd = {
         price: "0",
         priceCurrency: "USD",
         description:
-          "Includes one managed documentation site per workspace, free hosting, a custom domain, agent-readiness checks, unlimited pages and readers, documentation search, structured content for AI assistants, and review-gated docs agent runs using your own AI provider. The MIT-licensed engine can also be self-hosted for free.",
+          "Includes one managed documentation site per workspace, pull-request previews, documentation analytics, unlimited pages and readers, documentation search, and HTML, Markdown, JSON, and JSON-LD output. The MIT-licensed engine can also be self-hosted for free.",
       },
       {
         "@type": "Offer",
@@ -54,7 +54,7 @@ const pricingJsonLd = {
         price: "60",
         priceCurrency: "USD",
         description:
-          "$60 per workspace each month. Includes unlimited managed sites, 10,000 AI credits per month, cited AI answers, Thally-drafted updates for relevant merged changes, quality checks, and analytics. 14-day trial.",
+          "$60 per workspace each month. Includes unlimited managed sites and connected product repositories, five team members, 10,000 AI credits per month, cited AI answers, Thally Track, quality checks, custom domains, and team roles. 14-day trial.",
       },
       {
         "@type": "Offer",
@@ -62,7 +62,7 @@ const pricingJsonLd = {
         price: "50",
         priceCurrency: "USD",
         description:
-          "$50 per workspace per month with an annual subscription, billed monthly. Includes unlimited managed sites, 10,000 AI credits per month, cited AI answers, Thally-drafted updates for relevant merged changes, quality checks, analytics, and a 14-day trial.",
+          "$50 per workspace per month with an annual subscription, billed monthly. Includes unlimited managed sites and connected product repositories, five team members, 10,000 AI credits per month, cited AI answers, Thally Track, quality checks, custom domains, team roles, and a 14-day trial.",
       },
     ],
   },

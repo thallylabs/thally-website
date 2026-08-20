@@ -64,6 +64,18 @@ const comparisonFeatures: FeatureSection[] = [
         cloud: "10,000",
         enterprise: "Custom",
       },
+      {
+        name: "Workspace members",
+        free: "Owner only",
+        cloud: "5 included",
+        enterprise: "5 included",
+      },
+      {
+        name: "Connected product repositories",
+        free: false,
+        cloud: "Unlimited",
+        enterprise: "Unlimited",
+      },
     ],
   },
   {
@@ -101,7 +113,7 @@ const comparisonFeatures: FeatureSection[] = [
       },
       {
         name: "Documentation quality checks",
-        free: true,
+        free: false,
         cloud: true,
         enterprise: true,
       },
@@ -112,7 +124,7 @@ const comparisonFeatures: FeatureSection[] = [
         enterprise: true,
       },
       {
-        name: "Thally-drafted updates",
+        name: "Thally Track",
         free: false,
         cloud: true,
         enterprise: true,
@@ -124,8 +136,20 @@ const comparisonFeatures: FeatureSection[] = [
         enterprise: true,
       },
       {
-        name: "Custom domains",
+        name: "Pull-request previews",
         free: true,
+        cloud: true,
+        enterprise: true,
+      },
+      {
+        name: "Documentation analytics",
+        free: true,
+        cloud: true,
+        enterprise: true,
+      },
+      {
+        name: "Custom domains",
+        free: false,
         cloud: true,
         enterprise: true,
       },
