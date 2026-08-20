@@ -28,18 +28,18 @@ interface PricingPlan {
 const plans: PricingPlan[] = [
   {
     name: "Free",
-    tagline: "Launch one managed documentation site",
+    tagline: "Publish one documentation site at no cost",
     monthlyPrice: "$0",
     annualPrice: "$0",
     priceUnit: "forever",
     monthlyBillingNote: "MIT licensed · no card required",
     annualBillingNote: "MIT licensed · no card required",
     features: [
-      "1 managed site per workspace",
-      "Free managed hosting and a custom domain",
-      "Agent-readiness checks",
+      "1 managed documentation site",
+      "Pull-request previews",
+      "Documentation analytics",
       "Unlimited pages and readers",
-      "Pages built for people and AI tools",
+      "HTML, Markdown, JSON, and JSON-LD",
       "Optional MIT-licensed self-hosting",
     ],
     cta: "Start free",
@@ -49,7 +49,7 @@ const plans: PricingPlan[] = [
   },
   {
     name: "Thally Cloud",
-    tagline: "Let Thally manage hosting and services",
+    tagline: "Add automation, scale, and team controls",
     monthlyPrice: "$60",
     annualPrice: "$50",
     priceUnit: "per workspace / month",
@@ -57,11 +57,12 @@ const plans: PricingPlan[] = [
     annualBillingNote: "$50 billed monthly on an annual subscription",
     features: [
       "Everything in Free",
-      "Unlimited managed sites per workspace",
+      "Unlimited managed documentation sites",
+      "5 team members included",
+      "Unlimited connected product repositories",
       "10,000 AI credits per month",
-      "AI answers with links to the source",
-      "Thally-drafted updates for relevant merged changes",
-      "Documentation analytics and quality checks",
+      "AI answers and Thally Track",
+      "Custom domains and team roles",
     ],
     cta: "Start 14-day trial",
     href: DESTINATIONS.signup,
@@ -101,7 +102,7 @@ export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" 
         <SectionHeader
           eyebrow={headerTag === "h2" ? "Plans" : undefined}
           title="Start free. Add Thally Cloud when you need more."
-          description="Start with one managed site, hosting, a custom domain, and readiness checks for $0. Choose Thally Cloud for unlimited managed sites, 10,000 AI credits, cited answers, drafted updates, analytics, and a shared workspace."
+          description="Start with one managed site, pull-request previews, and analytics for $0. Choose Thally Cloud for unlimited sites, five team members, AI answers, Track, custom domains, and team roles."
           align="center"
           layout="stack"
           as={headerTag}

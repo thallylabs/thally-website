@@ -56,7 +56,7 @@ const productJsonLd = {
       price: "0",
       priceCurrency: "USD",
       description:
-        "Includes one managed documentation site per workspace, free hosting, a custom domain, agent-readiness checks, and unlimited readers. The MIT-licensed engine can also be self-hosted for free, including commercial use.",
+        "Includes one managed documentation site per workspace, pull-request previews, documentation analytics, and unlimited pages and readers. The MIT-licensed engine can also be self-hosted for free, including commercial use.",
     },
     {
       "@type": "Offer",
@@ -64,7 +64,7 @@ const productJsonLd = {
       price: "60",
       priceCurrency: "USD",
       description:
-        "Thally Cloud is $60 per workspace per month with unlimited managed sites, 10,000 AI credits, and three team members included. Additional active members are $20 per month each. Adds AI answers, Thally-drafted updates, documentation analytics, and workspace roles.",
+        "Thally Cloud is $60 per workspace per month with unlimited managed sites and connected product repositories, 10,000 AI credits, and five team members included. Additional active members or pending invitations are $20 per month each. Adds AI answers, Thally Track, custom domains, and team roles.",
     },
     {
       "@type": "Offer",
@@ -72,7 +72,7 @@ const productJsonLd = {
       price: "50",
       priceCurrency: "USD",
       description:
-        "$50 per workspace per month with an annual subscription, billed monthly. Includes unlimited managed sites, 10,000 AI credits, and three team members. Each additional active member adds $20 to the monthly bill.",
+        "$50 per workspace per month with an annual subscription, billed monthly. Includes unlimited managed sites and connected product repositories, 10,000 AI credits, and five team members. Each additional active member or pending invitation adds $20 to the monthly bill.",
     },
   ],
   featureList: [

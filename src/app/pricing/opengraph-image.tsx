@@ -8,7 +8,7 @@ export const alt = "Thally pricing";
 export default function Image() {
   return renderOgImage({
     title: "Start managed for free, scale when ready",
-    description: "Launch one managed site for free, or self-host the MIT-licensed engine.",
+    description: "Launch one managed site with previews and analytics for free.",
     url: "thally.io/pricing",
   });
 }

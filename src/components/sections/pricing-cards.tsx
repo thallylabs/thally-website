@@ -24,7 +24,7 @@ type Tier = {
 const TIERS: Tier[] = [
   {
     name: "Free",
-    tagline: "Launch one managed documentation site",
+    tagline: "Publish one documentation site at no cost",
     monthly: "$0",
     annual: "$0",
     monthlyNote: "MIT licensed · no card required",
@@ -32,17 +32,17 @@ const TIERS: Tier[] = [
     priceSuffix: "forever",
     cta: { label: "Start free", href: DESTINATIONS.signup },
     features: [
-      "1 managed site per workspace",
-      "Free managed hosting and a custom domain",
-      "Agent-readiness checks",
+      "1 managed documentation site",
+      "Pull-request previews",
+      "Documentation analytics",
       "Unlimited pages and readers",
-      "Pages built for people and AI tools",
+      "HTML, Markdown, JSON, and JSON-LD",
       "Optional MIT-licensed self-hosting",
     ],
   },
   {
     name: "Thally Cloud",
-    tagline: "Let Thally manage hosting and services",
+    tagline: "Add automation, scale, and team controls",
     monthly: "$60",
     annual: "$50",
     monthlyNote: "$60 billed monthly",
@@ -52,11 +52,12 @@ const TIERS: Tier[] = [
     recommended: true,
     features: [
       "Everything in Free",
-      "Unlimited managed sites per workspace",
+      "Unlimited managed documentation sites",
+      "5 team members included",
+      "Unlimited connected product repositories",
       "10,000 AI credits per month",
-      "AI answers with links to the source",
-      "Thally-drafted updates for relevant merged changes",
-      "Documentation analytics and quality checks",
+      "AI answers and Thally Track",
+      "Custom domains and team roles",
     ],
   },
   {
@@ -90,9 +91,8 @@ export function PricingCards({ headerTag = "h2" }: { headerTag?: "h1" | "h2" }) 
           </SplitReveal>
           <Reveal delay={0.15} distance={24}>
             <p className="text-canvas-muted mx-auto mt-5 max-w-2xl text-lg">
-              Start with one managed site, hosting, a custom domain, and readiness checks for $0. Choose Thally Cloud
-              for unlimited managed sites, 10,000 AI credits, cited answers, drafted updates, analytics, and a shared
-              workspace.
+              Start with one managed site, pull-request previews, and analytics for $0. Choose Thally Cloud for
+              unlimited sites, five team members, AI answers, Track, custom domains, and team roles.
             </p>
           </Reveal>
 

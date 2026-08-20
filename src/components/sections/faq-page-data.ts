@@ -11,7 +11,7 @@ export const faqItems: FAQItem[] = [
     category: "Support",
     question: "Is there a free version?",
     answer:
-      "Yes. The Free plan includes one managed documentation site per workspace, free hosting, a custom domain, agent-readiness checks, unlimited pages and readers, all four output formats, and the MCP server. The engine is also open source under the MIT license and free to self-host forever. Thally Cloud adds unlimited managed sites, AI answers, and team controls.",
+      "Yes. The Free plan includes one managed documentation site per workspace, pull-request previews, documentation analytics, unlimited pages and readers, all four output formats, and the MCP server. The engine is also open source under the MIT license and free to self-host forever. Thally Cloud adds unlimited managed sites, AI answers, Track, custom domains, and team controls.",
   },
   {
     category: "Support",
@@ -35,7 +35,7 @@ export const faqItems: FAQItem[] = [
     category: "Account",
     question: "How do I invite teammates?",
     answer:
-      "Owners and Editors can invite teammates by email from the admin dashboard. Thally Cloud includes three team members in any role. Each additional active member adds $20 to the monthly bill.",
+      "Owners and Editors can invite teammates by email from the admin dashboard. Thally Cloud includes five team members in any role. Each additional active member or pending invitation adds $20 to the monthly bill.",
   },
   {
     category: "Account",
@@ -47,7 +47,7 @@ export const faqItems: FAQItem[] = [
     category: "Account",
     question: "How does billing work?",
     answer:
-      "Thally Cloud costs $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include 10,000 AI credits per month. Three team members are included, and each additional member adds $20 to the monthly bill.",
+      "Thally Cloud costs $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include 10,000 AI credits per month, unlimited connected product repositories, and five team members. Each additional active member or pending invitation adds $20 to the monthly bill.",
   },
   {
     category: "Account",

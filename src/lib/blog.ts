@@ -77,7 +77,7 @@ export const blogPosts: BlogPost[] = [
       {
         question: "Is Thally free to self-host?",
         answer:
-          "Yes. The whole engine is MIT licensed, including commercial use, with unlimited pages and readers. Paid plans add managed hosting, AI answers, documentation automation, and team features, never the core.",
+          "Yes. The whole engine is MIT licensed, including commercial use, with unlimited pages and readers. Free also includes one managed site with previews and analytics. Paid plans add unlimited sites, AI answers, Track, custom domains, and team features.",
       },
       {
         question: "Does Mintlify support MCP or llms.txt?",

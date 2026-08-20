@@ -48,12 +48,12 @@ const pricingQuestions = [
   {
     question: "Is there a free plan?",
     answer:
-      "Yes. The Free plan includes one managed documentation site per workspace, free hosting, a custom domain, agent-readiness checks, and unlimited pages and readers. You can also self-host the MIT-licensed engine for free, including commercial use.",
+      "Yes. The Free plan includes one managed documentation site per workspace, pull-request previews, documentation analytics, and unlimited pages and readers. You can also self-host the MIT-licensed engine for free, including commercial use.",
   },
   {
     question: "How much does Thally Cloud cost?",
     answer:
-      "Thally Cloud costs $60 per workspace each month, or $50 per workspace each month on an annual subscription billed monthly. Both options include 10,000 AI credits per month, three team members, and a 14-day trial.",
+      "Thally Cloud costs $60 per workspace each month, or $50 per workspace each month on an annual subscription billed monthly. Both options include unlimited managed sites and connected product repositories, 10,000 AI credits per month, five team members, and a 14-day trial.",
   },
   {
     question: "Are documentation readers billed?",
@@ -68,7 +68,7 @@ const pricingQuestions = [
   {
     question: "What happens if I cancel Thally Cloud?",
     answer:
-      "Your documentation repository and the MIT-licensed engine remain yours. Paid Cloud services stop at the end of the billing period. If Cloud hosts the site, deploy the repository elsewhere before managed hosting ends.",
+      "Your workspace returns to the Free plan at the end of the billing period. Its oldest managed site stays online with previews and analytics, while additional sites and paid-only services pause until you upgrade again. Your repository and the MIT-licensed engine remain yours.",
   },
   {
     question: "What is included with Enterprise?",
