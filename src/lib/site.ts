@@ -11,11 +11,9 @@ export const LEGAL_ENTITY_NAME = "Fairspleet LLC";
 
 export const SITE_TAGLINE = "Every Product Change. Every Knowledge Surface. Automatically in Sync.";
 
-export const SOCIAL_PREVIEW_TITLE =
-  `${SITE_NAME} - The Product Knowledge Layer for Software Teams`;
+export const SOCIAL_PREVIEW_TITLE = `${SITE_NAME} - The Product Knowledge Layer for Software Teams`;
 
-export const SOCIAL_PREVIEW_DESCRIPTION =
-  "Automatically keep every knowledge surface in sync with product changes";
+export const SOCIAL_PREVIEW_DESCRIPTION = "Automatically keep every knowledge surface in sync with product changes";
 
 export const SITE_TITLE = SOCIAL_PREVIEW_TITLE;
 
@@ -34,7 +32,10 @@ export const DESTINATIONS = {
   docsComponents: "https://docs.thally.io/components/badge",
   email: "mailto:team@thally.io",
   login: "https://app.thally.io/login",
-  sales: "mailto:team@thally.io?subject=Thally%20Enterprise",
+  /* Enterprise enquiries go through the contact form, which stores them, rather
+     than a mailto that depends on the reader having a mail client wired up. The
+     topic arrives preselected. */
+  sales: "/contact?topic=Enterprise+%26+SSO",
   signup: "https://app.thally.io/register",
 } as const;
 
