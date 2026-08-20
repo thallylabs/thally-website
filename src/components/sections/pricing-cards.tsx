@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 import { ArrowRight, Check } from "@/components/icons";
@@ -79,6 +80,35 @@ const TIERS: Tier[] = [
 ];
 
 /** Template pricing-section: dark night canvas, hairline cards. */
+/**
+ * Signup tiers leave for the app; Enterprise goes to the contact form, so the
+ * link has to be a real client navigation rather than a full page load.
+ */
+function TierCta({ tier }: { tier: Tier }) {
+  const className = cn(
+    "flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-lg font-medium transition-colors",
+    tier.recommended
+      ? "text-canvas bg-white hover:bg-white/90"
+      : "border-canvas-stroke text-canvas-foreground border hover:bg-white/5",
+  );
+  const label = (
+    <>
+      {tier.cta.label}
+      <ArrowRight className="size-4" />
+    </>
+  );
+
+  return tier.cta.href.startsWith("/") ? (
+    <Link href={tier.cta.href} className={className}>
+      {label}
+    </Link>
+  ) : (
+    <a href={tier.cta.href} className={className}>
+      {label}
+    </a>
+  );
+}
+
 export function PricingCards({ headerTag = "h2" }: { headerTag?: "h1" | "h2" }) {
   const [annual, setAnnual] = useState(true);
 
@@ -157,18 +187,7 @@ export function PricingCards({ headerTag = "h2" }: { headerTag?: "h1" | "h2" }) 
               <p className="text-canvas-muted-2 mt-2 px-5 text-xs">{annual ? tier.annualNote : tier.monthlyNote}</p>
 
               <div className="mt-7 px-2.5">
-                <a
-                  href={tier.cta.href}
-                  className={cn(
-                    "flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-lg font-medium transition-colors",
-                    tier.recommended
-                      ? "text-canvas bg-white hover:bg-white/90"
-                      : "border-canvas-stroke text-canvas-foreground border hover:bg-white/5",
-                  )}
-                >
-                  {tier.cta.label}
-                  <ArrowRight className="size-4" />
-                </a>
+                <TierCta tier={tier} />
               </div>
 
               <ul className="mt-8 space-y-2.5 px-5">

@@ -2,7 +2,7 @@
 
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 
 /** Same cloud origin the Track demo posts to. */
 const CLOUD_API = (process.env.NEXT_PUBLIC_THALLY_CLOUD_API_URL || "https://app.thally.io").replace(/\/$/, "");
@@ -62,6 +62,24 @@ type SubmitState = "idle" | "submitting" | "sent";
 export default function Contact() {
   const [state, setState] = useState<SubmitState>("idle");
   const [error, setError] = useState<string | null>(null);
+  const topicRef = useRef<HTMLSelectElement>(null);
+
+  /**
+   * Preselect the topic a link arrived with, so "Talk to sales" on the
+   * Enterprise plan lands on a form already set to the right subject.
+   *
+   * Written straight to the select rather than held in state: the page is
+   * statically exported, so a value derived from the query string would not
+   * match the server-rendered markup. Read from `window` rather than
+   * `useSearchParams`, which needs a Suspense boundary under `output: export`.
+   * Anything not in TOPICS is ignored.
+   */
+  useEffect(() => {
+    const requested = new URLSearchParams(window.location.search).get("topic");
+    if (topicRef.current && requested && TOPICS.includes(requested)) {
+      topicRef.current.value = requested;
+    }
+  }, []);
 
   /**
    * A failed submit keeps the form and everything typed into it. The whole
@@ -166,7 +184,8 @@ export default function Contact() {
                       id="contact-topic"
                       name="topic"
                       className={`${fieldClassName} [&>option]:bg-canvas cursor-pointer appearance-none pr-7 [&>option]:text-white`}
-                      defaultValue="Sales"
+                      ref={topicRef}
+                      defaultValue={TOPICS[0]}
                     >
                       {TOPICS.map((topic) => (
                         <option key={topic}>{topic}</option>
