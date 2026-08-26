@@ -593,20 +593,30 @@ html.theme-transition::view-transition-new(root) {
   --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Mount reveals settle from a visible offset instead of a clipped or faded
-   hide: the hero copy (the LCP) is fully painted at first paint and only
-   glides to rest, so no later, larger LCP candidate is ever emitted. The
-   keyframes leave `from` implicit (the phase rule supplies the offset), which
-   keeps them var()-free and compositor-eligible. */
+/* Mount reveals never clip their text. The hero copy is the LCP on most
+   routes, and an entrance that hides it (an overflow mask, or a fade from
+   zero) keeps re-emitting LCP candidates until it finishes, which is what put
+   the paint seconds behind first paint. Everything here animates from a state
+   the text is already painted in. */
 @keyframes settle-enter {
   to {
     transform: translateY(0);
   }
 }
 
+@keyframes mount-enter {
+  from {
+    opacity: 0.12;
+    transform: translateY(var(--rv-y, 50px));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .motion-reveal[data-reveal="mount"] {
-  transform: translateY(var(--rv-y, 50px));
-  animation: settle-enter 0.7s var(--ease-reveal) var(--rv-delay, 0.2s) both;
+  animation: mount-enter 0.7s var(--ease-reveal) var(--rv-delay, 0.2s) both;
 }
 
 .motion-reveal[data-reveal="hidden"] {
@@ -625,14 +635,13 @@ html.theme-transition::view-transition-new(root) {
     filter 0.7s var(--ease-reveal) var(--rv-delay, 0.2s);
 }
 
-/* Mount-mode headings settle as one block, not per word: a staggered
-   per-word entrance keeps growing the text's painted union while settled and
-   unsettled words coexist, which re-emits LCP candidates until the last word
-   lands. One transform on the container paints once, at first paint. */
-[data-split="mount"] {
-  display: inline-block;
-  transform: translateY(0.4em);
-  animation: settle-enter 0.7s var(--ease-reveal) var(--sd-delay, 0s) both;
+/* Mount headings keep the per-word stagger, but the words rise from a visible
+   offset rather than out of a clipping mask. Every word is painted in the
+   first frame, so the heading is one LCP candidate at first paint while still
+   reading as a staggered reveal. */
+[data-split="mount"] .split-reveal-unit {
+  transform: translateY(0.42em);
+  animation: settle-enter 0.62s var(--ease-reveal) var(--su-delay, 0s) both;
 }
 
 /* Only the scroll phases clip: a mount reveal must never hide the LCP text,

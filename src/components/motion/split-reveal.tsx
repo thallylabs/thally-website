@@ -59,9 +59,7 @@ export function SplitReveal({
         ref={ref}
         aria-hidden
         data-split={onMount ? "mount" : phase === "visible" ? undefined : phase}
-        // Mount mode leaves display to the stylesheet (the block settle needs
-        // inline-block); an inline style here would beat that rule.
-        style={onMount ? ({ "--sd-delay": `${delay}s` } as CSSProperties) : { display: "inline" }}
+        style={{ display: "inline" }}
       >
         {units.map((unit, i) => {
           if (/^\s+$/.test(unit)) {
