@@ -300,6 +300,8 @@ export default function CloudDashboardFeaturePage() {
           alt="Thally Cloud Home: agent readiness, changes checked, publish activity, and reader questions, above site details and recent activity"
           width={2358}
           height={1978}
+          loading="lazy"
+          decoding="async"
           className="h-auto w-full"
         />
       </FeatureBanner>

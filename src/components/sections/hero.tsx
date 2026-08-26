@@ -77,16 +77,24 @@ function AmbientGlow() {
   );
 }
 
-/** Film grain over the field, so the gradients never band on wide displays. */
+/**
+ * Film grain over the field, so the gradients never band on wide displays.
+ *
+ * The noise is a tiled background image rather than a live SVG filter element:
+ * as an image it is rasterized once at 160px and repeated, where an in-DOM
+ * `feTurbulence` is re-evaluated over the full hero every time the canvas
+ * beneath it repaints. Same grain, paid for once.
+ */
+const GRAIN_TILE =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.72 0 0 0 0 0.89 0 0 0 0 0.30 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E\")";
+
 function Grain() {
   return (
-    <svg aria-hidden className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-40 mix-blend-overlay">
-      <filter id="hero-grain">
-        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" />
-        <feColorMatrix type="matrix" values="0 0 0 0 0.72 0 0 0 0 0.89 0 0 0 0 0.30 0 0 0 0.04 0" />
-      </filter>
-      <rect width="100%" height="100%" filter="url(#hero-grain)" />
-    </svg>
+    <div
+      aria-hidden
+      className="pointer-events-none absolute inset-0 z-0 opacity-40 mix-blend-overlay"
+      style={{ backgroundImage: GRAIN_TILE, backgroundRepeat: "repeat" }}
+    />
   );
 }
 
@@ -114,7 +122,7 @@ const Hero = () => {
               Every product change. Every knowledge surface. Automatically in sync.
             </SplitReveal>
 
-            <Reveal delay={0.5} distance={30} className="mt-7">
+            <Reveal mount delay={0.5} distance={30} className="mt-7">
               <p className="max-w-[36ch] text-xl tracking-[-0.04em] text-pretty text-white">
                 One MDX source serves AI agents and human readers from the same URL. And when your product changes,
                 Thally drafts the docs PR.
@@ -125,7 +133,7 @@ const Hero = () => {
             </Reveal>
           </div>
 
-          <Reveal delay={0.7} distance={20} className="mt-10 max-w-[560px]">
+          <Reveal mount delay={0.7} distance={20} className="mt-10 max-w-[560px]">
             <p className="mb-6 text-white">Built for the AI tools your readers already use</p>
             <AgentMarquee />
           </Reveal>

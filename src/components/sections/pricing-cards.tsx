@@ -111,6 +111,9 @@ function TierCta({ tier }: { tier: Tier }) {
 
 export function PricingCards({ headerTag = "h2" }: { headerTag?: "h1" | "h2" }) {
   const [annual, setAnnual] = useState(true);
+  // Tier names sit one level under the section header. Hard-coding h3 skipped a
+  // level on /pricing, where this section supplies the page's h1.
+  const TierHeading = headerTag === "h1" ? "h2" : "h3";
 
   return (
     <section id="pricing" className="bg-canvas marketing-section-pad relative">
@@ -169,7 +172,9 @@ export function PricingCards({ headerTag = "h2" }: { headerTag?: "h1" | "h2" }) 
             >
               {/* Bordered title row, template .pricing-card-title-wrap */}
               <div className="border-canvas-card-stroke flex items-center justify-between gap-2.5 rounded-2xl border p-5">
-                <h3 className="text-canvas-foreground text-lg font-medium tracking-tight">{tier.name}</h3>
+                <TierHeading className="text-canvas-foreground text-lg font-medium tracking-tight">
+                  {tier.name}
+                </TierHeading>
                 {tier.recommended && (
                   <span className="border-canvas-card-stroke text-canvas-foreground rounded-[20px] border bg-white/15 px-2.5 py-1 text-xs backdrop-blur-xl">
                     Recommended

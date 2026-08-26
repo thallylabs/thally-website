@@ -15,6 +15,20 @@ import { DESTINATIONS } from "@/lib/site";
 import styles from "./track-page.module.css";
 
 const CLOUD_API = (process.env.NEXT_PUBLIC_THALLY_CLOUD_API_URL || "https://app.thally.io").replace(/\/$/, "");
+
+/**
+ * Whether a credentialed call to the Cloud API can succeed from this origin.
+ *
+ * Same origin always works; otherwise only the deployed thally.io sites are
+ * allowlisted. Local and preview builds are not, so an unprompted probe from
+ * one only produces a console error.
+ */
+function canReachCloudApi(): boolean {
+  if (typeof window === "undefined") return false;
+  const { origin, hostname } = window.location;
+  if (origin === CLOUD_API) return true;
+  return hostname === "thally.io" || hostname.endsWith(".thally.io");
+}
 const STEP_NAMES = ["Connect GitHub", "Docs repository", "Product repositories", "Run analysis", "Findings"];
 
 interface RepositoryOption {
@@ -164,6 +178,15 @@ export function TrackDemo() {
   }, []);
 
   useEffect(() => {
+    // The credentialed probe is only accepted from origins the Cloud API
+    // allowlists. Anywhere else the browser blocks it and logs a CORS error
+    // that no catch can suppress, so the unprompted probe is skipped rather
+    // than firing a request that cannot succeed. A reader who presses connect
+    // still gets a real attempt and a real error.
+    if (!canReachCloudApi()) {
+      setSessionState("disconnected");
+      return;
+    }
     const timeoutId = window.setTimeout(() => void loadSession(), 0);
     return () => window.clearTimeout(timeoutId);
   }, [loadSession]);

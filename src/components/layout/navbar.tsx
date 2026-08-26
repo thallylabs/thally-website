@@ -20,6 +20,7 @@ import {
   Track,
 } from "@/components/icons";
 import { ThallyMark } from "@/components/layout/logo";
+import { useRenderTier } from "@/components/motion/use-render-tier";
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -29,6 +30,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { prefersCheapCompositing } from "@/lib/render-tier";
 import { DESTINATIONS } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -57,6 +59,12 @@ const Navbar = () => {
   }, []);
 
   const scrub = isDesktop && !reduced;
+  // The pill sits over the animating hero field, so its backdrop blur is
+  // recomputed on every frame the canvas paints. That is the most expensive
+  // thing on the software raster path, so machines that cannot afford it get
+  // an opaque pill instead: the pill's own background fades in with scroll
+  // anyway, which is most of the effect.
+  const cheapCompositing = prefersCheapCompositing(useRenderTier());
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -180,8 +188,9 @@ const Navbar = () => {
         <motion.div
           style={scrub ? { width: pillWidth, backgroundColor: pillBg } : undefined}
           className={cn(
-            "border-canvas-hairline relative mx-auto w-full rounded-2xl border shadow-[0_1px_0_0_rgba(255,255,255,0.04)_inset] backdrop-blur-xl lg:min-w-[860px]",
-            !scrub && "bg-canvas/80",
+            "border-canvas-hairline relative mx-auto w-full rounded-2xl border shadow-[0_1px_0_0_rgba(255,255,255,0.04)_inset] lg:min-w-[860px]",
+            cheapCompositing ? "bg-canvas/95" : "backdrop-blur-xl",
+            !scrub && !cheapCompositing && "bg-canvas/80",
           )}
         >
           <div className="flex items-center justify-between px-4 py-2.5 sm:px-5">

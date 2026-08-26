@@ -88,10 +88,15 @@ export function Guarantees() {
   return (
     <section className="bg-canvas px-2.5 sm:px-5">
       <div className="relative mx-auto max-w-[1480px] overflow-hidden rounded-[52px]">
-        <div
+        <img
           aria-hidden
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url(/template/ready-made-bg.webp)" }}
+          alt=""
+          src="/template/ready-made-bg.webp"
+          width={2912}
+          height={1440}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover object-center"
         />
         {/* The band used to sit under a white wash, which read as a hole in a
             dark page. Scrim it down instead, weighted toward the bright sky at

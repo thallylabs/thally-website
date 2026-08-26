@@ -51,6 +51,12 @@ export function SectionGrid({
   className?: string;
   mask?: string;
 }) {
+  // Callers write the mask in Tailwind's arbitrary-value form, where an
+  // underscore stands for a space. This is an inline style, not a class, so
+  // the underscores have to come back out: CSS treats the raw value as
+  // invalid and drops the mask, leaving the dot grid unfaded everywhere.
+  const maskImage = mask.replaceAll("_", " ");
+
   return (
     <div
       aria-hidden
@@ -59,8 +65,9 @@ export function SectionGrid({
         backgroundImage:
           "radial-gradient(color-mix(in oklab, var(--foreground) 12%, transparent) 1px, transparent 1px)",
         backgroundSize: "22px 22px",
-        maskImage: mask,
-        WebkitMaskImage: mask,
+        maskImage,
+        // Safari needs the prefix through 15.3, and React does not add it.
+        WebkitMaskImage: maskImage,
       }}
     />
   );

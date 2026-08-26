@@ -2,8 +2,8 @@ import "./globals.css";
 
 import type { Metadata } from "next";
 import { Inter, Plus_Jakarta_Sans } from "next/font/google";
-import Script from "next/script";
 
+import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import { ConditionalFooter } from "@/components/layout/conditional-footer";
 import Navbar from "@/components/layout/navbar";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
@@ -161,19 +161,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={`font-sans ${jakarta.variable} ${inter.variable}`}>
       <body className="flex min-h-svh flex-col antialiased">
-        <Script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ANALYTICS_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GOOGLE_ANALYTICS_ID}');
-          `}
-        </Script>
+        <GoogleAnalytics measurementId={GOOGLE_ANALYTICS_ID} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
         {/* The rebuilt marketing design is dark-first, matching the template. */}

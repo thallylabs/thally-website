@@ -17,6 +17,8 @@ export function CTA() {
         <img
           src="/template/cta-bg.webp"
           alt=""
+          loading="lazy"
+          decoding="async"
           className="absolute inset-0 h-full w-full object-cover blur-[5px]"
         />
         <div
@@ -52,6 +54,10 @@ export function CTA() {
           <div className="overflow-hidden rounded-[28px] bg-black/40 backdrop-blur-xl">
             <img
               src="/images/cloud-dashboard-dark-2000.webp"
+              loading="lazy"
+              decoding="async"
+              width={2000}
+              height={1042}
               alt="Thally Cloud dashboard home showing readiness, activity, and site status"
               className="w-full"
             />

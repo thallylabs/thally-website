@@ -6,6 +6,8 @@ import Lenis from "lenis";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 
+import { detectRenderTier } from "@/lib/render-tier";
+
 /** How long to keep a hash landing pinned while the page finishes laying out. */
 const SETTLE_MS = 1500;
 
@@ -39,6 +41,11 @@ export function SmoothScroll() {
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Lenis drives a permanent rAF loop and repositions the page itself every
+    // frame. On a machine already struggling to composite the hero, that loop
+    // competes with the canvas for the same main thread and turns smooth
+    // scrolling into the opposite. Native scroll is the better experience there.
+    if (detectRenderTier() !== "full") return;
 
     const lenis = new Lenis({ lerp: 0.1, anchors: true });
     lenisRef.current = lenis;
