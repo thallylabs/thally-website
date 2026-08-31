@@ -16,7 +16,8 @@ type Tier = {
   annual: string;
   monthlyNote: string;
   annualNote: string;
-  priceSuffix?: string;
+  monthlySuffix?: string;
+  annualSuffix?: string;
   cta: { label: string; href: string };
   features: string[];
   recommended?: boolean;
@@ -30,7 +31,8 @@ const TIERS: Tier[] = [
     annual: "$0",
     monthlyNote: "MIT licensed · no card required",
     annualNote: "MIT licensed · no card required",
-    priceSuffix: "forever",
+    monthlySuffix: "forever",
+    annualSuffix: "forever",
     cta: { label: "Start free", href: DESTINATIONS.signup },
     features: [
       "1 managed documentation site",
@@ -44,19 +46,21 @@ const TIERS: Tier[] = [
   {
     name: "Thally Cloud",
     tagline: "Add automation, scale, and team controls",
-    monthly: "$60",
-    annual: "$50",
-    monthlyNote: "$60 billed monthly",
-    annualNote: "$50 billed monthly on an annual subscription",
-    priceSuffix: "per workspace / month",
+    monthly: "$199",
+    annual: "$1,990",
+    monthlyNote: "$199 billed monthly",
+    annualNote: "$1,990 billed annually · save $398",
+    monthlySuffix: "per workspace / month",
+    annualSuffix: "per workspace / year",
     cta: { label: "Start 14-day trial", href: DESTINATIONS.signup },
     recommended: true,
     features: [
       "Everything in Free",
-      "Unlimited managed documentation sites",
+      "3 managed documentation sites",
       "5 team members included",
       "Unlimited connected product repositories",
-      "10,000 AI credits per month",
+      "10,000 shared AI credits each month",
+      "Unused credits roll over while subscribed",
       "AI answers and Thally Track",
       "Custom domains and team roles",
     ],
@@ -64,17 +68,20 @@ const TIERS: Tier[] = [
   {
     name: "Enterprise",
     tagline: "Shape security and support around your needs",
-    monthly: "Custom",
-    annual: "Custom",
+    monthly: "From $15k",
+    annual: "From $15k",
     monthlyNote: "Annual contract · invoiced",
     annualNote: "Annual contract · invoiced",
+    monthlySuffix: "per year",
+    annualSuffix: "per year",
     cta: { label: "Talk to sales", href: DESTINATIONS.sales },
     features: [
       "Everything in Thally Cloud",
-      "Security and identity requirements scoped with your team",
+      "Custom site, member, and AI allowances",
+      "Security review and invoicing",
       "Custom contract and support terms",
-      "Hands-on migration planning",
-      "Dedicated rollout support",
+      "Assisted migration from $1,500 per source site",
+      "Priority rollout support",
     ],
   },
 ];
@@ -121,8 +128,8 @@ export function PricingCards({ headerTag = "h2" }: { headerTag?: "h1" | "h2" }) 
           </SplitReveal>
           <Reveal delay={0.15} distance={24}>
             <p className="text-canvas-muted mx-auto mt-5 max-w-2xl text-lg">
-              Start with one managed site, pull-request previews, and analytics for $0. Choose Thally Cloud for
-              unlimited sites, five team members, AI answers, Track, custom domains, and team roles.
+              Start with one managed site, pull-request previews, and analytics for $0. Choose Thally Cloud for three
+              managed sites, five team members, AI answers, Track, custom domains, and team roles.
             </p>
           </Reveal>
 
@@ -182,7 +189,9 @@ export function PricingCards({ headerTag = "h2" }: { headerTag?: "h1" | "h2" }) 
                 <span className="text-canvas-foreground font-display text-5xl tracking-[-0.04em]">
                   {annual ? tier.annual : tier.monthly}
                 </span>
-                {tier.priceSuffix && <span className="text-canvas-muted text-sm">{tier.priceSuffix}</span>}
+                {(annual ? tier.annualSuffix : tier.monthlySuffix) && (
+                  <span className="text-canvas-muted text-sm">{annual ? tier.annualSuffix : tier.monthlySuffix}</span>
+                )}
               </div>
               <p className="text-canvas-muted-2 mt-2 px-5 text-xs">{annual ? tier.annualNote : tier.monthlyNote}</p>
 
@@ -201,6 +210,11 @@ export function PricingCards({ headerTag = "h2" }: { headerTag?: "h1" | "h2" }) 
             </Reveal>
           ))}
         </div>
+
+        <p className="text-canvas-muted-2 mx-auto mt-8 max-w-4xl text-center text-sm leading-6">
+          Need more capacity? Add members for $20 per month or $200 per year, managed sites for $39 per month or $390
+          per year, and 10,000-credit packs for $79 one time. Credit packs never auto-recharge.
+        </p>
       </div>
     </section>
   );

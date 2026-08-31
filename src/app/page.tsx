@@ -61,18 +61,26 @@ const productJsonLd = {
     {
       "@type": "Offer",
       name: "Thally Cloud monthly",
-      price: "60",
+      price: "199",
       priceCurrency: "USD",
       description:
-        "Thally Cloud is $60 per workspace per month with unlimited managed sites and connected product repositories, 10,000 AI credits, and five team members included. Additional active members or pending invitations are $20 per month each. Adds AI answers, Thally Track, custom domains, and team roles.",
+        "Thally Cloud is $199 per workspace per month with three managed sites, unlimited connected product repositories, 10,000 shared monthly AI credits with rollover, and five team members included. Additional members are $20 per month and additional managed sites are $39 per month. Adds AI answers, Thally Track, custom domains, and team roles.",
     },
     {
       "@type": "Offer",
       name: "Thally Cloud annual",
-      price: "50",
+      price: "1990",
       priceCurrency: "USD",
       description:
-        "$50 per workspace per month with an annual subscription, billed monthly. Includes unlimited managed sites and connected product repositories, 10,000 AI credits, and five team members. Each additional active member or pending invitation adds $20 to the monthly bill.",
+        "$1,990 per workspace billed annually. Includes three managed sites, unlimited connected product repositories, 10,000 shared monthly AI credits with rollover, and five team members. Additional members are $200 per year and additional managed sites are $390 per year.",
+    },
+    {
+      "@type": "Offer",
+      name: "Enterprise",
+      price: "15000",
+      priceCurrency: "USD",
+      description:
+        "Starts at $15,000 per year with custom allowances, security review, invoicing, custom contract terms, and priority rollout support.",
     },
   ],
   featureList: [

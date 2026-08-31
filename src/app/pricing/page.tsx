@@ -37,8 +37,8 @@ const pricingJsonLd = {
     "@type": "AggregateOffer",
     priceCurrency: "USD",
     lowPrice: "0",
-    highPrice: "60",
-    offerCount: 3,
+    highPrice: "15000",
+    offerCount: 4,
     offers: [
       {
         "@type": "Offer",
@@ -51,18 +51,26 @@ const pricingJsonLd = {
       {
         "@type": "Offer",
         name: "Thally Cloud monthly",
-        price: "60",
+        price: "199",
         priceCurrency: "USD",
         description:
-          "$60 per workspace each month. Includes unlimited managed sites and connected product repositories, five team members, 10,000 AI credits per month, cited AI answers, Thally Track, quality checks, custom domains, and team roles. 14-day trial.",
+          "$199 per workspace each month. Includes three managed sites, unlimited connected product repositories, five team members, 10,000 shared monthly AI credits with rollover, cited AI answers, Thally Track, quality checks, custom domains, and team roles. 14-day trial.",
       },
       {
         "@type": "Offer",
         name: "Thally Cloud annual",
-        price: "50",
+        price: "1990",
         priceCurrency: "USD",
         description:
-          "$50 per workspace per month with an annual subscription, billed monthly. Includes unlimited managed sites and connected product repositories, five team members, 10,000 AI credits per month, cited AI answers, Thally Track, quality checks, custom domains, team roles, and a 14-day trial.",
+          "$1,990 per workspace billed annually. Includes three managed sites, unlimited connected product repositories, five team members, 10,000 shared monthly AI credits with rollover, cited AI answers, Thally Track, quality checks, custom domains, team roles, and a 14-day trial.",
+      },
+      {
+        "@type": "Offer",
+        name: "Enterprise",
+        price: "15000",
+        priceCurrency: "USD",
+        description:
+          "Starts at $15,000 per year with custom site, member, and AI allowances, security review, invoicing, custom contract terms, and priority rollout support.",
       },
     ],
   },
