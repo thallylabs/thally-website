@@ -37,8 +37,8 @@ const pricingJsonLd = {
     "@type": "AggregateOffer",
     priceCurrency: "USD",
     lowPrice: "0",
-    highPrice: "15000",
-    offerCount: 4,
+    highPrice: "1990",
+    offerCount: 3,
     offers: [
       {
         "@type": "Offer",
@@ -63,14 +63,6 @@ const pricingJsonLd = {
         priceCurrency: "USD",
         description:
           "$1,990 per workspace billed annually. Includes three managed sites, unlimited connected product repositories, five team members, 10,000 shared monthly AI credits with rollover, cited AI answers, Thally Track, quality checks, custom domains, team roles, and a 14-day trial.",
-      },
-      {
-        "@type": "Offer",
-        name: "Enterprise",
-        price: "15000",
-        priceCurrency: "USD",
-        description:
-          "Starts at $15,000 per year with custom site, member, and AI allowances, security review, invoicing, custom contract terms, and priority rollout support.",
       },
     ],
   },

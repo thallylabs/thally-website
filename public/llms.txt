@@ -53,8 +53,8 @@
 ## Pricing summary
 
 - Free: $0. Includes 1 managed documentation site per workspace, pull-request previews, documentation analytics, unlimited pages and readers, all output formats, an MCP server, hybrid search, and a docs agent with your own API key. The MIT-licensed engine can also be self-hosted for free, including commercial use. Track, hosted AI answers, custom domains, and team access are not included.
-- Thally Cloud: $199/workspace/month or $1,990/workspace/year billed annually. Both include a 14-day trial, 3 managed sites, unlimited connected product repositories, 10,000 shared AI credits each month with rollover, and 5 team members in any role. Extra members are $20/month or $200/year, extra managed sites are $39/month or $390/year, and a one-time $79 pack adds 10,000 AI credits without automatic top-ups. Includes Thally AI answers and chat, Track, agent-readiness CI checks, custom domains, and team roles.
-- Enterprise: Starts at $15,000/year. Custom site, member, and AI allowances, security review, invoicing, migration, support, and contract requirements are scoped with each customer. Assisted migration starts at $1,500 per source site.
+- Thally Cloud: $199/workspace/month or the equivalent of $166/workspace/month with $1,990 billed annually. Both include a 14-day trial, 3 managed sites, unlimited connected product repositories, 10,000 shared AI credits each month with rollover, and 5 team members in any role. Extra members are $20/month or $200/year, extra managed sites are $39/month or $390/year, and a one-time $79 pack adds 10,000 AI credits without automatic top-ups. Includes Thally AI answers and chat, Track, agent-readiness CI checks, custom domains, and team roles.
+- Enterprise: Custom annual pricing. Site, member, and AI allowances, security review, invoicing, migration, support, and contract requirements are scoped with each customer.
 - Machine-readable pricing: [/pricing.md](/pricing.md)
 
 ## Trust and reuse

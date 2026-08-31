@@ -74,14 +74,6 @@ const productJsonLd = {
       description:
         "$1,990 per workspace billed annually. Includes three managed sites, unlimited connected product repositories, 10,000 shared monthly AI credits with rollover, and five team members. Additional members are $200 per year and additional managed sites are $390 per year.",
     },
-    {
-      "@type": "Offer",
-      name: "Enterprise",
-      price: "15000",
-      priceCurrency: "USD",
-      description:
-        "Starts at $15,000 per year with custom allowances, security review, invoicing, custom contract terms, and priority rollout support.",
-    },
   ],
   featureList: [
     "Product change intelligence that maps merged changes to affected documentation",
