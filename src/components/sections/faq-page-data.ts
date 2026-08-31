@@ -11,7 +11,7 @@ export const faqItems: FAQItem[] = [
     category: "Support",
     question: "Is there a free version?",
     answer:
-      "Yes. The Free plan includes one managed documentation site per workspace, pull-request previews, documentation analytics, unlimited pages and readers, all four output formats, and the MCP server. The engine is also open source under the MIT license and free to self-host forever. Thally Cloud adds unlimited managed sites, AI answers, Track, custom domains, and team controls.",
+      "Yes. The Free plan includes one managed documentation site per workspace, pull-request previews, documentation analytics, unlimited pages and readers, all four output formats, and the MCP server. The engine is also open source under the MIT license and free to self-host forever. Thally Cloud adds three managed sites, AI answers, Track, custom domains, and team controls.",
   },
   {
     category: "Support",
@@ -41,13 +41,19 @@ export const faqItems: FAQItem[] = [
     category: "Account",
     question: "What roles are available?",
     answer:
-      "Owner, Editor, and Viewer. Owners manage billing and SSO, Editors write and publish, and Viewers get read access to private documentation.",
+      "Owner, Editor, and Viewer. Owners manage billing and workspace access, Editors write and publish, and Viewers get read access to private documentation.",
   },
   {
     category: "Account",
     question: "How does billing work?",
     answer:
-      "Thally Cloud costs $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include 10,000 AI credits per month, unlimited connected product repositories, and five team members. Each additional active member or pending invitation adds $20 to the monthly bill.",
+      "Thally Cloud costs $199 per workspace per month, or $1,990 billed annually. Both include three managed sites, 10,000 shared monthly AI credits that roll over, unlimited connected product repositories, and five team members. Extra members are $20 per month or $200 per year, and extra sites are $39 per month or $390 per year.",
+  },
+  {
+    category: "Account",
+    question: "Can I buy more AI credits?",
+    answer:
+      "Yes. A one-time $79 credit pack adds 10,000 AI credits to your workspace. Credits roll over while your subscription remains active, usage stops when the balance reaches zero, and packs never auto-recharge.",
   },
   {
     category: "Account",

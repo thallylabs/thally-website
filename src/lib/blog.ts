@@ -32,7 +32,7 @@ export const blogPosts: BlogPost[] = [
     description:
       "An honest comparison of the best AI documentation tools and platforms in 2026: Thally, Mintlify, GitBook, ReadMe, Docusaurus, Fern, and Document360, evaluated on agent readability, drift, and ownership.",
     date: "2026-07-30",
-    updated: "2026-07-30",
+    updated: "2026-08-31",
     verified: "2026-07-30",
     category: "Guide",
     readingTime: 8,
@@ -63,7 +63,7 @@ export const blogPosts: BlogPost[] = [
     description:
       "Compare Thally and Mintlify across ownership, machine-readable output, code-to-docs automation, deployment, migration, and pricing.",
     date: "2026-07-11",
-    updated: "2026-08-18",
+    updated: "2026-08-31",
     verified: "2026-08-18",
     category: "Comparison",
     readingTime: 8,
@@ -77,7 +77,7 @@ export const blogPosts: BlogPost[] = [
       {
         question: "Is Thally free to self-host?",
         answer:
-          "Yes. The whole engine is MIT licensed, including commercial use, with unlimited pages and readers. Free also includes one managed site with previews and analytics. Paid plans add unlimited sites, AI answers, Track, custom domains, and team features.",
+          "Yes. The whole engine is MIT licensed, including commercial use, with unlimited pages and readers. Free also includes one managed site with previews and analytics. Cloud adds three managed sites, AI answers, Track, custom domains, and team features.",
       },
       {
         question: "Does Mintlify support MCP or llms.txt?",
@@ -99,7 +99,7 @@ export const blogPosts: BlogPost[] = [
     description:
       "Compare Thally's product-linked docs workflow with GitBook's hosted knowledge base across authoring, Git, AI-readable output, migration, and collaboration.",
     date: "2026-07-08",
-    updated: "2026-07-24",
+    updated: "2026-08-31",
     verified: "2026-07-24",
     category: "Comparison",
     readingTime: 6,
@@ -125,7 +125,7 @@ export const blogPosts: BlogPost[] = [
     description:
       "Compare Docusaurus's framework approach with Thally's documentation engine and product-change synchronization pipeline across setup, ownership, automation, and maintenance.",
     date: "2026-07-01",
-    updated: "2026-07-24",
+    updated: "2026-08-31",
     verified: "2026-07-24",
     category: "Comparison",
     readingTime: 6,

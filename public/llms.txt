@@ -29,7 +29,7 @@
 - [Agent Layer](/features/agent-layer): llms.txt, MCP server, and grounded answers with cited sources
 - [Migration & Hosting](/features/migration-hosting): migrate from GitBook, Mintlify, Docusaurus, or Markdown and let Thally host
 - [Cloud Dashboard](/features/cloud-dashboard): sites, drafts, analytics, team, and AI context in one workspace
-- [Pricing](/pricing): Free (1 managed site per workspace plus MIT self-hosting), Cloud (unlimited managed sites and 10,000 AI credits), Enterprise (SSO, SLA)
+- [Pricing](/pricing): Free (1 managed site per workspace plus MIT self-hosting), Cloud (3 managed sites and 10,000 monthly AI credits), Enterprise (custom allowances and contract terms)
 - [Blog](/blog): comparisons, guides, and product deep dives (RSS at /rss.xml)
 - [About](/about): the problem, position, product principles, and long-term mission
 - [FAQ](/faq): common questions on migration, automation, agents, self-hosting
@@ -53,8 +53,8 @@
 ## Pricing summary
 
 - Free: $0. Includes 1 managed documentation site per workspace, pull-request previews, documentation analytics, unlimited pages and readers, all output formats, an MCP server, hybrid search, and a docs agent with your own API key. The MIT-licensed engine can also be self-hosted for free, including commercial use. Track, hosted AI answers, custom domains, and team access are not included.
-- Thally Cloud: $60/workspace/month on a monthly subscription, or $50/workspace/month on an annual subscription. Both are billed monthly and include a 14-day trial, unlimited managed sites and connected product repositories, 10,000 AI credits per month, and 5 team members in any role. Each additional active member or pending invitation adds $20 to the monthly bill. Includes Thally AI answers and chat, Track, agent-readiness CI checks, custom domains, and team roles.
-- Enterprise: Custom annual pricing. Security, identity, migration, support, and contract requirements are scoped with each customer.
+- Thally Cloud: $199/workspace/month or $1,990/workspace/year billed annually. Both include a 14-day trial, 3 managed sites, unlimited connected product repositories, 10,000 shared AI credits each month with rollover, and 5 team members in any role. Extra members are $20/month or $200/year, extra managed sites are $39/month or $390/year, and a one-time $79 pack adds 10,000 AI credits without automatic top-ups. Includes Thally AI answers and chat, Track, agent-readiness CI checks, custom domains, and team roles.
+- Enterprise: Starts at $15,000/year. Custom site, member, and AI allowances, security review, invoicing, migration, support, and contract requirements are scoped with each customer. Assisted migration starts at $1,500 per source site.
 - Machine-readable pricing: [/pricing.md](/pricing.md)
 
 ## Trust and reuse

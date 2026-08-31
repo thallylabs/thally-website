@@ -14,14 +14,15 @@ interface PricingPlan {
   accent: string;
   annualBillingNote: string;
   annualPrice: string;
+  annualUnit?: string;
   cta: string;
   features: string[];
   href: string;
   monthlyBillingNote: string;
   monthlyPrice: string;
+  monthlyUnit?: string;
   name: string;
   popular: boolean;
-  priceUnit?: string;
   tagline: string;
 }
 
@@ -31,7 +32,8 @@ const plans: PricingPlan[] = [
     tagline: "Publish one documentation site at no cost",
     monthlyPrice: "$0",
     annualPrice: "$0",
-    priceUnit: "forever",
+    monthlyUnit: "forever",
+    annualUnit: "forever",
     monthlyBillingNote: "MIT licensed · no card required",
     annualBillingNote: "MIT licensed · no card required",
     features: [
@@ -50,17 +52,19 @@ const plans: PricingPlan[] = [
   {
     name: "Thally Cloud",
     tagline: "Add automation, scale, and team controls",
-    monthlyPrice: "$60",
-    annualPrice: "$50",
-    priceUnit: "per workspace / month",
-    monthlyBillingNote: "$60 billed monthly",
-    annualBillingNote: "$50 billed monthly on an annual subscription",
+    monthlyPrice: "$199",
+    annualPrice: "$1,990",
+    monthlyUnit: "per workspace / month",
+    annualUnit: "per workspace / year",
+    monthlyBillingNote: "$199 billed monthly",
+    annualBillingNote: "$1,990 billed annually · save $398",
     features: [
       "Everything in Free",
-      "Unlimited managed documentation sites",
+      "3 managed documentation sites",
       "5 team members included",
       "Unlimited connected product repositories",
-      "10,000 AI credits per month",
+      "10,000 shared AI credits each month",
+      "Unused credits roll over while subscribed",
       "AI answers and Thally Track",
       "Custom domains and team roles",
     ],
@@ -72,16 +76,19 @@ const plans: PricingPlan[] = [
   {
     name: "Enterprise",
     tagline: "Shape security and support around your needs",
-    monthlyPrice: "Custom",
-    annualPrice: "Custom",
+    monthlyPrice: "From $15k",
+    annualPrice: "From $15k",
+    monthlyUnit: "per year",
+    annualUnit: "per year",
     monthlyBillingNote: "Annual contract · invoiced",
     annualBillingNote: "Annual contract · invoiced",
     features: [
       "Everything in Thally Cloud",
-      "Security and identity requirements scoped with your team",
+      "Custom site, member, and AI allowances",
+      "Security review and invoicing",
       "Custom contract and support terms",
-      "Hands-on migration planning",
-      "Dedicated rollout support",
+      "Assisted migration from $1,500 per source site",
+      "Priority rollout support",
     ],
     cta: "Talk to sales",
     href: DESTINATIONS.sales,
@@ -102,7 +109,7 @@ export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" 
         <SectionHeader
           eyebrow={headerTag === "h2" ? "Plans" : undefined}
           title="Start free. Add Thally Cloud when you need more."
-          description="Start with one managed site, pull-request previews, and analytics for $0. Choose Thally Cloud for unlimited sites, five team members, AI answers, Track, custom domains, and team roles."
+          description="Start with one managed site, pull-request previews, and analytics for $0. Choose Thally Cloud for three managed sites, five team members, AI answers, Track, custom domains, and team roles."
           align="center"
           layout="stack"
           as={headerTag}
@@ -140,6 +147,7 @@ export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" 
           {plans.map((plan) => {
             const price = isAnnual ? plan.annualPrice : plan.monthlyPrice;
             const billingNote = isAnnual ? plan.annualBillingNote : plan.monthlyBillingNote;
+            const priceUnit = isAnnual ? plan.annualUnit : plan.monthlyUnit;
 
             return (
               <article
@@ -164,9 +172,7 @@ export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" 
                 <div className="mt-8 min-h-24">
                   <div className="flex items-end gap-2">
                     <span className="text-4xl font-semibold tracking-tight tabular-nums">{price}</span>
-                    {plan.priceUnit ? (
-                      <span className="text-muted-foreground pb-1 text-sm">{plan.priceUnit}</span>
-                    ) : null}
+                    {priceUnit ? <span className="text-muted-foreground pb-1 text-sm">{priceUnit}</span> : null}
                   </div>
                   <p className="text-muted-foreground mt-2 text-xs">{billingNote}</p>
                 </div>
@@ -190,7 +196,8 @@ export default function Pricing({ headerTag = "h2" }: { headerTag?: "h1" | "h2" 
         </div>
 
         <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-center text-xs leading-5">
-          Prices are in USD per workspace. Documentation readers are always free.
+          Prices are in USD per workspace. Extra members are $20 per month or $200 per year, extra managed sites are $39
+          per month or $390 per year, and 10,000-credit packs are $79 one time. Documentation readers are always free.
         </p>
       </div>
     </section>
