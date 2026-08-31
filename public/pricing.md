@@ -18,7 +18,7 @@ Thally is a product knowledge synchronization pipeline, starting with documentat
 ## Thally Cloud
 
 - Monthly platform fee: $199 per workspace / month
-- Annual subscription fee: $1,990 per workspace / year, billed annually
+- Annual subscription fee: $166 per workspace / month equivalent, $1,990 billed annually
 - Managed sites: 3 active sites included per workspace
 - Additional managed sites: $39 / month or $390 / year each
 - Connected product repositories: unlimited
@@ -34,9 +34,9 @@ Thally is a product knowledge synchronization pipeline, starting with documentat
 
 ## Enterprise
 
-- Price: Starts at $15,000 / year
+- Price: Custom annual contract
 - Scope: custom site, member, and AI allowances, security review, invoicing, support, and contract requirements are agreed with each customer
-- Assisted migration: starts at $1,500 per source site
+- Assisted migration: scoped per source site
 - Contact: /contact
 - Best for: organizations that need a sales-led security, support, or procurement process
 

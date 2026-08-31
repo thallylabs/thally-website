@@ -53,7 +53,7 @@ const pricingQuestions = [
   {
     question: "How much does Thally Cloud cost?",
     answer:
-      "Thally Cloud costs $199 per workspace each month, or $1,990 billed annually. Both options include three managed sites, unlimited connected product repositories, 10,000 shared monthly AI credits that roll over, five team members, and a 14-day trial.",
+      "Thally Cloud costs $199 per workspace each month, or the equivalent of $166 per month with $1,990 billed annually. Both options include three managed sites, unlimited connected product repositories, 10,000 shared monthly AI credits that roll over, five team members, and a 14-day trial.",
   },
   {
     question: "What happens when I need more capacity?",
@@ -78,7 +78,7 @@ const pricingQuestions = [
   {
     question: "What is included with Enterprise?",
     answer:
-      "Enterprise starts at $15,000 per year. It adds custom site, member, and AI allowances, security review, invoicing, custom contract terms, and priority rollout support. Assisted migration starts at $1,500 per source site.",
+      "Enterprise is tailored to each organization. It adds custom site, member, and AI allowances, security review, invoicing, custom contract terms, assisted migration planning, and priority rollout support.",
   },
 ];
 

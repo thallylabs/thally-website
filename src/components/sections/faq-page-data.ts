@@ -47,7 +47,7 @@ export const faqItems: FAQItem[] = [
     category: "Account",
     question: "How does billing work?",
     answer:
-      "Thally Cloud costs $199 per workspace per month, or $1,990 billed annually. Both include three managed sites, 10,000 shared monthly AI credits that roll over, unlimited connected product repositories, and five team members. Extra members are $20 per month or $200 per year, and extra sites are $39 per month or $390 per year.",
+      "Thally Cloud costs $199 per workspace per month, or the equivalent of $166 per month with $1,990 billed annually. Both include three managed sites, 10,000 shared monthly AI credits that roll over, unlimited connected product repositories, and five team members. Extra members are $20 per month or $200 per year, and extra sites are $39 per month or $390 per year.",
   },
   {
     category: "Account",
