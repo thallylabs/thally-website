@@ -57,7 +57,7 @@ const About = () => {
               <div>
                 <p className="text-canvas-muted text-sm font-medium tracking-widest uppercase">The premise</p>
                 <p className="heading-card text-canvas-foreground mt-8 max-w-lg text-balance">
-                  Every product change. Every knowledge surface. Automatically in sync.
+                  Every product change. Every affected surface. Automatically in sync.
                 </p>
               </div>
               <div className="border-canvas-hairline mt-14 grid grid-cols-2 gap-8 border-t pt-8">
@@ -104,8 +104,8 @@ const About = () => {
               </SplitReveal>
               <Reveal delay={0.2} distance={24}>
                 <p className="text-canvas-muted mt-6 text-lg leading-8">
-                  Documentation, SDK references, release notes, examples, tutorials, and AI context are usually
-                  maintained separately. Teams have to rediscover what changed, decide which surfaces are affected, and
+                  Docs, website content, agent skills, release notes, and examples often live in different repositories
+                  with different owners. Teams have to rediscover what changed, decide which surfaces are affected, and
                   repeat the same update across each one. No system owns that understanding.
                 </p>
               </Reveal>
@@ -118,8 +118,8 @@ const About = () => {
               <Reveal delay={0.2} distance={24}>
                 <p className="text-canvas-muted mt-6 text-lg leading-8">
                   Documentation platforms, wikis, content management systems, and knowledge bases store what a team
-                  already knows. Thally connects product evolution to customer-facing knowledge. It discovers the
-                  communication work a change creates, prioritizes it, and prepares the right updates for review.
+                  already knows. Thally connects product evolution to every public surface your team maintains in Git.
+                  It analyzes one merge, finds the affected destinations, and prepares separate updates for review.
                 </p>
               </Reveal>
             </div>
@@ -149,27 +149,27 @@ const About = () => {
 
             <div className="max-w-2xl">
               <SplitReveal as="h2" mode="chars" className="heading-card text-canvas-foreground">
-                Documentation is the first surface.
+                Every surface keeps its own boundaries.
               </SplitReveal>
               <Reveal delay={0.2} distance={24}>
                 <p className="text-canvas-muted mt-6 text-lg leading-8">
-                  Thally&apos;s first job is narrow: understand how a product change affects documentation and help
-                  teams keep those pages synchronized. The publishing engine is available under the MIT license, content
-                  stays in Git, and humans review the updates. Each accepted review and correction improves the
-                  product-specific understanding behind future changes.
+                  Connect the repositories and exact paths each team owns. Thally evaluates the same product change
+                  against each surface, follows its destination-specific rules, and opens a separate draft pull request
+                  only where the evidence supports an update. Nothing pushes to a base branch or publishes without human
+                  review.
                 </p>
               </Reveal>
             </div>
 
             <div className="ml-auto max-w-2xl">
               <SplitReveal as="h2" mode="chars" className="heading-card text-canvas-foreground">
-                The long-term goal is a synchronized knowledge ecosystem.
+                One change should not become five follow-up projects.
               </SplitReveal>
               <Reveal delay={0.2} distance={24}>
                 <p className="text-canvas-muted mt-6 text-lg leading-8">
-                  Teams should not have to remember every place a product change needs to be explained. As Thally
-                  expands, shipping the product should surface the work across documentation, SDK references, examples,
-                  tutorials, release notes, AI context, and the knowledge surfaces still to come.
+                  Teams should not have to remember every place a product change needs to be explained. Thally fans one
+                  merge out across connected docs, website content, agent skills, release notes, and other Git
+                  repositories, so each owner gets review-ready work for the surface they control.
                 </p>
               </Reveal>
             </div>

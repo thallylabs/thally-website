@@ -11,7 +11,7 @@ import { SITE_URL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Thally Pricing: Open Source and Cloud Plans",
   description:
-    "Create one managed documentation site with previews and analytics for free, self-host the MIT-licensed engine, or upgrade for automation, scale, and team controls.",
+    "Create one managed documentation site with previews and analytics for free, self-host the MIT-licensed engine, or upgrade for cross-surface automation, scale, and team controls.",
   alternates: {
     canonical: "/pricing",
   },
@@ -30,7 +30,7 @@ const pricingJsonLd = {
   operatingSystem: "Web",
   license: "https://opensource.org/license/mit",
   description:
-    "Product knowledge synchronization pipeline with one managed documentation site, pull-request previews, and analytics for free, plus paid automation, scale, and team controls.",
+    "Product knowledge synchronization pipeline with one managed documentation site, pull-request previews, and analytics for free, plus paid cross-surface automation, scale, and team controls.",
   publisher: { "@id": `${SITE_URL}/#organization` },
   mainEntityOfPage: `${SITE_URL}/pricing`,
   offers: {
@@ -54,7 +54,7 @@ const pricingJsonLd = {
         price: "199",
         priceCurrency: "USD",
         description:
-          "$199 per workspace each month. Includes three managed sites, unlimited connected product repositories, five team members, 10,000 shared monthly AI credits with rollover, cited AI answers, Thally Track, quality checks, custom domains, and team roles. 14-day trial.",
+          "$199 per workspace each month. Includes three managed sites, unlimited connected product repositories and knowledge surfaces, five team members, 10,000 shared monthly AI credits with rollover, cited AI answers, Thally Track, quality checks, custom domains, and team roles. 14-day trial.",
       },
       {
         "@type": "Offer",
@@ -62,7 +62,7 @@ const pricingJsonLd = {
         price: "1990",
         priceCurrency: "USD",
         description:
-          "$1,990 per workspace billed annually. Includes three managed sites, unlimited connected product repositories, five team members, 10,000 shared monthly AI credits with rollover, cited AI answers, Thally Track, quality checks, custom domains, team roles, and a 14-day trial.",
+          "$1,990 per workspace billed annually. Includes three managed sites, unlimited connected product repositories and knowledge surfaces, five team members, 10,000 shared monthly AI credits with rollover, cited AI answers, Thally Track, quality checks, custom domains, team roles, and a 14-day trial.",
       },
     ],
   },

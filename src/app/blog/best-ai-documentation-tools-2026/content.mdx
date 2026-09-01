@@ -26,7 +26,7 @@ Each tool was scored against five questions, using vendor documentation and publ
 
 | Tool | Best for | AI layer | License | Self-host |
 | --- | --- | --- | --- | --- |
-| Thally | Docs that keep up with your products | llms.txt, MCP, JSON per page, drift-driven docs PRs | MIT engine, paid cloud | Yes, free |
+| Thally | Product changes propagated across connected public surfaces | llms.txt, MCP, JSON per page, cross-surface update PRs | MIT engine, paid cloud | Yes, free |
 | Mintlify | Polished hosted developer docs | Assistant, agent features on the hosted platform | Proprietary | No |
 | GitBook | Mixed technical and non-technical teams | AI search and writing assistant | Proprietary | No |
 | ReadMe | Interactive API reference hubs | AI Q&A over your API docs | Proprietary | No |
@@ -36,7 +36,7 @@ Each tool was scored against five questions, using vendor documentation and publ
 
 ## Thally
 
-Thally's premise is that documentation is a synchronization problem, not a writing problem. You connect your product repositories, and when a merged pull request changes behavior that your docs describe, Thally evaluates the change, gathers evidence, and can open a reviewed docs pull request. Nothing merges without a human, and "no change needed" is a valid outcome.
+Thally's premise is that product knowledge is a synchronization problem, not a writing problem. You connect product repositories and the public knowledge surfaces they affect. When a merged pull request changes public behavior, Thally evaluates every enabled destination, gathers evidence, and can open separate reviewed pull requests across docs, website content, agent skills, and other Git repositories. Nothing merges without a human, and "no change needed" is a valid outcome for each surface.
 
 The published output is built for both audiences: every page serves HTML for people and JSON, JSON-LD, or Markdown for machines from the same URL, with llms.txt and an MCP server on every deploy. A deterministic agent-readiness score grades each build from 0 to 100, so CI can enforce documentation quality the way it enforces tests.
 

@@ -111,13 +111,14 @@ const Hero = () => {
               className="heading-hero max-w-[13ch] text-pretty text-white"
               stagger={0.4}
             >
-              Every product change. Every knowledge surface. Automatically in sync.
+              Every product change. Every affected surface. Automatically in sync.
             </SplitReveal>
 
             <Reveal delay={0.5} distance={30} className="mt-7">
-              <p className="max-w-[36ch] text-xl tracking-[-0.04em] text-pretty text-white">
-                One MDX source serves AI agents and human readers from the same URL. And when your product changes,
-                Thally drafts the docs PR.
+              <p className="max-w-[44ch] text-xl tracking-[-0.04em] text-pretty text-white">
+                Every product update automatically propagates across your connected public surfaces: docs, website
+                content, agent skills, and other Git repositories. Each affected surface gets an evidence-backed pull
+                request for your team to review.
               </p>
               <div className="mt-9">
                 <HeroCtas />

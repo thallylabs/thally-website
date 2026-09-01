@@ -1,6 +1,6 @@
 # Pricing: Thally
 
-Thally is a product knowledge synchronization pipeline, starting with documentation. The Free plan includes one managed documentation site per workspace with pull-request previews and analytics, and the MIT-licensed publishing engine can also be self-hosted. Thally Cloud adds automation, more managed capacity, and team controls. All prices are in USD. Last updated: 2026-08-31.
+Thally is a product knowledge synchronization pipeline. The Free plan includes one managed documentation site per workspace with pull-request previews and analytics, and the MIT-licensed publishing engine can also be self-hosted. Thally Cloud adds cross-surface automation across connected Git repositories, more managed capacity, and team controls. All prices are in USD. Last updated: 2026-08-31.
 
 ## Free
 
@@ -29,8 +29,8 @@ Thally is a product knowledge synchronization pipeline, starting with documentat
 - Includes 5 team members in any role
 - Additional active members or pending invitations: $20 / month or $200 / year each after the 5 included members
 - Trial: 14 days, no credit card required
-- Everything in Free, plus: three managed sites, unlimited connected product repositories, Thally AI answers and chat, Thally Track, documentation quality checks, custom domains, and Owner/Editor/Viewer workspace roles
-- Best for: growing teams that want docs automation with predictable included capacity
+- Everything in Free, plus: three managed sites, unlimited connected product repositories and knowledge surfaces, Thally AI answers and chat, Thally Track, documentation quality checks, custom domains, and Owner/Editor/Viewer workspace roles
+- Best for: growing teams that want product changes propagated across connected public surfaces with predictable included capacity
 
 ## Enterprise
 

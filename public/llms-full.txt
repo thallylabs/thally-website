@@ -5,19 +5,20 @@
 Generated from the same repository as thally.io. Last generated: 2026-08-31.
 # Thally
 
-> Thally is the product knowledge synchronization pipeline. It understands what changed, finds the customer-facing knowledge affected, and prepares evidence-backed updates for human review. Documentation is the first surface, and the publishing engine is open source under the MIT license.
+> Every product change. Every affected surface. Automatically in sync. Thally evaluates each merged change across connected docs, website content, agent skills, and other Git repositories, then prepares separate, evidence-backed pull requests wherever an update is needed.
 
 ## What Thally does
 
-- Product change intelligence: Track evaluates merged changes from connected product repositories and maps them to affected customer-facing documentation.
-- Understanding before generation: Thally gathers evidence and treats no documentation change as a valid result instead of generating content by default.
-- Human review: important communication stays reviewable. Thally prepares pull requests, and the customer's team decides what lands.
-- Product-specific knowledge: accepted reviews, corrections, and releases strengthen Thally's understanding of how each customer's product changes affect its documentation.
+- Product change intelligence: Track evaluates each merged change once and maps it to every affected connected knowledge surface.
+- Cross-surface fan-out: docs, website content, agent skills, release notes, and other Git-owned product knowledge can each receive a separate, bounded pull request.
+- Understanding before generation: Thally gathers evidence and treats no change as a valid result for each destination instead of generating content by default.
+- Human review: important communication stays reviewable. Thally prepares pull requests, and each surface owner decides what lands.
+- Product-specific knowledge: accepted reviews, corrections, and releases strengthen Thally's understanding of how each customer's product changes affect its public knowledge.
 - AI-native output: every docs page supports content negotiation (?format=json, ?format=md, Accept headers). Agents get structured data; humans get the same pre-rendered UI.
 - Remote MCP server: every deployed docs site exposes /api/mcp. Attach it to any agent and the docs become native tools (search_docs, read_page, list_pages, agent_readiness). No key, no account.
 - Agent-readiness score: a deterministic 0-100 grade per build covering structured data, metadata, discovery files, machine readability, and OpenAPI coverage. Gate CI on a threshold, then ask Thally to draft fixes for low-scoring pages.
 - Docs agent: turn an instruction, a diff, or a product PR into a reviewable docs pull request. Comment "@thally document this" on any GitHub issue or PR to trigger it. The agent never merges; a human always does.
-- Docs updates from product changes: after a Thally site is live, choose the product repos Thally should watch. Thally can turn relevant merged changes into reviewable documentation PRs and report when no docs change is needed.
+- Connected-surface updates from product changes: choose the product repositories Thally should watch and the destination repositories it may update. One relevant merge can become separate pull requests across every affected connected surface, with no-change results for the rest.
 - Provenance and drift: machine-legible lastUpdated / lastVerified dates, plus deterministic drift detection against the source code each page documents.
 - Authoring: MDX with 25+ components, OpenAPI-generated API reference with an interactive Try-It console, hybrid full-text + vector search, retrieval-grounded AI chat with inline citations.
 - Multi-language: one command translates the whole site; locale URLs, hreflang, and graceful fallbacks.
@@ -29,7 +30,7 @@ Generated from the same repository as thally.io. Last generated: 2026-08-31.
 
 - [Home](/): product overview, features, pricing, FAQ
 - [Thally Track](/features/track): product-change impact analysis, evidence, findings, and reviewable drafts
-- [Automation](/features/automation): merged product changes become reviewable documentation pull requests
+- [Automation](/features/automation): one merged product change becomes reviewable pull requests across every affected connected surface
 - [Content Graph](/features/content-graph): write once in MDX and publish HTML, JSON, llms.txt, and Markdown
 - [Agent Layer](/features/agent-layer): llms.txt, MCP server, and grounded answers with cited sources
 - [Migration & Hosting](/features/migration-hosting): migrate from GitBook, Mintlify, Docusaurus, or Markdown and let Thally host
@@ -76,7 +77,7 @@ Generated from the same repository as thally.io. Last generated: 2026-08-31.
 
 # Pricing: Thally
 
-Thally is a product knowledge synchronization pipeline, starting with documentation. The Free plan includes one managed documentation site per workspace with pull-request previews and analytics, and the MIT-licensed publishing engine can also be self-hosted. Thally Cloud adds automation, more managed capacity, and team controls. All prices are in USD. Last updated: 2026-08-31.
+Thally is a product knowledge synchronization pipeline. The Free plan includes one managed documentation site per workspace with pull-request previews and analytics, and the MIT-licensed publishing engine can also be self-hosted. Thally Cloud adds cross-surface automation across connected Git repositories, more managed capacity, and team controls. All prices are in USD. Last updated: 2026-08-31.
 
 ## Free
 
@@ -105,8 +106,8 @@ Thally is a product knowledge synchronization pipeline, starting with documentat
 - Includes 5 team members in any role
 - Additional active members or pending invitations: $20 / month or $200 / year each after the 5 included members
 - Trial: 14 days, no credit card required
-- Everything in Free, plus: three managed sites, unlimited connected product repositories, Thally AI answers and chat, Thally Track, documentation quality checks, custom domains, and Owner/Editor/Viewer workspace roles
-- Best for: growing teams that want docs automation with predictable included capacity
+- Everything in Free, plus: three managed sites, unlimited connected product repositories and knowledge surfaces, Thally AI answers and chat, Thally Track, documentation quality checks, custom domains, and Owner/Editor/Viewer workspace roles
+- Best for: growing teams that want product changes propagated across connected public surfaces with predictable included capacity
 
 ## Enterprise
 
@@ -137,7 +138,7 @@ Canonical URL: https://thally.io/blog/thally-vs-mintlify
 
 Mintlify and Thally both publish developer documentation from MDX, generate API references from OpenAPI specifications, provide search and AI answers, expose MCP servers, generate `llms.txt`, and serve Markdown versions of published pages.
 
-Both platforms also address documentation drift. Mintlify Automations can read connected code repositories, identify documentation affected by merged changes, and open pull requests. Thally Track evaluates merged product changes against the current documentation and prepares an evidence-backed pull request when an update is needed.
+Both platforms also address documentation drift. Mintlify Automations can read connected code repositories, identify documentation affected by merged changes, and open pull requests. Thally Track evaluates each merged product change across connected docs, website content, agent skills, and other Git repositories, then prepares a separate evidence-backed pull request for every affected destination.
 
 The comparison gets interesting one level down.
 
@@ -193,7 +194,7 @@ Mintlify also offers an Agent Score that tests whether an agent can find, parse,
 
 Documentation starts drifting when the product changes. The two platforms address that problem differently.
 
-Thally treats drift as a product-understanding problem. After a Thally docs repository is connected, mention `@thally document this` on a GitHub issue or PR to request a documentation pull request. Once a site is live and product repositories are mapped, Track evaluates merged product PRs, gathers evidence, and can draft a docs PR when the documentation needs to change. No change is a valid result, and nothing merges without a human.
+Thally treats drift as a product-understanding problem. Mention `@thally document this` on a connected GitHub issue or PR to request a documentation pull request. With Track enabled, each merged product change is evaluated across the connected docs, website content, agent skills, and other Git repositories. Every affected destination can receive its own evidence-backed pull request, no change is a valid result for each surface, and nothing merges without a human.
 
 Mintlify now has a comparable code-to-docs loop. Its Automations can run when a code pull request merges, on a schedule, after a content update, or, on Enterprise, from an integration event. The agent reads the documentation and connected repositories, then opens or updates a pull request with a summary and citations to source changes. For GitHub, it can assign reviewers based on who authored the triggering code changes. A run can also finish with no action needed.
 
@@ -242,7 +243,7 @@ Mintlify capabilities were checked against [Docs on autopilot](https://www.mintl
 
 Canonical URL: https://thally.io/blog/thally-vs-gitbook
 
-**The short answer:** GitBook is a hosted knowledge base with a polished WYSIWYG editor, ideal when most authors are not developers. Thally is a product knowledge synchronization pipeline that starts with a docs-as-code engine, structured output for AI agents, and reviewable updates from product changes. If your customer-facing knowledge should follow the product from Git, Thally is the better fit. If your priority is a friendly destination for a mixed writing team, GitBook is a fine choice.
+**The short answer:** GitBook is a hosted knowledge base with a polished WYSIWYG editor, ideal when most authors are not developers. Thally is a product knowledge synchronization pipeline that propagates product changes across connected docs, website content, agent skills, and other Git repositories through reviewable pull requests. If your customer-facing knowledge should follow the product across Git-owned surfaces, Thally is the better fit. If your priority is a friendly destination for a mixed writing team, GitBook is a fine choice.
 
 ## Two different center-of-gravity decisions
 
@@ -296,7 +297,7 @@ GitBook is a hosted product with per-user pricing, so check its pricing page for
 
 - documentation belongs in git next to the code it documents
 - AI agents are part of your audience today or will be soon
-- you want product changes mapped to affected documentation before a reviewed docs PR is generated
+- you want one product change mapped across every affected Git-owned surface before separate reviewed pull requests are generated
 - you need self-hosting or an open-source license
 
 **Choose GitBook if:**

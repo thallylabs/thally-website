@@ -47,7 +47,7 @@ export const faqItems: FAQItem[] = [
     category: "Account",
     question: "How does billing work?",
     answer:
-      "Thally Cloud costs $199 per workspace per month, or the equivalent of $166 per month with $1,990 billed annually. Both include three managed sites, 10,000 shared monthly AI credits that roll over, unlimited connected product repositories, and five team members. Extra members are $20 per month or $200 per year, and extra sites are $39 per month or $390 per year.",
+      "Thally Cloud costs $199 per workspace per month, or the equivalent of $166 per month with $1,990 billed annually. Both include three managed sites, 10,000 shared monthly AI credits that roll over, unlimited connected product repositories and knowledge surfaces, and five team members. Extra members are $20 per month or $200 per year, and extra sites are $39 per month or $390 per year.",
   },
   {
     category: "Account",
@@ -65,25 +65,25 @@ export const faqItems: FAQItem[] = [
     category: "Features",
     question: "What is Thally?",
     answer:
-      "Thally is a product knowledge synchronization pipeline. It connects product changes to customer-facing knowledge, identifies what needs to change, and prepares reviewable updates. Documentation is the first surface.",
+      "Thally is a product knowledge synchronization pipeline. When a product change merges, it identifies every affected connected surface and prepares separate, evidence-backed pull requests for the destinations that need an update.",
   },
   {
     category: "Features",
     question: "How is Thally different from a documentation platform?",
     answer:
-      "A documentation platform is a destination where knowledge is written and stored. Thally adds the synchronization pipeline around it. Track evaluates product changes, maps them to affected documentation, and prepares evidence-backed updates for human review.",
+      "A documentation platform is one destination where knowledge is written and stored. Thally is the synchronization pipeline across destinations. Track evaluates one product change against every enabled surface, then prepares separate, evidence-backed pull requests for human review.",
   },
   {
     category: "Features",
     question: "What knowledge surfaces can Thally update today?",
     answer:
-      "Thally currently focuses automated updates on documentation repositories, including the guides, API references, examples, and release notes maintained there. The long-term direction is to keep the broader customer-facing knowledge ecosystem synchronized.",
+      "Thally can update connected Git repositories that hold docs, website content, agent skills, release notes, and other public product knowledge. Each surface can be limited to approved Markdown, MDX, JSX, or TSX paths and keeps its own branch, validation, and review rules.",
   },
   {
     category: "Features",
-    question: "Can Thally decide that a product change needs no documentation update?",
+    question: "Can Thally decide that a product change does not affect a surface?",
     answer:
-      "Yes. Thally optimizes for understanding before generation. If the available evidence does not show that a customer-facing page needs to change, Track can return a no-change result instead of producing unnecessary content.",
+      "Yes. Thally optimizes for understanding before generation. If the evidence does not show that a connected surface needs to change, Track records a no-change result for that destination instead of producing unnecessary content.",
   },
   {
     category: "Features",

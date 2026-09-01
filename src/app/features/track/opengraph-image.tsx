@@ -7,8 +7,8 @@ export const alt = "Thally Track product knowledge impact analysis";
 
 export default function Image() {
   return renderOgImage({
-    title: "The product changed. The knowledge should follow.",
-    description: "Map specific product changes to evidence-backed documentation drafts for human review.",
+    title: "One product change. Every affected surface.",
+    description: "Map one merge to evidence-backed pull requests across the connected surfaces it affects.",
     url: "thally.io/features/track",
   });
 }

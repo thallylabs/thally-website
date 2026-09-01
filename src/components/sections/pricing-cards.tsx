@@ -45,7 +45,7 @@ const TIERS: Tier[] = [
   },
   {
     name: "Thally Cloud",
-    tagline: "Add automation, scale, and team controls",
+    tagline: "Keep every connected surface in sync",
     monthly: "$199",
     annual: "$166",
     monthlyNote: "$199 billed monthly",
@@ -58,7 +58,7 @@ const TIERS: Tier[] = [
       "Everything in Free",
       "3 managed documentation sites",
       "5 team members included",
-      "Unlimited connected product repositories",
+      "Unlimited connected product repositories and knowledge surfaces",
       "10,000 shared AI credits each month",
       "Unused credits roll over while subscribed",
       "AI answers and Thally Track",
@@ -126,8 +126,8 @@ export function PricingCards({ headerTag = "h2" }: { headerTag?: "h1" | "h2" }) 
           </SplitReveal>
           <Reveal delay={0.15} distance={24}>
             <p className="text-canvas-muted mx-auto mt-5 max-w-2xl text-lg">
-              Start with one managed site, pull-request previews, and analytics for $0. Choose Thally Cloud for three
-              managed sites, five team members, AI answers, Track, custom domains, and team roles.
+              Start with one managed site, pull-request previews, and analytics for $0. Choose Thally Cloud for
+              cross-surface automation, three managed sites, five team members, AI answers, and team controls.
             </p>
           </Reveal>
 

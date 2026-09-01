@@ -83,7 +83,7 @@ const comparisonFeatures: FeatureSection[] = [
         enterprise: "Custom",
       },
       {
-        name: "Connected product repositories",
+        name: "Connected product repositories and knowledge surfaces",
         free: false,
         cloud: "Unlimited",
         enterprise: "Unlimited",

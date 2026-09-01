@@ -46,7 +46,7 @@ const productJsonLd = {
   operatingSystem: "Web",
   license: "https://opensource.org/license/mit",
   description:
-    "Thally is a product knowledge synchronization pipeline. It understands product changes, identifies the customer-facing documentation affected, and prepares evidence-backed updates for human review.",
+    "Thally is a product knowledge synchronization pipeline. When a product change merges, it identifies every affected connected knowledge surface and prepares a separate evidence-backed pull request for each destination that needs an update.",
   publisher: { "@id": `${SITE_URL}/#organization` },
   mainEntityOfPage: SITE_URL,
   offers: [
@@ -64,7 +64,7 @@ const productJsonLd = {
       price: "199",
       priceCurrency: "USD",
       description:
-        "Thally Cloud is $199 per workspace per month with three managed sites, unlimited connected product repositories, 10,000 shared monthly AI credits with rollover, and five team members included. Additional members are $20 per month and additional managed sites are $39 per month. Adds AI answers, Thally Track, custom domains, and team roles.",
+        "Thally Cloud is $199 per workspace per month with three managed sites, unlimited connected product repositories and knowledge surfaces, 10,000 shared monthly AI credits with rollover, and five team members included. Additional members are $20 per month and additional managed sites are $39 per month. Adds AI answers, Thally Track, custom domains, and team roles.",
     },
     {
       "@type": "Offer",
@@ -72,12 +72,13 @@ const productJsonLd = {
       price: "1990",
       priceCurrency: "USD",
       description:
-        "$1,990 per workspace billed annually. Includes three managed sites, unlimited connected product repositories, 10,000 shared monthly AI credits with rollover, and five team members. Additional members are $200 per year and additional managed sites are $390 per year.",
+        "$1,990 per workspace billed annually. Includes three managed sites, unlimited connected product repositories and knowledge surfaces, 10,000 shared monthly AI credits with rollover, and five team members. Additional members are $200 per year and additional managed sites are $390 per year.",
     },
   ],
   featureList: [
-    "Product change intelligence that maps merged changes to affected documentation",
-    "Evidence-backed impact analysis with no-change as a valid result",
+    "Product change intelligence that maps merged changes to affected connected knowledge surfaces",
+    "Separate evidence-backed pull requests for docs, website content, agent skills, and other Git repositories",
+    "Per-surface impact analysis with no-change as a valid result",
     "Product-specific knowledge that improves through accepted reviews and corrections",
     "Human approval for important customer-facing communication",
     "MIT-licensed publishing engine",
@@ -85,7 +86,7 @@ const productJsonLd = {
     "Remote MCP server at /api/mcp on every deployed site",
     "Agent-readiness score with CI gating and Thally-drafted fix PRs",
     "@thally GitHub mentions can become reviewable docs PRs",
-    "Thally Track can turn relevant merged product PRs into reviewable documentation PRs",
+    "Thally Track can turn one relevant merged product PR into reviewable pull requests across every affected connected surface",
     "Migration from Mintlify, Docusaurus, GitBook, Nextra, VitePress, and Starlight",
     "OpenAPI API reference with interactive Try-It console",
     "Hybrid ⌘K search and retrieval-grounded AI chat with citations",

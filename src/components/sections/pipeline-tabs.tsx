@@ -21,14 +21,14 @@ const STAGES = [
     number: "02.",
     label: "Impact analysis",
     title: "Understand the change before the update.",
-    body: "Track evaluates merged changes, gathers evidence, and finds the documentation each change affects.",
+    body: "Track evaluates the merge once, gathers evidence, and finds every enabled knowledge surface the change affects.",
     icon: Track,
   },
   {
     number: "03.",
-    label: "Drafted docs PRs",
+    label: "Surface pull requests",
     title: "Evidence-backed drafts, ready to review.",
-    body: "Thally opens a pull request on your docs repo only when the evidence says an update is needed.",
+    body: "Thally opens a separate pull request for each affected destination. Unaffected surfaces get a no-change result.",
     icon: GitPullRequest,
   },
   {
@@ -71,7 +71,7 @@ export function PipelineTabs() {
           </SplitReveal>
           <Reveal delay={0.15} distance={20}>
             <p className="mt-5 text-lg text-white/90">
-              Thally watches the repos you choose and drafts only the updates the evidence supports.
+              Thally watches the repositories you choose and prepares the right update for every affected surface.
             </p>
           </Reveal>
         </div>

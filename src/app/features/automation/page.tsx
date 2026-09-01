@@ -22,16 +22,16 @@ import { AutomationDemo, AutomationTriggers } from "./automation-demo";
 import { SetupTabs } from "./setup-tabs";
 
 export const metadata: Metadata = {
-  title: "Thally Automation: Ship the Code. Docs Follow.",
+  title: "Thally Automation: One Merge, Every Affected Surface",
   description:
-    "Connect your repositories once. When a pull request merges, Thally analyzes the change, drafts the documentation updates it implies, and opens them as a pull request on your docs repo, ready for your review.",
+    "Connect your repositories once. When a pull request merges, Thally analyzes every enabled public surface and opens separate, evidence-backed pull requests wherever an update is needed.",
   alternates: {
     canonical: "/features/automation",
   },
   openGraph: {
-    title: "Ship the code. Docs follow.",
+    title: "Every product change. Every affected surface.",
     description:
-      "Every merged pull request drafts its own documentation updates, opened as a reviewable pull request on your docs.",
+      "Every merged product change becomes reviewable pull requests across the connected public surfaces it affects.",
     url: `${SITE_URL}/features/automation`,
   },
 };
@@ -45,7 +45,7 @@ const softwareJsonLd = {
   operatingSystem: "Web",
   url: `${SITE_URL}/features/automation`,
   description:
-    "Automated documentation drafting on every merge: Thally watches connected repositories, analyzes each merged pull request, and opens evidence-backed draft docs pull requests for human review.",
+    "Cross-surface automation on every merge: Thally watches connected product repositories, evaluates each enabled destination, and opens separate evidence-backed pull requests for human review.",
   isPartOf: { "@id": `${SITE_URL}/#software` },
   publisher: { "@id": `${SITE_URL}/#organization` },
 };
@@ -86,17 +86,17 @@ const feedItems = [
 ] as const;
 
 const withoutAutomation = [
-  "Someone has to remember a merge affected the docs; usually nobody does.",
-  "Drift is discovered by a confused customer or a failing example.",
-  "Catching up means a big, dreaded documentation audit.",
-  "Machine surfaces and AI context fall furthest behind.",
+  "Someone has to remember every surface a merge affected; usually something gets missed.",
+  "Drift appears as conflicting docs, website copy, examples, and agent instructions.",
+  "Each destination becomes a separate follow-up project with a different owner.",
+  "The last surface is often corrected only after a customer notices.",
 ] as const;
 
 const withAutomation = [
-  "Every relevant merge opens a reviewable draft within minutes.",
-  "Each draft carries the diff and evidence behind it.",
-  "Reviews are small and frequent, never a quarterly cleanup.",
-  "Every surface regenerates together: humans and agents stay in sync.",
+  "One merge is evaluated against every enabled surface.",
+  "Each affected destination gets its own bounded, evidence-backed pull request.",
+  "Unaffected surfaces receive an explicit no-change result.",
+  "Every owner reviews and ships the update in the repository they control.",
 ] as const;
 
 /** Dense merge-to-draft board shown inside the banner's glass frame. */
@@ -259,9 +259,9 @@ export default function AutomationFeaturePage() {
 
       <FeatureBanner
         layout="split"
-        title="Ship the code."
-        titleAccent="Docs follow."
-        description="Connect your repositories once. When a pull request merges, Thally analyzes the change, drafts the documentation updates it implies, and opens them as a pull request on your docs repo, ready for your review."
+        title="Ship the change."
+        titleAccent="Every surface follows."
+        description="Connect your repositories once. When a pull request merges, Thally evaluates every enabled public surface and opens separate, evidence-backed pull requests wherever an update is needed."
         primaryCta={{ label: "Watch a merge flow through", href: "#loop" }}
         secondaryCta={{ label: "What triggers a draft", href: "#triggers" }}
         finePrint="Read-only GitHub App. Nothing publishes until a human approves it."
@@ -275,12 +275,12 @@ export default function AutomationFeaturePage() {
       <section id="loop" className="bg-canvas pb-[120px]">
         <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
           <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
-            From merge to draft PR, automatically.
+            From one merge to every affected surface.
           </SplitReveal>
           <Reveal delay={0.15} distance={20}>
             <p className="mt-5 text-lg text-[#afafaf]">
-              This is what happens the moment a pull request merges on a connected repository. Run the simulation to
-              watch one change go from merged code to a review-ready docs pull request.
+              Run the simulation to watch one change go from merged code to a review-ready pull request. In a live
+              workspace, the same event fans out across every enabled destination it affects.
             </p>
           </Reveal>
         </div>
@@ -297,8 +297,8 @@ export default function AutomationFeaturePage() {
           </SplitReveal>
           <Reveal delay={0.15} distance={20}>
             <p className="mt-5 text-lg text-[#afafaf]">
-              Not every commit deserves a documentation review. Turn on the events that change your public surface;
-              Thally ignores the rest.
+              Not every commit affects public knowledge. Turn on the events that can change your public surfaces; Thally
+              ignores the rest.
             </p>
           </Reveal>
         </div>
@@ -310,9 +310,7 @@ export default function AutomationFeaturePage() {
       {/* Activity marquee band */}
       <section id="activity" className="border-y border-white/10 bg-[#0a0d13]/60 py-[100px]">
         <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
-          <p className="text-sm font-medium tracking-widest text-white/45 uppercase">
-            Recent automation · jahce/dabs
-          </p>
+          <p className="text-sm font-medium tracking-widest text-white/45 uppercase">Recent automation · jahce/dabs</p>
           <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
             A running log of what Thally drafted.
           </SplitReveal>
@@ -362,7 +360,7 @@ export default function AutomationFeaturePage() {
               </ul>
             </div>
             <p className="subtitle-display mx-auto mt-10 max-w-[420px] text-center text-white">
-              Docs drift,
+              Knowledge drifts,
               <br />
               <span className="linear-text">quietly.</span>
             </p>
@@ -390,9 +388,9 @@ export default function AutomationFeaturePage() {
               </ul>
             </div>
             <p className="subtitle-display mx-auto mt-10 max-w-[420px] text-center text-white">
-              Drafts arrive
+              Every surface
               <br />
-              <span className="linear-text">on merge.</span>
+              <span className="linear-text">gets its update.</span>
             </p>
           </Reveal>
         </div>
@@ -414,12 +412,12 @@ export default function AutomationFeaturePage() {
       <section id="start" className="bg-canvas px-5 py-[120px]">
         <div className="mx-auto max-w-[746px] text-center">
           <SplitReveal as="h2" mode="chars" className="heading-section text-white">
-            Ship without wondering what the docs forgot.
+            Ship without wondering what got left behind.
           </SplitReveal>
           <Reveal delay={0.15} distance={20}>
             <p className="mt-5 text-lg text-[#afafaf]">
-              Install the read-only GitHub App, choose your triggers, and every merge drafts its own documentation:
-              reviewed by you, shipped on your say-so.
+              Install the read-only GitHub App, connect each public surface, and every merge produces the right set of
+              pull requests. Your teams review them and decide what ships.
             </p>
           </Reveal>
           <Reveal delay={0.3} distance={16} className="mt-8 flex flex-wrap items-center justify-center gap-4">

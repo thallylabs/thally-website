@@ -4,7 +4,7 @@
 
 Mintlify and Thally both publish developer documentation from MDX, generate API references from OpenAPI specifications, provide search and AI answers, expose MCP servers, generate `llms.txt`, and serve Markdown versions of published pages.
 
-Both platforms also address documentation drift. Mintlify Automations can read connected code repositories, identify documentation affected by merged changes, and open pull requests. Thally Track evaluates merged product changes against the current documentation and prepares an evidence-backed pull request when an update is needed.
+Both platforms also address documentation drift. Mintlify Automations can read connected code repositories, identify documentation affected by merged changes, and open pull requests. Thally Track evaluates each merged product change across connected docs, website content, agent skills, and other Git repositories, then prepares a separate evidence-backed pull request for every affected destination.
 
 The comparison gets interesting one level down.
 
@@ -60,7 +60,7 @@ Mintlify also offers an Agent Score that tests whether an agent can find, parse,
 
 Documentation starts drifting when the product changes. The two platforms address that problem differently.
 
-Thally treats drift as a product-understanding problem. After a Thally docs repository is connected, mention `@thally document this` on a GitHub issue or PR to request a documentation pull request. Once a site is live and product repositories are mapped, Track evaluates merged product PRs, gathers evidence, and can draft a docs PR when the documentation needs to change. No change is a valid result, and nothing merges without a human.
+Thally treats drift as a product-understanding problem. Mention `@thally document this` on a connected GitHub issue or PR to request a documentation pull request. With Track enabled, each merged product change is evaluated across the connected docs, website content, agent skills, and other Git repositories. Every affected destination can receive its own evidence-backed pull request, no change is a valid result for each surface, and nothing merges without a human.
 
 Mintlify now has a comparable code-to-docs loop. Its Automations can run when a code pull request merges, on a schedule, after a content update, or, on Enterprise, from an integration event. The agent reads the documentation and connected repositories, then opens or updates a pull request with a summary and citations to source changes. For GitHub, it can assign reviewers based on who authored the triggering code changes. A run can also finish with no action needed.
 

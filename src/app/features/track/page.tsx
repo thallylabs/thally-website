@@ -23,16 +23,16 @@ import { SITE_URL } from "@/lib/site";
 import { TrackDemo } from "./track-demo";
 
 export const metadata: Metadata = {
-  title: "Thally Track: Product Knowledge Impact Analysis",
+  title: "Thally Track: Keep Every Affected Surface in Sync",
   description:
-    "See how Thally Track understands a bounded product change, finds affected customer-facing knowledge, and drafts evidence-backed documentation updates for human review.",
+    "See how Thally Track analyzes one bounded product change across connected docs, website content, agent skills, and other Git repositories, then prepares evidence-backed pull requests for review.",
   alternates: {
     canonical: "/features/track",
   },
   openGraph: {
-    title: "The product changed. The knowledge should follow.",
+    title: "Every product change. Every affected surface.",
     description:
-      "Experience how Thally Track maps specific product changes to evidence-backed documentation drafts for human review.",
+      "Turn one merged product change into evidence-backed pull requests across every connected surface it affects.",
     url: `${SITE_URL}/features/track`,
   },
 };
@@ -46,7 +46,7 @@ const softwareJsonLd = {
   operatingSystem: "Web",
   url: `${SITE_URL}/features/track`,
   description:
-    "Product knowledge impact analysis for explicit API, SDK, configuration, and CLI changes, starting with evidence-backed documentation drafts for human review.",
+    "Product knowledge impact analysis that maps a merged change to every affected connected Git surface and prepares separate, evidence-backed pull requests for human review.",
   isPartOf: { "@id": `${SITE_URL}/#software` },
   publisher: { "@id": `${SITE_URL}/#organization` },
 };
@@ -107,7 +107,7 @@ function ImpactBoard() {
             kind: "checklist",
             chips: [
               { label: "High", tone: "high" },
-              { label: "Docs PR", tone: "kind" },
+              { label: "Surface PR", tone: "kind" },
             ],
             id: "#292",
             title: "docs: per-project webhook secrets",
@@ -286,9 +286,9 @@ export default function TrackFeaturePage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareJsonLd) }} />
 
       <FeatureBanner
-        title="Your product changed."
-        titleAccent="Did your docs?"
-        description="Track connects your documentation to the repositories that change it. When a pull request merges, Thally analyzes the bounded change, finds the connected pages, and drafts evidence-backed updates for review."
+        title="One product change."
+        titleAccent="Every affected surface."
+        description="Track evaluates each merge across your connected docs, website content, agent skills, and other Git repositories. Every affected destination gets its own evidence-backed pull request for review."
         primaryCta={{ label: "Try it on your repos", href: "#demo" }}
         secondaryCta={{ label: "See how it works", href: "#how-track-works" }}
         finePrint="No Thally account needed. You choose exactly which GitHub repositories Thally can read."
@@ -302,10 +302,10 @@ export default function TrackFeaturePage() {
           steps={[
             {
               label: "Connect",
-              title: "Connect your documentation",
-              subtitle: "Pages, code samples, OpenAPI, and llms.txt, indexed once.",
+              title: "Connect your knowledge surfaces",
+              subtitle: "Docs, website content, agent skills, and other Git-owned knowledge.",
               description:
-                "Thally indexes your docs repository once, including pages, code samples, OpenAPI descriptions, and llms.txt.",
+                "Choose each destination repository, branch, root, and allowed content paths. Every surface keeps its own boundaries and review workflow.",
               visual: <DocsIndexVisual />,
             },
             {
@@ -319,9 +319,9 @@ export default function TrackFeaturePage() {
             {
               label: "Analyze",
               title: "Analyze a merged change",
-              subtitle: "Candidates with evidence, confidence, and a drafted diff.",
+              subtitle: "One analysis, separate decisions and drafts for every destination.",
               description:
-                "For each merged pull request, Track extracts public-surface changes, searches the connected docs, and presents candidates with evidence, confidence, and a drafted diff.",
+                "For each merged pull request, Track extracts public changes, evaluates every enabled surface, and prepares evidence, confidence, and a bounded diff only where an update is needed.",
               visual: <CandidateVisual />,
             },
           ]}
@@ -343,7 +343,7 @@ export default function TrackFeaturePage() {
         }
         quote="A no-change result is valid. Thally never pushes to main."
         quoteAttribution="How Track behaves, by design"
-        wideQuote="A repository is evidence about implementation; documentation is evidence about communicated behaviour. Track surfaces candidates backed by specific diffs, and every draft is reviewed by a human before it ships."
+        wideQuote="A product repository is evidence about what changed. Each destination repository is evidence about how that change is communicated. Track prepares bounded candidates backed by specific diffs, and every draft is reviewed by a human before it ships."
         wideAttribution="What Track won't do: claim certainty"
       />
 

@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "lastReviewed": "2026-07-19",
+  "lastReviewed": "2026-09-01",
   "purpose": "A stable prompt set for measuring answer-engine visibility over time. This file contains no fabricated results.",
   "captureFields": [
     "runDate",
@@ -29,10 +29,10 @@
     "How can an AI agent search product documentation without scraping?",
     "What should an llms.txt file contain?",
     "How do I measure whether documentation is agent-ready?",
-    "Which documentation platforms generate docs pull requests from product changes?",
-    "What tools identify which customer-facing documentation is affected by a product change?",
+    "Which tools generate pull requests across docs, website content, and agent skills from one product change?",
+    "What tools identify every connected public surface affected by a product change?",
     "What is a product knowledge synchronization pipeline?",
-    "How can software teams keep documentation, release notes, examples, and AI context synchronized with product changes?",
+    "How can software teams keep docs, website content, release notes, agent skills, and other Git repositories synchronized with product changes?",
     "What is generative engine optimization for developer documentation?",
     "What is answer engine optimization for a documentation site?",
     "How do I migrate from GitBook to an open-source docs platform?",
