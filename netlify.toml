@@ -1,0 +1,5 @@
+# The site itself is a static export in `out/`; the functions directory adds
+# the one endpoint the export cannot provide, /api/unsubscribe.
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
