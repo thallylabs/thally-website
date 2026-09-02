@@ -9,12 +9,11 @@ export const SITE_NAME = "Thally";
 
 export const LEGAL_ENTITY_NAME = "Fairspleet LLC";
 
-export const SITE_TAGLINE = "The Product Knowledge Layer for Software Teams";
+export const SITE_TAGLINE = "Every Product Change. Every Knowledge Surface. Automatically in Sync.";
 
 export const SOCIAL_PREVIEW_TITLE = `${SITE_NAME} - The Product Knowledge Layer for Software Teams`;
 
-export const SOCIAL_PREVIEW_DESCRIPTION =
-  "Your product changed. Thally finds every page it affects across docs, website, and help center, and drafts the update with evidence.";
+export const SOCIAL_PREVIEW_DESCRIPTION = "Automatically keep every knowledge surface in sync with product changes";
 
 export const SITE_TITLE = SOCIAL_PREVIEW_TITLE;
 

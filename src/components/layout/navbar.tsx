@@ -79,13 +79,13 @@ const Navbar = () => {
         {
           title: "Thally Track",
           href: "/features/track",
-          description: "Trace a product change across every surface.",
+          description: "See what a product change affects.",
           icon: Track,
         },
         {
           title: "Automation",
           href: "/features/automation",
-          description: "Draft updates on merge, PR, or schedule.",
+          description: "Draft doc updates on every merge.",
           icon: GitPullRequest,
         },
         {

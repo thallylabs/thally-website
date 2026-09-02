@@ -32,9 +32,8 @@ const SMALL_FEATURES = [
   },
   {
     icon: Overview,
-    title: "Review every update in one queue",
-    description:
-      "Drafts from merged changes, drift sweeps, and @thally mentions, across every surface, approved before merge.",
+    title: "Review every docs task in one queue",
+    description: "Updates from merged changes, drift sweeps, and @thally mentions, approved before merge.",
   },
   {
     icon: Mcp,
@@ -44,7 +43,7 @@ const SMALL_FEATURES = [
 ];
 
 /**
- * The second act: a bordered section header, two equal cards
+ * The showcase below the hero: a bordered section header, two equal cards
  * carrying a real product surface each, then a hairline 2x2 grid of the
  * smaller claims.
  */
@@ -55,12 +54,12 @@ export function FeatureShowcase() {
       <div className="mb-[60px] border-b border-white/18 pb-[60px]">
         <div className="mx-auto max-w-3xl px-5 text-center">
           <SplitReveal as="h2" mode="chars" className="heading-section text-canvas-foreground">
-            And a complete docs platform underneath.
+            Maintain one source. Serve every reader.
           </SplitReveal>
           <Reveal delay={0.15} distance={24}>
             <p className="text-canvas-muted mx-auto mt-6 max-w-xl text-lg">
-              Thally is not only the automation. Your docs site itself lives here: one MDX source serving people and AI
-              tools, with grounded answers, search, and a readiness score you can gate CI on.
+              Your team maintains one set of pages. Everyone who reads them, person or agent, gets the version they can
+              actually use.
             </p>
           </Reveal>
         </div>

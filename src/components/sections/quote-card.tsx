@@ -2,16 +2,17 @@
 
 import Link from "next/link";
 
-import { ArrowRight } from "@/components/icons";
+import { ArrowRight, Leaf } from "@/components/icons";
 import { Reveal } from "@/components/motion/reveal";
 
 /**
- * Founder statement on the night-landscape art.
+ * A wide statement panel on the night-landscape art.
  *
- * Pre-launch, the most credible proof on the page is the person who lived
- * the problem at companies the reader has heard of. The panel used to carry
- * an unattributed slogan; it now carries a first-person line with a name on
- * it and sends the reader to the full story.
+ * The line used to sit in quotation marks with nobody attached to it, which
+ * reads as a testimonial nobody said. It is Thally's own claim, so it is set
+ * as a statement. The pill beside it was staged under a decorative cursor
+ * pointing at nothing; it is a real link now, and the section has somewhere
+ * to send the reader.
  */
 export function QuoteCard() {
   return (
@@ -25,22 +26,19 @@ export function QuoteCard() {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="relative mx-auto max-w-[760px]">
-          <p className="subtitle-display text-center text-white">
-            I spent years at Flutterwave, Netlify, and LI.FI doing this detective work by hand.{" "}
-            <span className="linear-text">Thally is the system I wished those teams had.</span>
+        <div className="relative mx-auto max-w-[560px]">
+          <p className="subtitle-display text-center">
+            Thally turns shipped code into shipped docs.{" "}
+            <span className="linear-text">Every change lands exactly where it belongs.</span>
           </p>
 
-          <p className="mt-8 text-center text-sm tracking-wide text-white/70">
-            Ekene Eze, founder of Thally. Developer experience, documentation, and integrations before that.
-          </p>
-
-          <div className="mt-8 flex justify-center">
+          <div className="mt-10 flex justify-center">
             <Link
-              href="/about"
-              className="group/pill text-canvas inline-flex items-center gap-2 rounded-full bg-white py-2.5 pr-4 pl-4 text-[13px] font-semibold tracking-wide"
+              href="/features/track"
+              className="group/pill text-canvas inline-flex items-center gap-2 rounded-full bg-white py-2.5 pr-4 pl-3.5 text-[13px] font-semibold tracking-wide"
             >
-              Read the story
+              <Leaf className="size-4" />
+              Thally Track
               <ArrowRight className="size-3.5 transition-transform duration-200 group-hover/pill:translate-x-0.5" />
             </Link>
           </div>
