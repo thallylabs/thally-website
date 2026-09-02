@@ -1,61 +1,58 @@
 "use client";
 
 import Link from "next/link";
-import type { IconType } from "react-icons";
-import { SiClaude, SiCursor, SiGithubcopilot, SiGooglegemini, SiPerplexity, SiV0, SiWindsurf } from "react-icons/si";
 
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
 import { HeroStrandField } from "@/components/sections/hero-strand-field";
 import { DESTINATIONS } from "@/lib/site";
 
-const AGENTS: Array<{ name: string; icon: IconType }> = [
-  { name: "Claude", icon: SiClaude },
-  { name: "Cursor", icon: SiCursor },
-  { name: "Copilot", icon: SiGithubcopilot },
-  { name: "Perplexity", icon: SiPerplexity },
-  { name: "Gemini", icon: SiGooglegemini },
-  { name: "v0", icon: SiV0 },
-  { name: "Windsurf", icon: SiWindsurf },
+/**
+ * The surfaces a product change has to reach. Named, not abstracted: "every
+ * knowledge surface" is internal vocabulary, this row is what it means.
+ */
+const SURFACES = [
+  "Docs",
+  "API reference",
+  "Quickstart",
+  "Marketing site",
+  "Help center",
+  "Changelog",
+  "Blog examples",
+  "Integration guides",
 ];
 
-function AgentMarquee() {
+function SurfaceRow() {
   return (
-    <div className="logos-marquee flex overflow-hidden mask-[linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
-      {[false, true].map((hidden) => (
-        <div
-          key={String(hidden)}
-          className="logos-marquee-track flex min-w-max shrink-0 items-center"
-          aria-hidden={hidden || undefined}
+    <ul className="flex flex-wrap gap-2">
+      {SURFACES.map((surface) => (
+        <li
+          key={surface}
+          className="rounded-full border border-white/12 bg-white/[0.04] px-3.5 py-1.5 text-sm tracking-[-0.02em] text-white/80"
         >
-          {AGENTS.map((agent) => (
-            <span key={agent.name} className="mr-10 flex shrink-0 items-center gap-2.5 text-white/80">
-              <agent.icon className="size-6" aria-hidden />
-              <span className="font-display text-xl font-semibold tracking-tight whitespace-nowrap">{agent.name}</span>
-            </span>
-          ))}
-        </div>
+          {surface}
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
 
-/** Hero CTA pair: primary signup plus the live Track demo. */
+/** Hero CTA pair: the live Track demo leads, the docs site signup follows. */
 function HeroCtas() {
   return (
     <div className="flex flex-col gap-3 sm:flex-row">
-      <a
-        href={DESTINATIONS.signup}
-        className="btn-sheen text-canvas inline-flex items-center justify-center rounded-lg bg-white px-7 py-3.5 text-lg font-medium"
-      >
-        Get Started
-      </a>
       <Link
         href="/features/track#demo"
+        className="btn-sheen text-canvas inline-flex items-center justify-center rounded-lg bg-white px-7 py-3.5 text-lg font-medium"
+      >
+        Run Thally on a repo
+      </Link>
+      <a
+        href={DESTINATIONS.signup}
         className="btn-sheen inline-flex items-center justify-center rounded-lg border border-[#606060] px-7 py-3.5 text-lg font-medium text-white"
       >
-        Try Thally
-      </Link>
+        Create your docs site
+      </a>
     </div>
   );
 }
@@ -108,16 +105,16 @@ const Hero = () => {
               as="h1"
               mode="words"
               onMount
-              className="heading-hero max-w-[13ch] text-pretty text-white"
+              className="heading-hero max-w-[15ch] text-pretty text-white"
               stagger={0.4}
             >
-              Every product change. Every knowledge surface. Automatically in sync.
+              Your product changed. Did your docs, website, and help center?
             </SplitReveal>
 
             <Reveal delay={0.5} distance={30} className="mt-7">
-              <p className="max-w-[36ch] text-xl tracking-[-0.04em] text-pretty text-white">
-                One MDX source serves AI agents and human readers from the same URL. And when your product changes,
-                Thally drafts the docs PR.
+              <p className="max-w-[40ch] text-xl tracking-[-0.04em] text-pretty text-white">
+                Thally is the product knowledge layer for software teams. It watches the repos you connect, finds every
+                page a merge affects, and drafts the update with the diff as evidence. You approve.
               </p>
               <div className="mt-9">
                 <HeroCtas />
@@ -125,9 +122,9 @@ const Hero = () => {
             </Reveal>
           </div>
 
-          <Reveal delay={0.7} distance={20} className="mt-10 max-w-[560px]">
-            <p className="mb-6 text-white">Built for the AI tools your readers already use</p>
-            <AgentMarquee />
+          <Reveal delay={0.7} distance={20} className="mt-10 max-w-[640px]">
+            <p className="mb-5 text-white">One change. Every place a customer learns about it.</p>
+            <SurfaceRow />
           </Reveal>
         </div>
       </div>

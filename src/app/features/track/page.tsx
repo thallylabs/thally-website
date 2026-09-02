@@ -23,16 +23,16 @@ import { SITE_URL } from "@/lib/site";
 import { TrackDemo } from "./track-demo";
 
 export const metadata: Metadata = {
-  title: "Thally Track: Product Knowledge Impact Analysis",
+  title: "Thally Track: Product Change Impact Analysis",
   description:
-    "See how Thally Track understands a bounded product change, finds affected customer-facing knowledge, and drafts evidence-backed documentation updates for human review.",
+    "See how Thally Track understands a product change, finds every affected page across docs, website, help center, and changelog, and drafts evidence-backed updates for human review.",
   alternates: {
     canonical: "/features/track",
   },
   openGraph: {
-    title: "The product changed. The knowledge should follow.",
+    title: "The product changed. Every surface should follow.",
     description:
-      "Experience how Thally Track maps specific product changes to evidence-backed documentation drafts for human review.",
+      "Experience how Thally Track maps a product change to evidence-backed updates across docs, website, help center, and changelog, all for human review.",
     url: `${SITE_URL}/features/track`,
   },
 };
@@ -46,7 +46,7 @@ const softwareJsonLd = {
   operatingSystem: "Web",
   url: `${SITE_URL}/features/track`,
   description:
-    "Product knowledge impact analysis for explicit API, SDK, configuration, and CLI changes, starting with evidence-backed documentation drafts for human review.",
+    "Product change impact analysis for API, SDK, configuration, and CLI changes, producing evidence-backed update drafts across documentation, website, help center, and changelog for human review.",
   isPartOf: { "@id": `${SITE_URL}/#software` },
   publisher: { "@id": `${SITE_URL}/#organization` },
 };
@@ -84,7 +84,7 @@ function ImpactBoard() {
             id: "T-101",
             icon: <GitPullRequest className="text-canvas-accent size-9" />,
             title: "Impact analysis",
-            desc: "Track maps the bounded change to affected knowledge.",
+            desc: "Track maps the change to every affected surface.",
           },
           {
             kind: "task",
@@ -111,11 +111,11 @@ function ImpactBoard() {
             ],
             id: "#292",
             title: "docs: per-project webhook secrets",
-            desc: "Opened by thally-bot · needs 1 review",
+            desc: "Opened by thally-bot · 1 of 4 PRs · needs 1 review",
             items: [
               { label: "guides/webhooks.mdx updated", done: true },
-              { label: "api/projects.mdx updated", done: true },
-              { label: "Changelog entry drafted" },
+              { label: "Help center: rotating secrets", done: true },
+              { label: "Website /pricing#security" },
             ],
           },
           { kind: "filler", h: 110 },
@@ -140,7 +140,7 @@ function ImpactBoard() {
             ],
             id: "T-204",
             title: "Approve and merge",
-            desc: "Human review before anything ships.",
+            desc: "Human review before anything ships, on every surface.",
             progress: 90,
             avatars: 4,
             links: 6,
@@ -170,17 +170,17 @@ function ImpactBoard() {
 /** Light UI mocks for the pastel process cards. */
 function DocsIndexVisual() {
   const files = [
-    { path: "guides/", meta: "42 pages", done: true },
-    { path: "api/openapi.yaml", meta: "118 ops", done: true },
-    { path: "llms.txt", meta: "1 file", done: true },
-    { path: "snippets/", meta: "36 samples", done: false },
+    { path: "acme/docs · guides/", meta: "42 pages", done: true },
+    { path: "acme/docs · api/openapi.yaml", meta: "118 ops", done: true },
+    { path: "acme.com · website", meta: "36 pages", done: true },
+    { path: "help.acme.com · articles", meta: "210 articles", done: false },
   ];
   return (
     <div className="w-full rounded-2xl border border-black/[0.06] bg-white/85 p-4 shadow-[0_10px_30px_rgba(56,51,45,0.08)]">
       <div className="flex items-center justify-between border-b border-black/[0.06] pb-3">
         <span className="flex items-center gap-2 font-mono text-xs text-[#2b3124]">
           <SiGithub className="size-3.5" />
-          acme/docs
+          acme · knowledge surfaces
         </span>
         <span className="rounded-full bg-[#2b3124]/[0.06] px-2 py-0.5 text-[10px] font-medium text-[#4a5040]">
           indexing
@@ -273,7 +273,7 @@ function CandidateVisual() {
         </div>
       </div>
       <div className="mt-3 flex items-center justify-between border-t border-black/[0.06] pt-3">
-        <span className="font-mono text-[11px] text-[#6d7360]">evidence: acme/api#517</span>
+        <span className="font-mono text-[11px] text-[#6d7360]">evidence: acme/api#517 · 1 of 4 surfaces</span>
         <span className="text-[11px] font-medium text-[#2b3124]">Awaiting review</span>
       </div>
     </div>
@@ -287,8 +287,8 @@ export default function TrackFeaturePage() {
 
       <FeatureBanner
         title="Your product changed."
-        titleAccent="Did your docs?"
-        description="Track connects your documentation to the repositories that change it. When a pull request merges, Thally analyzes the bounded change, finds the connected pages, and drafts evidence-backed updates for review."
+        titleAccent="Did every surface follow?"
+        description="Track connects your docs, website, help center, and changelog to the repositories that change them. On merge, on pull request, or on a schedule you set, Thally reads the change, finds every page it affects, and drafts evidence-backed updates for review."
         primaryCta={{ label: "Try it on your repos", href: "#demo" }}
         secondaryCta={{ label: "See how it works", href: "#how-track-works" }}
         finePrint="No Thally account needed. You choose exactly which GitHub repositories Thally can read."
@@ -298,14 +298,14 @@ export default function TrackFeaturePage() {
 
       <div id="how-track-works">
         <ProcessCards
-          title="Understand the change before drafting the update."
+          title="Understand the change before drafting the update. On every surface."
           steps={[
             {
               label: "Connect",
-              title: "Connect your documentation",
-              subtitle: "Pages, code samples, OpenAPI, and llms.txt, indexed once.",
+              title: "Connect your knowledge surfaces",
+              subtitle: "Docs, website, help center, and changelog, indexed once.",
               description:
-                "Thally indexes your docs repository once, including pages, code samples, OpenAPI descriptions, and llms.txt.",
+                "Thally indexes your docs repository, including pages, code samples, OpenAPI descriptions, and llms.txt, then the other surfaces that explain your product: website pages, help center articles, and the changelog.",
               visual: <DocsIndexVisual />,
             },
             {
@@ -318,10 +318,11 @@ export default function TrackFeaturePage() {
             },
             {
               label: "Analyze",
-              title: "Analyze a merged change",
-              subtitle: "Candidates with evidence, confidence, and a drafted diff.",
+              title: "Analyze a change, when you choose",
+              subtitle:
+                "On merge, on PR open, or on a schedule. Every candidate carries evidence and a confidence score.",
               description:
-                "For each merged pull request, Track extracts public-surface changes, searches the connected docs, and presents candidates with evidence, confidence, and a drafted diff.",
+                "On every merge, when a pull request opens, or on a schedule you set, Track extracts customer-facing changes, searches every connected surface, and presents candidates with evidence, confidence, and a drafted diff for each one.",
               visual: <CandidateVisual />,
             },
           ]}
@@ -343,7 +344,7 @@ export default function TrackFeaturePage() {
         }
         quote="A no-change result is valid. Thally never pushes to main."
         quoteAttribution="How Track behaves, by design"
-        wideQuote="A repository is evidence about implementation; documentation is evidence about communicated behaviour. Track surfaces candidates backed by specific diffs, and every draft is reviewed by a human before it ships."
+        wideQuote="A repository is evidence about implementation. Your docs, website, and help center are evidence about communicated behaviour. Track surfaces candidates backed by specific diffs on each of them, and every draft is reviewed by a human before it ships."
         wideAttribution="What Track won't do: claim certainty"
       />
 

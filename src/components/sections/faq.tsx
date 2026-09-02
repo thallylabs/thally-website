@@ -10,12 +10,32 @@ const homeQuestions = [
   {
     question: "What is Thally?",
     answer:
-      "Thally keeps your documentation in step with your product. It watches the changes your team merges, works out which pages they affect, and opens the update as a pull request with the evidence attached. You review and merge, the same way you ship code.",
+      "Thally is the product knowledge layer for software teams. You create your documentation site on Thally, connect your product repositories, and connect the other surfaces that explain your product: website, help center, changelog. When the product changes, Thally finds every page the change affects and drafts the update as a pull request with the evidence attached. You review and merge.",
   },
   {
     question: "How is Thally different from other docs tools?",
     answer:
-      "Other docs tools give you somewhere to write. Thally does the work that keeps what you wrote true. It reads merged product changes, finds the pages they contradict, and drafts the fix alongside the diff that caused it. Your docs stop drifting between releases without anyone having to chase them.",
+      "Other docs tools give you somewhere to write. Thally does the work that keeps what you wrote true, and not only in the docs. It reads merged product changes, traces them across docs, website, and help center, and drafts each fix alongside the diff that caused it. Your surfaces stop drifting apart between releases.",
+  },
+  {
+    question: "Which surfaces can Thally keep current?",
+    answer:
+      "Documentation first: guides, API references, examples, and release notes in your docs repository. Connected surfaces run on the same pipeline: your marketing site, help center or support articles, and changelog. Each surface gets its own reviewable update, with the same evidence behind it.",
+  },
+  {
+    question: "How does Thally decide what needs to change?",
+    answer:
+      "It starts from evidence: the diff, the pull request discussion, and any linked tickets. Every candidate page gets a confidence score and the sources that earned it. If the evidence does not support an update, Thally says so instead of inventing one.",
+  },
+  {
+    question: "Will Thally publish something wrong on my website?",
+    answer:
+      "No. Thally never pushes to main and never publishes on its own. Every update is a pull request or a draft for your team to approve, with the diff that justified it attached. If you reject it, nothing changes. If you edit it, your edit is what ships.",
+  },
+  {
+    question: "When does Thally run?",
+    answer:
+      "On every merge, when a pull request opens, or on a schedule you choose. You can also mention @thally on a pull request to ask for a specific update, and run drift sweeps across existing pages.",
   },
   {
     question: "How do I migrate from Mintlify, Docusaurus, or GitBook?",
@@ -23,24 +43,9 @@ const homeQuestions = [
       "Give Thally Cloud your public docs URL, or run the create-thally-docs CLI against your repository. Thally converts your pages to MDX, rebuilds the navigation, and hands back a project you own. Nextra, VitePress, and Starlight migrate the same way.",
   },
   {
-    question: "How does Thally keep my docs up to date?",
-    answer:
-      "Publish or connect a docs site, then pick the product repositories Thally Track should watch. Every relevant merge gets read, mapped to the pages it affects, and turned into a reviewable documentation PR. Track tells you when nothing needs changing, and nothing reaches your readers without your approval.",
-  },
-  {
-    question: "How does Thally check documentation quality?",
-    answer:
-      "Every build gets a 0 to 100 agent readiness score for whether people and AI tools can find, read, and understand each page. Gate your CI on it to stop regressions at the pull request, and ask Thally to open the PR that fixes whatever it flagged.",
-  },
-  {
     question: "How can AI assistants read my docs?",
     answer:
-      "Directly, with no scraping. Every deployed site ships a remote MCP server at /api/mcp, so assistants can search your docs, open pages, and follow your navigation as a tool. The same URLs also serve Markdown and JSON for anything that simply fetches.",
-  },
-  {
-    question: "What does Thally cover today?",
-    answer:
-      "Documentation, end to end: the guides, API references, examples, and release notes in your docs repository. That is where drift costs you the most, so it is where Thally goes deepest. The wider knowledge surfaces around your product are next on the same pipeline.",
+      "Directly, with no scraping. Every deployed site ships a remote MCP server at /api/mcp, so assistants can search your docs, open pages, and follow your navigation as a tool. The same URLs also serve Markdown and JSON for anything that simply fetches. Keeping those pages current is the point: a stale page is now a wrong answer.",
   },
 ];
 
@@ -110,7 +115,7 @@ export const FAQ = ({ context = "home" }: { context?: "home" | "pricing" }) => {
             <p className="text-canvas-muted mt-5 text-lg">
               {context === "pricing"
                 ? "Find answers about plans, billing, hosting, cancellation, and Enterprise support."
-                : "What Thally does, how it keeps your docs current, what migration takes, and how it fits the stack you already have."}
+                : "What Thally does, which surfaces it keeps current, how it decides what to change, and how it fits the stack you already have."}
             </p>
           </Reveal>
         </div>

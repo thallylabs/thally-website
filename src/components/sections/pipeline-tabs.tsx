@@ -12,31 +12,31 @@ import { cn } from "@/lib/utils";
 const STAGES = [
   {
     number: "01.",
-    label: "Connect repositories",
-    title: "Set it up once. It runs on every merge.",
-    body: "Install the read-only GitHub App and choose the product repos Thally should watch. You choose exactly what Thally can see.",
+    label: "Connect repos and surfaces",
+    title: "Create your docs site. Connect the rest.",
+    body: "Create or migrate your docs on Thally, then connect the product repositories and the surfaces that explain them: website, help center, changelog. Read-only access, chosen by you.",
     icon: GitBranch,
   },
   {
     number: "02.",
-    label: "Impact analysis",
-    title: "Understand the change before the update.",
-    body: "Track evaluates merged changes, gathers evidence, and finds the documentation each change affects.",
+    label: "Understand the change",
+    title: "Read the merge the way a good tech writer would.",
+    body: "On every merge, on pull request, or on a schedule you set, Thally reads the diff, the PR discussion, and the linked tickets to work out what changed for customers.",
     icon: Track,
   },
   {
     number: "03.",
-    label: "Drafted docs PRs",
-    title: "Evidence-backed drafts, ready to review.",
-    body: "Thally opens a pull request on your docs repo only when the evidence says an update is needed.",
-    icon: GitPullRequest,
+    label: "Trace the impact",
+    title: "Find every page the change touches.",
+    body: "Thally maps the change across docs, website, help center, and changelog, with a confidence score per page and the evidence behind it. No change is a valid answer.",
+    icon: Structured,
   },
   {
     number: "04.",
-    label: "Human review",
-    title: "You approve what ships. Every time.",
-    body: "Your team reviews, edits, and merges. A no-change result is valid. Thally never pushes to main.",
-    icon: Structured,
+    label: "Evidence-backed PRs",
+    title: "Draft the update. You approve what ships.",
+    body: "Each affected surface gets a pull request with the diff as evidence. Your team reviews, edits, and merges. Nothing publishes without a human.",
+    icon: GitPullRequest,
   },
 ];
 
@@ -67,11 +67,12 @@ export function PipelineTabs() {
       <div className="mb-[60px] border-b border-white/18 pb-[60px]">
         <div className="mx-auto max-w-[746px] px-5 text-center">
           <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
-            One product change. The right knowledge updates.
+            One change ships. Every surface follows.
           </SplitReveal>
           <Reveal delay={0.15} distance={20}>
             <p className="mt-5 text-lg text-white/90">
-              Thally watches the repos you choose and drafts only the updates the evidence supports.
+              Detection tells you which pages the evidence says are affected. Propagation lands the fix on each one.
+              Both, in one pipeline.
             </p>
           </Reveal>
         </div>
@@ -240,46 +241,37 @@ function Panel({
 const rowBase =
   "flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5";
 
-/** The first two stages use the Thally-labeled diagrams. */
-const STAGE_DIAGRAMS: Record<number, string> = {
-  0: "/template/workflow-diagram.png",
-  1: "/template/impact-analysis-diagram.png",
-};
+/** Small surface-kind tag used on cross-surface rows. */
+function SurfaceTag({ kind }: { kind: string }) {
+  return (
+    <span className="shrink-0 rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-[10px] text-white/45">{kind}</span>
+  );
+}
 
 function StageVisual({ index }: { index: number }) {
-  const diagram = STAGE_DIAGRAMS[index];
-  if (diagram) {
-    return (
-      <img src={diagram} alt="" aria-hidden className="w-full max-w-[520px]" loading={index === 0 ? "eager" : "lazy"} />
-    );
-  }
-
   if (index === 0) {
     return (
-      <Panel title="acme · Thally GitHub App" icon={<SiGithub className="size-4 text-white/45" />} status="read-only">
+      <Panel title="acme · Thally connections" icon={<SiGithub className="size-4 text-white/45" />} status="read-only">
         {(
           [
-            ["acme/api", "main", "watching", "synced 2m ago"],
-            ["acme/web-app", "main", "watching", "synced 18m ago"],
-            ["acme/docs", "main", "docs target", "synced 4m ago"],
+            ["acme/api", "repo", "watching", "synced 2m ago"],
+            ["acme/docs", "docs", "Thally site", "synced 4m ago"],
+            ["acme.com", "website", "connected", "synced 18m ago"],
+            ["help.acme.com", "help center", "connected", "synced 21m ago"],
           ] as const
-        ).map(([repo, branch, role, synced]) => (
-          <div key={repo} className={rowBase}>
-            <SiGithub className="size-3.5 shrink-0 text-white/35" />
-            <span className="truncate font-mono text-xs text-white/85">{repo}</span>
-            <span className="flex shrink-0 items-center gap-1 rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-[10px] text-white/45">
-              <GitBranch className="size-2.5" />
-              {branch}
-            </span>
+        ).map(([name, kind, role, synced]) => (
+          <div key={name} className={rowBase}>
+            <span className="bg-canvas-accent size-1.5 shrink-0 rounded-full" />
+            <span className="truncate font-mono text-xs text-white/85">{name}</span>
+            <SurfaceTag kind={kind} />
             <span className="flex shrink-0 items-center gap-1.5 text-[10px] text-white/40 sm:ml-auto">
-              <span className="bg-canvas-accent size-1.5 rounded-full" />
               {role} · {synced}
             </span>
           </div>
         ))}
-        <div className="flex items-center justify-between border-t border-white/[0.06] pt-2.5 text-[11px] text-white/40">
-          <span>Read-only access. You choose exactly what Thally can see.</span>
-          <span className="shrink-0 tabular-nums">3 repos</span>
+        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-white/[0.06] pt-2.5 text-[11px] text-white/40">
+          <span>Runs on merge · on PR open · nightly</span>
+          <span className="shrink-0 tabular-nums">4 connections</span>
         </div>
       </Panel>
     );
@@ -290,7 +282,7 @@ function StageVisual({ index }: { index: number }) {
       <Panel
         title="acme/api#517"
         icon={<Track className="text-canvas-accent size-4" />}
-        status="analyzing"
+        status="understanding"
         statusTone="warn"
       >
         <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5">
@@ -305,28 +297,56 @@ function StageVisual({ index }: { index: number }) {
         <div aria-hidden className="mx-auto h-4 w-px bg-gradient-to-b from-white/25 to-transparent" />
         {(
           [
-            ["guides/webhooks.mdx", "0.94", "update needed"],
-            ["api/projects.mdx", "0.87", "update needed"],
-            ["guides/quickstart.mdx", "0.12", "no change"],
-            ["api/webhooks.mdx", "", "scanning"],
+            ["Diff", "2 endpoints, 1 config schema changed", true],
+            ["PR discussion", "rotation moves to Project Settings", true],
+            ["Linked ticket", "LIN-482 · per-project secrets", true],
+            ["Release notes draft", "", false],
           ] as const
-        ).map(([page, confidence, verdict]) => (
-          <div key={page} className={rowBase}>
-            {verdict === "scanning" ? (
-              <span className="border-canvas-accent/40 border-t-canvas-accent size-3 shrink-0 animate-spin rounded-full border-2" />
+        ).map(([source, finding, done]) => (
+          <div key={source} className={rowBase}>
+            {done ? (
+              <Check className="text-canvas-accent size-3.5 shrink-0" />
             ) : (
-              <span
-                className={cn(
-                  "size-1.5 shrink-0 rounded-full",
-                  verdict === "no change" ? "bg-white/25" : "bg-canvas-accent",
-                )}
-              />
+              <span className="border-canvas-accent/40 border-t-canvas-accent size-3 shrink-0 animate-spin rounded-full border-2" />
             )}
-            <span className="truncate font-mono text-[11px] text-white/75">{page}</span>
-            <span className="ml-auto flex shrink-0 items-center gap-2">
-              {confidence && (
-                <span className="font-mono text-[10px] text-white/35 tabular-nums">conf {confidence}</span>
+            <span className="shrink-0 text-[11px] text-white/80">{source}</span>
+            <span className="truncate text-[11px] text-white/40 sm:ml-auto">{finding || "reading"}</span>
+          </div>
+        ))}
+        <p className="border-t border-white/[0.06] px-1 pt-2.5 text-[11px] leading-relaxed text-white/55">
+          Customer-facing: webhook secrets are now per project, rotated from Project Settings.
+        </p>
+      </Panel>
+    );
+  }
+
+  if (index === 2) {
+    return (
+      <Panel
+        title="Impact of acme/api#517"
+        icon={<Structured className="text-canvas-accent size-4" />}
+        status="4 pages affected"
+      >
+        {(
+          [
+            ["guides/webhooks.mdx", "docs", "0.94", "update needed"],
+            ["/pricing#security", "website", "0.81", "update needed"],
+            ["Rotating webhook secrets", "help center", "0.88", "update needed"],
+            ["September release notes", "changelog", "0.97", "update needed"],
+            ["guides/quickstart.mdx", "docs", "0.12", "no change"],
+          ] as const
+        ).map(([page, kind, confidence, verdict]) => (
+          <div key={page} className={rowBase}>
+            <span
+              className={cn(
+                "size-1.5 shrink-0 rounded-full",
+                verdict === "no change" ? "bg-white/25" : "bg-canvas-accent",
               )}
+            />
+            <span className="truncate font-mono text-[11px] text-white/75">{page}</span>
+            <SurfaceTag kind={kind} />
+            <span className="ml-auto flex shrink-0 items-center gap-2">
+              <span className="font-mono text-[10px] text-white/35 tabular-nums">conf {confidence}</span>
               <span
                 className={cn(
                   "rounded-full px-2 py-0.5 text-[10px] font-medium",
@@ -340,64 +360,37 @@ function StageVisual({ index }: { index: number }) {
             </span>
           </div>
         ))}
-      </Panel>
-    );
-  }
-
-  if (index === 2) {
-    return (
-      <Panel
-        title="acme/docs #292"
-        icon={<GitPullRequest className="text-canvas-accent size-4" />}
-        status="draft"
-        statusTone="warn"
-      >
-        <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5">
-          <p className="truncate text-xs font-medium text-white/85">docs: document per-project webhook secrets</p>
-          <div className="mt-2 flex items-center gap-2">
-            <span className="text-[10px] text-white/40">
-              thally-bot opened 3m ago · 2 files changed · label origin: track
-            </span>
-          </div>
-        </div>
-        <div className="rounded-xl border border-white/[0.07] bg-black/45 p-3 font-mono text-[11px] leading-[1.7]">
-          <p className="text-white/25">@@ guides/webhooks.mdx +18 -6</p>
-          <p className="text-[#c48b95]">- Webhook secrets are shared across projects.</p>
-          <p className="text-canvas-accent">+ Each project now has its own webhook secret.</p>
-          <p className="text-canvas-accent">+ Rotate secrets from Project Settings.</p>
-        </div>
-        <div className="flex items-center gap-1.5 border-t border-white/[0.06] pt-2.5">
-          <span className="text-canvas-accent bg-canvas-accent/12 rounded px-1.5 py-0.5 font-mono text-[10px]">
-            +42
-          </span>
-          <span className="rounded bg-[#c48b95]/12 px-1.5 py-0.5 font-mono text-[10px] text-[#c48b95]">-11</span>
-          <span className="ml-auto text-[10px] text-white/40">every line backed by the diff</span>
-        </div>
+        <p className="border-t border-white/[0.06] px-1 pt-2.5 text-[11px] text-white/40">
+          Every score links to the diff lines that earned it.
+        </p>
       </Panel>
     );
   }
 
   return (
-    <Panel title="acme/docs #292" icon={<Structured className="text-canvas-accent size-4" />} status="awaiting review">
-      <div className="flex items-center gap-2 rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5">
-        <span className="truncate text-[11px] text-white/60">Review requested from two maintainers</span>
-        <span className="ml-auto shrink-0 text-[10px] text-white/35">2m ago</span>
-      </div>
+    <Panel
+      title="4 pull requests · 1 change"
+      icon={<GitPullRequest className="text-canvas-accent size-4" />}
+      status="awaiting review"
+      statusTone="warn"
+    >
       {(
         [
-          ["Evidence attached", "4 diffs", true],
-          ["Preview build passed", "38s", true],
-          ["Approvals", "1 of 2", false],
+          ["acme/docs#292", "docs", "+42", "-11"],
+          ["acme/website#88", "website", "+9", "-4"],
+          ["acme/help-center#41", "help center", "+17", "-6"],
+          ["acme/changelog#12", "changelog", "+6", "-0"],
         ] as const
-      ).map(([label, meta, done]) => (
-        <div key={label} className="flex items-center gap-2 px-1 py-1.5 text-[11px]">
-          {done ? (
-            <Check className="text-canvas-accent size-3.5 shrink-0" />
-          ) : (
-            <span className="size-3.5 shrink-0 rounded-full border border-white/25" />
-          )}
-          <span className={done ? "text-white/55" : "text-white/75"}>{label}</span>
-          <span className="ml-auto font-mono text-[10px] text-white/35 tabular-nums">{meta}</span>
+      ).map(([pr, kind, add, del]) => (
+        <div key={pr} className={rowBase}>
+          <GitPullRequest className="text-canvas-accent size-3.5 shrink-0" />
+          <span className="truncate font-mono text-[11px] text-white/85">{pr}</span>
+          <SurfaceTag kind={kind} />
+          <span className="ml-auto flex shrink-0 items-center gap-1.5 font-mono text-[10px]">
+            <span className="text-canvas-accent">{add}</span>
+            <span className="text-[#c48b95]">{del}</span>
+            <span className="text-white/35">· evidence attached</span>
+          </span>
         </div>
       ))}
       {/* Static action bar, rendered as spans so the hidden layers stay untabbable */}
@@ -408,7 +401,7 @@ function StageVisual({ index }: { index: number }) {
         <span className="rounded-lg border border-white/15 px-3.5 py-2 text-xs font-medium text-white/70">
           Request changes
         </span>
-        <span className="flex items-center gap-1.5 text-[10px] text-white/35 sm:ml-auto">awaiting review</span>
+        <span className="flex items-center gap-1.5 text-[10px] text-white/35 sm:ml-auto">0 of 4 approved</span>
       </div>
       <p className="px-1 pt-1 text-[11px] text-white/40">Nothing publishes until a human approves it.</p>
     </Panel>

@@ -65,19 +65,19 @@ export const faqItems: FAQItem[] = [
     category: "Features",
     question: "What is Thally?",
     answer:
-      "Thally is a product knowledge synchronization pipeline. It connects product changes to customer-facing knowledge, identifies what needs to change, and prepares reviewable updates. Documentation is the first surface.",
+      "Thally is the product knowledge layer for software teams. You create your documentation site on Thally, connect your product repositories and the surfaces that explain the product, and Thally drafts evidence-backed updates whenever the product changes. Your team approves what ships.",
   },
   {
     category: "Features",
     question: "How is Thally different from a documentation platform?",
     answer:
-      "A documentation platform is a destination where knowledge is written and stored. Thally adds the synchronization pipeline around it. Track evaluates product changes, maps them to affected documentation, and prepares evidence-backed updates for human review.",
+      "A documentation platform is a destination where knowledge is written and stored. Thally adds the pipeline around it. Track evaluates product changes, traces them across documentation, website, help center, and changelog, and prepares evidence-backed updates for human review on each one.",
   },
   {
     category: "Features",
     question: "What knowledge surfaces can Thally update today?",
     answer:
-      "Thally currently focuses automated updates on documentation repositories, including the guides, API references, examples, and release notes maintained there. The long-term direction is to keep the broader customer-facing knowledge ecosystem synchronized.",
+      "Documentation repositories, including guides, API references, examples, and release notes, plus the connected surfaces that explain your product: marketing site pages, help center or support articles, and the changelog. Each connected surface gets its own reviewable update.",
   },
   {
     category: "Features",

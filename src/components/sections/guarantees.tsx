@@ -6,8 +6,28 @@ import { cn } from "@/lib/utils";
 
 const GUARANTEES = [
   {
-    title: "Your content stays in your repository",
-    body: "Your documentation remains as source files in your repository. There is nothing to export because we never hold the source.",
+    title: "Every update carries its evidence",
+    body: "Each pull request shows what changed, where the information came from, and why the update was necessary. You verify before you merge.",
+    tag: "Evidence first",
+  },
+  {
+    title: "A no-change result is valid",
+    body: "Thally reports when a page does not need to change instead of inventing an update to look busy.",
+    tag: "No busywork",
+  },
+  {
+    title: "Humans approve everything that ships",
+    body: "Thally never pushes to main and never publishes on its own. Your team keeps judgment and publishing authority on every surface.",
+    tag: "Human review",
+  },
+  {
+    title: "Thally never invents product behavior",
+    body: "Drafts are grounded in the diff, the pull request, and the linked tickets. If the evidence is not there, the words are not either.",
+    tag: "Grounded in the diff",
+  },
+  {
+    title: "Your content stays in your repositories",
+    body: "Docs, website, and help center content remain as source files where they live today. There is nothing to export because we never hold the source.",
     tag: "Source files in Git",
   },
   {
@@ -16,34 +36,14 @@ const GUARANTEES = [
     tag: "MIT licensed",
   },
   {
-    title: "Self-hosting stays available",
-    body: "Clone the repository and deploy the open-source engine wherever Next.js runs. Managed hosting is a service, not a content lock-in.",
-    tag: "Deploy anywhere",
-  },
-  {
-    title: "Your domain stays under your control",
-    body: "Thally never takes ownership of your domain. Use it wherever you deploy the site.",
-    tag: "Your domain",
+    title: "Your surfaces stay under your control",
+    body: "Thally never takes ownership of your domain, your website, or your help center. It proposes updates into the tools you already use.",
+    tag: "Your domain, your tools",
   },
   {
     title: "Cancellation leaves you with the source",
-    body: "Your repository and the MIT-licensed engine remain yours. If Cloud hosting ends, you can deploy the site elsewhere.",
+    body: "Your repositories and the MIT-licensed engine remain yours. If Cloud hosting ends, you can deploy the site elsewhere.",
     tag: "No exit tax",
-  },
-  {
-    title: "Humans approve important communication",
-    body: "Thally prepares reviewable work. Your team keeps judgment and publishing authority.",
-    tag: "Human review",
-  },
-  {
-    title: "Understand before generating",
-    body: "Thally finds what changed, gathers evidence, and maps the affected knowledge before drafting new words.",
-    tag: "Evidence first",
-  },
-  {
-    title: "A no-change result is valid",
-    body: "Thally reports when no documentation update is needed instead of inventing one.",
-    tag: "No busywork",
   },
 ];
 
@@ -82,7 +82,7 @@ function MarqueeRow({ items, reverse }: { items: typeof GUARANTEES; reverse?: bo
 /**
  * Template "testimonial-section": a light rounded band over the pastel
  * illustration with two counter-scrolling marquee rows of glass cards.
- * Carries Thally's no-lock-in guarantees instead of testimonials.
+ * Carries Thally's evidence and no-lock-in guarantees instead of testimonials.
  */
 export function Guarantees() {
   return (
@@ -101,12 +101,12 @@ export function Guarantees() {
         <div className="marketing-section-pad relative">
           <div className="mx-auto max-w-3xl px-5 text-center">
             <SplitReveal as="h2" mode="chars" className="heading-section text-white">
-              Proof over promises
+              Evidence first. Your surfaces stay yours.
             </SplitReveal>
             <Reveal delay={0.15} distance={24}>
               <p className="mx-auto mt-5 max-w-xl text-lg text-white/85">
-                Pay for the service. Keep the source. Thally Cloud never takes ownership of your content, repository,
-                engine, or domain.
+                The goal is not to replace the people who own your docs, website, or help center. It is to hand them the
+                update, with proof, before a customer finds the gap.
               </p>
             </Reveal>
           </div>
