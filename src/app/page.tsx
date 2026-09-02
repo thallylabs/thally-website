@@ -46,7 +46,7 @@ const productJsonLd = {
   operatingSystem: "Web",
   license: "https://opensource.org/license/mit",
   description:
-    "Thally is a product knowledge synchronization pipeline. It understands product changes, identifies the customer-facing documentation affected, and prepares evidence-backed updates for human review.",
+    "Thally is the product knowledge layer for software teams. When a product change merges, it works out what the change means, traces the impact across connected documentation, website, help center, and changelog surfaces, and opens evidence-backed pull requests for human review. It is also a complete AI-native documentation platform.",
   publisher: { "@id": `${SITE_URL}/#organization` },
   mainEntityOfPage: SITE_URL,
   offers: [
@@ -76,7 +76,7 @@ const productJsonLd = {
     },
   ],
   featureList: [
-    "Product change intelligence that maps merged changes to affected documentation",
+    "Product change intelligence that maps merged changes to affected documentation, website pages, and support content",
     "Evidence-backed impact analysis with no-change as a valid result",
     "Product-specific knowledge that improves through accepted reviews and corrections",
     "Human approval for important customer-facing communication",
@@ -85,7 +85,7 @@ const productJsonLd = {
     "Remote MCP server at /api/mcp on every deployed site",
     "Agent-readiness score with CI gating and Thally-drafted fix PRs",
     "@thally GitHub mentions can become reviewable docs PRs",
-    "Thally Track can turn relevant merged product PRs into reviewable documentation PRs",
+    "Thally Track turns relevant merged product PRs into reviewable PRs across connected customer-facing surfaces",
     "Migration from Mintlify, Docusaurus, GitBook, Nextra, VitePress, and Starlight",
     "OpenAPI API reference with interactive Try-It console",
     "Hybrid ⌘K search and retrieval-grounded AI chat with citations",

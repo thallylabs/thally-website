@@ -28,8 +28,8 @@ export function QuoteCard() {
       >
         <div className="relative mx-auto max-w-[560px]">
           <p className="subtitle-display text-center">
-            Thally turns shipped code into shipped docs.{" "}
-            <span className="linear-text">Every change lands exactly where it belongs.</span>
+            A feature ships, and your team should not have to hunt for every page that now says something wrong.{" "}
+            <span className="linear-text">Thally does the detective work.</span>
           </p>
 
           <div className="mt-10 flex justify-center">

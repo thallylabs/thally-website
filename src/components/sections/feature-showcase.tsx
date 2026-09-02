@@ -32,8 +32,8 @@ const SMALL_FEATURES = [
   },
   {
     icon: Overview,
-    title: "Review every docs task in one queue",
-    description: "Updates from merged changes, drift sweeps, and @thally mentions, approved before merge.",
+    title: "Review every update in one queue",
+    description: "Drafts from merged changes, drift sweeps, and @thally mentions, approved before merge.",
   },
   {
     icon: Mcp,
@@ -54,12 +54,12 @@ export function FeatureShowcase() {
       <div className="mb-[60px] border-b border-white/18 pb-[60px]">
         <div className="mx-auto max-w-3xl px-5 text-center">
           <SplitReveal as="h2" mode="chars" className="heading-section text-canvas-foreground">
-            Maintain one source. Serve every reader.
+            A complete docs platform underneath.
           </SplitReveal>
           <Reveal delay={0.15} distance={24}>
             <p className="text-canvas-muted mx-auto mt-6 max-w-xl text-lg">
-              Your team maintains one set of pages. Everyone who reads them, person or agent, gets the version they can
-              actually use.
+              Thally is also where your documentation lives, with custom domains, search, versioned deploys, rollbacks,
+              and AI assistants included.
             </p>
           </Reveal>
         </div>

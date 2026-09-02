@@ -48,13 +48,13 @@ function HeroCtas() {
         href={DESTINATIONS.signup}
         className="btn-sheen text-canvas inline-flex items-center justify-center rounded-lg bg-white px-7 py-3.5 text-lg font-medium"
       >
-        Get Started
+        Get started free
       </a>
       <Link
         href="/features/track#demo"
         className="btn-sheen inline-flex items-center justify-center rounded-lg border border-[#606060] px-7 py-3.5 text-lg font-medium text-white"
       >
-        Try Thally
+        Run Thally on a repo
       </Link>
     </div>
   );
@@ -111,13 +111,14 @@ const Hero = () => {
               className="heading-hero max-w-[13ch] text-pretty text-white"
               stagger={0.4}
             >
-              Every product change. Every knowledge surface. Automatically in sync.
+              Your product changed. Did your docs, website, and help center?
             </SplitReveal>
 
             <Reveal delay={0.5} distance={30} className="mt-7">
               <p className="max-w-[36ch] text-xl tracking-[-0.04em] text-pretty text-white">
-                One MDX source serves AI agents and human readers from the same URL. And when your product changes,
-                Thally drafts the docs PR.
+                Thally is the product knowledge layer for software teams. When a pull request merges, it works out what
+                changed, traces the impact across your connected surfaces, and opens evidence-backed PRs your team can
+                review and merge.
               </p>
               <div className="mt-9">
                 <HeroCtas />
@@ -126,7 +127,7 @@ const Hero = () => {
           </div>
 
           <Reveal delay={0.7} distance={20} className="mt-10 max-w-[560px]">
-            <p className="mb-6 text-white">Built for the AI tools your readers already use</p>
+            <p className="mb-6 text-white">Built for the people and AI tools reading your product knowledge</p>
             <AgentMarquee />
           </Reveal>
         </div>
