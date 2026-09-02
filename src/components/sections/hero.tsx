@@ -11,16 +11,7 @@ import { DESTINATIONS } from "@/lib/site";
  * The surfaces a product change has to reach. Named, not abstracted: "every
  * knowledge surface" is internal vocabulary, this row is what it means.
  */
-const SURFACES = [
-  "Docs",
-  "API reference",
-  "Quickstart",
-  "Marketing site",
-  "Help center",
-  "Changelog",
-  "Blog examples",
-  "Integration guides",
-];
+const SURFACES = ["Docs", "API reference", "Website", "Help center", "Support articles", "Changelog", "AI context"];
 
 function SurfaceRow() {
   return (
@@ -45,13 +36,13 @@ function HeroCtas() {
         href="/features/track#demo"
         className="btn-sheen text-canvas inline-flex items-center justify-center rounded-lg bg-white px-7 py-3.5 text-lg font-medium"
       >
-        Run Thally on a repo
+        Run Thally on your repos
       </Link>
       <a
         href={DESTINATIONS.signup}
         className="btn-sheen inline-flex items-center justify-center rounded-lg border border-[#606060] px-7 py-3.5 text-lg font-medium text-white"
       >
-        Create your docs site
+        Get started free
       </a>
     </div>
   );
@@ -113,8 +104,9 @@ const Hero = () => {
 
             <Reveal delay={0.5} distance={30} className="mt-7">
               <p className="max-w-[40ch] text-xl tracking-[-0.04em] text-pretty text-white">
-                Thally is the product knowledge layer for software teams. It watches the repos you connect, finds every
-                page a merge affects, and drafts the update with the diff as evidence. You approve.
+                Thally is the product knowledge layer for software teams. When a pull request merges, it works out what
+                changed, traces the impact across your docs, website, and help center, then opens evidence-backed PRs
+                for your team to review.
               </p>
               <div className="mt-9">
                 <HeroCtas />
@@ -123,7 +115,7 @@ const Hero = () => {
           </div>
 
           <Reveal delay={0.7} distance={20} className="mt-10 max-w-[640px]">
-            <p className="mb-5 text-white">One change. Every place a customer learns about it.</p>
+            <p className="mb-5 text-white">One change in the code. The right update on every surface.</p>
             <SurfaceRow />
           </Reveal>
         </div>

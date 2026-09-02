@@ -1,18 +1,18 @@
 # Thally
 
-> Thally is the product knowledge synchronization pipeline. It understands what changed, finds the customer-facing knowledge affected, and prepares evidence-backed updates for human review. Documentation is the first surface, and the publishing engine is open source under the MIT license.
+> Thally is the product knowledge layer for software teams. When a product change merges, it works out what the change means, traces the impact across connected docs, website, help center, changelog, and other customer-facing surfaces, then opens evidence-backed updates for human review. It is also a complete AI-native documentation platform, and its publishing engine is open source under the MIT license.
 
 ## What Thally does
 
-- Product change intelligence: Track evaluates merged changes from connected product repositories and maps them to affected customer-facing documentation.
-- Understanding before generation: Thally gathers evidence and treats no documentation change as a valid result instead of generating content by default.
-- Human review: important communication stays reviewable. Thally prepares pull requests, and the customer's team decides what lands.
-- Product-specific knowledge: accepted reviews, corrections, and releases strengthen Thally's understanding of how each customer's product changes affect its documentation.
+- Product change intelligence: Track evaluates merged changes from connected product repositories and maps them to affected docs, website pages, help center articles, changelog entries, and other connected customer-facing content.
+- Understanding before generation: Thally gathers evidence and treats no change as a valid result instead of generating content by default.
+- Human review: important communication stays reviewable. Thally prepares pull requests or drafts for each affected surface, and the customer's team decides what lands.
+- Product-specific knowledge: accepted reviews, corrections, and releases strengthen Thally's understanding of how each customer's product changes affect connected product knowledge.
 - AI-native output: every docs page supports content negotiation (?format=json, ?format=md, Accept headers). Agents get structured data; humans get the same pre-rendered UI.
 - Remote MCP server: every deployed docs site exposes /api/mcp. Attach it to any agent and the docs become native tools (search_docs, read_page, list_pages, agent_readiness). No key, no account.
 - Agent-readiness score: a deterministic 0-100 grade per build covering structured data, metadata, discovery files, machine readability, and OpenAPI coverage. Gate CI on a threshold, then ask Thally to draft fixes for low-scoring pages.
 - Docs agent: turn an instruction, a diff, or a product PR into a reviewable docs pull request. Comment "@thally document this" on any GitHub issue or PR to trigger it. The agent never merges; a human always does.
-- Docs updates from product changes: after a Thally site is live, choose the product repos Thally should watch. Thally can turn relevant merged changes into reviewable documentation PRs and report when no docs change is needed.
+- Updates from product changes: after a Thally site is live, choose the product repos and customer-facing surfaces Thally should connect. Thally can turn relevant merged changes into reviewable updates for each affected surface and report when no change is needed.
 - Provenance and drift: machine-legible lastUpdated / lastVerified dates, plus deterministic drift detection against the source code each page documents.
 - Authoring: MDX with 25+ components, OpenAPI-generated API reference with an interactive Try-It console, hybrid full-text + vector search, retrieval-grounded AI chat with inline citations.
 - Multi-language: one command translates the whole site; locale URLs, hreflang, and graceful fallbacks.
@@ -23,15 +23,15 @@
 ## Pages
 
 - [Home](/): product overview, features, pricing, FAQ
-- [Thally Track](/features/track): product-change impact analysis, evidence, findings, and reviewable drafts
-- [Automation](/features/automation): merged product changes become reviewable documentation pull requests
+- [Thally Track](/features/track): product-change impact analysis across docs, website, help center, and changelog, with evidence and reviewable drafts
+- [Automation](/features/automation): product changes become evidence-backed pull requests on connected surfaces
 - [Content Graph](/features/content-graph): write once in MDX and publish HTML, JSON, llms.txt, and Markdown
 - [Agent Layer](/features/agent-layer): llms.txt, MCP server, and grounded answers with cited sources
 - [Migration & Hosting](/features/migration-hosting): migrate from GitBook, Mintlify, Docusaurus, or Markdown and let Thally host
 - [Cloud Dashboard](/features/cloud-dashboard): sites, drafts, analytics, team, and AI context in one workspace
 - [Pricing](/pricing): Free (1 managed site per workspace plus MIT self-hosting), Cloud (3 managed sites and 10,000 monthly AI credits), Enterprise (custom allowances and contract terms)
 - [Blog](/blog): comparisons, guides, and product deep dives (RSS at /rss.xml)
-- [About](/about): the problem, position, product principles, and long-term mission
+- [About](/about): the founder story, the manual detective work behind Thally, and the product principles
 - [FAQ](/faq): common questions on migration, automation, agents, self-hosting
 - [Contact](/contact): sales and support
 - [Create a docs site](https://app.thally.io/register): create one managed documentation site for free

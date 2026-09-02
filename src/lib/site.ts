@@ -14,7 +14,7 @@ export const SITE_TAGLINE = "The Product Knowledge Layer for Software Teams";
 export const SOCIAL_PREVIEW_TITLE = `${SITE_NAME} - The Product Knowledge Layer for Software Teams`;
 
 export const SOCIAL_PREVIEW_DESCRIPTION =
-  "Your product changed. Thally finds every page it affects across docs, website, and help center, and drafts the update with evidence.";
+  "When a pull request merges, Thally traces its impact across your docs, website, and help center, then opens evidence-backed PRs for your team to review.";
 
 export const SITE_TITLE = SOCIAL_PREVIEW_TITLE;
 

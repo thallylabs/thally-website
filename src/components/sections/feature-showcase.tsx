@@ -59,8 +59,8 @@ export function FeatureShowcase() {
           </SplitReveal>
           <Reveal delay={0.15} distance={24}>
             <p className="text-canvas-muted mx-auto mt-6 max-w-xl text-lg">
-              Thally is not only the automation. Your docs site itself lives here: one MDX source serving people and AI
-              tools, with grounded answers, search, and a readiness score you can gate CI on.
+              Thally is also where your documentation lives: one source with custom domains, search, versioned deploys,
+              rollbacks, grounded AI assistants, and formats built for people and machines.
             </p>
           </Reveal>
         </div>

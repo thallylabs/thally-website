@@ -1,6 +1,6 @@
 # Thally
 
-The Thally marketing site. Thally is the product knowledge synchronization pipeline. It understands what changed, finds the customer-facing knowledge affected, and prepares reviewable updates, starting with documentation.
+The Thally marketing site. Thally is the product knowledge layer for software teams. It understands product changes, traces their impact across connected customer-facing surfaces, and prepares evidence-backed updates for human review.
 
 Built with Next.js 16 (App Router), Tailwind CSS v4, shadcn/ui, and Motion.
 

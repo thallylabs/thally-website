@@ -23,16 +23,16 @@ import { SITE_URL } from "@/lib/site";
 import { TrackDemo } from "./track-demo";
 
 export const metadata: Metadata = {
-  title: "Thally Track: Product Change Impact Analysis",
+  title: "Thally Track: Product Knowledge Impact Analysis",
   description:
-    "See how Thally Track understands a product change, finds every affected page across docs, website, help center, and changelog, and drafts evidence-backed updates for human review.",
+    "See how Thally Track understands a merged product change, traces its impact across your docs, website, and help center, and drafts evidence-backed updates for human review.",
   alternates: {
     canonical: "/features/track",
   },
   openGraph: {
-    title: "The product changed. Every surface should follow.",
+    title: "Your product changed. Did your docs, website, and help center?",
     description:
-      "Experience how Thally Track maps a product change to evidence-backed updates across docs, website, help center, and changelog, all for human review.",
+      "Experience how Thally Track maps a specific product change to evidence-backed drafts on every connected knowledge surface, ready for human review.",
     url: `${SITE_URL}/features/track`,
   },
 };
@@ -46,7 +46,7 @@ const softwareJsonLd = {
   operatingSystem: "Web",
   url: `${SITE_URL}/features/track`,
   description:
-    "Product change impact analysis for API, SDK, configuration, and CLI changes, producing evidence-backed update drafts across documentation, website, help center, and changelog for human review.",
+    "Product knowledge impact analysis for API, SDK, configuration, and CLI changes. Traces each merged change to affected docs, website pages, and support content, and drafts evidence-backed updates for human review.",
   isPartOf: { "@id": `${SITE_URL}/#software` },
   publisher: { "@id": `${SITE_URL}/#organization` },
 };
@@ -287,8 +287,8 @@ export default function TrackFeaturePage() {
 
       <FeatureBanner
         title="Your product changed."
-        titleAccent="Did every surface follow?"
-        description="Track connects your docs, website, help center, and changelog to the repositories that change them. On merge, on pull request, or on a schedule you set, Thally reads the change, finds every page it affects, and drafts evidence-backed updates for review."
+        titleAccent="Did your docs, website, and help center?"
+        description="Track connects the repositories that change your product to every surface that describes it. When a pull request merges, Thally works out what the change means, traces the impact across your docs, website, and support content, and drafts evidence-backed updates for review. By default it runs on merge. You can also run it when a pull request opens, or on a schedule."
         primaryCta={{ label: "Try it on your repos", href: "#demo" }}
         secondaryCta={{ label: "See how it works", href: "#how-track-works" }}
         finePrint="No Thally account needed. You choose exactly which GitHub repositories Thally can read."
@@ -298,14 +298,14 @@ export default function TrackFeaturePage() {
 
       <div id="how-track-works">
         <ProcessCards
-          title="Understand the change before drafting the update. On every surface."
+          title="Understand the change. Then trace it everywhere."
           steps={[
             {
               label: "Connect",
-              title: "Connect your knowledge surfaces",
-              subtitle: "Docs, website, help center, and changelog, indexed once.",
+              title: "Connect your surfaces",
+              subtitle: "Docs first. Then your website, help center, and content repos.",
               description:
-                "Thally indexes your docs repository, including pages, code samples, OpenAPI descriptions, and llms.txt, then the other surfaces that explain your product: website pages, help center articles, and the changelog.",
+                "Thally indexes your docs site once, including pages, code samples, OpenAPI descriptions, and llms.txt. Then connect the other surfaces it should keep current: your website repo, support platform, and any customer-facing content repository.",
               visual: <DocsIndexVisual />,
             },
             {
@@ -318,11 +318,10 @@ export default function TrackFeaturePage() {
             },
             {
               label: "Analyze",
-              title: "Analyze a change, when you choose",
-              subtitle:
-                "On merge, on PR open, or on a schedule. Every candidate carries evidence and a confidence score.",
+              title: "Trace the impact",
+              subtitle: "Candidates on every surface, with evidence, confidence, and a drafted diff.",
               description:
-                "On every merge, when a pull request opens, or on a schedule you set, Track extracts customer-facing changes, searches every connected surface, and presents candidates with evidence, confidence, and a drafted diff for each one.",
+                "For each merged pull request, Track works out what changed for users, searches every connected surface for pages that now contradict it, and presents candidates with evidence, confidence, and a drafted diff. A no-change result is valid.",
               visual: <CandidateVisual />,
             },
           ]}
@@ -342,7 +341,7 @@ export default function TrackFeaturePage() {
             <p className="absolute bottom-6 left-8 text-lg font-medium text-white">Track inside Thally Cloud</p>
           </div>
         }
-        quote="A no-change result is valid. Thally never pushes to main."
+        quote="A no-change result is valid. Thally never publishes to any surface without a human."
         quoteAttribution="How Track behaves, by design"
         wideQuote="A repository is evidence about implementation. Your docs, website, and help center are evidence about communicated behaviour. Track surfaces candidates backed by specific diffs on each of them, and every draft is reviewed by a human before it ships."
         wideAttribution="What Track won't do: claim certainty"

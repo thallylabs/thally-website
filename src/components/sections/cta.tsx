@@ -28,8 +28,8 @@ export function CTA() {
           </SplitReveal>
           <Reveal delay={0.2} distance={24}>
             <p className="mt-4 text-lg text-white/85">
-              If your team ships software and keeping your product knowledge current is a job nobody wants, Thally was
-              built for you. Connect a repo and see what your last merge touched.
+              If your team ships software and keeping your product knowledge accurate still depends on chasing
+              information across tickets, pull requests, and conversations, Thally is built for you.
             </p>
           </Reveal>
           <Reveal delay={0.35} distance={16} className="mt-8">

@@ -13,29 +13,29 @@ const STAGES = [
   {
     number: "01.",
     label: "Connect repos and surfaces",
-    title: "Create your docs site. Connect the rest.",
-    body: "Create or migrate your docs on Thally, then connect the product repositories and the surfaces that explain them: website, help center, changelog. Read-only access, chosen by you.",
+    title: "Create your docs site. Connect what should follow it.",
+    body: "Create your documentation site on Thally, install the read-only GitHub App on the product repos to watch, then connect the surfaces those repos should keep current: your website, help center, support platform, and other customer-facing content repos.",
     icon: GitBranch,
   },
   {
     number: "02.",
     label: "Understand the change",
-    title: "Read the merge the way a good tech writer would.",
-    body: "On every merge, on pull request, or on a schedule you set, Thally reads the diff, the PR discussion, and the linked tickets to work out what changed for customers.",
+    title: "Work out what the change means before touching a word.",
+    body: "Did an authentication flow change? Was a configuration option renamed? Did an endpoint gain a field, or a method get deprecated? Thally reads the merged change and works out what it means for the people using your product.",
     icon: Track,
   },
   {
     number: "03.",
     label: "Trace the impact",
-    title: "Find every page the change touches.",
-    body: "Thally maps the change across docs, website, help center, and changelog, with a confidence score per page and the evidence behind it. No change is a valid answer.",
+    title: "Find every surface the change contradicts.",
+    body: "Thally traces the change across your docs, website, help center, and changelog, and lists each affected page with a confidence score and the evidence behind it. When nothing needs to change, it says so.",
     icon: Structured,
   },
   {
     number: "04.",
-    label: "Evidence-backed PRs",
-    title: "Draft the update. You approve what ships.",
-    body: "Each affected surface gets a pull request with the diff as evidence. Your team reviews, edits, and merges. Nothing publishes without a human.",
+    label: "Review evidence-backed PRs",
+    title: "You approve what ships. Every surface. Every time.",
+    body: "Thally opens a pull request into your docs and every other affected surface, with the completed update and the evidence that justifies it. Your team verifies what changed, where it came from, and why, then merges. Nothing publishes without a human.",
     icon: GitPullRequest,
   },
 ];
@@ -67,12 +67,12 @@ export function PipelineTabs() {
       <div className="mb-[60px] border-b border-white/18 pb-[60px]">
         <div className="mx-auto max-w-[746px] px-5 text-center">
           <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
-            One change ships. Every surface follows.
+            One product change. Every surface, updated.
           </SplitReveal>
           <Reveal delay={0.15} distance={20}>
             <p className="mt-5 text-lg text-white/90">
-              Detection tells you which pages the evidence says are affected. Propagation lands the fix on each one.
-              Both, in one pipeline.
+              Thally watches the repos you choose, works out what each merge means, and drafts only the updates the
+              evidence supports, wherever they need to land.
             </p>
           </Reveal>
         </div>
@@ -89,6 +89,7 @@ export function PipelineTabs() {
                 {STAGES.map((stage, i) => (
                   <motion.div
                     key={stage.number}
+                    aria-hidden="true"
                     initial={false}
                     animate={{ opacity: active === i ? 1 : 0 }}
                     transition={{ duration: reduced ? 0 : 0.5 }}
@@ -111,6 +112,7 @@ export function PipelineTabs() {
                     type="button"
                     onClick={() => setActive(i)}
                     aria-current={active === i}
+                    aria-expanded={active === i}
                     className="border-b border-[#383838] pb-5 text-left"
                   >
                     <span className="flex items-end gap-3">
@@ -132,6 +134,7 @@ export function PipelineTabs() {
                       </span>
                     </span>
                     <motion.div
+                      aria-hidden={active !== i}
                       initial={false}
                       animate={{
                         height: active === i || reduced ? "auto" : 0,
@@ -141,6 +144,7 @@ export function PipelineTabs() {
                       className="overflow-hidden"
                     >
                       <p className="max-w-md pt-3 text-[15px] leading-relaxed tracking-[-0.03em] text-[#afafaf]">
+                        <span className="sr-only">{stage.title}. </span>
                         {stage.body}
                       </p>
                     </motion.div>
@@ -251,28 +255,34 @@ function SurfaceTag({ kind }: { kind: string }) {
 function StageVisual({ index }: { index: number }) {
   if (index === 0) {
     return (
-      <Panel title="acme · Thally connections" icon={<SiGithub className="size-4 text-white/45" />} status="read-only">
+      <Panel title="acme · Thally workspace" icon={<SiGithub className="size-4 text-white/45" />} status="connected">
+        <p className="px-1 text-[10px] font-semibold tracking-widest text-white/35 uppercase">Watching</p>
+        {["acme/api", "acme/sdk-js"].map((repo) => (
+          <div key={repo} className={rowBase}>
+            <span className="bg-canvas-accent size-1.5 shrink-0 rounded-full" />
+            <span className="truncate font-mono text-xs text-white/85">{repo}</span>
+            <SurfaceTag kind="product repo" />
+          </div>
+        ))}
+        <p className="px-1 pt-2 text-[10px] font-semibold tracking-widest text-white/35 uppercase">Keeps in sync</p>
         {(
           [
-            ["acme/api", "repo", "watching", "synced 2m ago"],
-            ["acme/docs", "docs", "Thally site", "synced 4m ago"],
-            ["acme.com", "website", "connected", "synced 18m ago"],
-            ["help.acme.com", "help center", "connected", "synced 21m ago"],
+            ["acme/docs", "docs site", "Thally"],
+            ["acme/website", "website", "Next.js repo"],
+            ["Help center", "support", "Zendesk"],
+            ["acme/docs/changelog", "changelog", "Thally"],
           ] as const
-        ).map(([name, kind, role, synced]) => (
+        ).map(([name, kind, destination]) => (
           <div key={name} className={rowBase}>
             <span className="bg-canvas-accent size-1.5 shrink-0 rounded-full" />
             <span className="truncate font-mono text-xs text-white/85">{name}</span>
             <SurfaceTag kind={kind} />
-            <span className="flex shrink-0 items-center gap-1.5 text-[10px] text-white/40 sm:ml-auto">
-              {role} · {synced}
-            </span>
+            <span className="shrink-0 text-[10px] text-white/40 sm:ml-auto">{destination}</span>
           </div>
         ))}
-        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-white/[0.06] pt-2.5 text-[11px] text-white/40">
-          <span>Runs on merge · on PR open · nightly</span>
-          <span className="shrink-0 tabular-nums">4 connections</span>
-        </div>
+        <p className="border-t border-white/[0.06] px-1 pt-2.5 text-[11px] text-white/40">
+          Runs on merge by default. Or on PR open, or on a schedule.
+        </p>
       </Panel>
     );
   }
@@ -285,36 +295,28 @@ function StageVisual({ index }: { index: number }) {
         status="understanding"
         statusTone="warn"
       >
-        <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5">
-          <p className="truncate font-mono text-xs text-white/85">feat: per-project webhook secrets</p>
-          <div className="mt-2 flex items-center justify-end">
-            <span className="font-mono text-[10px] text-white/40">
-              12 files · <span className="text-canvas-accent">+318</span> <span className="text-[#c48b95]">-74</span> ·
-              merged 14m ago
-            </span>
-          </div>
-        </div>
-        <div aria-hidden className="mx-auto h-4 w-px bg-gradient-to-b from-white/25 to-transparent" />
+        <p className="px-1 text-[10px] font-semibold tracking-widest text-white/35 uppercase">
+          What this means for users
+        </p>
         {(
           [
-            ["Diff", "2 endpoints, 1 config schema changed", true],
-            ["PR discussion", "rotation moves to Project Settings", true],
-            ["Linked ticket", "LIN-482 · per-project secrets", true],
-            ["Release notes draft", "", false],
+            ["Endpoint gained a field", "POST /v1/projects now accepts webhook_secret", "public API"],
+            ["Behaviour changed", "Secrets are scoped per project, not per account", "breaking"],
+            ["Method deprecated", "GET /v1/account/webhook-secret returns 410 after 1 Oct", "deprecation"],
+            ["Config option renamed", "WEBHOOK_SECRET is now THALLY_WEBHOOK_SECRET in the SDK", "sdk"],
           ] as const
-        ).map(([source, finding, done]) => (
-          <div key={source} className={rowBase}>
-            {done ? (
-              <Check className="text-canvas-accent size-3.5 shrink-0" />
-            ) : (
-              <span className="border-canvas-accent/40 border-t-canvas-accent size-3 shrink-0 animate-spin rounded-full border-2" />
-            )}
-            <span className="shrink-0 text-[11px] text-white/80">{source}</span>
-            <span className="truncate text-[11px] text-white/40 sm:ml-auto">{finding || "reading"}</span>
+        ).map(([change, meaning, kind]) => (
+          <div key={change} className={rowBase}>
+            <Check className="text-canvas-accent size-3.5 shrink-0" />
+            <div className="min-w-0 flex-1">
+              <p className="text-[11px] text-white/80">{change}</p>
+              <p className="truncate font-mono text-[10px] text-white/40">{meaning}</p>
+            </div>
+            <SurfaceTag kind={kind} />
           </div>
         ))}
         <p className="border-t border-white/[0.06] px-1 pt-2.5 text-[11px] leading-relaxed text-white/55">
-          Customer-facing: webhook secrets are now per project, rotated from Project Settings.
+          Evidence gathered from the diff, the tests, and the PR thread.
         </p>
       </Panel>
     );
@@ -323,16 +325,17 @@ function StageVisual({ index }: { index: number }) {
   if (index === 2) {
     return (
       <Panel
-        title="Impact of acme/api#517"
+        title="acme/api#517 · impact"
         icon={<Structured className="text-canvas-accent size-4" />}
-        status="4 pages affected"
+        status="4 surfaces"
       >
         {(
           [
             ["guides/webhooks.mdx", "docs", "0.94", "update needed"],
-            ["/pricing#security", "website", "0.81", "update needed"],
-            ["Rotating webhook secrets", "help center", "0.88", "update needed"],
-            ["September release notes", "changelog", "0.97", "update needed"],
+            ["api/projects.mdx", "docs", "0.87", "update needed"],
+            ["website: /features/webhooks", "website", "0.81", "update needed"],
+            ["Help center: Rotating webhook secrets", "support", "0.76", "update needed"],
+            ["changelog", "changelog", "0.99", "new entry"],
             ["guides/quickstart.mdx", "docs", "0.12", "no change"],
           ] as const
         ).map(([page, kind, confidence, verdict]) => (
@@ -350,9 +353,7 @@ function StageVisual({ index }: { index: number }) {
               <span
                 className={cn(
                   "rounded-full px-2 py-0.5 text-[10px] font-medium",
-                  verdict === "update needed"
-                    ? "bg-canvas-accent/15 text-canvas-accent"
-                    : "bg-white/[0.07] text-white/45",
+                  verdict !== "no change" ? "bg-canvas-accent/15 text-canvas-accent" : "bg-white/[0.07] text-white/45",
                 )}
               >
                 {verdict}
@@ -361,38 +362,37 @@ function StageVisual({ index }: { index: number }) {
           </div>
         ))}
         <p className="border-t border-white/[0.06] px-1 pt-2.5 text-[11px] text-white/40">
-          Every score links to the diff lines that earned it.
+          Each verdict links to the lines in the diff that justify it.
         </p>
       </Panel>
     );
   }
 
   return (
-    <Panel
-      title="4 pull requests · 1 change"
-      icon={<GitPullRequest className="text-canvas-accent size-4" />}
-      status="awaiting review"
-      statusTone="warn"
-    >
+    <Panel title="Pull requests opened" icon={<GitPullRequest className="text-canvas-accent size-4" />} status="review">
       {(
         [
-          ["acme/docs#292", "docs", "+42", "-11"],
-          ["acme/website#88", "website", "+9", "-4"],
-          ["acme/help-center#41", "help center", "+17", "-6"],
-          ["acme/changelog#12", "changelog", "+6", "-0"],
+          ["acme/docs #292", "docs", "2 files", "1 of 2 approvals"],
+          ["acme/website #148", "website", "1 file", "awaiting review"],
+          ["Help center draft", "support", "1 article", "awaiting review"],
         ] as const
-      ).map(([pr, kind, add, del]) => (
+      ).map(([pr, kind, files, review]) => (
         <div key={pr} className={rowBase}>
           <GitPullRequest className="text-canvas-accent size-3.5 shrink-0" />
           <span className="truncate font-mono text-[11px] text-white/85">{pr}</span>
           <SurfaceTag kind={kind} />
-          <span className="ml-auto flex shrink-0 items-center gap-1.5 font-mono text-[10px]">
-            <span className="text-canvas-accent">{add}</span>
-            <span className="text-[#c48b95]">{del}</span>
-            <span className="text-white/35">· evidence attached</span>
+          <span className="ml-auto flex shrink-0 items-center gap-1.5 text-[10px] text-white/35">
+            <span>{files}</span>
+            <span>· {review}</span>
           </span>
         </div>
       ))}
+      <div className="rounded-xl border border-white/[0.07] bg-black/45 p-3 font-mono text-[11px] leading-[1.7]">
+        <p className="text-white/25">@@ guides/webhooks.mdx +18 -6 · evidence: api/projects.ts L41-58</p>
+        <p className="text-[#c48b95]">- Webhook secrets are shared across projects.</p>
+        <p className="text-canvas-accent">+ Each project now has its own webhook secret.</p>
+        <p className="text-canvas-accent">+ Rotate secrets from Project Settings.</p>
+      </div>
       {/* Static action bar, rendered as spans so the hidden layers stay untabbable */}
       <div className="flex flex-wrap items-center gap-2 border-t border-white/[0.06] pt-3">
         <span className="bg-canvas-accent text-canvas rounded-lg px-3.5 py-2 text-xs font-semibold">
@@ -401,7 +401,6 @@ function StageVisual({ index }: { index: number }) {
         <span className="rounded-lg border border-white/15 px-3.5 py-2 text-xs font-medium text-white/70">
           Request changes
         </span>
-        <span className="flex items-center gap-1.5 text-[10px] text-white/35 sm:ml-auto">0 of 4 approved</span>
       </div>
       <p className="px-1 pt-1 text-[11px] text-white/40">Nothing publishes until a human approves it.</p>
     </Panel>

@@ -10,42 +10,42 @@ const homeQuestions = [
   {
     question: "What is Thally?",
     answer:
-      "Thally is the product knowledge layer for software teams. You create your documentation site on Thally, connect your product repositories, and connect the other surfaces that explain your product: website, help center, changelog. When the product changes, Thally finds every page the change affects and drafts the update as a pull request with the evidence attached. You review and merge.",
+      "Thally is the product knowledge layer for software teams. You create your documentation site on Thally, connect your product repositories, and connect the other surfaces where customers learn about your product. When a pull request merges, Thally works out what the change means, traces the impact across those surfaces, and opens evidence-backed pull requests your team reviews and merges.",
   },
   {
-    question: "How is Thally different from other docs tools?",
+    question: "Which surfaces can Thally keep in sync?",
     answer:
-      "Other docs tools give you somewhere to write. Thally does the work that keeps what you wrote true, and not only in the docs. It reads merged product changes, traces them across docs, website, and help center, and drafts each fix alongside the diff that caused it. Your surfaces stop drifting apart between releases.",
+      "Your documentation site on Thally, including guides, API references, examples, and the changelog, plus connected surfaces such as your website, support platform or help center, and other customer-facing content repositories. Start with docs, then add surfaces as you need them.",
   },
   {
-    question: "Which surfaces can Thally keep current?",
+    question: "How is Thally different from a docs platform?",
     answer:
-      "Documentation first: guides, API references, examples, and release notes in your docs repository. Connected surfaces run on the same pipeline: your marketing site, help center or support articles, and changelog. Each surface gets its own reviewable update, with the same evidence behind it.",
+      "A docs platform gives you somewhere to write. Thally also does the work that keeps what you wrote true, and not only in the docs. It reads merged product changes, finds the pages they contradict across your connected surfaces, and drafts each fix alongside the diff that caused it. Because Thally is also a complete docs platform, you do not need a second one.",
   },
   {
-    question: "How does Thally decide what needs to change?",
+    question: "How does Thally know what to change?",
     answer:
-      "It starts from evidence: the diff, the pull request discussion, and any linked tickets. Every candidate page gets a confidence score and the sources that earned it. If the evidence does not support an update, Thally says so instead of inventing one.",
+      "It starts by understanding the change, such as an authentication flow changing, a configuration option being renamed, an endpoint gaining a field, or a method being deprecated. Then it traces that meaning to the pages that describe it, with a confidence score and evidence for each candidate. When nothing needs to change, Thally says so rather than inventing an update.",
   },
   {
     question: "Will Thally publish something wrong on my website?",
     answer:
-      "No. Thally never pushes to main and never publishes on its own. Every update is a pull request or a draft for your team to approve, with the diff that justified it attached. If you reject it, nothing changes. If you edit it, your edit is what ships.",
+      "No. Thally never publishes directly to any surface. Every update arrives as a pull request or draft with the completed change and the evidence used to justify it. Your team can verify what changed, where the information came from, and why. A human approves before anything goes live.",
   },
   {
     question: "When does Thally run?",
     answer:
-      "On every merge, when a pull request opens, or on a schedule you choose. You can also mention @thally on a pull request to ask for a specific update, and run drift sweeps across existing pages.",
+      "By default, whenever a pull request merges into a tracked product repository. You can also run it when a pull request opens, so the knowledge update ships with the code, or on a custom schedule.",
+  },
+  {
+    question: "How can AI assistants read my docs?",
+    answer:
+      "Directly, with no scraping. Every page is served as HTML for people and as Markdown and JSON for machines from the same URL. Every deployed site also includes a remote MCP server at /api/mcp. Because every format comes from one source, agents and people read the same source version.",
   },
   {
     question: "How do I migrate from Mintlify, Docusaurus, or GitBook?",
     answer:
       "Give Thally Cloud your public docs URL, or run the create-thally-docs CLI against your repository. Thally converts your pages to MDX, rebuilds the navigation, and hands back a project you own. Nextra, VitePress, and Starlight migrate the same way.",
-  },
-  {
-    question: "How can AI assistants read my docs?",
-    answer:
-      "Directly, with no scraping. Every deployed site ships a remote MCP server at /api/mcp, so assistants can search your docs, open pages, and follow your navigation as a tool. The same URLs also serve Markdown and JSON for anything that simply fetches. Keeping those pages current is the point: a stale page is now a wrong answer.",
   },
 ];
 

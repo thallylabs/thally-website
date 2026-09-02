@@ -11,23 +11,23 @@ const principles = [
   {
     icon: Structured,
     title: "The product is the source of truth",
-    description:
-      "Docs, website, and help center should follow what the product does, not drift into separate realities.",
+    description: "Customer-facing knowledge should follow what the product does, not drift into a separate reality.",
   },
   {
     icon: Search,
     title: "Understand before generating",
-    description: "Read the diff, the discussion, and the tickets. Map the affected pages. Only then draft new words.",
+    description: "Find what changed, gather evidence, and map the affected knowledge before drafting new words.",
   },
   {
     icon: Trust,
     title: "Evidence before confidence",
-    description: "Show why an update is needed, which sources support it, and when no change is the right answer.",
+    description:
+      "Show why an update is needed, which sources support it, and when no communication change is required.",
   },
   {
     icon: Team,
-    title: "Humans approve what ships",
-    description: "Thally prepares reviewable work. Your team keeps judgment and publishing authority on every surface.",
+    title: "Humans approve important communication",
+    description: "Thally prepares reviewable work. Your team keeps judgment and publishing authority.",
   },
 ];
 
@@ -36,7 +36,6 @@ const statGlow = { textShadow: "0 0 12px rgba(255,255,255,0.35)" };
 const About = () => {
   return (
     <div className="bg-canvas">
-      {/* Banner: centered headline over the two-card intro row */}
       <section className="px-2.5 pt-20 sm:px-5 md:pt-28">
         <div className="mx-auto w-full max-w-[1480px]">
           <div className="mx-auto max-w-4xl text-center">
@@ -52,31 +51,34 @@ const About = () => {
           </div>
 
           <div className="mt-14 flex flex-col gap-2.5 lg:flex-row">
-            {/* Left card: founder pull-quote with two big stats */}
             <Reveal className="border-canvas-card-stroke flex flex-1 flex-col justify-between rounded-[35px] border p-8 sm:p-12">
               <div>
                 <p className="text-canvas-muted text-sm font-medium tracking-widest uppercase">From the founder</p>
-                <p className="heading-card text-canvas-foreground mt-8 max-w-lg text-balance">
-                  Your product changed. Did your docs, website, and help center?
+                <p className="text-canvas-foreground mt-8 max-w-xl text-xl leading-8">
+                  For most of my career I worked in developer experience: developer relations, documentation, and
+                  integrations at Flutterwave, Netlify, and LI.FI.
+                </p>
+                <p className="text-canvas-muted mt-5 max-w-xl text-lg leading-8">
+                  One thing stayed the same at every one of them: the amount of work it took to keep what we told
+                  customers aligned with what the product actually did.
                 </p>
               </div>
               <div className="border-canvas-hairline mt-14 grid grid-cols-2 gap-8 border-t pt-8">
-                <div>
-                  <p className="heading-section text-canvas-foreground">3</p>
-                  <p className="text-canvas-muted mt-2 text-sm" style={statGlow}>
-                    Companies where I kept docs current by hand
-                  </p>
-                </div>
                 <div>
                   <p className="heading-section text-canvas-foreground">MIT</p>
                   <p className="text-canvas-muted mt-2 text-sm" style={statGlow}>
                     Publishing engine license
                   </p>
                 </div>
+                <div>
+                  <p className="heading-section text-canvas-foreground">Git</p>
+                  <p className="text-canvas-muted mt-2 text-sm" style={statGlow}>
+                    Where your content stays
+                  </p>
+                </div>
               </div>
             </Reveal>
 
-            {/* Right card: visual block over the night illustration */}
             <Reveal
               delay={0.3}
               className="border-canvas-hairline relative flex-1 overflow-hidden rounded-[35px] border"
@@ -100,46 +102,36 @@ const About = () => {
           <div className="mx-auto max-w-[1060px] space-y-20 md:space-y-28">
             <div className="max-w-2xl">
               <SplitReveal as="h2" mode="chars" className="heading-card text-canvas-foreground">
-                For most of my career, I worked in developer experience.
+                When we shipped a feature, I went hunting.
               </SplitReveal>
               <Reveal delay={0.2} distance={24}>
                 <p className="text-canvas-muted mt-6 text-lg leading-8">
-                  I managed developer relations, documentation, and integrations at Flutterwave, Netlify, and LI.FI. The
-                  products were different. One thing was the same everywhere: the amount of work it took to keep the
-                  documentation aligned as the product evolved.
+                  I collected one-pagers from product managers, went through Linear tickets, and read changelogs and
+                  code diffs to work out what had changed. Then came the harder part: which public surfaces needed to
+                  reflect it? The API reference, maybe. The quickstart. The website. A support article last updated six
+                  months ago. Code examples in old blog posts. An integration guide that had quietly gone stale.
+                </p>
+                <p className="text-canvas-muted mt-5 text-lg leading-8">
+                  Most of the time we updated the documentation, and rarely comprehensively enough to cover everything
+                  else. Not for lack of care. There was always another release.
                 </p>
               </Reveal>
             </div>
 
             <div className="ml-auto max-w-2xl">
               <SplitReveal as="h2" mode="chars" className="heading-card text-canvas-foreground">
-                Every release started with detective work.
+                Now the problem compounds.
               </SplitReveal>
               <Reveal delay={0.2} distance={24}>
                 <p className="text-canvas-muted mt-6 text-lg leading-8">
-                  When we shipped a feature, I would collect one-pagers from product managers, go through Linear
-                  tickets, and inspect changelogs and code diffs to figure out what had changed. Then the harder part:
-                  which public surfaces needed to reflect it? The API reference? The quickstart? The website? A support
-                  article last updated six months ago, the code examples in blog posts, an integration guide that had
-                  quietly gone stale?
+                  With AI helping teams ship faster, the gap opens faster. Outdated documentation no longer affects only
+                  the people reading it. It also affects the AI tools that rely on your documentation to understand your
+                  product. If an old API or workflow is still documented somewhere, a coding assistant can recommend it,
+                  generate code with it, and repeat that mistake at scale.
                 </p>
               </Reveal>
             </div>
 
-            <div className="max-w-2xl">
-              <SplitReveal as="h2" mode="chars" className="heading-card text-canvas-foreground">
-                Most of the time, we updated the docs and missed the rest.
-              </SplitReveal>
-              <Reveal delay={0.2} distance={24}>
-                <p className="text-canvas-muted mt-6 text-lg leading-8">
-                  Not because anyone was careless. Because nobody could hold the whole map in their head, and no system
-                  owned it. Customers found the gaps for us: a pricing page that contradicted the docs, a support
-                  article describing a flow that no longer existed, an assistant confidently repeating both.
-                </p>
-              </Reveal>
-            </div>
-
-            {/* Principles: hairline 2x2 value grid */}
             <Reveal delay={0.2} distance={40}>
               <div className="border-canvas-hairline grid overflow-hidden rounded-[32px] border sm:grid-cols-2">
                 {principles.map((principle, i) => (
@@ -168,37 +160,47 @@ const About = () => {
               </SplitReveal>
               <Reveal delay={0.2} distance={24}>
                 <p className="text-canvas-muted mt-6 text-lg leading-8">
-                  You create your documentation site on Thally, connect the product repositories, and connect the other
-                  surfaces that explain the product: website, help center, changelog. When the product changes, Thally
-                  reads the change, finds every page it affects, and opens a pull request on each one with the diff as
-                  evidence. Your team approves what ships.
+                  You create your documentation site on Thally, connect your product repositories, and connect the
+                  surfaces you want kept current when the product changes: your website, support platform, and other
+                  customer-facing content repositories. When a pull request merges, Thally works out what the change
+                  means for the people using your product, traces the impact across every connected surface, and opens
+                  evidence-backed pull requests into each one.
+                </p>
+                <p className="text-canvas-muted mt-5 text-lg leading-8">
+                  Each pull request carries the completed update and the evidence behind it, so your team can verify
+                  what changed, where the information came from, and why the update was necessary. The goal is not to
+                  replace the people who create great documentation. It is to remove the manual detective work that
+                  takes up so much of their time.
                 </p>
               </Reveal>
             </div>
 
             <div className="ml-auto max-w-2xl">
               <SplitReveal as="h2" mode="chars" className="heading-card text-canvas-foreground">
-                Detection and propagation are two halves of one mechanism.
+                Where this goes.
               </SplitReveal>
               <Reveal delay={0.2} distance={24}>
                 <p className="text-canvas-muted mt-6 text-lg leading-8">
-                  Detection answers which pages the evidence says are affected. Propagation lands the fix on each of
-                  them. Detection alone is a to-do list. Propagation alone is an AI rewriting your content on a hunch,
-                  which is exactly what nobody wants. Thally only ever does both, and the publishing engine underneath
-                  is MIT licensed, so your content stays in Git and under your control.
+                  Teams should never have to remember every place a product change needs to be explained. Docs, the
+                  website, and support content are the surfaces Thally connects today. SDK references, examples,
+                  tutorials, and the AI context that agents read from are on the same pipeline, and every accepted
+                  review makes Thally better at understanding your product specifically.
                 </p>
               </Reveal>
             </div>
 
-            {/* Closing card */}
             <Reveal className="border-canvas-card-stroke rounded-[32px] border bg-white/[0.04] p-8 backdrop-blur-sm md:p-14">
               <div className="max-w-2xl">
                 <h2 className="heading-card text-canvas-foreground mt-4">
-                  Thally is built by Ekene Eze and operated by Fairspleet LLC.
+                  If this is your job, I would love for you to try it.
                 </h2>
                 <p className="text-canvas-muted mt-5 text-lg leading-8">
-                  If your team ships software and keeping your product knowledge current is a job nobody wants, I would
-                  like to hear from you. Questions about the product, support, or the company are welcome.
+                  If your team ships software and keeping product knowledge accurate still depends on chasing
+                  information across tickets, pull requests, and conversations, Thally is built for you. Write to me
+                  directly with questions about the product, or about the problem.
+                </p>
+                <p className="text-canvas-muted-2 mt-5 text-sm">
+                  Ekene Eze, founder. Thally is built and operated by Fairspleet LLC.
                 </p>
                 <Link
                   href="/contact"

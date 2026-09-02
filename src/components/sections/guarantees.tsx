@@ -8,27 +8,27 @@ const GUARANTEES = [
   {
     title: "Every update carries its evidence",
     body: "Each pull request shows what changed, where the information came from, and why the update was necessary. You verify before you merge.",
+    tag: "Evidence attached",
+  },
+  {
+    title: "A human approves every surface",
+    body: "Docs, website, and help center: Thally drafts, your team publishes. Nothing goes live on any surface without review.",
+    tag: "Human review",
+  },
+  {
+    title: "Understand before generating",
+    body: "Thally works out what a change means and maps the affected surfaces before drafting a single word.",
     tag: "Evidence first",
   },
   {
     title: "A no-change result is valid",
-    body: "Thally reports when a page does not need to change instead of inventing an update to look busy.",
+    body: "When the evidence shows nothing needs to change, Thally says so instead of inventing an update.",
     tag: "No busywork",
   },
   {
-    title: "Humans approve everything that ships",
-    body: "Thally never pushes to main and never publishes on its own. Your team keeps judgment and publishing authority on every surface.",
-    tag: "Human review",
-  },
-  {
-    title: "Thally never invents product behavior",
-    body: "Drafts are grounded in the diff, the pull request, and the linked tickets. If the evidence is not there, the words are not either.",
-    tag: "Grounded in the diff",
-  },
-  {
-    title: "Your content stays in your repositories",
-    body: "Docs, website, and help center content remain as source files where they live today. There is nothing to export because we never hold the source.",
-    tag: "Source files in Git",
+    title: "Your content stays where it lives",
+    body: "Docs and website content remain in your repositories. Help center content remains in your support platform. Thally does not become the system of record.",
+    tag: "You own the source",
   },
   {
     title: "The publishing engine is open source",
@@ -36,9 +36,9 @@ const GUARANTEES = [
     tag: "MIT licensed",
   },
   {
-    title: "Your surfaces stay under your control",
-    body: "Thally never takes ownership of your domain, your website, or your help center. It proposes updates into the tools you already use.",
-    tag: "Your domain, your tools",
+    title: "Your domain stays under your control",
+    body: "Thally never takes ownership of your domain. You keep the domain and the source behind every page.",
+    tag: "Your domain",
   },
   {
     title: "Cancellation leaves you with the source",
@@ -105,8 +105,8 @@ export function Guarantees() {
             </SplitReveal>
             <Reveal delay={0.15} distance={24}>
               <p className="mx-auto mt-5 max-w-xl text-lg text-white/85">
-                The goal is not to replace the people who own your docs, website, or help center. It is to hand them the
-                update, with proof, before a customer finds the gap.
+                The goal is not to replace the people who create great documentation. It is to remove the detective
+                work, and to leave judgment and publishing authority with your team.
               </p>
             </Reveal>
           </div>
