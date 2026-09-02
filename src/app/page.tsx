@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { AiRisk } from "@/components/sections/ai-risk";
 import { CTA } from "@/components/sections/cta";
 import { Daybreak } from "@/components/sections/daybreak";
 import { FAQ } from "@/components/sections/faq";
@@ -8,6 +9,7 @@ import { Guarantees } from "@/components/sections/guarantees";
 import Hero from "@/components/sections/hero";
 import { PipelineTabs } from "@/components/sections/pipeline-tabs";
 import { PricingCards } from "@/components/sections/pricing-cards";
+import { Problem } from "@/components/sections/problem";
 import { QuoteCard } from "@/components/sections/quote-card";
 import { SITE_NAME, SITE_TITLE, SITE_URL, SOCIAL_PREVIEW_DESCRIPTION, SOCIAL_PREVIEW_TITLE } from "@/lib/site";
 import { socialPreviewImage } from "@/lib/social-preview";
@@ -100,11 +102,13 @@ export default function Home() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       <Hero />
+      <Problem />
+      <AiRisk />
+      <PipelineTabs />
+      <Guarantees />
       <FeatureShowcase />
       <QuoteCard />
       <Daybreak />
-      <PipelineTabs />
-      <Guarantees />
       <PricingCards />
       <FAQ context="home" />
       <CTA />

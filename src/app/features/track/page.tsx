@@ -344,7 +344,6 @@ export default function TrackFeaturePage() {
         quote="A no-change result is valid. Thally never publishes to any surface without a human."
         quoteAttribution="How Track behaves, by design"
         wideQuote="A repository is evidence about implementation, and documentation is evidence about communicated behaviour. Track surfaces candidates backed by specific diffs, and every draft is reviewed by a human before it ships."
-        wideAttribution="What Track won't do: claim certainty"
       />
 
       {/* Live demo */}
