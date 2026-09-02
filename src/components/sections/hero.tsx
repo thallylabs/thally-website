@@ -116,9 +116,8 @@ const Hero = () => {
 
             <Reveal delay={0.5} distance={30} className="mt-7">
               <p className="max-w-[36ch] text-xl tracking-[-0.04em] text-pretty text-white">
-                Thally is the product knowledge layer for software teams. When a pull request merges, it works out what
-                changed, traces the impact across your connected surfaces, and opens evidence-backed PRs your team can
-                review and merge.
+                Thally is the product knowledge layer for software teams. It keeps your docs, website, and support
+                platform in sync as your product changes.
               </p>
               <div className="mt-9">
                 <HeroCtas />
