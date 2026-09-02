@@ -85,7 +85,7 @@ const Navbar = () => {
         {
           title: "Automation",
           href: "/features/automation",
-          description: "Evidence-backed PRs on every merge.",
+          description: "Draft updates on merge, PR, or schedule.",
           icon: GitPullRequest,
         },
         {

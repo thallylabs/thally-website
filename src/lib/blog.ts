@@ -123,7 +123,7 @@ export const blogPosts: BlogPost[] = [
     seoTitle: "Thally vs Docusaurus for AI-Ready Docs",
     cardTitle: "Thally vs Docusaurus",
     description:
-      "Compare Docusaurus's framework approach with Thally's documentation engine and product-change update workflow across setup, ownership, automation, and maintenance.",
+      "Compare Docusaurus's framework approach with Thally's documentation engine and product-change synchronization pipeline across setup, ownership, automation, and maintenance.",
     date: "2026-07-01",
     updated: "2026-08-31",
     verified: "2026-07-24",

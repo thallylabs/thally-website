@@ -48,7 +48,7 @@ const productJsonLd = {
   operatingSystem: "Web",
   license: "https://opensource.org/license/mit",
   description:
-    "Thally is the product knowledge layer for software teams. When a product change merges, it works out what the change means, traces the impact across connected knowledge surfaces (documentation, website, help center, changelog), and opens evidence-backed pull requests for human review. It is also a complete AI-native documentation platform.",
+    "Thally is the product knowledge layer for software teams. It understands product changes, finds every affected page across documentation, website, help center, and changelog, and prepares evidence-backed updates for human review.",
   publisher: { "@id": `${SITE_URL}/#organization` },
   mainEntityOfPage: SITE_URL,
   offers: [
@@ -78,9 +78,9 @@ const productJsonLd = {
     },
   ],
   featureList: [
-    "Product change intelligence that maps merged changes to affected documentation, website pages, and support content",
+    "Product change intelligence that maps merged changes to affected documentation, website, help center, and changelog pages",
     "Evidence-backed impact analysis with confidence per surface and no-change as a valid result",
-    "Runs on PR merge by default, on PR open, or on a custom schedule",
+    "Runs on merge, on pull request, or on a schedule",
     "Product-specific knowledge that improves through accepted reviews and corrections",
     "Human approval for important customer-facing communication",
     "MIT-licensed publishing engine",
@@ -88,7 +88,7 @@ const productJsonLd = {
     "Remote MCP server at /api/mcp on every deployed site",
     "Agent-readiness score with CI gating and Thally-drafted fix PRs",
     "@thally GitHub mentions can become reviewable docs PRs",
-    "Thally Track turns relevant merged product PRs into reviewable PRs on every connected knowledge surface",
+    "Thally Track can turn relevant merged product PRs into reviewable documentation PRs",
     "Migration from Mintlify, Docusaurus, GitBook, Nextra, VitePress, and Starlight",
     "OpenAPI API reference with interactive Try-It console",
     "Hybrid ⌘K search and retrieval-grounded AI chat with citations",

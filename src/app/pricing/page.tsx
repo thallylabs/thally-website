@@ -30,7 +30,7 @@ const pricingJsonLd = {
   operatingSystem: "Web",
   license: "https://opensource.org/license/mit",
   description:
-    "The product knowledge layer for software teams, with one managed documentation site, pull-request previews, and analytics for free, plus paid automation, scale, and team controls.",
+    "Product knowledge synchronization pipeline with one managed documentation site, pull-request previews, and analytics for free, plus paid automation, scale, and team controls.",
   publisher: { "@id": `${SITE_URL}/#organization` },
   mainEntityOfPage: `${SITE_URL}/pricing`,
   offers: {

@@ -26,27 +26,21 @@ export function QuoteCard() {
         }}
       >
         <div className="relative mx-auto max-w-[760px]">
-          <blockquote>
-            <p className="subtitle-display text-center text-white">
-              I spent most of my career in developer experience, and at every company the job was the same: a feature
-              shipped, and I went hunting for every page that now said something wrong.{" "}
-              <span className="linear-text">Thally is the tool I wished I had.</span>
-            </p>
+          <p className="subtitle-display text-center text-white">
+            I spent years at Flutterwave, Netlify, and LI.FI doing this detective work by hand.{" "}
+            <span className="linear-text">Thally is the system I wished those teams had.</span>
+          </p>
 
-            <footer className="mt-8 text-center text-sm tracking-wide text-white/70">
-              <span className="block text-white/90">Ekene Eze</span>
-              <span className="mt-1 block">
-                Founder, Thally. Previously developer experience at Flutterwave, Netlify, and LI.FI.
-              </span>
-            </footer>
-          </blockquote>
+          <p className="mt-8 text-center text-sm tracking-wide text-white/70">
+            Ekene Eze, founder of Thally. Developer experience, documentation, and integrations before that.
+          </p>
 
           <div className="mt-8 flex justify-center">
             <Link
               href="/about"
               className="group/pill text-canvas inline-flex items-center gap-2 rounded-full bg-white py-2.5 pr-4 pl-4 text-[13px] font-semibold tracking-wide"
             >
-              Why Thally exists
+              Read the story
               <ArrowRight className="size-3.5 transition-transform duration-200 group-hover/pill:translate-x-0.5" />
             </Link>
           </div>

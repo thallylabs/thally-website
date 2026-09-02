@@ -6,6 +6,10 @@ import { SiClaude, SiCursor, SiGithubcopilot, SiGooglegemini, SiPerplexity, SiV0
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
 
+/**
+ * The tools that now read your docs on a customer's behalf. They are listed as
+ * readers, not endorsements: none of them have said anything about Thally.
+ */
 const READERS: Array<{ name: string; icon: IconType }> = [
   { name: "Claude", icon: SiClaude },
   { name: "Cursor", icon: SiCursor },
@@ -16,12 +20,20 @@ const READERS: Array<{ name: string; icon: IconType }> = [
   { name: "Windsurf", icon: SiWindsurf },
 ];
 
-const FORMATS = [
-  ["A developer in a browser", "HTML", "/guides/webhooks"],
-  ["A coding assistant", "Markdown", "/guides/webhooks.md"],
-  ["An agent with tools", "MCP", "/api/mcp"],
-  ["Anything that fetches", "JSON", "/guides/webhooks.json"],
-] as const;
+const CONSEQUENCES = [
+  {
+    title: "What the assistant reads",
+    body: "Whatever you published last. It has no way to know the pricing page is from two releases ago.",
+  },
+  {
+    title: "What it does with a stale page",
+    body: "Answers confidently anyway, inside someone else's editor, where you will never see the question.",
+  },
+  {
+    title: "What Thally changes",
+    body: "The page is current before the question is asked, because the update shipped with the code that caused it.",
+  },
+];
 
 function ReaderMarquee() {
   return (
@@ -44,64 +56,58 @@ function ReaderMarquee() {
   );
 }
 
-function OneSourcePanel() {
-  return (
-    <div
-      aria-hidden
-      className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#0a0d13] p-5 shadow-[0_24px_60px_rgba(0,0,0,0.45)]"
-    >
-      <div className="flex items-center justify-between gap-3 border-b border-white/[0.08] pb-3">
-        <span className="truncate font-mono text-[13px] text-white/80">guides/webhooks.mdx</span>
-        <span className="bg-canvas-accent/15 text-canvas-accent shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium">
-          one source
-        </span>
-      </div>
-      <div className="mt-3 space-y-1.5">
-        {FORMATS.map(([reader, format, path]) => (
-          <div
-            key={reader}
-            className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-white/[0.07] bg-white/[0.03] px-3 py-2.5"
-          >
-            <span className="min-w-0 flex-1 text-[12px] text-white/80">{reader}</span>
-            <span className="rounded bg-white/[0.06] px-1.5 py-0.5 font-mono text-[10px] text-white/45">{format}</span>
-            <span className="font-mono text-[10px] text-white/35">{path}</span>
-          </div>
-        ))}
-      </div>
-      <p className="mt-3 border-t border-white/[0.06] pt-2.5 text-[11px] leading-relaxed text-white/40">
-        Same URL, same content, same commit. Updated together when the product changes.
-      </p>
-    </div>
-  );
-}
-
+/**
+ * Why drift compounds now: readers increasingly meet your docs through a
+ * coding assistant, so a stale page becomes a wrong answer instead of a gap.
+ */
 export function AiRisk() {
   return (
     <section id="ai-risk" className="bg-canvas px-2.5 pb-[120px] sm:px-5">
-      <div className="border-canvas-card-stroke mx-auto grid w-full max-w-[1480px] items-center gap-14 overflow-hidden rounded-[35px] border px-6 py-16 sm:px-14 sm:py-20 lg:grid-cols-2 lg:gap-12">
-        <div className="max-w-2xl min-w-0">
-          <SplitReveal as="h2" mode="chars" className="heading-section text-canvas-foreground">
-            Stale docs no longer mislead one reader at a time.
+      <div className="border-canvas-card-stroke relative mx-auto w-full max-w-[1480px] overflow-hidden rounded-[50px] border px-6 py-16 sm:px-14 sm:py-20">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10"
+          style={{
+            background:
+              "radial-gradient(60% 50% at 85% 0%, color-mix(in oklab, var(--chart-3) 14%, transparent), transparent 70%)",
+          }}
+        />
+        <div className="max-w-3xl">
+          <Reveal>
+            <p className="text-canvas-muted text-sm font-medium tracking-widest uppercase">Why it compounds</p>
+          </Reveal>
+          <SplitReveal as="h2" mode="chars" className="heading-section text-canvas-foreground mt-5">
+            A stale page used to cost you a support ticket. Now it costs you the answer.
           </SplitReveal>
           <Reveal delay={0.15} distance={24}>
-            <p className="text-canvas-muted mt-6 text-lg leading-8">
-              With AI helping teams ship faster, the gap between the product and its docs opens faster too. And the
-              readers have changed. If an old endpoint or a deprecated workflow is still documented somewhere, a coding
-              assistant will recommend it, generate code with it, and repeat that mistake for every developer who asks.
+            <p className="text-canvas-muted mt-6 max-w-2xl text-lg leading-8">
+              Your readers increasingly ask an assistant instead of opening your docs. Those tools read what you
+              published, stale or not, and repeat it with full confidence. Drift is no longer a small gap. It is the
+              wrong answer, generated on your behalf.
             </p>
-            <p className="text-canvas-muted mt-5 text-lg leading-8">
-              Thally serves every format from one source, so agents and people read the same source version. When the
-              product changes, both get the update.
-            </p>
-          </Reveal>
-          <Reveal delay={0.25} distance={20} className="mt-10">
-            <p className="mb-5 text-sm text-white/60">The AI tools reading your docs today</p>
-            <ReaderMarquee />
           </Reveal>
         </div>
 
-        <Reveal delay={0.2} distance={40} className="flex justify-center lg:justify-end">
-          <OneSourcePanel />
+        <Reveal delay={0.25} distance={20} className="mt-12">
+          <p className="mb-5 text-sm text-white/60">Your docs are now read by</p>
+          <ReaderMarquee />
+        </Reveal>
+
+        <Reveal delay={0.3} distance={30} className="mt-12">
+          <div className="grid overflow-hidden rounded-[20px] border border-white/[0.09] md:grid-cols-3">
+            {CONSEQUENCES.map((item, i) => (
+              <div
+                key={item.title}
+                className={[
+                  "flex flex-col gap-2 p-7",
+                  i < CONSEQUENCES.length - 1 ? "border-b border-white/[0.09] md:border-r md:border-b-0" : "",
+                ].join(" ")}
+              >
+                <h3 className="text-[17px] font-medium tracking-[-0.02em] text-white">{item.title}</h3>
+                <p className="text-[15px] leading-relaxed text-white/50">{item.body}</p>
+              </div>
+            ))}
+          </div>
         </Reveal>
       </div>
     </section>
