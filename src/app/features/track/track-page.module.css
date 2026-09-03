@@ -1518,3 +1518,22 @@
   padding: 0.2rem 0.5rem;
   text-transform: uppercase;
 }
+
+.githubAlternative {
+  color: var(--muted-foreground);
+  font-size: 0.84rem;
+  margin: 0.875rem 0 0;
+}
+
+.githubAlternative .textLink {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: inherit;
+  padding: 0;
+}
+
+.githubAlternative .textLink:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

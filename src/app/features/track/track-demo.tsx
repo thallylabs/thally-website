@@ -246,7 +246,9 @@ export function TrackDemo() {
             ? "GitHub could not finish the connection. Please try again."
             : githubStatus === "cancelled"
               ? "GitHub connection was cancelled. No repository access was granted."
-              : null,
+              : githubStatus === "not_installed"
+                ? "The Thally Labs app is not installed for your GitHub account yet. Install it first, then come back."
+                : null,
         );
       }
       try {
@@ -344,6 +346,13 @@ export function TrackDemo() {
 
   const connectGitHub = () => {
     window.location.assign(`${CLOUD_API}/api/track/demo/github/connect`);
+  };
+
+  // An account that already installed the app is sent by GitHub to the
+  // installation settings (behind sudo) and loses the return state, so it
+  // authorizes with OAuth instead and Thally finds its installation.
+  const authorizeExistingInstallation = () => {
+    window.location.assign(`${CLOUD_API}/api/track/demo/github/authorize`);
   };
 
   const toggleProductRepository = (name: string) => {
@@ -510,6 +519,17 @@ export function TrackDemo() {
               >
                 {sessionState === "loading" ? "Checking GitHub connection" : "Connect GitHub and choose repos"}
               </button>
+              <p className={styles.githubAlternative}>
+                Already installed the Thally Labs app?{" "}
+                <button
+                  className={styles.textLink}
+                  disabled={sessionState === "loading"}
+                  onClick={authorizeExistingInstallation}
+                  type="button"
+                >
+                  Authorize with GitHub instead
+                </button>
+              </p>
               {error ? (
                 <p aria-live="polite" className={styles.errorMessage}>
                   {error}
