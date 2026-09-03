@@ -1,21 +1,48 @@
 "use client";
 
 /**
- * Live pre-signup Track client.
+ * Live pre-signup Track run.
  *
  * The static website holds no GitHub or model credential. It uses the
- * credentialed, installation-bound API exposed by Thally Cloud.
+ * credentialed, installation-bound API exposed by Thally Cloud: connect the
+ * GitHub App, choose product repositories and customer-facing surfaces, start
+ * one background run, poll it, and read the findings. Saying yes to drafting
+ * pull requests hands the run into registration through a one-time link.
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { ArrowRight, Check, Docs, GitBranch, GitPullRequest, RefreshCw, Track } from "@/components/icons";
-import { DESTINATIONS } from "@/lib/site";
+import {
+  ArrowRight,
+  Check,
+  Docs,
+  ExternalLink,
+  GitBranch,
+  GitPullRequest,
+  Globe,
+  Guide,
+  RefreshCw,
+  Track,
+} from "@/components/icons";
 
 import styles from "./track-page.module.css";
 
 const CLOUD_API = (process.env.NEXT_PUBLIC_THALLY_CLOUD_API_URL || "https://app.thally.io").replace(/\/$/, "");
-const STEP_NAMES = ["Connect GitHub", "Docs repository", "Product repositories", "Run analysis", "Findings"];
+const API_VERSION_HEADER = "track-v2";
+const STEP_NAMES = ["Connect GitHub", "Product repositories", "Customer-facing surfaces", "Run Track", "What Track found"];
+const PRODUCT_REPOSITORY_LIMIT = 3;
+const SURFACE_LIMIT = 3;
+const PULL_REQUEST_LIMIT = 5;
+const POLL_INTERVAL_MS = 2_500;
+
+type SurfaceKind = "docs" | "website" | "support" | "other";
+
+const SURFACE_KINDS: Array<{ kind: SurfaceKind; label: string; hint: string }> = [
+  { kind: "docs", label: "Docs", hint: "Reference and guides" },
+  { kind: "website", label: "Website", hint: "Marketing pages, pricing, blog" },
+  { kind: "support", label: "Support", hint: "Help center and articles" },
+  { kind: "other", label: "Other", hint: "Any customer-facing content" },
+];
 
 interface RepositoryOption {
   defaultBranch: string;
@@ -24,11 +51,9 @@ interface RepositoryOption {
   isPrivate: boolean;
 }
 
-interface TrackSession {
-  accountLogin: string;
-  canAnalyze: boolean;
-  repositories: RepositoryOption[];
-  status: "connected" | "analyzing" | "completed" | "failed";
+interface SurfaceSelection {
+  kind: SurfaceKind;
+  repository: string;
 }
 
 interface TrackFinding {
@@ -36,27 +61,68 @@ interface TrackFinding {
   confidence: "high" | "medium" | "low";
   draft: { after: string; before: string };
   evidence: string[];
+  gap: "missing" | "stale" | "inconsistent";
+  headline: string;
   impact: string;
-  title: string;
+  surface: string;
 }
 
-interface TrackResult {
-  analysis: {
-    findings: TrackFinding[];
-    summary: string;
-  };
+interface PullRequestSummary {
+  baseBranch: string;
+  filesChanged: number;
+  mergedAt: string;
+  number: number;
+  repository: string;
+  title: string;
+  url: string;
+}
+
+interface PullRequestAnalysis {
+  findings: TrackFinding[];
+  pullRequest: PullRequestSummary;
+  summary: string;
+  unverifiedFindings: number;
+}
+
+interface SurfaceSummary extends SurfaceSelection {
+  defaultBranch: string;
+  isThallySite: boolean;
   pagesInspected: string[];
-  pullRequest: {
-    baseBranch: string;
-    mergedAt: string;
-    number: number;
-    repository: string;
-    title: string;
-    url: string;
+}
+
+interface RunResult {
+  brief: string;
+  coveredPullRequestCount: number;
+  findingsCount: number;
+  pullRequests: PullRequestAnalysis[];
+  surfaces: SurfaceSummary[];
+}
+
+interface TrackRun {
+  completedAt: string | null;
+  createdAt: string;
+  error: string | null;
+  id: string;
+  progress: {
+    message?: string;
+    phase?: "queued" | "collecting" | "analyzing" | "completed" | "failed";
+    pullRequestsAnalyzed?: number;
+    pullRequestsTotal?: number;
   };
+  result: RunResult | null;
+  status: "queued" | "running" | "completed" | "failed";
+}
+
+interface TrackSession {
+  accountLogin: string;
+  canAnalyze: boolean;
+  latestRun: TrackRun | null;
+  repositories: RepositoryOption[];
+  status: "connected" | "analyzing" | "completed" | "failed";
 }
 
 type SessionState = "loading" | "disconnected" | "connected" | "error";
+type HandoffState = "idle" | "loading" | "declined" | "error";
 
 function GitHubMark() {
   return (
@@ -66,13 +132,26 @@ function GitHubMark() {
   );
 }
 
+function surfaceIcon(kind: SurfaceKind) {
+  if (kind === "docs") return <Docs />;
+  if (kind === "website") return <Globe />;
+  if (kind === "support") return <Guide />;
+  return <Track />;
+}
+
+function surfaceLabel(kind: SurfaceKind): string {
+  return SURFACE_KINDS.find((entry) => entry.kind === kind)?.label ?? "Content";
+}
+
 function RepoOption({
   icon,
+  isDisabled,
   isSelected,
   onSelect,
   repository,
 }: {
   icon: "docs" | "product";
+  isDisabled?: boolean;
   isSelected: boolean;
   onSelect: () => void;
   repository: RepositoryOption;
@@ -82,6 +161,7 @@ function RepoOption({
     <button
       aria-pressed={isSelected}
       className={`${styles.repoOption} ${isSelected ? styles.repoOptionSelected : ""}`}
+      disabled={isDisabled && !isSelected}
       onClick={onSelect}
       type="button"
     >
@@ -106,85 +186,37 @@ async function responseError(response: Response, fallback: string): Promise<stri
   return body?.error || fallback;
 }
 
+function formatMergedAt(value: string): string {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+}
+
+function confidenceClass(confidence: TrackFinding["confidence"]): string {
+  return confidence === "medium" ? styles.findingDotMedium : confidence === "low" ? styles.findingDotLow : styles.findingDotHigh;
+}
+
+function gapDescription(gap: TrackFinding["gap"]): string {
+  if (gap === "missing") return "Not mentioned anywhere on this surface.";
+  if (gap === "stale") return "This page describes the old behavior.";
+  return "This surface disagrees with another one.";
+}
+
 export function TrackDemo() {
   const [step, setStep] = useState(0);
   const [sessionState, setSessionState] = useState<SessionState>("loading");
   const [session, setSession] = useState<TrackSession | null>(null);
-  const [docsRepository, setDocsRepository] = useState<string | null>(null);
   const [productRepositories, setProductRepositories] = useState<string[]>([]);
-  const [isRunning, setIsRunning] = useState(false);
-  const [result, setResult] = useState<TrackResult | null>(null);
-  const [activeFindingIndex, setActiveFindingIndex] = useState(0);
+  const [surfaces, setSurfaces] = useState<SurfaceSelection[]>([]);
+  const [run, setRun] = useState<TrackRun | null>(null);
+  const [isStarting, setIsStarting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [visibleLogLines, setVisibleLogLines] = useState(0);
+  const [activeFinding, setActiveFinding] = useState<{ finding: number; pullRequest: number } | null>(null);
+  const [handoffState, setHandoffState] = useState<HandoffState>("idle");
   const stageRef = useRef<HTMLDivElement>(null);
   const findingDetailRef = useRef<HTMLElement>(null);
 
-  /**
-   * The initial probe runs before the reader has asked for anything, so a
-   * failure there means "not connected", not "something went wrong". Only
-   * a retry the reader triggered surfaces an error.
-   */
-  const loadSession = useCallback(async ({ userInitiated = false }: { userInitiated?: boolean } = {}) => {
-    const githubStatus = new URLSearchParams(window.location.search).get("github");
-    setSessionState("loading");
-    setError(
-      githubStatus === "failed"
-        ? "GitHub could not finish the connection. Please try again."
-        : githubStatus === "cancelled"
-          ? "GitHub connection was cancelled. No repository access was granted."
-          : null,
-    );
-    try {
-      const response = await fetch(`${CLOUD_API}/api/track/demo/session`, {
-        credentials: "include",
-        headers: { Accept: "application/json" },
-      });
-      if (response.status === 401) {
-        setSession(null);
-        setSessionState("disconnected");
-        return;
-      }
-      if (!response.ok) throw new Error(await responseError(response, "GitHub repositories are unavailable."));
-      const nextSession = (await response.json()) as TrackSession;
-      setSession(nextSession);
-      setSessionState("connected");
-      if (new URLSearchParams(window.location.search).has("github")) {
-        window.history.replaceState({}, "", `${window.location.pathname}#demo`);
-      }
-    } catch {
-      if (userInitiated) {
-        setError("Could not reach the Track service. Please try again.");
-        setSessionState("error");
-        return;
-      }
-      setSession(null);
-      setSessionState("disconnected");
-    }
-  }, []);
-
-  useEffect(() => {
-    const timeoutId = window.setTimeout(() => void loadSession(), 0);
-    return () => window.clearTimeout(timeoutId);
-  }, [loadSession]);
-
-  const productOptions = useMemo(
-    () => session?.repositories.filter((repository) => repository.fullName !== docsRepository) ?? [],
-    [docsRepository, session],
-  );
-  const runLogLines = useMemo(
-    () => [
-      `Verifying access to ${docsRepository || "your docs repository"}`,
-      `Finding the latest merged pull request across ${productRepositories.length || 1} product ${productRepositories.length === 1 ? "repository" : "repositories"}`,
-      "Reading the bounded pull request patch and changed public surfaces",
-      "Ranking Markdown pages connected to the change",
-      "Drafting evidence-backed documentation updates",
-    ],
-    [docsRepository, productRepositories.length],
-  );
-  const activeFinding = result?.analysis.findings[activeFindingIndex] ?? null;
-
-  const goToStep = (nextStep: number) => {
+  const goToStep = useCallback((nextStep: number) => {
     setStep(nextStep);
     window.requestAnimationFrame(() => {
       const top = stageRef.current?.getBoundingClientRect().top;
@@ -192,78 +224,248 @@ export function TrackDemo() {
         window.scrollTo({ top: top + window.scrollY - 88, behavior: "smooth" });
       }
     });
-  };
+  }, []);
+
+  /**
+   * The initial probe runs before the reader has asked for anything, so a
+   * failure there means "not connected", not "something went wrong". Only
+   * a retry the reader triggered surfaces an error. A run that is still
+   * executing, or finished while the page was away, is resumed in place.
+   */
+  const loadSession = useCallback(
+    async ({
+      userInitiated = false,
+      resumeRun = true,
+      keepError = false,
+    }: { keepError?: boolean; resumeRun?: boolean; userInitiated?: boolean } = {}) => {
+      const githubStatus = new URLSearchParams(window.location.search).get("github");
+      setSessionState("loading");
+      if (!keepError) {
+        setError(
+          githubStatus === "failed"
+            ? "GitHub could not finish the connection. Please try again."
+            : githubStatus === "cancelled"
+              ? "GitHub connection was cancelled. No repository access was granted."
+              : null,
+        );
+      }
+      try {
+        const response = await fetch(`${CLOUD_API}/api/track/demo/session`, {
+          credentials: "include",
+          headers: { Accept: "application/json" },
+        });
+        if (response.status === 401) {
+          setSession(null);
+          setSessionState("disconnected");
+          return;
+        }
+        if (!response.ok) throw new Error(await responseError(response, "GitHub repositories are unavailable."));
+        const nextSession = (await response.json()) as TrackSession;
+        setSession(nextSession);
+        setSessionState("connected");
+        if (new URLSearchParams(window.location.search).has("github")) {
+          window.history.replaceState({}, "", `${window.location.pathname}#demo`);
+        }
+        const latest = nextSession.latestRun;
+        if (latest && (latest.status === "queued" || latest.status === "running")) {
+          setRun(latest);
+          goToStep(3);
+        } else if (resumeRun && latest && latest.status === "completed" && latest.result) {
+          setRun(latest);
+          goToStep(4);
+        }
+      } catch {
+        if (userInitiated) {
+          setError("Could not reach the Track service. Please try again.");
+          setSessionState("error");
+          return;
+        }
+        setSession(null);
+        setSessionState("disconnected");
+      }
+    },
+    [goToStep],
+  );
+
+  useEffect(() => {
+    const timeoutId = window.setTimeout(() => void loadSession(), 0);
+    return () => window.clearTimeout(timeoutId);
+  }, [loadSession]);
+
+  // Poll the run while it executes in the background. The effect keys on the
+  // run's id and status only: every response produces a new object, and
+  // re-subscribing on each one would poll at network speed instead of the
+  // intended cadence.
+  const runId = run?.id ?? null;
+  const isRunActive = run?.status === "queued" || run?.status === "running";
+  useEffect(() => {
+    if (!runId || !isRunActive) return;
+    let isCancelled = false;
+    const poll = async () => {
+      try {
+        const response = await fetch(`${CLOUD_API}/api/track/demo/runs/${runId}`, {
+          credentials: "include",
+          headers: { Accept: "application/json" },
+        });
+        if (!response.ok) throw new Error(await responseError(response, "Track lost contact with the run."));
+        const next = (await response.json()) as TrackRun;
+        if (isCancelled) return;
+        setRun(next);
+        if (next.status === "completed") {
+          setActiveFinding(null);
+          goToStep(4);
+        } else if (next.status === "failed") {
+          // Refresh the allowance first; the session probe resets errors, so
+          // the run's own reason is applied afterwards and survives.
+          await loadSession({ userInitiated: true, resumeRun: false, keepError: true });
+          if (!isCancelled) setError(next.error || "Track could not complete this analysis.");
+        }
+      } catch (pollError) {
+        if (isCancelled) return;
+        setError(pollError instanceof Error ? pollError.message : "Track lost contact with the run.");
+      }
+    };
+    const timer = window.setInterval(() => void poll(), POLL_INTERVAL_MS);
+    void poll();
+    return () => {
+      isCancelled = true;
+      window.clearInterval(timer);
+    };
+  }, [goToStep, isRunActive, loadSession, runId]);
+
+  const productOptions = useMemo(
+    () => session?.repositories.filter((repository) => !surfaces.some((surface) => surface.repository === repository.fullName)) ?? [],
+    [session, surfaces],
+  );
+  const surfaceOptions = useMemo(
+    () => session?.repositories.filter((repository) => !productRepositories.includes(repository.fullName)) ?? [],
+    [productRepositories, session],
+  );
 
   const connectGitHub = () => {
     window.location.assign(`${CLOUD_API}/api/track/demo/github/connect`);
-  };
-
-  const chooseDocsRepository = (name: string) => {
-    setDocsRepository(name);
-    setProductRepositories((current) => current.filter((repository) => repository !== name));
   };
 
   const toggleProductRepository = (name: string) => {
     setProductRepositories((current) =>
       current.includes(name)
         ? current.filter((repository) => repository !== name)
-        : current.length < 3
+        : current.length < PRODUCT_REPOSITORY_LIMIT
           ? [...current, name]
           : current,
     );
   };
 
-  const runAnalysis = async () => {
-    if (!docsRepository || productRepositories.length === 0) return;
-    setIsRunning(true);
+  const toggleSurface = (name: string) => {
+    setSurfaces((current) => {
+      if (current.some((surface) => surface.repository === name)) {
+        return current.filter((surface) => surface.repository !== name);
+      }
+      if (current.length >= SURFACE_LIMIT) return current;
+      // A repository named "docs" almost always is one; everything else starts
+      // as a website so the reader only has to correct the exceptions.
+      const guessedKind: SurfaceKind = /docs|documentation/i.test(name) ? "docs" : /support|help|kb/i.test(name) ? "support" : "website";
+      return [...current, { repository: name, kind: guessedKind }];
+    });
+  };
+
+  const setSurfaceKind = (name: string, kind: SurfaceKind) => {
+    setSurfaces((current) => current.map((surface) => (surface.repository === name ? { ...surface, kind } : surface)));
+  };
+
+  const startRun = async () => {
+    if (productRepositories.length === 0 || surfaces.length === 0) return;
+    setIsStarting(true);
     setError(null);
-    setVisibleLogLines(1);
-    const logTimer = window.setInterval(() => {
-      setVisibleLogLines((current) => Math.min(current + 1, runLogLines.length));
-    }, 1_300);
     try {
       const response = await fetch(`${CLOUD_API}/api/track/demo/analyze`, {
-        body: JSON.stringify({ docsRepository, productRepositories }),
+        body: JSON.stringify({ productRepositories, surfaces }),
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
-          "X-Thally-Track-Demo": "track-v1",
+          "X-Thally-Track-Demo": API_VERSION_HEADER,
         },
         method: "POST",
       });
-      if (!response.ok) throw new Error(await responseError(response, "Track could not complete this analysis."));
-      setResult((await response.json()) as TrackResult);
-      setActiveFindingIndex(0);
-      setVisibleLogLines(runLogLines.length);
-      goToStep(4);
-    } catch (analysisError) {
-      setError(analysisError instanceof Error ? analysisError.message : "Track could not complete this analysis.");
+      if (!response.ok) throw new Error(await responseError(response, "Track could not start this analysis."));
+      const { runId } = (await response.json()) as { runId: string };
+      setRun({
+        id: runId,
+        status: "queued",
+        progress: { phase: "queued", message: "Waiting for a worker" },
+        result: null,
+        error: null,
+        createdAt: new Date().toISOString(),
+        completedAt: null,
+      });
+    } catch (startError) {
+      setError(startError instanceof Error ? startError.message : "Track could not start this analysis.");
     } finally {
-      window.clearInterval(logTimer);
-      setIsRunning(false);
+      setIsStarting(false);
     }
   };
 
   const restartAnalysis = () => {
-    setResult(null);
+    setRun(null);
     setError(null);
-    setVisibleLogLines(0);
-    setActiveFindingIndex(0);
+    setActiveFinding(null);
+    setHandoffState("idle");
+    setProductRepositories([]);
+    setSurfaces([]);
+    void loadSession({ userInitiated: true, resumeRun: false });
     goToStep(1);
   };
 
-  const selectFinding = (index: number) => {
-    setActiveFindingIndex(index);
-    findingDetailRef.current?.scrollTo({ top: 0 });
+  const continueToThally = async () => {
+    if (!run) return;
+    setHandoffState("loading");
+    try {
+      const response = await fetch(`${CLOUD_API}/api/track/demo/runs/${run.id}/handoff`, {
+        credentials: "include",
+        headers: { Accept: "application/json", "X-Thally-Track-Demo": API_VERSION_HEADER },
+        method: "POST",
+      });
+      if (!response.ok) throw new Error(await responseError(response, "Thally could not prepare your workspace link."));
+      const { url } = (await response.json()) as { url: string };
+      window.location.assign(url);
+    } catch (handoffError) {
+      setHandoffState("error");
+      setError(handoffError instanceof Error ? handoffError.message : "Thally could not prepare your workspace link.");
+    }
   };
+
+  const result = run?.status === "completed" ? run.result : null;
+  const selectedFinding =
+    result && activeFinding ? (result.pullRequests[activeFinding.pullRequest]?.findings[activeFinding.finding] ?? null) : null;
+  const selectedPullRequest = result && activeFinding ? (result.pullRequests[activeFinding.pullRequest]?.pullRequest ?? null) : null;
+  const surfaceKindByRepository = useMemo(
+    () => new Map(result?.surfaces.map((surface) => [surface.repository, surface.kind]) ?? []),
+    [result],
+  );
+  const summarySurfaces: SurfaceSelection[] = surfaces.length > 0 ? surfaces : (run?.result?.surfaces ?? []);
+  const summaryProducts =
+    productRepositories.length > 0
+      ? productRepositories
+      : [...new Set(run?.result?.pullRequests.map((analysis) => analysis.pullRequest.repository) ?? [])];
+  const progressTotal = run?.progress.pullRequestsTotal ?? 0;
+  const progressDone = run?.progress.pullRequestsAnalyzed ?? 0;
+  const progressPercent =
+    run?.status === "completed"
+      ? 100
+      : run?.progress.phase === "analyzing" && progressTotal > 0
+        ? 15 + Math.round((progressDone / progressTotal) * 80)
+        : run?.progress.phase === "collecting"
+          ? 10
+          : 3;
+  const pagesInspected = result?.surfaces.reduce((total, surface) => total + surface.pagesInspected.length, 0) ?? 0;
 
   return (
     <div className={`${styles.stage} ${step === 4 ? styles.stageWide : ""}`} ref={stageRef}>
       <div className={styles.progressHeader}>
         <p className={styles.progressLabel}>{STEP_NAMES[step]}</p>
         <div
-          aria-label={`Step ${step + 1} of 5`}
-          aria-valuemax={5}
+          aria-label={`Step ${step + 1} of ${STEP_NAMES.length}`}
+          aria-valuemax={STEP_NAMES.length}
           aria-valuemin={1}
           aria-valuenow={step + 1}
           className={styles.progressSegments}
@@ -279,8 +481,9 @@ export function TrackDemo() {
         <div className={styles.pane}>
           <h3>Connect your GitHub repositories</h3>
           <p className={styles.paneDescription}>
-            Install the Thally Labs GitHub App on the repositories you want to test. Thally reads only the repository
-            contents, metadata, and pull requests you grant.
+            Install the Thally Labs GitHub App on the repositories you want to test: where your product changes, and
+            where customers read about it. Thally reads only the repository contents, metadata, and pull requests you
+            grant.
           </p>
 
           {sessionState !== "connected" ? (
@@ -340,12 +543,12 @@ export function TrackDemo() {
           </div>
           {session && !session.canAnalyze ? (
             <p className={styles.limitMessage}>
-              This GitHub installation has already used its free Track analysis in the last 24 hours.
+              This GitHub installation has already used its free Track run in the last 24 hours.
             </p>
           ) : null}
           {session && session.repositories.length < 2 ? (
             <p className={styles.limitMessage}>
-              Grant at least two repositories: one for docs and one where your product changes.
+              Grant at least two repositories: one where your product changes and one where customers read about it.
             </p>
           ) : null}
         </div>
@@ -353,46 +556,15 @@ export function TrackDemo() {
 
       {step === 1 ? (
         <div className={styles.pane}>
-          <h3>Where do your docs live?</h3>
-          <p className={styles.paneDescription}>
-            Choose the repository containing your Markdown or MDX documentation. Track will inspect a bounded set of
-            pages relevant to the product change.
-          </p>
-          {session?.repositories.map((repository) => (
-            <RepoOption
-              icon="docs"
-              isSelected={docsRepository === repository.fullName}
-              key={repository.fullName}
-              onSelect={() => chooseDocsRepository(repository.fullName)}
-              repository={repository}
-            />
-          ))}
-          <div className={styles.paneFooter}>
-            <button className={`${styles.button} ${styles.ghostButton}`} onClick={() => goToStep(0)} type="button">
-              Back
-            </button>
-            <span />
-            <button
-              className={`${styles.button} ${styles.primaryButton}`}
-              disabled={!docsRepository}
-              onClick={() => goToStep(2)}
-              type="button"
-            >
-              Next: choose product repos <ArrowRight />
-            </button>
-          </div>
-        </div>
-      ) : null}
-
-      {step === 2 ? (
-        <div className={styles.pane}>
           <h3>Where does your product change?</h3>
           <p className={styles.paneDescription}>
-            Select up to three repositories. Track will analyze the most recently merged pull request across them.
+            Choose up to {PRODUCT_REPOSITORY_LIMIT} repositories. Track reads the last {PULL_REQUEST_LIMIT} pull requests
+            merged across them and works out what each one changed for customers.
           </p>
           {productOptions.map((repository) => (
             <RepoOption
               icon="product"
+              isDisabled={productRepositories.length >= PRODUCT_REPOSITORY_LIMIT}
               isSelected={productRepositories.includes(repository.fullName)}
               key={repository.fullName}
               onSelect={() => toggleProductRepository(repository.fullName)}
@@ -400,20 +572,79 @@ export function TrackDemo() {
             />
           ))}
           <div className={styles.paneFooter}>
-            <p aria-live="polite" className={styles.selectionCount}>
-              {productRepositories.length} of 3 selected
-            </p>
-            <span />
-            <button className={`${styles.button} ${styles.ghostButton}`} onClick={() => goToStep(1)} type="button">
+            <button className={`${styles.button} ${styles.ghostButton}`} onClick={() => goToStep(0)} type="button">
               Back
             </button>
+            <p className={styles.selectionCount}>
+              {productRepositories.length} of {PRODUCT_REPOSITORY_LIMIT} selected
+            </p>
+            <span />
             <button
               className={`${styles.button} ${styles.primaryButton}`}
               disabled={productRepositories.length === 0}
+              onClick={() => goToStep(2)}
+              type="button"
+            >
+              Next: choose surfaces <ArrowRight />
+            </button>
+          </div>
+        </div>
+      ) : null}
+
+      {step === 2 ? (
+        <div className={styles.pane}>
+          <h3>Where do customers read about it?</h3>
+          <p className={styles.paneDescription}>
+            Choose up to {SURFACE_LIMIT} repositories that hold customer-facing content: your docs, your website, a
+            help center. Tell Track what each one is so it knows how to read it.
+          </p>
+          {surfaceOptions.map((repository) => {
+            const selection = surfaces.find((surface) => surface.repository === repository.fullName);
+            return (
+              <div className={styles.surfaceRow} key={repository.fullName}>
+                <RepoOption
+                  icon="docs"
+                  isDisabled={surfaces.length >= SURFACE_LIMIT}
+                  isSelected={Boolean(selection)}
+                  onSelect={() => toggleSurface(repository.fullName)}
+                  repository={repository}
+                />
+                {selection ? (
+                  <div aria-label={`Content kind for ${repository.fullName}`} className={styles.surfaceKinds} role="radiogroup">
+                    {SURFACE_KINDS.map((option) => (
+                      <button
+                        aria-checked={selection.kind === option.kind}
+                        className={`${styles.surfaceKind} ${selection.kind === option.kind ? styles.surfaceKindActive : ""}`}
+                        key={option.kind}
+                        onClick={() => setSurfaceKind(repository.fullName, option.kind)}
+                        role="radio"
+                        title={option.hint}
+                        type="button"
+                      >
+                        {surfaceIcon(option.kind)}
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
+          <div className={styles.paneFooter}>
+            <button className={`${styles.button} ${styles.ghostButton}`} onClick={() => goToStep(1)} type="button">
+              Back
+            </button>
+            <p className={styles.selectionCount}>
+              {surfaces.length} of {SURFACE_LIMIT} selected
+            </p>
+            <span />
+            <button
+              className={`${styles.button} ${styles.primaryButton}`}
+              disabled={surfaces.length === 0}
               onClick={() => goToStep(3)}
               type="button"
             >
-              Continue <ArrowRight />
+              Next: run Track <ArrowRight />
             </button>
           </div>
         </div>
@@ -421,183 +652,257 @@ export function TrackDemo() {
 
       {step === 3 ? (
         <div className={styles.pane}>
-          <h3>Analyze your latest merged change</h3>
+          <h3>{run ? "Track is reading your repositories" : "Ready to run"}</h3>
           <p className={styles.paneDescription}>
-            This is a real read-only run against your selected repositories. It can take up to a minute while Track
-            reads the pull request, finds connected docs, and validates a draft.
+            {run
+              ? "This takes a couple of minutes. Track reads each merged pull request, then checks every surface you chose for anything it made stale, inconsistent, or missing."
+              : `Track will read the last ${PULL_REQUEST_LIMIT} merged pull requests and compare them with your surfaces. Nothing is written anywhere.`}
           </p>
-          <div aria-live="polite" className={styles.progressLog} role="log">
-            {visibleLogLines === 0 ? (
-              <p className={styles.logPlaceholder}>Ready to analyze your repositories.</p>
-            ) : null}
-            {runLogLines.slice(0, visibleLogLines).map((line, index) => (
-              <p className={index < visibleLogLines - 1 || !isRunning ? styles.logSuccess : ""} key={line}>
-                <span>{index < visibleLogLines - 1 || !isRunning ? "✓" : "·"}</span>
-                {line}
+
+          <dl className={styles.runSummary}>
+            <dt>Product</dt>
+            <dd>{summaryProducts.length > 0 ? summaryProducts.join(", ") : "from your last run"}</dd>
+            <dt>Surfaces</dt>
+            <dd>
+              {summarySurfaces.map((surface) => (
+                <span className={styles.surfaceChip} key={surface.repository}>
+                  {surfaceIcon(surface.kind)}
+                  {surface.repository}
+                  <em>{surfaceLabel(surface.kind)}</em>
+                </span>
+              ))}
+              {summarySurfaces.length === 0 ? "from your last run" : null}
+            </dd>
+          </dl>
+
+          {run ? (
+            <div aria-live="polite" className={styles.runProgress}>
+              <div aria-hidden="true" className={styles.progressBar}>
+                <span className={styles.progressBarFill} style={{ width: `${progressPercent}%` }} />
+              </div>
+              <p className={styles.progressStatus}>
+                {run.status === "failed" ? "Analysis failed" : (run.progress.message ?? "Working")}
+                {run.status !== "failed" && run.progress.phase === "analyzing" && progressTotal > 0
+                  ? ` · ${progressDone} of ${progressTotal} pull requests`
+                  : ""}
               </p>
-            ))}
-          </div>
+            </div>
+          ) : null}
+
           {error ? (
             <p aria-live="polite" className={styles.errorMessage}>
               {error}
             </p>
           ) : null}
+
           <div className={styles.paneFooter}>
-            <span />
             <button
               className={`${styles.button} ${styles.ghostButton}`}
-              disabled={isRunning}
+              disabled={Boolean(run && run.status !== "failed")}
               onClick={() => goToStep(2)}
               type="button"
             >
               Back
             </button>
-            <button
-              className={`${styles.button} ${styles.primaryButton}`}
-              disabled={isRunning}
-              onClick={() => void runAnalysis()}
-              type="button"
-            >
-              <Track /> {isRunning ? "Analyzing your repositories" : "Run Thally Track"}
-            </button>
+            <span />
+            {run && run.status !== "failed" ? null : (
+              <button
+                className={`${styles.button} ${styles.primaryButton}`}
+                disabled={
+                  isStarting || productRepositories.length === 0 || surfaces.length === 0 || (session ? !session.canAnalyze : false)
+                }
+                onClick={() => void startRun()}
+                type="button"
+              >
+                {isStarting ? "Starting" : run?.status === "failed" ? "Try once more" : "Run Track"} <ArrowRight />
+              </button>
+            )}
           </div>
         </div>
       ) : null}
 
       {step === 4 && result ? (
         <div className={`${styles.pane} ${styles.findingsPane}`}>
-          <h3>Findings</h3>
-          <p className={styles.paneDescription}>
-            Analyzed the most recent merged change in{" "}
-            <a href={result.pullRequest.url} rel="noreferrer" target="_blank">
-              {result.pullRequest.repository} #{result.pullRequest.number}
-            </a>{" "}
-            against {docsRepository}.
-          </p>
-          <p className={styles.verdict}>
-            <span /> {result.analysis.findings.length} {result.analysis.findings.length === 1 ? "finding" : "findings"}{" "}
-            detected <em>· candidates, not verified corrections</em>
-          </p>
-
-          {result.analysis.findings.length === 0 ? (
-            <div className={styles.noFindings}>
-              <Check />
-              <div>
-                <strong>No grounded documentation update was found.</strong>
-                <p>Track inspected {result.pagesInspected.length} likely pages and chose not to invent a change.</p>
-              </div>
+          <div className={styles.brief}>
+            <span className={styles.briefIcon}>
+              <Track />
+            </span>
+            <div>
+              <p className={styles.briefLabel}>Track says</p>
+              <p className={styles.briefText}>{result.brief}</p>
             </div>
-          ) : null}
+          </div>
 
-          {activeFinding ? (
-            <div className={styles.findingsLayout}>
-              <div className={styles.findingsList}>
-                <div className={styles.findingsListLabel}>
-                  {result.analysis.findings.length} {result.analysis.findings.length === 1 ? "finding" : "findings"}
-                </div>
-                {result.analysis.findings.map((finding, index) => (
-                  <button
-                    aria-current={index === activeFindingIndex ? "true" : undefined}
-                    className={`${styles.findingsListItem} ${
-                      index === activeFindingIndex ? styles.findingsListItemActive : ""
-                    }`}
-                    key={`${finding.affectedPage}:${finding.title}`}
-                    onClick={() => selectFinding(index)}
-                    type="button"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className={`${styles.findingDot} ${
-                        finding.confidence === "medium"
-                          ? styles.findingDotMedium
-                          : finding.confidence === "low"
-                            ? styles.findingDotLow
-                            : styles.findingDotHigh
-                      }`}
-                    />
-                    <span className={styles.findingsListText}>
-                      <span className={styles.findingsListTitle}>{finding.title}</span>
-                      <span className={styles.findingsListMeta}>
-                        {finding.affectedPage} · {finding.confidence}
+          <div className={styles.findingsLayout}>
+            <div className={styles.findingsList}>
+              {result.pullRequests.map((analysis, pullRequestIndex) => (
+                <section className={styles.prGroup} key={`${analysis.pullRequest.repository}#${analysis.pullRequest.number}`}>
+                  <header className={styles.prHeader}>
+                    <span className={styles.prIcon}>
+                      <GitPullRequest />
+                    </span>
+                    <span className={styles.prText}>
+                      <a href={analysis.pullRequest.url} rel="noreferrer" target="_blank">
+                        {analysis.pullRequest.repository} #{analysis.pullRequest.number} <ExternalLink />
+                      </a>
+                      <span className={styles.prTitle}>{analysis.pullRequest.title}</span>
+                      <span className={styles.prMeta}>
+                        merged {formatMergedAt(analysis.pullRequest.mergedAt)} · {analysis.pullRequest.filesChanged}{" "}
+                        {analysis.pullRequest.filesChanged === 1 ? "file" : "files"}
                       </span>
                     </span>
-                  </button>
-                ))}
-              </div>
-
-              <article className={styles.findingDetail} ref={findingDetailRef}>
-                <header className={styles.findingHeader}>
-                  <span className={styles.findingIcon}>
-                    <GitPullRequest />
-                  </span>
-                  <div>
-                    <h4>
-                      {activeFinding.title}
-                      <span>
-                        {result.pullRequest.repository} #{result.pullRequest.number} → {result.pullRequest.baseBranch}
-                      </span>
-                    </h4>
-                    <p>{activeFinding.affectedPage} may be affected</p>
-                  </div>
-                  <span
-                    className={`${styles.confidence} ${
-                      activeFinding.confidence === "medium"
-                        ? styles.confidenceMedium
-                        : activeFinding.confidence === "low"
-                          ? styles.confidenceLow
-                          : styles.confidenceHigh
-                    }`}
-                  >
-                    {activeFinding.confidence} confidence
-                  </span>
-                </header>
-                <dl className={styles.evidenceGrid}>
-                  <dt>Change detected</dt>
-                  <dd>{activeFinding.evidence.join(" ")}</dd>
-                  <dt>Docs searched</dt>
-                  <dd>
-                    {result.pagesInspected.length} likely Markdown{" "}
-                    {result.pagesInspected.length === 1 ? "page" : "pages"} inspected. Track matched{" "}
-                    {activeFinding.affectedPage}.
-                  </dd>
-                  <dt>Why this matters</dt>
-                  <dd>{activeFinding.impact}</dd>
-                </dl>
-                <div className={styles.diff}>
-                  <div className={styles.diffHeader}>
-                    <Docs /> {activeFinding.affectedPage} <span>Drafted update · for your review</span>
-                  </div>
-                  <div className={styles.diffDelete}>- {activeFinding.draft.before}</div>
-                  <div className={styles.diffAdd}>+ {activeFinding.draft.after}</div>
-                </div>
-                <p className={styles.findingFootnote}>
-                  Evidence comes from the bounded pull request and the connected docs. In Thally, Track opens this as a
-                  draft pull request. Nothing publishes without review.
-                </p>
-              </article>
+                    {analysis.findings.length === 0 ? (
+                      analysis.unverifiedFindings > 0 ? (
+                        <span className={styles.prUnverified}>Unverified</span>
+                      ) : (
+                        <span className={styles.prCovered}>Reflected</span>
+                      )
+                    ) : null}
+                  </header>
+                  {analysis.findings.length === 0 ? (
+                    <p className={styles.prSummary}>{analysis.summary}</p>
+                  ) : (
+                    analysis.findings.map((finding, findingIndex) => {
+                      const isActive =
+                        activeFinding?.pullRequest === pullRequestIndex && activeFinding?.finding === findingIndex;
+                      return (
+                        <button
+                          aria-current={isActive ? "true" : undefined}
+                          className={`${styles.findingsListItem} ${isActive ? styles.findingsListItemActive : ""}`}
+                          key={`${finding.surface}:${finding.affectedPage}`}
+                          onClick={() => {
+                            setActiveFinding({ pullRequest: pullRequestIndex, finding: findingIndex });
+                            findingDetailRef.current?.scrollTo({ top: 0 });
+                          }}
+                          type="button"
+                        >
+                          <span aria-hidden="true" className={`${styles.findingDot} ${confidenceClass(finding.confidence)}`} />
+                          <span className={styles.findingsListText}>
+                            <span className={styles.findingsListTitle}>{finding.headline}</span>
+                            <span className={styles.findingsListMeta}>
+                              {surfaceLabel(surfaceKindByRepository.get(finding.surface) ?? "other")} · {finding.affectedPage}
+                            </span>
+                          </span>
+                        </button>
+                      );
+                    })
+                  )}
+                </section>
+              ))}
             </div>
-          ) : null}
 
-          <div className={styles.conversionCard}>
+            <article className={styles.findingDetail} ref={findingDetailRef}>
+              {selectedFinding && selectedPullRequest ? (
+                <>
+                  <header className={styles.findingHeader}>
+                    <span className={styles.findingIcon}>
+                      {surfaceIcon(surfaceKindByRepository.get(selectedFinding.surface) ?? "other")}
+                    </span>
+                    <div>
+                      <h4>
+                        {selectedFinding.headline}
+                        <span>
+                          {selectedPullRequest.repository} #{selectedPullRequest.number} → {selectedPullRequest.baseBranch}
+                        </span>
+                      </h4>
+                      <p>
+                        {selectedFinding.surface} · {selectedFinding.affectedPage}
+                      </p>
+                    </div>
+                    <span
+                      className={`${styles.confidence} ${
+                        selectedFinding.confidence === "medium"
+                          ? styles.confidenceMedium
+                          : selectedFinding.confidence === "low"
+                            ? styles.confidenceLow
+                            : styles.confidenceHigh
+                      }`}
+                    >
+                      {selectedFinding.confidence} confidence
+                    </span>
+                  </header>
+                  <dl className={styles.evidenceGrid}>
+                    <dt>What changed</dt>
+                    <dd>{selectedFinding.evidence.join(" ")}</dd>
+                    <dt>Gap</dt>
+                    <dd>{gapDescription(selectedFinding.gap)}</dd>
+                    <dt>Why this matters</dt>
+                    <dd>{selectedFinding.impact}</dd>
+                  </dl>
+                  <div className={styles.diff}>
+                    <div className={styles.diffHeader}>
+                      <Docs /> {selectedFinding.affectedPage} <span>Drafted update · for your review</span>
+                    </div>
+                    <div className={styles.diffDelete}>- {selectedFinding.draft.before}</div>
+                    <div className={styles.diffAdd}>+ {selectedFinding.draft.after}</div>
+                  </div>
+                  <p className={styles.findingFootnote}>
+                    Evidence comes from the merged pull request and the pages Track inspected. In Thally, this becomes
+                    a draft pull request on {selectedFinding.surface}. Nothing publishes without review.
+                  </p>
+                </>
+              ) : (
+                <div className={styles.noFindings}>
+                  <span className={styles.findingIcon}>
+                    <Track />
+                  </span>
+                  <h4>{result.findingsCount > 0 ? "Pick a gap to see the evidence" : "Nothing to fix right now"}</h4>
+                  <p>
+                    {result.findingsCount > 0
+                      ? "Each gap shows what the pull request changed, which page still says otherwise, and the draft Track would open."
+                      : `Track read ${result.pullRequests.length} merged ${result.pullRequests.length === 1 ? "pull request" : "pull requests"} and inspected ${pagesInspected} pages. Every surface already reflects those changes.`}
+                  </p>
+                </div>
+              )}
+            </article>
+          </div>
+
+          <div className={styles.decisionCard}>
             <div>
               <h4>
-                {result.analysis.findings.length > 0
-                  ? "Turn these into pull requests"
-                  : "Keep your docs checked on every merge"}
+                {result.findingsCount > 0 ? "Should I draft pull requests to close these gaps?" : "Should I keep watching every merge?"}
               </h4>
               <p>
-                Create a Thally workspace to send these drafts to your docs repository for review, and let Track watch
-                every merge from now on.
+                {result.findingsCount > 0
+                  ? `Yes opens a Thally workspace with these repositories already connected. Track drafts the ${result.findingsCount === 1 ? "pull request" : "pull requests"} for review and keeps checking every merge from now on.`
+                  : "Yes opens a Thally workspace with these repositories already connected, so the next merge that changes something customers rely on gets a draft pull request."}
               </p>
+              {handoffState === "declined" ? (
+                <p className={styles.decisionNote}>
+                  No problem. This run stays here for 24 hours, and you can continue whenever you are ready.
+                </p>
+              ) : null}
+              {handoffState === "error" && error ? (
+                <p aria-live="polite" className={styles.errorMessage}>
+                  {error}
+                </p>
+              ) : null}
             </div>
-            <a className={`${styles.button} ${styles.primaryButton}`} href={`${DESTINATIONS.signup}?intent=track`}>
-              Continue with Thally <ArrowRight />
-            </a>
+            <div className={styles.decisionActions}>
+              <button
+                className={`${styles.button} ${styles.primaryButton}`}
+                disabled={handoffState === "loading"}
+                onClick={() => void continueToThally()}
+                type="button"
+              >
+                {handoffState === "loading" ? "Preparing your workspace" : "Yes, draft them"} <ArrowRight />
+              </button>
+              {handoffState !== "declined" ? (
+                <button
+                  className={`${styles.button} ${styles.ghostButton}`}
+                  disabled={handoffState === "loading"}
+                  onClick={() => setHandoffState("declined")}
+                  type="button"
+                >
+                  Not now
+                </button>
+              ) : null}
+            </div>
           </div>
           <div className={styles.paneFooter}>
             <span />
             <button className={`${styles.button} ${styles.ghostButton}`} onClick={restartAnalysis} type="button">
-              <RefreshCw /> Run another analysis
+              <RefreshCw /> Run on other repositories
             </button>
           </div>
         </div>
