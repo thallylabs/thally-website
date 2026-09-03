@@ -6,6 +6,7 @@ import { SiClaude, SiCursor, SiGithubcopilot, SiGooglegemini, SiPerplexity, SiV0
 
 import { Reveal } from "@/components/motion/reveal";
 import { SplitReveal } from "@/components/motion/split-reveal";
+import { HeroFlow } from "@/components/sections/hero-flow";
 import { HeroStrandField } from "@/components/sections/hero-strand-field";
 import { DESTINATIONS } from "@/lib/site";
 
@@ -100,29 +101,33 @@ const Hero = () => {
         <AmbientGlow />
         <Grain />
 
-        {/* The right ~38% stays empty on purpose: that is where the strand
-            bundle converges and the field is at its densest. */}
         <div className="relative z-10 flex min-h-[inherit] min-w-0 flex-col justify-between p-6 sm:p-10 lg:p-[70px]">
-          <div className="pt-6 lg:w-[62%] lg:pt-[30px]">
-            <SplitReveal
-              as="h1"
-              mode="words"
-              onMount
-              className="heading-hero max-w-[13ch] text-pretty text-white"
-              stagger={0.4}
-            >
-              Your product changed. Did your docs, website, and help center?
-            </SplitReveal>
+          <div className="grid min-w-0 flex-1 items-center gap-6 min-[1100px]:grid-cols-[44fr_56fr]">
+            <div className="min-w-0 pt-6 min-[1100px]:pt-0">
+              <SplitReveal
+                as="h1"
+                mode="words"
+                onMount
+                className="heading-hero max-w-[13ch] text-pretty text-white"
+                stagger={0.4}
+              >
+                Your product changed. Did your docs, website, and help center?
+              </SplitReveal>
 
-            <Reveal delay={0.5} distance={30} className="mt-7">
-              <p className="max-w-[36ch] text-xl tracking-[-0.04em] text-pretty text-white">
-                Thally is the product knowledge layer for software teams. It keeps your docs, website, and support
-                platform in sync as your product changes.
-              </p>
-              <div className="mt-9">
-                <HeroCtas />
-              </div>
-            </Reveal>
+              <Reveal delay={0.5} distance={30} className="mt-7">
+                <p className="max-w-[36ch] text-xl tracking-[-0.04em] text-pretty text-white">
+                  Thally is the product knowledge layer for software teams. It keeps your docs, website, and support
+                  platform in sync as your product changes.
+                </p>
+                <div className="mt-9">
+                  <HeroCtas />
+                </div>
+              </Reveal>
+            </div>
+
+            <div className="min-w-0">
+              <HeroFlow />
+            </div>
           </div>
 
           <Reveal delay={0.7} distance={20} className="mt-10 max-w-[560px]">
