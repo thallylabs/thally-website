@@ -1,0 +1,363 @@
+.wrap {
+  --card: rgba(255, 255, 255, 0.055);
+  --ink: #f2f3ee;
+  --muted: rgba(242, 243, 238, 0.55);
+  --faint: rgba(255, 255, 255, 0.1);
+  --line: rgba(255, 255, 255, 0.16);
+  --forest: #7fd19a;
+  --sans: var(--font-sans), system-ui, sans-serif;
+  --display: var(--font-display), system-ui, sans-serif;
+  --mono: var(--font-mono), ui-monospace, monospace;
+
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1120 / 600;
+  color: var(--ink);
+}
+
+.wrap * {
+  box-sizing: border-box;
+}
+
+.stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1120px;
+  height: 600px;
+  transform-origin: 0 0;
+}
+
+.graph {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.edge {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 1.25;
+}
+
+.edgeLit {
+  stroke-width: 1.5;
+}
+
+.dot {
+  fill: var(--forest);
+}
+
+.node {
+  position: absolute;
+}
+
+.label {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.label small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.repositoryLabel {
+  top: 216px;
+  left: 40px;
+}
+
+.surfacesLabel {
+  top: 52px;
+  left: 846px;
+}
+
+.repository {
+  top: 240px;
+  left: 40px;
+  width: 300px;
+  padding: 16px 18px;
+  border: 1px solid var(--faint);
+  border-radius: 14px;
+  background: var(--card);
+}
+
+.repositoryHeading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.repositoryHeading svg {
+  position: static;
+  width: 18px;
+  height: 18px;
+}
+
+.repositoryMeta {
+  margin-top: 4px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+.commit {
+  position: absolute;
+  top: 330px;
+  left: 40px;
+  width: 300px;
+  padding: 14px 16px 0;
+  overflow: hidden;
+  border: 1px solid var(--faint);
+  border-radius: 12px;
+  background: var(--card);
+  opacity: 0;
+}
+
+.mergeMeta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.mergeMeta svg {
+  position: static;
+  width: 16px;
+  height: 16px;
+  flex: none;
+  color: #a371f7;
+}
+
+.mergeMeta b {
+  color: #a371f7;
+  font-weight: 600;
+}
+
+.pullRequestNumber {
+  margin-left: auto;
+  font-family: var(--mono);
+}
+
+.commitTitle {
+  margin-top: 8px;
+  color: var(--ink);
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.branches {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.branches code {
+  max-width: 150px;
+  flex: none;
+  padding: 2px 7px;
+  overflow: hidden;
+  border-radius: 5px;
+  background: rgba(56, 139, 253, 0.15);
+  color: #79c0ff;
+  font-family: var(--mono);
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.diffStats {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12.5px;
+}
+
+.additions,
+.deletions {
+  font-weight: 500;
+}
+
+.additions {
+  color: #3fb950;
+}
+
+.deletions {
+  color: #f85149;
+}
+
+.statBar {
+  display: inline-flex;
+  gap: 1px;
+  margin-left: 2px;
+}
+
+.statBar i {
+  width: 8px;
+  height: 8px;
+  border-radius: 1.5px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.statBar i[data-kind="add"] {
+  background: #3fb950;
+}
+
+.statBar i[data-kind="delete"] {
+  background: #f85149;
+}
+
+.code {
+  margin: 12px -16px 0;
+  border-top: 1px solid var(--faint);
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 2.1;
+}
+
+.code div {
+  padding: 0 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.code div[data-kind="delete"] {
+  background: rgba(248, 81, 73, 0.15);
+  color: #ffa198;
+}
+
+.code div[data-kind="add"] {
+  background: rgba(63, 185, 80, 0.15);
+  color: #7ee787;
+}
+
+.thally {
+  top: 262px;
+  left: 475px;
+  width: 170px;
+  text-align: center;
+}
+
+.mark {
+  position: relative;
+  display: grid;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto;
+  place-items: center;
+  border: 1px solid var(--faint);
+  border-radius: 50%;
+  background: var(--card);
+}
+
+.mark img {
+  width: 34px;
+  height: 34px;
+}
+
+.ring {
+  position: absolute;
+  inset: -1px;
+  border: 1.5px solid var(--forest);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.wordmark {
+  margin-top: 12px;
+  font-family: var(--display);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.analysis {
+  position: absolute;
+  top: 378px;
+  left: 400px;
+  width: 320px;
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.analysis div {
+  position: absolute;
+  right: 0;
+  left: 0;
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.analysis b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.surface {
+  position: absolute;
+  left: 846px;
+  display: flex;
+  width: 250px;
+  flex-direction: column;
+}
+
+.surfaceName {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 22px;
+}
+
+.surfaceDot {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--line);
+  transition: background 300ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.surfaceStatus {
+  margin-top: 2px;
+  padding-left: 14px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  opacity: 0;
+  transform: translateY(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .surfaceDot {
+    transition: none;
+  }
+}

@@ -47,7 +47,7 @@ const About = () => {
               stagger={0.4}
               className="heading-hero text-canvas-foreground mt-5"
             >
-              Software ships faster than customer-facing knowledge can follow.
+              Built by someone who did the detective work for a living.
             </SplitReveal>
           </div>
 
@@ -55,9 +55,10 @@ const About = () => {
             {/* Left card: premise pull-quote with two big stats */}
             <Reveal className="border-canvas-card-stroke flex flex-1 flex-col justify-between rounded-[35px] border p-8 sm:p-12">
               <div>
-                <p className="text-canvas-muted text-sm font-medium tracking-widest uppercase">The premise</p>
+                <p className="text-canvas-muted text-sm font-medium tracking-widest uppercase">From the founder</p>
                 <p className="heading-card text-canvas-foreground mt-8 max-w-lg text-balance">
-                  Every product change. Every knowledge surface. Automatically in sync.
+                  I spent most of my career in developer experience at Flutterwave, Netlify, and LI.FI. At each one,
+                  keeping customer-facing knowledge aligned with the product took the same manual work.
                 </p>
               </div>
               <div className="border-canvas-hairline mt-14 grid grid-cols-2 gap-8 border-t pt-8">
@@ -100,26 +101,25 @@ const About = () => {
           <div className="mx-auto max-w-[1060px] space-y-20 md:space-y-28">
             <div className="max-w-2xl">
               <SplitReveal as="h2" mode="chars" className="heading-card text-canvas-foreground">
-                Every product change creates communication work.
+                When we shipped a feature, I went hunting.
               </SplitReveal>
               <Reveal delay={0.2} distance={24}>
                 <p className="text-canvas-muted mt-6 text-lg leading-8">
-                  Documentation, SDK references, release notes, examples, tutorials, and AI context are usually
-                  maintained separately. Teams have to rediscover what changed, decide which surfaces are affected, and
-                  repeat the same update across each one. No system owns that understanding.
+                  I collected product notes, went through tickets, and read changelogs and code diffs to understand what
+                  shipped. Then I had to find every public surface that needed to reflect it, from the API reference and
+                  quickstart to the website, support articles, old code samples, and integration guides.
                 </p>
               </Reveal>
             </div>
 
             <div className="ml-auto max-w-2xl">
               <SplitReveal as="h2" mode="chars" className="heading-card text-canvas-foreground">
-                Thally is the pipeline, not another destination.
+                Now the problem compounds.
               </SplitReveal>
               <Reveal delay={0.2} distance={24}>
                 <p className="text-canvas-muted mt-6 text-lg leading-8">
-                  Documentation platforms, wikis, content management systems, and knowledge bases store what a team
-                  already knows. Thally connects product evolution to customer-facing knowledge. It discovers the
-                  communication work a change creates, prioritizes it, and prepares the right updates for review.
+                  AI helps teams ship faster, so the gap opens faster. Outdated documentation also feeds the AI tools
+                  developers use. An old API or workflow can be recommended, generated into code, and repeated at scale.
                 </p>
               </Reveal>
             </div>
@@ -149,27 +149,26 @@ const About = () => {
 
             <div className="max-w-2xl">
               <SplitReveal as="h2" mode="chars" className="heading-card text-canvas-foreground">
-                Documentation is the first surface.
+                Thally is the product knowledge layer for software teams.
               </SplitReveal>
               <Reveal delay={0.2} distance={24}>
                 <p className="text-canvas-muted mt-6 text-lg leading-8">
-                  Thally&apos;s first job is narrow: understand how a product change affects documentation and help
-                  teams keep those pages synchronized. The publishing engine is available under the MIT license, content
-                  stays in Git, and humans review the updates. Each accepted review and correction improves the
-                  product-specific understanding behind future changes.
+                  Connect the repositories that define your product and the surfaces that explain it. When a pull
+                  request merges, Thally works out what the change means, traces the impact across your docs, website,
+                  help center, and changelog, then opens evidence-backed pull requests for your team to review.
                 </p>
               </Reveal>
             </div>
 
             <div className="ml-auto max-w-2xl">
               <SplitReveal as="h2" mode="chars" className="heading-card text-canvas-foreground">
-                The long-term goal is a synchronized knowledge ecosystem.
+                The judgment stays with your team.
               </SplitReveal>
               <Reveal delay={0.2} distance={24}>
                 <p className="text-canvas-muted mt-6 text-lg leading-8">
-                  Teams should not have to remember every place a product change needs to be explained. As Thally
-                  expands, shipping the product should surface the work across documentation, SDK references, examples,
-                  tutorials, release notes, AI context, and the knowledge surfaces still to come.
+                  Each pull request shows what changed, where the information came from, and why the update is needed.
+                  Your team verifies and merges it. When nothing needs to change, Thally says so instead of inventing
+                  work.
                 </p>
               </Reveal>
             </div>
@@ -178,11 +177,12 @@ const About = () => {
             <Reveal className="border-canvas-card-stroke rounded-[32px] border bg-white/[0.04] p-8 backdrop-blur-sm md:p-14">
               <div className="max-w-2xl">
                 <h2 className="heading-card text-canvas-foreground mt-4">
-                  Thally is built and operated by Fairspleet LLC.
+                  If this is your job, I would love for you to try it.
                 </h2>
                 <p className="text-canvas-muted mt-5 text-lg leading-8">
-                  We build Thally so product evolution is continuously reflected everywhere customers learn about it.
-                  Contact us directly with questions about the product, support, or company.
+                  If keeping product knowledge accurate still means chasing information across tickets, pull requests,
+                  and conversations, Thally is built for you. I am Ekene Eze, the founder of Thally. Contact me directly
+                  with questions about the product or the problem. Thally is built and operated by Fairspleet LLC.
                 </p>
                 <Link
                   href="/contact"

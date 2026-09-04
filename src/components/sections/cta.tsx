@@ -14,11 +14,7 @@ export function CTA() {
     <section className="relative z-[1] overflow-hidden pt-[120px]">
       {/* Background: blurred dusk sky under a night -> olive gradient */}
       <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden rounded-b-[52px]">
-        <img
-          src="/template/cta-bg.webp"
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover blur-[5px]"
-        />
+        <img src="/template/cta-bg.webp" alt="" className="absolute inset-0 h-full w-full object-cover blur-[5px]" />
         <div
           className="absolute inset-0 mix-blend-hard-light"
           style={{ backgroundImage: "linear-gradient(#000104 40%, rgba(115,121,56,0.55))" }}
@@ -28,12 +24,12 @@ export function CTA() {
       <div className="mx-auto w-full max-w-[1260px] px-5">
         <div className="mx-auto mb-20 max-w-[800px] text-center">
           <SplitReveal as="h2" mode="chars" className="heading-section text-white">
-            Ship the code. Docs follow.
+            Ship the code. Everything else follows.
           </SplitReveal>
           <Reveal delay={0.2} distance={24}>
             <p className="mt-4 text-lg text-white/85">
-              Keep shipping without letting your docs fall behind. Thally drafts the updates; your team approves what
-              ships.
+              Keep your product knowledge accurate without chasing information across tickets, pull requests, and
+              conversations. Thally drafts the updates, your team approves what ships.
             </p>
           </Reveal>
           <Reveal delay={0.35} distance={16} className="mt-8">
