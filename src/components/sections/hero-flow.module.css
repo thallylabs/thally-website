@@ -67,15 +67,6 @@
   white-space: nowrap;
 }
 
-.label::before {
-  width: 6px;
-  height: 6px;
-  flex: none;
-  border-radius: 50%;
-  background: var(--forest);
-  content: "";
-}
-
 .label small {
   color: var(--muted);
   font-size: 12px;
