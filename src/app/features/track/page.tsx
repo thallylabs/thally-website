@@ -25,7 +25,7 @@ import { TrackDemo } from "./track-demo";
 export const metadata: Metadata = {
   title: "Thally Track: Product Knowledge Impact Analysis",
   description:
-    "See how Thally Track understands a merged product change, traces its impact across your docs, website, and help center, and drafts evidence-backed updates for human review.",
+    "Run Thally Track on your own repositories. It reads your last five merged pull requests, finds what your docs, website, and support content have not caught up with, and offers to draft the fixes.",
   alternates: {
     canonical: "/features/track",
   },
@@ -288,10 +288,10 @@ export default function TrackFeaturePage() {
       <FeatureBanner
         title="Your product changed."
         titleAccent="Did your docs, website, and help center?"
-        description="Track connects the repositories that change your product to the surfaces that explain it. When a pull request merges, Thally works out what the change means, traces the impact across your connected surfaces, and drafts evidence-backed updates for review."
-        primaryCta={{ label: "Try it on your repos", href: "#demo" }}
+        description="Track connects the repositories that change your product to the docs, website, and support content that explain it. When a pull request merges, Thally works out what changed for customers, finds every place that still says otherwise, and drafts evidence-backed updates for review."
+        primaryCta={{ label: "Run it on your repos", href: "#demo" }}
         secondaryCta={{ label: "See how it works", href: "#how-track-works" }}
-        finePrint="No Thally account needed. You choose exactly which GitHub repositories Thally can read."
+        finePrint="No Thally account needed. Connect GitHub, and Track reads your last five merged pull requests in plain language."
       >
         <ImpactBoard />
       </FeatureBanner>
@@ -350,12 +350,13 @@ export default function TrackFeaturePage() {
       <section id="demo" className="bg-canvas pb-[120px]">
         <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
           <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
-            Try Track right now.
+            Run Track on your repos right now.
           </SplitReveal>
           <Reveal delay={0.15} distance={20}>
             <p className="mt-5 text-lg text-[#afafaf]">
-              Connect customer-facing repositories and at least one product repository, then let Thally analyze the most
-              recent merged change.
+              Connect the repositories where your product changes, then connect the docs, website, and help center your
+              customers read. Track reads your last five merged pull requests and explains what each one changed that
+              your public content has not caught up with. Then it offers to draft the pull requests.
             </p>
           </Reveal>
         </div>
