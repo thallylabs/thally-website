@@ -33,7 +33,14 @@ const blogJsonLd = {
     datePublished: post.date,
     dateModified: post.updated,
     url: `${SITE_URL}/blog/${post.slug}`,
-    author: { "@id": `${SITE_URL}/authors/thally-team#team` },
+    image: post.thumbnailImage ? `${SITE_URL}${post.thumbnailImage}` : `${SITE_URL}/blog/${post.slug}/opengraph-image`,
+    author: post.authorName
+      ? {
+          "@type": "Person",
+          name: post.authorName,
+          url: `${SITE_URL}${post.authorPath ?? ""}`,
+        }
+      : { "@id": `${SITE_URL}/authors/thally-team#team` },
   })),
 };
 

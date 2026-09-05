@@ -2,7 +2,7 @@
 
 > Expanded first-party content for retrieval and citation. Canonical HTML pages remain the source of truth.
 
-Generated from the same repository as thally.io. Last generated: 2026-08-31.
+Generated from the same repository as thally.io. Last generated: 2026-09-05.
 # Thally
 
 > Thally is the product knowledge synchronization pipeline. It understands what changed, finds the customer-facing knowledge affected, and prepares evidence-backed updates for human review. Documentation is the first surface, and the publishing engine is open source under the MIT license.
@@ -49,6 +49,7 @@ Generated from the same repository as thally.io. Last generated: 2026-08-31.
 
 ## Blog highlights
 
+- [Introducing Thally](/blog/introducing-thally): why product knowledge falls out of sync and how Thally prepares evidence-backed updates
 - [Thally vs Mintlify](/blog/thally-vs-mintlify): ownership, self-hosting, and machine readability compared
 - [Thally vs GitBook](/blog/thally-vs-gitbook): docs-as-code versus a hosted wiki
 - [Thally vs Docusaurus](/blog/thally-vs-docusaurus): two open-source paths to developer docs
@@ -124,6 +125,68 @@ Thally is a product knowledge synchronization pipeline, starting with documentat
 - Plan changes apply immediately on upgrade, at period end on downgrade.
 - Full pricing page: /pricing
 
+
+---
+
+# Article: Introducing Thally
+
+Canonical URL: https://thally.io/blog/introducing-thally
+
+For most of my career, I’ve worked in developer experience, managing developer relationships, documentation, and integrations at companies like Flutterwave, Netlify, and LI.FI.
+
+Across those companies, one part of the job kept coming back: keeping the information people relied on aligned with the product as it evolved.
+
+Whenever we shipped a feature, I would collect one-pagers from product managers, go through Linear tickets, read changelogs, and inspect code changes to figure out what had actually changed.
+
+Then came the harder question. Where else did that change need to show up?
+
+Did we need to update the API reference? The quickstart guide? A feature page on the website? A support article nobody had touched in six months? What about the code example in a blog post or the integration guide a partner was still following?
+
+Writing the update was often the last part of the work. First, someone had to find it.
+
+Most of the time, we updated the documentation. But we rarely covered every public place where someone could learn about the product. Another release was already waiting, and the information was spread across too many pages, repositories, and teams.
+
+I’m excited to introduce [Thally](https://thally.io/) today. Thally is the product knowledge layer for software teams. It keeps your documentation, website, support platform, and other connected customer-facing content in sync as your product changes.
+
+This is a problem I’ve wanted to solve for a long time. AI has made it more urgent.
+
+As software teams use AI coding assistants to ship faster, the amount of product knowledge that needs updating grows with them. Documentation teams have less time between releases to investigate changes and find every affected page.
+
+The old information doesn’t disappear when the new feature ships. It stays online, searchable, linkable, and available to anyone trying to understand the product.
+
+That now includes AI tools.
+
+If a deprecated method still appears in an integration guide, an AI coding assistant can recommend it. If an old authentication flow remains in a code example, that assistant can generate a new integration around it. The product has moved on, but the information teaching people and machines how to use it hasn’t.
+
+A missed update can become a broken integration, a support conversation, or a customer losing trust in the product. AI can repeat that mistake at a scale that makes keeping the source accurate even more important.
+
+With Thally, you create your documentation site, connect your product repositories, and connect the knowledge surfaces you want maintained alongside them. Those can include your website, support content, and other customer-facing content repositories.
+
+When a pull request merges into a tracked product repository, Thally works out what the change means for the people using your product. It then traces the impact across every connected knowledge surface and identifies the updates each one needs.
+
+For example, imagine you rename a configuration option. The code is updated and the tests pass, but the old name might still appear in the API reference, a quickstart, a troubleshooting article, and a blog post with a copyable example.
+
+Thally follows that change into the connected content, makes the relevant updates, and opens pull requests in the affected repositories. A connected page that doesn’t need changing is left alone.
+
+Each pull request contains the completed updates and the evidence used to justify them. Your team can see what changed, where the information came from, and why the update was necessary. They can review, edit, and approve the work before it gets published.
+
+That is the time I want Thally to give back: the hours spent chasing context and searching for everything a release might have made inaccurate. The people responsible for your product knowledge keep their judgment and publishing authority, with the investigation and proposed changes already in front of them.
+
+You also choose when Thally runs. By default, it runs when a pull request merges into a tracked product repository. You can configure it to run when a pull request opens or on a schedule to check for changes since the previous run.
+
+Underneath that automation is a complete platform for building and publishing documentation.
+
+We built it with agents and machines as primary consumers, alongside the people reading your documentation in a browser. You write the content once. A developer gets a fast, readable documentation site, while an AI agent can access the same content as Markdown, JSON, or through an MCP server.
+
+Keeping both connected to the same source means your team can maintain the information they depend on together.
+
+Thally also includes custom domains, search, versioned deployments, rollbacks, and AI assistants. The documentation engine is MIT licensed and can be self-hosted, and your content stays in repositories you control.
+
+If keeping your product knowledge accurate still depends on someone chasing tickets, reading through pull requests, and asking around to find out what changed, I built Thally for your team.
+
+Start by creating your documentation site, connect your product repositories, then connect the places your users learn about the product. When the product changes, Thally prepares the updates for your team to review.
+
+[Get started with Thally](https://thally.io/).
 
 ---
 

@@ -3,6 +3,7 @@ import path from "node:path";
 
 const root = process.cwd();
 const posts = [
+  ["Introducing Thally", "introducing-thally"],
   ["Thally vs Mintlify", "thally-vs-mintlify"],
   ["Thally vs GitBook", "thally-vs-gitbook"],
   ["Thally vs Docusaurus", "thally-vs-docusaurus"],
@@ -25,7 +26,7 @@ const header = [
   "",
   "> Expanded first-party content for retrieval and citation. Canonical HTML pages remain the source of truth.",
   "",
-  "Generated from the same repository as thally.io. Last generated: 2026-08-31.",
+  "Generated from the same repository as thally.io. Last generated: 2026-09-05.",
   "",
 ].join("\n");
 

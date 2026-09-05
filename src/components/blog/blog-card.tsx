@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
 import { Reveal } from "@/components/motion/reveal";
@@ -37,6 +38,11 @@ export function BlogCard({
   index?: number;
   featured?: boolean;
 }) {
+  const customThumbnail =
+    post.thumbnailAnimation && post.thumbnailImage
+      ? { animation: post.thumbnailAnimation, image: post.thumbnailImage }
+      : null;
+
   return (
     <Reveal delay={0.1 + index * 0.06} distance={30} className={featured ? "lg:col-span-2" : undefined}>
       <article className="h-full">
@@ -46,28 +52,49 @@ export function BlogCard({
             <div
               className={cn(
                 "relative overflow-hidden rounded-[16px]",
-                featured ? "aspect-[16/9] md:aspect-[21/9]" : "aspect-[16/10]",
+                customThumbnail ? "aspect-[1200/630]" : featured ? "aspect-[16/9] md:aspect-[21/9]" : "aspect-[16/10]",
               )}
             >
-              <div
-                className="absolute inset-0 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
-                style={{
-                  background: `linear-gradient(140deg, color-mix(in oklab, ${post.accent} 32%, #000104) 0%, color-mix(in oklab, ${post.accent} 10%, #000104) 45%, #000104 100%)`,
-                }}
-              >
-                <span
-                  aria-hidden
-                  className={cn(
-                    // right-5 as well as left-5: with only left set, max-w-full
-                    // measures the whole card and the watermark ran past the
-                    // edge. break-words covers cards narrower than one word.
-                    "font-display absolute -bottom-2 right-5 left-5 max-w-full leading-[1.05] tracking-[-0.04em] break-words text-white/20 select-none",
-                    featured ? "text-[clamp(1.75rem,8vw,4.5rem)]" : "text-[clamp(1.5rem,7vw,3rem)]",
-                  )}
+              {customThumbnail ? (
+                <>
+                  <Image
+                    src={customThumbnail.image}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1296px) 1232px, calc(100vw - 72px)"
+                    className="object-cover"
+                  />
+                  <iframe
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 size-full border-0"
+                    loading="eager"
+                    sandbox="allow-scripts"
+                    src={customThumbnail.animation}
+                    tabIndex={-1}
+                    title=""
+                  />
+                </>
+              ) : (
+                <div
+                  className="absolute inset-0 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105"
+                  style={{
+                    background: `linear-gradient(140deg, color-mix(in oklab, ${post.accent} 32%, #000104) 0%, color-mix(in oklab, ${post.accent} 10%, #000104) 45%, #000104 100%)`,
+                  }}
                 >
-                  {post.cardTitle}
-                </span>
-              </div>
+                  <span
+                    aria-hidden
+                    className={cn(
+                      // right-5 as well as left-5: with only left set, max-w-full
+                      // measures the whole card and the watermark ran past the
+                      // edge. break-words covers cards narrower than one word.
+                      "font-display absolute right-5 -bottom-2 left-5 max-w-full leading-[1.05] tracking-[-0.04em] break-words text-white/20 select-none",
+                      featured ? "text-[clamp(1.75rem,8vw,4.5rem)]" : "text-[clamp(1.5rem,7vw,3rem)]",
+                    )}
+                  >
+                    {post.cardTitle}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 
