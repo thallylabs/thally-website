@@ -28,8 +28,29 @@ import {
 import styles from "./track-page.module.css";
 
 const CLOUD_API = (process.env.NEXT_PUBLIC_THALLY_CLOUD_API_URL || "https://app.thally.io").replace(/\/$/, "");
+
+/**
+ * Whether a credentialed call to the Cloud API can succeed from this origin.
+ *
+ * Same origin always works; otherwise only the deployed thally.io sites are
+ * allowlisted. Local and preview builds are not, so an unprompted probe from
+ * one only produces a console error.
+ */
+function canReachCloudApi(): boolean {
+  if (typeof window === "undefined") return false;
+  const { origin, hostname } = window.location;
+  if (origin === CLOUD_API) return true;
+  return hostname === "thally.io" || hostname.endsWith(".thally.io");
+}
+
 const API_VERSION_HEADER = "track-v2";
-const STEP_NAMES = ["Connect GitHub", "Product repositories", "Customer-facing surfaces", "Run Track", "What Track found"];
+const STEP_NAMES = [
+  "Connect GitHub",
+  "Product repositories",
+  "Customer-facing surfaces",
+  "Run Track",
+  "What Track found",
+];
 const PRODUCT_REPOSITORY_LIMIT = 3;
 const SURFACE_LIMIT = 3;
 const PULL_REQUEST_LIMIT = 5;
@@ -193,7 +214,11 @@ function formatMergedAt(value: string): string {
 }
 
 function confidenceClass(confidence: TrackFinding["confidence"]): string {
-  return confidence === "medium" ? styles.findingDotMedium : confidence === "low" ? styles.findingDotLow : styles.findingDotHigh;
+  return confidence === "medium"
+    ? styles.findingDotMedium
+    : confidence === "low"
+      ? styles.findingDotLow
+      : styles.findingDotHigh;
 }
 
 function gapDescription(gap: TrackFinding["gap"]): string {
@@ -290,6 +315,15 @@ export function TrackDemo() {
   );
 
   useEffect(() => {
+    // The credentialed probe is only accepted from origins the Cloud API
+    // allowlists. Anywhere else the browser blocks it and logs a CORS error
+    // that no catch can suppress, so the unprompted probe is skipped rather
+    // than firing a request that cannot succeed. A reader who presses connect
+    // still gets a real attempt and a real error.
+    if (!canReachCloudApi()) {
+      const timeoutId = window.setTimeout(() => setSessionState("disconnected"), 0);
+      return () => window.clearTimeout(timeoutId);
+    }
     const timeoutId = window.setTimeout(() => void loadSession(), 0);
     return () => window.clearTimeout(timeoutId);
   }, [loadSession]);
@@ -336,7 +370,10 @@ export function TrackDemo() {
   }, [goToStep, isRunActive, loadSession, runId]);
 
   const productOptions = useMemo(
-    () => session?.repositories.filter((repository) => !surfaces.some((surface) => surface.repository === repository.fullName)) ?? [],
+    () =>
+      session?.repositories.filter(
+        (repository) => !surfaces.some((surface) => surface.repository === repository.fullName),
+      ) ?? [],
     [session, surfaces],
   );
   const surfaceOptions = useMemo(
@@ -373,7 +410,11 @@ export function TrackDemo() {
       if (current.length >= SURFACE_LIMIT) return current;
       // A repository named "docs" almost always is one; everything else starts
       // as a website so the reader only has to correct the exceptions.
-      const guessedKind: SurfaceKind = /docs|documentation/i.test(name) ? "docs" : /support|help|kb/i.test(name) ? "support" : "website";
+      const guessedKind: SurfaceKind = /docs|documentation/i.test(name)
+        ? "docs"
+        : /support|help|kb/i.test(name)
+          ? "support"
+          : "website";
       return [...current, { repository: name, kind: guessedKind }];
     });
   };
@@ -445,8 +486,11 @@ export function TrackDemo() {
 
   const result = run?.status === "completed" ? run.result : null;
   const selectedFinding =
-    result && activeFinding ? (result.pullRequests[activeFinding.pullRequest]?.findings[activeFinding.finding] ?? null) : null;
-  const selectedPullRequest = result && activeFinding ? (result.pullRequests[activeFinding.pullRequest]?.pullRequest ?? null) : null;
+    result && activeFinding
+      ? (result.pullRequests[activeFinding.pullRequest]?.findings[activeFinding.finding] ?? null)
+      : null;
+  const selectedPullRequest =
+    result && activeFinding ? (result.pullRequests[activeFinding.pullRequest]?.pullRequest ?? null) : null;
   const surfaceKindByRepository = useMemo(
     () => new Map(result?.surfaces.map((surface) => [surface.repository, surface.kind]) ?? []),
     [result],
@@ -578,8 +622,8 @@ export function TrackDemo() {
         <div className={styles.pane}>
           <h3>Where does your product change?</h3>
           <p className={styles.paneDescription}>
-            Choose up to {PRODUCT_REPOSITORY_LIMIT} repositories. Track reads the last {PULL_REQUEST_LIMIT} pull requests
-            merged across them and works out what each one changed for customers.
+            Choose up to {PRODUCT_REPOSITORY_LIMIT} repositories. Track reads the last {PULL_REQUEST_LIMIT} pull
+            requests merged across them and works out what each one changed for customers.
           </p>
           {productOptions.map((repository) => (
             <RepoOption
@@ -615,8 +659,8 @@ export function TrackDemo() {
         <div className={styles.pane}>
           <h3>Where do customers read about it?</h3>
           <p className={styles.paneDescription}>
-            Choose up to {SURFACE_LIMIT} repositories that hold customer-facing content: your docs, your website, a
-            help center. Tell Track what each one is so it knows how to read it.
+            Choose up to {SURFACE_LIMIT} repositories that hold customer-facing content: your docs, your website, a help
+            center. Tell Track what each one is so it knows how to read it.
           </p>
           {surfaceOptions.map((repository) => {
             const selection = surfaces.find((surface) => surface.repository === repository.fullName);
@@ -630,7 +674,11 @@ export function TrackDemo() {
                   repository={repository}
                 />
                 {selection ? (
-                  <div aria-label={`Content kind for ${repository.fullName}`} className={styles.surfaceKinds} role="radiogroup">
+                  <div
+                    aria-label={`Content kind for ${repository.fullName}`}
+                    className={styles.surfaceKinds}
+                    role="radiogroup"
+                  >
                     {SURFACE_KINDS.map((option) => (
                       <button
                         aria-checked={selection.kind === option.kind}
@@ -729,7 +777,10 @@ export function TrackDemo() {
               <button
                 className={`${styles.button} ${styles.primaryButton}`}
                 disabled={
-                  isStarting || productRepositories.length === 0 || surfaces.length === 0 || (session ? !session.canAnalyze : false)
+                  isStarting ||
+                  productRepositories.length === 0 ||
+                  surfaces.length === 0 ||
+                  (session ? !session.canAnalyze : false)
                 }
                 onClick={() => void startRun()}
                 type="button"
@@ -756,7 +807,10 @@ export function TrackDemo() {
           <div className={styles.findingsLayout}>
             <div className={styles.findingsList}>
               {result.pullRequests.map((analysis, pullRequestIndex) => (
-                <section className={styles.prGroup} key={`${analysis.pullRequest.repository}#${analysis.pullRequest.number}`}>
+                <section
+                  className={styles.prGroup}
+                  key={`${analysis.pullRequest.repository}#${analysis.pullRequest.number}`}
+                >
                   <header className={styles.prHeader}>
                     <span className={styles.prIcon}>
                       <GitPullRequest />
@@ -796,11 +850,15 @@ export function TrackDemo() {
                           }}
                           type="button"
                         >
-                          <span aria-hidden="true" className={`${styles.findingDot} ${confidenceClass(finding.confidence)}`} />
+                          <span
+                            aria-hidden="true"
+                            className={`${styles.findingDot} ${confidenceClass(finding.confidence)}`}
+                          />
                           <span className={styles.findingsListText}>
                             <span className={styles.findingsListTitle}>{finding.headline}</span>
                             <span className={styles.findingsListMeta}>
-                              {surfaceLabel(surfaceKindByRepository.get(finding.surface) ?? "other")} · {finding.affectedPage}
+                              {surfaceLabel(surfaceKindByRepository.get(finding.surface) ?? "other")} ·{" "}
+                              {finding.affectedPage}
                             </span>
                           </span>
                         </button>
@@ -822,7 +880,8 @@ export function TrackDemo() {
                       <h4>
                         {selectedFinding.headline}
                         <span>
-                          {selectedPullRequest.repository} #{selectedPullRequest.number} → {selectedPullRequest.baseBranch}
+                          {selectedPullRequest.repository} #{selectedPullRequest.number} →{" "}
+                          {selectedPullRequest.baseBranch}
                         </span>
                       </h4>
                       <p>
@@ -857,8 +916,8 @@ export function TrackDemo() {
                     <div className={styles.diffAdd}>+ {selectedFinding.draft.after}</div>
                   </div>
                   <p className={styles.findingFootnote}>
-                    Evidence comes from the merged pull request and the pages Track inspected. In Thally, this becomes
-                    a draft pull request on {selectedFinding.surface}. Nothing publishes without review.
+                    Evidence comes from the merged pull request and the pages Track inspected. In Thally, this becomes a
+                    draft pull request on {selectedFinding.surface}. Nothing publishes without review.
                   </p>
                 </>
               ) : (
@@ -880,7 +939,9 @@ export function TrackDemo() {
           <div className={styles.decisionCard}>
             <div>
               <h4>
-                {result.findingsCount > 0 ? "Should I draft pull requests to close these gaps?" : "Should I keep watching every merge?"}
+                {result.findingsCount > 0
+                  ? "Should I draft pull requests to close these gaps?"
+                  : "Should I keep watching every merge?"}
               </h4>
               <p>
                 {result.findingsCount > 0

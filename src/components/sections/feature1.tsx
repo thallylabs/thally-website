@@ -219,8 +219,11 @@ function WorkspaceCard({
   });
   const rotate = useTransform(relative, (value) => -value * 4.5);
   const scale = useTransform(relative, (value) => 1 - Math.min(Math.abs(value), 1.6) * 0.045);
-  const opacity = useTransform(relative, (value) => Math.max(0.34, 1 - Math.min(Math.abs(value), 1.6) * 0.35));
-  const filter = useTransform(relative, (value) => `blur(${Math.min(2.2, Math.abs(value) * 1.2)}px)`);
+  // Depth comes from offset, rotation, scale, and opacity alone. A
+  // scroll-linked blur re-rasterizes the whole card on every frame of the
+  // scroll, which is the difference between a composited deck and a stuttering
+  // one on software-rasterized machines.
+  const opacity = useTransform(relative, (value) => Math.max(0.34, 1 - Math.min(Math.abs(value), 1.6) * 0.42));
   const isActive = index === active;
 
   return (
@@ -230,8 +233,8 @@ function WorkspaceCard({
       style={{ zIndex: isActive ? 3 : index < active ? 1 : 2, pointerEvents: isActive ? "auto" : "none" }}
     >
       <motion.div
-        className="will-change-[transform,opacity,filter]"
-        style={reduce ? { opacity: isActive ? 1 : 0 } : { x, y, rotate, scale, opacity, filter }}
+        className="will-change-[transform,opacity]"
+        style={reduce ? { opacity: isActive ? 1 : 0 } : { x, y, rotate, scale, opacity }}
       >
         <WorkspaceWindow feature={feature.id} />
       </motion.div>

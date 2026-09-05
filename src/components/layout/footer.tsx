@@ -50,7 +50,15 @@ export const Footer = () => {
     <footer className="bg-canvas relative overflow-hidden pt-[120px]">
       {/* Photographic backdrop */}
       <div aria-hidden className="absolute inset-0 overflow-hidden rounded-[52px]">
-        <img src="/template/footer-1-1.webp" alt="" className="h-full w-full object-cover opacity-30" />
+        <img
+          src="/template/footer-1-1.webp"
+          alt=""
+          width={2912}
+          height={1440}
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover opacity-30"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-[#000104]/70 via-[#000104]/85 to-[#000104]" />
       </div>
 

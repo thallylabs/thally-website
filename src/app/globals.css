@@ -584,6 +584,83 @@ html.theme-transition::view-transition-new(root) {
   animation-play-state: paused;
 }
 
+/* Entrance reveals (Reveal / SplitReveal): CSS-driven so first paint never
+   waits on the JS bundle. The server renders the resting, visible state;
+   [data-reveal] / [data-split] carry the phase. "mount" plays as keyframes
+   from first paint (hero copy, the LCP on most routes); "hidden" -> "in" is
+   applied after hydration, only to content still outside the viewport. */
+:root {
+  --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Mount reveals never clip their text. The hero copy is the LCP on most
+   routes, and an entrance that hides it (an overflow mask, or a fade from
+   zero) keeps re-emitting LCP candidates until it finishes, which is what put
+   the paint seconds behind first paint. Everything here animates from a state
+   the text is already painted in. */
+@keyframes settle-enter {
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes mount-enter {
+  from {
+    opacity: 0.12;
+    transform: translateY(var(--rv-y, 50px));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.motion-reveal[data-reveal="mount"] {
+  animation: mount-enter 0.7s var(--ease-reveal) var(--rv-delay, 0.2s) both;
+}
+
+.motion-reveal[data-reveal="hidden"] {
+  opacity: 0;
+  transform: translateY(var(--rv-y, 50px));
+  filter: var(--rv-blur-from, none);
+}
+
+.motion-reveal[data-reveal="in"] {
+  opacity: 1;
+  transform: translateY(0);
+  filter: var(--rv-blur-to, none);
+  transition:
+    opacity 0.7s var(--ease-reveal) var(--rv-delay, 0.2s),
+    transform 0.7s var(--ease-reveal) var(--rv-delay, 0.2s),
+    filter 0.7s var(--ease-reveal) var(--rv-delay, 0.2s);
+}
+
+/* Mount headings keep the per-word stagger, but the words rise from a visible
+   offset rather than out of a clipping mask. Every word is painted in the
+   first frame, so the heading is one LCP candidate at first paint while still
+   reading as a staggered reveal. */
+[data-split="mount"] .split-reveal-unit {
+  transform: translateY(0.42em);
+  animation: settle-enter 0.62s var(--ease-reveal) var(--su-delay, 0s) both;
+}
+
+/* Only the scroll phases clip: a mount reveal must never hide the LCP text,
+   and the masks' overflow lives here rather than inline so the phase rules
+   can decide. */
+[data-split="hidden"] .split-reveal-mask,
+[data-split="in"] .split-reveal-mask {
+  overflow: hidden;
+}
+
+[data-split="hidden"] .split-reveal-unit {
+  transform: translateY(100%);
+}
+
+[data-split="in"] .split-reveal-unit {
+  transform: translateY(0);
+  transition: transform 0.6s var(--ease-reveal) var(--su-delay, 0s);
+}
+
 /* Handle reduced motion preference globally */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -597,20 +674,25 @@ html.theme-transition::view-transition-new(root) {
   .motion-safe-only {
     display: none !important;
   }
-  /* Safety net: the reveals start hidden and are brought in by JS. When the
-     animation is suppressed the content would stay invisible, so force the
-     resting state here rather than trusting the animation to land. */
+  /* Safety net: the reveal phases hide content until an animation or
+     transition brings it in. When motion is suppressed, force the resting
+     state here rather than trusting the animation to land. */
   .motion-reveal {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
+    animation: none !important;
+    transition: none !important;
   }
   .split-reveal-mask {
     overflow: visible !important;
   }
-  .split-reveal-unit {
+  .split-reveal-unit,
+  [data-split="mount"] {
     transform: none !important;
     opacity: 1 !important;
+    animation: none !important;
+    transition: none !important;
   }
 
   .logos-marquee {
@@ -630,5 +712,36 @@ html.theme-transition::view-transition-new(root) {
   }
   .logos-marquee-track[aria-hidden="true"] {
     display: none;
+  }
+}
+
+/* Tier 2 degradation guards. See the browser support contract in README.md.
+ *
+ * Almost everything else here degrades on its own: Lightning CSS already emits
+ * an sRGB hex fallback ahead of every oklch token, prefixes mask-image and
+ * backdrop-filter, and Tailwind ships its own fallback layer for engines
+ * without @property. Decorative layers may be missing below the Tier 1 floor.
+ * Text going missing is the one outcome the contract does not allow, and
+ * .linear-text is the only construct on the site that can produce it: it paints
+ * display headings with a background gradient clipped to the glyphs while the
+ * glyph fill itself is transparent. Where the clip is not honoured, or a
+ * forced-colours mode repaints the background but leaves -webkit-text-fill-color
+ * alone, the heading becomes invisible rather than plain. Both blocks are inert
+ * wherever the effect works, and both are unlayered so they win the cascade
+ * against the utility that sets it up. */
+@supports not ((background-clip: text) or (-webkit-background-clip: text)) {
+  .linear-text {
+    background-image: none;
+    -webkit-text-fill-color: currentcolor;
+    color: var(--canvas-foreground);
+  }
+}
+
+@media (forced-colors: active) {
+  .linear-text {
+    background-image: none;
+    -webkit-text-fill-color: currentcolor;
+    color: CanvasText;
+    text-shadow: none;
   }
 }

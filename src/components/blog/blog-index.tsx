@@ -13,7 +13,7 @@ export function BlogIndex() {
           <SplitReveal as="h1" mode="words" onMount className="heading-section text-canvas-foreground">
             The Thally blog
           </SplitReveal>
-          <Reveal delay={0.2} distance={20}>
+          <Reveal mount delay={0.2} distance={20}>
             <p className="text-canvas-muted mt-5 text-lg text-pretty">
               Practical guides and honest comparisons for teams building documentation that works for people and AI
               agents from one source.

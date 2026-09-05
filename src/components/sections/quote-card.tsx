@@ -17,15 +17,21 @@ import { Reveal } from "@/components/motion/reveal";
 export function QuoteCard() {
   return (
     <section className="bg-canvas px-2.5 pb-[120px] sm:px-5">
-      <Reveal
-        className="art-scrim border-canvas-card-stroke relative mx-auto w-full max-w-[1480px] overflow-hidden rounded-[50px] border px-6 py-20 sm:px-[160px] sm:py-[80px]"
-        style={{
-          backgroundImage: "url(/template/card-bg-2.webp)",
-          backgroundSize: "cover",
-          backgroundPosition: "50%",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
+      <Reveal className="art-scrim border-canvas-card-stroke relative isolate mx-auto w-full max-w-[1480px] overflow-hidden rounded-[50px] border px-6 py-20 sm:px-[160px] sm:py-[80px]">
+        {/* The art is an element rather than a CSS background so it can be
+            deferred: this panel is far below the fold, and as a background it
+            was fetched at full priority while the hero was still painting.
+            Positioned inline because `.art-scrim > *` stacks every child above
+            the scrim, which is right for the copy and wrong for the art. */}
+        <img
+          src="/template/card-bg-2.webp"
+          alt=""
+          aria-hidden
+          loading="lazy"
+          decoding="async"
+          style={{ position: "absolute", inset: 0, zIndex: -1 }}
+          className="h-full w-full object-cover object-center"
+        />
         <div className="relative mx-auto max-w-[560px]">
           <p className="subtitle-display text-center">
             A feature ships, and your team should not have to hunt for every page that now says something wrong.{" "}

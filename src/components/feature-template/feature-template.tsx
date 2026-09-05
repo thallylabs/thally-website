@@ -91,7 +91,14 @@ export function FeatureBanner({
     <section className="bg-canvas relative overflow-hidden rounded-b-[60px] pt-[70px] pb-[120px]">
       {/* Night backdrop rising from the bottom, blurred like the template */}
       <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-[70%]">
-        <img src="/template/scene-bg.webp" alt="" className="h-full w-full object-cover object-top blur-[5px]" />
+        <img
+          src="/template/scene-bg.webp"
+          alt=""
+          width={2912}
+          height={1440}
+          decoding="async"
+          className="h-full w-full object-cover object-top blur-[5px]"
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-[#000104] via-[#000104]/35 to-transparent" />
       </div>
 
@@ -172,7 +179,7 @@ export function FeatureBanner({
                 </>
               )}
             </h1>
-            <Reveal delay={0.35} distance={24}>
+            <Reveal mount delay={0.35} distance={24}>
               <p
                 className={cn(
                   "text-lg text-[#afafaf]",
@@ -183,6 +190,7 @@ export function FeatureBanner({
               </p>
             </Reveal>
             <Reveal
+              mount
               delay={0.5}
               distance={20}
               className={cn(
@@ -218,7 +226,7 @@ export function FeatureBanner({
 
             {/* Trusted logo marquee; the offset layout moves it beside the copy. */}
             {showTrusted && layout !== "offset" && (
-              <Reveal delay={0.65} distance={16} className="w-full max-w-[588px]">
+              <Reveal mount delay={0.65} distance={16} className="w-full max-w-[588px]">
                 <p className="mb-6 text-[15px] text-[#afafaf]">{trustedLine}</p>
                 <TrustedMarquee />
               </Reveal>
@@ -227,7 +235,7 @@ export function FeatureBanner({
 
           {/* Offset layout: logos sit in the second column, board runs full width below. */}
           {layout === "offset" && showTrusted && (
-            <Reveal delay={0.65} distance={16} className="w-full max-w-[520px] lg:justify-self-end">
+            <Reveal mount delay={0.65} distance={16} className="w-full max-w-[520px] lg:justify-self-end">
               <p className="mb-6 text-[15px] text-[#afafaf]">{trustedLine}</p>
               <TrustedMarquee />
             </Reveal>
@@ -322,7 +330,7 @@ function BoardChips({ chips, id }: { chips?: BoardChip[]; id?: string }) {
           </span>
         ))}
       </span>
-      {id && <span className="font-mono text-[11px] text-white/25">{id}</span>}
+      {id && <span className="font-mono text-[11px] text-white/50">{id}</span>}
     </div>
   );
 }
@@ -341,7 +349,7 @@ function BoardTitle({ children, mono }: { children: ReactNode; mono?: boolean })
 }
 
 function BoardDesc({ children }: { children: ReactNode }) {
-  return <p className="mt-1.5 text-[13px] leading-relaxed break-words text-white/45">{children}</p>;
+  return <p className="mt-1.5 text-[13px] leading-relaxed break-words text-white/55">{children}</p>;
 }
 
 function BoardCardView({ card }: { card: BoardCard }) {
@@ -373,7 +381,7 @@ function BoardCardView({ card }: { card: BoardCard }) {
               key={item.label}
               className={cn(
                 "flex items-center gap-2.5 text-[13px] break-words",
-                item.done ? "text-white/70" : "text-white/40",
+                item.done ? "text-white/70" : "text-white/55",
               )}
             >
               {item.done ? (
@@ -550,7 +558,9 @@ export function ProcessCards({ title, steps }: { title?: string; steps: ProcessS
                   </h3>
                   <p className="font-display text-2xl font-light tracking-[-0.04em] sm:text-[28px]">{step.subtitle}</p>
                 </div>
-                <p className="border-t border-black/10 pt-6 text-[15px] leading-relaxed tracking-[-0.03em] text-[#7c7b79]">
+                {/* Darker than the site's muted grey: these cards sit on pastel
+                    tints, where that grey lands around 3.7:1. */}
+                <p className="border-t border-black/10 pt-6 text-[15px] leading-relaxed tracking-[-0.03em] text-[#5f5d59]">
                   {step.description}
                 </p>
               </div>

@@ -388,10 +388,15 @@ export default function AgentLayerFeaturePage() {
       {/* Grounded vs ungrounded light band */}
       <section id="trust" className="bg-canvas px-2.5 pb-[120px] sm:px-5">
         <div className="relative mx-auto max-w-[1480px] overflow-hidden rounded-[52px]">
-          <div
+          <img
             aria-hidden
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: "url(/template/ready-made-bg.webp)" }}
+            alt=""
+            src="/template/ready-made-bg.webp"
+            width={2912}
+            height={1440}
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover object-center"
           />
           <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-white/60 to-white/10" />
 

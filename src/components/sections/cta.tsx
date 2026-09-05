@@ -14,7 +14,13 @@ export function CTA() {
     <section className="relative z-[1] overflow-hidden pt-[120px]">
       {/* Background: blurred dusk sky under a night -> olive gradient */}
       <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden rounded-b-[52px]">
-        <img src="/template/cta-bg.webp" alt="" className="absolute inset-0 h-full w-full object-cover blur-[5px]" />
+        <img
+          src="/template/cta-bg.webp"
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover blur-[5px]"
+        />
         <div
           className="absolute inset-0 mix-blend-hard-light"
           style={{ backgroundImage: "linear-gradient(#000104 40%, rgba(115,121,56,0.55))" }}
@@ -48,6 +54,10 @@ export function CTA() {
           <div className="overflow-hidden rounded-[28px] bg-black/40 backdrop-blur-xl">
             <img
               src="/images/cloud-dashboard-dark-2000.webp"
+              loading="lazy"
+              decoding="async"
+              width={2000}
+              height={1042}
               alt="Thally Cloud dashboard home showing readiness, activity, and site status"
               className="w-full"
             />

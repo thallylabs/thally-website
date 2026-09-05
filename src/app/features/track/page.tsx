@@ -335,6 +335,10 @@ export default function TrackFeaturePage() {
             <img
               src="/images/track-cloud-2000.webp"
               alt="The Track page in Thally Cloud showing setup progress and watched product repositories"
+              width={2000}
+              height={1202}
+              loading="lazy"
+              decoding="async"
               className="absolute inset-0 h-full w-full object-cover object-left-top"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
