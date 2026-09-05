@@ -19,11 +19,32 @@ export interface BlogPost {
   category: BlogCategory;
   readingTime: number;
   accent: string;
+  authorName?: string;
+  authorPath?: string;
+  thumbnailAnimation?: string;
+  thumbnailImage?: string;
   faq?: BlogFAQ[];
 }
 
 /** Newest first. Used by the index page, sitemap, RSS feed, JSON-LD, and OG images. */
 export const blogPosts: BlogPost[] = [
+  {
+    slug: "introducing-thally",
+    title: "Introducing Thally: Keep your product knowledge in sync with your product",
+    seoTitle: "Introducing Thally: Product Knowledge in Sync",
+    cardTitle: "Introducing Thally",
+    description:
+      "Thally turns product changes into evidence-backed updates across connected docs, websites, support platforms, and other places users learn about your product.",
+    date: "2026-09-05",
+    updated: "2026-09-05",
+    category: "Product",
+    readingTime: 5,
+    accent: "var(--chart-2)",
+    authorName: "Ekene Eze",
+    authorPath: "/about",
+    thumbnailAnimation: "/blog/introducing-thally-thumbnail.html",
+    thumbnailImage: "/images/introducing-thally-thumbnail.png",
+  },
   {
     slug: "best-ai-documentation-tools-2026",
     title: "The best AI documentation tools in 2026, compared honestly",

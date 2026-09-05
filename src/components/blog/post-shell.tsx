@@ -19,7 +19,10 @@ export function PostShell({ post, children }: { post: BlogPost; children: ReactN
         <div className="mx-auto max-w-3xl">
           <header>
             <nav aria-label="Breadcrumb" className="text-canvas-muted-2 mb-5 flex items-center gap-2 text-sm">
-              <Link className="hover:text-canvas-foreground -my-2 flex min-h-10 items-center transition-colors" href="/blog">
+              <Link
+                className="hover:text-canvas-foreground -my-2 flex min-h-10 items-center transition-colors"
+                href="/blog"
+              >
                 Blog
               </Link>
               <span aria-hidden>/</span>
@@ -31,12 +34,7 @@ export function PostShell({ post, children }: { post: BlogPost; children: ReactN
               <CategoryChip post={post} />
               <PostMeta post={post} />
             </div>
-            <SplitReveal
-              as="h1"
-              mode="words"
-              onMount
-              className="heading-hero text-canvas-foreground mt-5 text-balance"
-            >
+            <SplitReveal as="h1" mode="words" onMount className="heading-hero text-canvas-foreground mt-5 text-balance">
               {post.title}
             </SplitReveal>
             <Reveal delay={0.2} distance={20}>
@@ -49,10 +47,10 @@ export function PostShell({ post, children }: { post: BlogPost; children: ReactN
                 By{" "}
                 <Link
                   className="text-canvas-foreground underline underline-offset-4"
-                  href="/authors/thally-team"
+                  href={post.authorPath ?? "/authors/thally-team"}
                   rel="author"
                 >
-                  Thally Editorial Team
+                  {post.authorName ?? "Thally Editorial Team"}
                 </Link>
               </span>
               <span>
@@ -73,7 +71,10 @@ export function PostShell({ post, children }: { post: BlogPost; children: ReactN
 
           <p className="text-canvas-muted-2 mt-8 text-sm">
             Published under the{" "}
-            <Link className="text-canvas-muted hover:text-canvas-foreground underline underline-offset-4" href="/editorial-policy">
+            <Link
+              className="text-canvas-muted hover:text-canvas-foreground underline underline-offset-4"
+              href="/editorial-policy"
+            >
               Thally editorial policy
             </Link>
             . Technical conformance is defined in the{" "}

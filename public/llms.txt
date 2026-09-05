@@ -44,6 +44,7 @@
 
 ## Blog highlights
 
+- [Introducing Thally](/blog/introducing-thally): why product knowledge falls out of sync and how Thally prepares evidence-backed updates
 - [Thally vs Mintlify](/blog/thally-vs-mintlify): ownership, self-hosting, and machine readability compared
 - [Thally vs GitBook](/blog/thally-vs-gitbook): docs-as-code versus a hosted wiki
 - [Thally vs Docusaurus](/blog/thally-vs-docusaurus): two open-source paths to developer docs
