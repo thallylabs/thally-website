@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { AiRisk } from "@/components/sections/ai-risk";
 import { CTA } from "@/components/sections/cta";
 import { Daybreak } from "@/components/sections/daybreak";
 import { FAQ } from "@/components/sections/faq";
@@ -8,6 +9,7 @@ import { Guarantees } from "@/components/sections/guarantees";
 import Hero from "@/components/sections/hero";
 import { PipelineTabs } from "@/components/sections/pipeline-tabs";
 import { PricingCards } from "@/components/sections/pricing-cards";
+import { Problem } from "@/components/sections/problem";
 import { QuoteCard } from "@/components/sections/quote-card";
 import { SITE_NAME, SITE_TITLE, SITE_URL, SOCIAL_PREVIEW_DESCRIPTION, SOCIAL_PREVIEW_TITLE } from "@/lib/site";
 import { socialPreviewImage } from "@/lib/social-preview";
@@ -46,7 +48,7 @@ const productJsonLd = {
   operatingSystem: "Web",
   license: "https://opensource.org/license/mit",
   description:
-    "Thally is a product knowledge synchronization pipeline. It understands product changes, identifies the customer-facing documentation affected, and prepares evidence-backed updates for human review.",
+    "Thally is the product knowledge layer for software teams. When a product change merges, it works out what the change means, traces the impact across connected documentation, website, help center, and changelog surfaces, and opens evidence-backed pull requests for human review. It is also a complete AI-native documentation platform.",
   publisher: { "@id": `${SITE_URL}/#organization` },
   mainEntityOfPage: SITE_URL,
   offers: [
@@ -76,7 +78,7 @@ const productJsonLd = {
     },
   ],
   featureList: [
-    "Product change intelligence that maps merged changes to affected documentation",
+    "Product change intelligence that maps merged changes to affected documentation, website pages, and support content",
     "Evidence-backed impact analysis with no-change as a valid result",
     "Product-specific knowledge that improves through accepted reviews and corrections",
     "Human approval for important customer-facing communication",
@@ -85,7 +87,7 @@ const productJsonLd = {
     "Remote MCP server at /api/mcp on every deployed site",
     "Agent-readiness score with CI gating and Thally-drafted fix PRs",
     "@thally GitHub mentions can become reviewable docs PRs",
-    "Thally Track can turn relevant merged product PRs into reviewable documentation PRs",
+    "Thally Track turns relevant merged product PRs into reviewable PRs across connected customer-facing surfaces",
     "Migration from Mintlify, Docusaurus, GitBook, Nextra, VitePress, and Starlight",
     "OpenAPI API reference with interactive Try-It console",
     "Hybrid ⌘K search and retrieval-grounded AI chat with citations",
@@ -100,11 +102,13 @@ export default function Home() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       <Hero />
+      <Problem />
+      <AiRisk />
+      <PipelineTabs />
+      <Guarantees />
       <FeatureShowcase />
       <QuoteCard />
       <Daybreak />
-      <PipelineTabs />
-      <Guarantees />
       <PricingCards />
       <FAQ context="home" />
       <CTA />

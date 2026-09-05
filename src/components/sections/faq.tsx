@@ -10,12 +10,12 @@ const homeQuestions = [
   {
     question: "What is Thally?",
     answer:
-      "Thally keeps your documentation in step with your product. It watches the changes your team merges, works out which pages they affect, and opens the update as a pull request with the evidence attached. You review and merge, the same way you ship code.",
+      "Thally is the product knowledge layer for software teams. It watches the changes your team merges, works out what they mean, traces the impact across your connected docs, website, help center, and changelog, then opens evidence-backed pull requests for your team to review.",
   },
   {
     question: "How is Thally different from other docs tools?",
     answer:
-      "Other docs tools give you somewhere to write. Thally does the work that keeps what you wrote true. It reads merged product changes, finds the pages they contradict, and drafts the fix alongside the diff that caused it. Your docs stop drifting between releases without anyone having to chase them.",
+      "Other docs tools give you somewhere to write. Thally is a complete docs platform that also does the work of keeping what you wrote true. It reads merged product changes, finds the pages they contradict across connected surfaces, and drafts the fix alongside the evidence that caused it.",
   },
   {
     question: "How do I migrate from Mintlify, Docusaurus, or GitBook?",
@@ -25,12 +25,12 @@ const homeQuestions = [
   {
     question: "How does Thally keep my docs up to date?",
     answer:
-      "Publish or connect a docs site, then pick the product repositories Thally Track should watch. Every relevant merge gets read, mapped to the pages it affects, and turned into a reviewable documentation PR. Track tells you when nothing needs changing, and nothing reaches your readers without your approval.",
+      "Publish or connect a docs site, then choose the product and customer-facing repositories Thally Track should watch. Every relevant merge is read, mapped to the connected pages it affects, and turned into reviewable pull requests. Track says when nothing needs changing, and nothing reaches your readers without your approval.",
   },
   {
     question: "How does Thally check documentation quality?",
     answer:
-      "Every build gets a 0 to 100 agent readiness score for whether people and AI tools can find, read, and understand each page. Gate your CI on it to stop regressions at the pull request, and ask Thally to open the PR that fixes whatever it flagged.",
+      "Every build gets a 0 to 100 agent readiness score for whether people and AI tools can find, read, and understand each page. You can gate CI on it to stop regressions at the pull request, then ask Thally to open the PR that fixes what it flagged.",
   },
   {
     question: "How can AI assistants read my docs?",
@@ -40,7 +40,7 @@ const homeQuestions = [
   {
     question: "What does Thally cover today?",
     answer:
-      "Documentation, end to end: the guides, API references, examples, and release notes in your docs repository. That is where drift costs you the most, so it is where Thally goes deepest. The wider knowledge surfaces around your product are next on the same pipeline.",
+      "Your documentation site on Thally, including guides, API references, examples, and the changelog, plus connected customer-facing repositories such as your website and support content. Most teams start with docs and connect other surfaces as they go.",
   },
 ];
 
@@ -110,7 +110,7 @@ export const FAQ = ({ context = "home" }: { context?: "home" | "pricing" }) => {
             <p className="text-canvas-muted mt-5 text-lg">
               {context === "pricing"
                 ? "Find answers about plans, billing, hosting, cancellation, and Enterprise support."
-                : "What Thally does, how it keeps your docs current, what migration takes, and how it fits the stack you already have."}
+                : "What Thally does, which surfaces it keeps current, how it decides what to change, and how it fits the stack you already have."}
             </p>
           </Reveal>
         </div>
