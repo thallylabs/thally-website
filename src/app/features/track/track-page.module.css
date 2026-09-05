@@ -704,6 +704,40 @@
   text-align: right;
 }
 
+.retainedResultNotice {
+  align-items: center;
+  background: var(--track-panel);
+  border: 1px solid var(--track-border-strong);
+  border-radius: 0.875rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  margin-top: 1.25rem;
+  padding: 1rem 1.125rem;
+}
+
+.retainedResultNotice > div {
+  min-width: 0;
+}
+
+.retainedResultNotice h4 {
+  font-family: var(--font-display);
+  font-size: 0.96rem;
+  margin: 0 0 0.25rem;
+}
+
+.retainedResultNotice p {
+  color: var(--muted-foreground);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  margin: 0;
+  max-width: 38rem;
+}
+
+.retainedResultNotice .button {
+  flex: 0 0 auto;
+}
+
 .repoOption {
   align-items: center;
   background: var(--track-surface);
@@ -1296,6 +1330,15 @@
   .installationRecoveryActions {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .retainedResultNotice {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .retainedResultNotice .button {
+    width: 100%;
   }
 
   .liveLabel {

@@ -7,7 +7,7 @@
 
 import { readFileSync } from "node:fs";
 
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import axe from "axe-core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -102,7 +102,32 @@ function completedSession({
       },
       status: "completed",
     },
-    repositories: [],
+    repositories: [
+      {
+        defaultBranch: "main",
+        fullName: "octo-org/product",
+        htmlUrl: "https://github.com/octo-org/product",
+        isPrivate: false,
+      },
+      {
+        defaultBranch: "main",
+        fullName: "octo-org/docs",
+        htmlUrl: "https://github.com/octo-org/docs",
+        isPrivate: false,
+      },
+      {
+        defaultBranch: "main",
+        fullName: "octo-org/new-product",
+        htmlUrl: "https://github.com/octo-org/new-product",
+        isPrivate: false,
+      },
+      {
+        defaultBranch: "main",
+        fullName: "octo-org/new-docs",
+        htmlUrl: "https://github.com/octo-org/new-docs",
+        isPrivate: false,
+      },
+    ],
     status: "completed",
   };
 }
@@ -157,6 +182,116 @@ describe("completed Track result trust signals", () => {
     fireEvent.click(document.getElementById(GAP_ID)!);
     expect(window.location.hash).toBe(`#${GAP_ID}`);
     expect(screen.getAllByText(GAP_ID)).toHaveLength(2);
+  });
+
+  it.each([
+    ["unchanged", "octo-org/product", "octo-org/docs"],
+    ["new", "octo-org/new-product", "octo-org/new-docs"],
+  ])("restores the retained assessment without analyzing %s selections again", async (_, product, surface) => {
+    const session = completedSession();
+    const fetchMock = vi.fn(
+      async (_input: string | URL | Request, _init?: RequestInit) =>
+        new Response(JSON.stringify(session), { headers: { "Content-Type": "application/json" } }),
+    );
+    vi.stubGlobal("fetch", fetchMock);
+    render(<TrackDemo />);
+
+    fireEvent.click(await screen.findByRole("button", { name: "Run on other repositories" }));
+    fireEvent.click(await screen.findByRole("button", { name: new RegExp(product) }));
+    fireEvent.click(screen.getByRole("button", { name: /Next: choose surfaces/ }));
+    fireEvent.click(await screen.findByRole("button", { name: new RegExp(surface) }));
+    fireEvent.click(screen.getByRole("button", { name: /Next: run Track/ }));
+
+    expect(await screen.findByRole("heading", { name: "Your completed assessment is still available" })).toBeVisible();
+    expect(
+      screen.getByText(/New repository or revision selections can be analyzed when the window resets/),
+    ).toBeVisible();
+    expect(screen.queryByRole("button", { name: /^Run Track/ })).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: /View retained assessment/ }));
+    expect(await screen.findByText("One documentation gap needs review.")).toBeVisible();
+    expect(screen.getByText(FIRST_INPUT_IDENTITY)).toBeVisible();
+    expect(
+      fetchMock.mock.calls.some(
+        ([input, init]) => String(input).endsWith("/api/track/demo/analyze") && init?.method === "POST",
+      ),
+    ).toBe(false);
+  });
+
+  it("fails closed while replay allowance is being refreshed", async () => {
+    // Polling can complete before the session projection refreshes, leaving
+    // the component with its pre-run allowance until restart reloads it.
+    const staleSession = { ...completedSession(), canAnalyze: true };
+    const refreshedSession = completedSession();
+    let resolveRefresh: ((response: Response) => void) | undefined;
+    const refresh = new Promise<Response>((resolve) => {
+      resolveRefresh = resolve;
+    });
+    const fetchMock = vi
+      .fn<(input: string | URL | Request, init?: RequestInit) => Promise<Response>>()
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify(staleSession), { headers: { "Content-Type": "application/json" } }),
+      )
+      .mockReturnValueOnce(refresh);
+    vi.stubGlobal("fetch", fetchMock);
+    render(<TrackDemo />);
+
+    fireEvent.click(await screen.findByRole("button", { name: "Run on other repositories" }));
+    fireEvent.click(await screen.findByRole("button", { name: /octo-org\/product/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Next: choose surfaces/ }));
+    fireEvent.click(await screen.findByRole("button", { name: /octo-org\/docs/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Next: run Track/ }));
+
+    expect(screen.getByRole("status")).toHaveTextContent("Checking whether another free Track run is available.");
+    expect(screen.queryByRole("button", { name: /^Run Track/ })).not.toBeInTheDocument();
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+
+    await act(async () => {
+      resolveRefresh?.(
+        new Response(JSON.stringify(refreshedSession), {
+          headers: { "Content-Type": "application/json" },
+        }),
+      );
+      await refresh;
+    });
+
+    expect(await screen.findByRole("button", { name: /View retained assessment/ })).toBeVisible();
+    expect(
+      fetchMock.mock.calls.some(
+        ([input, init]) => String(input).endsWith("/api/track/demo/analyze") && init?.method === "POST",
+      ),
+    ).toBe(false);
+  });
+
+  it("does not claim a retained result after exhausted failed runs", async () => {
+    const completed = { ...completedSession(), canAnalyze: true };
+    const exhausted = {
+      ...completed,
+      canAnalyze: false,
+      latestRun: null,
+      status: "failed",
+    };
+    const fetchMock = vi
+      .fn<(input: string | URL | Request, init?: RequestInit) => Promise<Response>>()
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify(completed), { headers: { "Content-Type": "application/json" } }),
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify(exhausted), { headers: { "Content-Type": "application/json" } }),
+      );
+    vi.stubGlobal("fetch", fetchMock);
+    render(<TrackDemo />);
+
+    fireEvent.click(await screen.findByRole("button", { name: "Run on other repositories" }));
+    fireEvent.click(await screen.findByRole("button", { name: /octo-org\/product/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Next: choose surfaces/ }));
+    fireEvent.click(await screen.findByRole("button", { name: /octo-org\/docs/ }));
+    fireEvent.click(screen.getByRole("button", { name: /Next: run Track/ }));
+
+    expect(await screen.findByRole("heading", { name: "Another free Track run is not available yet" })).toBeVisible();
+    expect(screen.queryByText("Your completed assessment is still available")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /View retained assessment/ })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Back to connection" })).toBeVisible();
   });
 
   it("shows changed evidence as a newly analyzed input", async () => {

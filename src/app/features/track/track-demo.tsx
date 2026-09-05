@@ -316,6 +316,7 @@ export function TrackDemo() {
   const [productRepositories, setProductRepositories] = useState<string[]>([]);
   const [surfaces, setSurfaces] = useState<SurfaceSelection[]>([]);
   const [run, setRun] = useState<TrackRun | null>(null);
+  const [retainedRun, setRetainedRun] = useState<TrackRun | null>(null);
   const [isStarting, setIsStarting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeFinding, setActiveFinding] = useState<{ finding: number; pullRequest: number } | null>(null);
@@ -371,6 +372,7 @@ export function TrackDemo() {
         });
         if (response.status === 401) {
           setSession(null);
+          setRetainedRun(null);
           setSessionState("disconnected");
           return;
         }
@@ -382,11 +384,13 @@ export function TrackDemo() {
           window.history.replaceState({}, "", `${window.location.pathname}#demo`);
         }
         const latest = nextSession.latestRun;
+        const latestCompletedRun = latest?.status === "completed" && latest.result ? latest : null;
+        setRetainedRun(latestCompletedRun);
         if (latest && (latest.status === "queued" || latest.status === "running")) {
           setRun(latest);
           goToStep(3);
-        } else if (resumeRun && latest && latest.status === "completed" && latest.result) {
-          setRun(latest);
+        } else if (resumeRun && latestCompletedRun) {
+          setRun(latestCompletedRun);
           goToStep(4);
         }
       } catch {
@@ -484,6 +488,7 @@ export function TrackDemo() {
         if (isCancelled) return;
         setRun(next);
         if (next.status === "completed") {
+          setRetainedRun(next);
           setActiveFinding(null);
           goToStep(4);
         } else if (next.status === "failed") {
@@ -600,6 +605,7 @@ export function TrackDemo() {
       setInstallationAccessManagement(null);
       setSelectedInstallationId(null);
       setSession(null);
+      setRetainedRun(null);
       setSessionState("disconnected");
       setError(null);
       setInstallationNotice("GitHub account selection cancelled. No Track demo account is connected.");
@@ -646,7 +652,13 @@ export function TrackDemo() {
   };
 
   const startRun = async () => {
-    if (productRepositories.length === 0 || surfaces.length === 0) return;
+    if (
+      productRepositories.length === 0 ||
+      surfaces.length === 0 ||
+      sessionState !== "connected" ||
+      !session?.canAnalyze
+    )
+      return;
     setIsStarting(true);
     setError(null);
     try {
@@ -686,6 +698,16 @@ export function TrackDemo() {
     setSurfaces([]);
     void loadSession({ userInitiated: true, resumeRun: false });
     goToStep(1);
+  };
+
+  /** Restore the durable result without claiming another analysis allowance. */
+  const restoreRetainedResult = () => {
+    if (!retainedRun?.result) return;
+    setRun(retainedRun);
+    setError(null);
+    setActiveFinding(null);
+    setHandoffState("idle");
+    goToStep(4);
   };
 
   const continueToThally = async () => {
@@ -1207,6 +1229,47 @@ export function TrackDemo() {
             </p>
           ) : null}
 
+          {sessionState === "loading" ? (
+            <p aria-live="polite" className={styles.limitMessage} role="status">
+              Checking whether another free Track run is available.
+            </p>
+          ) : session && !session.canAnalyze ? (
+            <section aria-labelledby="track-retained-result" className={styles.retainedResultNotice}>
+              <div>
+                <h4 id="track-retained-result">
+                  {retainedRun?.result
+                    ? "Your completed assessment is still available"
+                    : "Another free Track run is not available yet"}
+                </h4>
+                {retainedRun?.result ? (
+                  <p>
+                    This GitHub installation has used its free Track runs for the current 24-hour window. New repository
+                    or revision selections can be analyzed when the window resets. The retained result stays bound to
+                    the revisions shown in its evidence.
+                  </p>
+                ) : (
+                  <p>
+                    This GitHub installation has used its free Track runs for the current 24-hour window. Return to the
+                    connection step now, or analyze these selections when the window resets.
+                  </p>
+                )}
+              </div>
+              {retainedRun?.result ? (
+                <button
+                  className={`${styles.button} ${styles.primaryButton}`}
+                  onClick={restoreRetainedResult}
+                  type="button"
+                >
+                  View retained assessment <ArrowRight />
+                </button>
+              ) : (
+                <button className={`${styles.button} ${styles.ghostButton}`} onClick={() => goToStep(0)} type="button">
+                  Back to connection
+                </button>
+              )}
+            </section>
+          ) : null}
+
           <div className={styles.paneFooter}>
             <button
               className={`${styles.button} ${styles.ghostButton}`}
@@ -1217,7 +1280,7 @@ export function TrackDemo() {
               Back
             </button>
             <span />
-            {run && run.status !== "failed" ? null : (
+            {run && run.status !== "failed" ? null : sessionState !== "connected" || !session?.canAnalyze ? null : (
               <button
                 className={`${styles.button} ${styles.primaryButton}`}
                 disabled={
