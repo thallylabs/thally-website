@@ -78,6 +78,8 @@ interface SurfaceSelection {
 }
 
 interface TrackFinding {
+  /** Stable browser-safe identity added by Track v2. Historical runs may omit it. */
+  id?: string;
   affectedPage: string;
   confidence: "high" | "medium" | "low";
   draft: { after: string; before: string };
@@ -92,6 +94,8 @@ interface PullRequestSummary {
   baseBranch: string;
   filesChanged: number;
   mergedAt: string;
+  /** Exact merge commit inspected by Track. Historical runs may omit it. */
+  mergeCommitSha?: string;
   number: number;
   repository: string;
   title: string;
@@ -109,12 +113,21 @@ interface SurfaceSummary extends SurfaceSelection {
   defaultBranch: string;
   isThallySite: boolean;
   pagesInspected: string[];
+  /** Exact destination commit inspected by Track. Historical runs may omit it. */
+  revision?: string;
 }
 
 interface RunResult {
+  /** Reconciliation status and uncertainty copy supplied by the public API. */
+  assessment?: {
+    notice: string;
+    status: "analyzed" | "reused";
+  };
   brief: string;
   coveredPullRequestCount: number;
   findingsCount: number;
+  /** SHA-256 identity of every byte supplied to the assessment. */
+  inputIdentity?: string;
   pullRequests: PullRequestAnalysis[];
   surfaces: SurfaceSummary[];
 }
@@ -225,6 +238,17 @@ function gapDescription(gap: TrackFinding["gap"]): string {
   if (gap === "missing") return "Not mentioned anywhere on this surface.";
   if (gap === "stale") return "This page describes the old behavior.";
   return "This surface disagrees with another one.";
+}
+
+const STABLE_GAP_ID_PATTERN = /^gap-[0-9a-f]{16}$/;
+
+/** Only backend-issued gap identities become public URL fragments. */
+function stableGapId(value: string | undefined): string | null {
+  return value && STABLE_GAP_ID_PATTERN.test(value) ? value : null;
+}
+
+function shortRevision(value: string): string {
+  return value.slice(0, 12);
 }
 
 export function TrackDemo() {
@@ -511,6 +535,37 @@ export function TrackDemo() {
           ? 10
           : 3;
   const pagesInspected = result?.surfaces.reduce((total, surface) => total + surface.pagesInspected.length, 0) ?? 0;
+  const sourceRevisions =
+    result?.pullRequests.flatMap((analysis) =>
+      analysis.pullRequest.mergeCommitSha
+        ? [
+            {
+              label: `${analysis.pullRequest.repository} #${analysis.pullRequest.number}`,
+              revision: analysis.pullRequest.mergeCommitSha,
+            },
+          ]
+        : [],
+    ) ?? [];
+  const destinationRevisions =
+    result?.surfaces.flatMap((surface) =>
+      surface.revision ? [{ label: surface.repository, revision: surface.revision }] : [],
+    ) ?? [];
+  const hasRunProvenance = Boolean(
+    result?.assessment || result?.inputIdentity || sourceRevisions.length > 0 || destinationRevisions.length > 0,
+  );
+
+  useEffect(() => {
+    if (!result) return;
+    const requestedGapId = stableGapId(window.location.hash.slice(1));
+    if (!requestedGapId) return;
+
+    result.pullRequests.some((analysis, pullRequestIndex) => {
+      const findingIndex = analysis.findings.findIndex((finding) => finding.id === requestedGapId);
+      if (findingIndex < 0) return false;
+      setActiveFinding({ pullRequest: pullRequestIndex, finding: findingIndex });
+      return true;
+    });
+  }, [result]);
 
   return (
     <div className={`${styles.stage} ${step === 4 ? styles.stageWide : ""}`} ref={stageRef}>
@@ -804,6 +859,53 @@ export function TrackDemo() {
             </div>
           </div>
 
+          {hasRunProvenance ? (
+            <section aria-labelledby="track-run-provenance" className={styles.provenanceCard}>
+              <header className={styles.provenanceHeader}>
+                <div>
+                  <p className={styles.briefLabel}>Assessment evidence</p>
+                  <h4 id="track-run-provenance">Revisions checked for this result</h4>
+                </div>
+                {result.assessment ? (
+                  <span className={styles.assessmentStatus}>
+                    {result.assessment.status === "reused" ? "Reused assessment" : "New assessment"}
+                  </span>
+                ) : null}
+              </header>
+              {result.assessment?.notice ? (
+                <p className={styles.assessmentNotice} role="status">
+                  {result.assessment.notice}
+                </p>
+              ) : null}
+              <dl className={styles.provenanceGrid}>
+                {result.inputIdentity ? (
+                  <div className={styles.provenanceIdentity}>
+                    <dt>Evidence identity</dt>
+                    <dd>
+                      <code>{result.inputIdentity}</code>
+                    </dd>
+                  </div>
+                ) : null}
+                {sourceRevisions.map((source) => (
+                  <div key={`source:${source.label}:${source.revision}`}>
+                    <dt>Source · {source.label}</dt>
+                    <dd>
+                      <code>{source.revision}</code>
+                    </dd>
+                  </div>
+                ))}
+                {destinationRevisions.map((destination) => (
+                  <div key={`destination:${destination.label}:${destination.revision}`}>
+                    <dt>Destination · {destination.label}</dt>
+                    <dd>
+                      <code>{destination.revision}</code>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+          ) : null}
+
           <div className={styles.findingsLayout}>
             <div className={styles.findingsList}>
               {result.pullRequests.map((analysis, pullRequestIndex) => (
@@ -823,6 +925,15 @@ export function TrackDemo() {
                       <span className={styles.prMeta}>
                         merged {formatMergedAt(analysis.pullRequest.mergedAt)} · {analysis.pullRequest.filesChanged}{" "}
                         {analysis.pullRequest.filesChanged === 1 ? "file" : "files"}
+                        {analysis.pullRequest.mergeCommitSha ? (
+                          <>
+                            {" "}
+                            · source{" "}
+                            <code title={analysis.pullRequest.mergeCommitSha}>
+                              {shortRevision(analysis.pullRequest.mergeCommitSha)}
+                            </code>
+                          </>
+                        ) : null}
                       </span>
                     </span>
                     {analysis.findings.length === 0 ? (
@@ -839,14 +950,28 @@ export function TrackDemo() {
                     analysis.findings.map((finding, findingIndex) => {
                       const isActive =
                         activeFinding?.pullRequest === pullRequestIndex && activeFinding?.finding === findingIndex;
+                      const publicGapId = stableGapId(finding.id);
+                      const findingAnchorId = publicGapId ?? `track-gap-${pullRequestIndex + 1}-${findingIndex + 1}`;
                       return (
                         <button
+                          aria-controls="track-finding-detail"
                           aria-current={isActive ? "true" : undefined}
                           className={`${styles.findingsListItem} ${isActive ? styles.findingsListItemActive : ""}`}
-                          key={`${finding.surface}:${finding.affectedPage}`}
+                          id={findingAnchorId}
+                          key={
+                            publicGapId ??
+                            `${analysis.pullRequest.repository}#${analysis.pullRequest.number}:${finding.surface}:${finding.affectedPage}`
+                          }
                           onClick={() => {
                             setActiveFinding({ pullRequest: pullRequestIndex, finding: findingIndex });
                             findingDetailRef.current?.scrollTo({ top: 0 });
+                            if (publicGapId) {
+                              window.history.replaceState(
+                                {},
+                                "",
+                                `${window.location.pathname}${window.location.search}#${publicGapId}`,
+                              );
+                            }
                           }}
                           type="button"
                         >
@@ -860,6 +985,7 @@ export function TrackDemo() {
                               {surfaceLabel(surfaceKindByRepository.get(finding.surface) ?? "other")} ·{" "}
                               {finding.affectedPage}
                             </span>
+                            {publicGapId ? <code className={styles.gapIdentity}>{publicGapId}</code> : null}
                           </span>
                         </button>
                       );
@@ -869,7 +995,7 @@ export function TrackDemo() {
               ))}
             </div>
 
-            <article className={styles.findingDetail} ref={findingDetailRef}>
+            <article className={styles.findingDetail} id="track-finding-detail" ref={findingDetailRef}>
               {selectedFinding && selectedPullRequest ? (
                 <>
                   <header className={styles.findingHeader}>
@@ -907,6 +1033,14 @@ export function TrackDemo() {
                     <dd>{gapDescription(selectedFinding.gap)}</dd>
                     <dt>Why this matters</dt>
                     <dd>{selectedFinding.impact}</dd>
+                    {stableGapId(selectedFinding.id) ? (
+                      <>
+                        <dt>Gap identity</dt>
+                        <dd>
+                          <code>{selectedFinding.id}</code>
+                        </dd>
+                      </>
+                    ) : null}
                   </dl>
                   <div className={styles.diff}>
                     <div className={styles.diffHeader}>
