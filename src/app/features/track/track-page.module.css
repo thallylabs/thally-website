@@ -469,6 +469,13 @@
   margin: 1rem 0 0;
 }
 
+.installationNotice {
+  color: var(--track-success);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  margin: 0.875rem 0 0;
+}
+
 .installationList {
   border: 1px solid var(--track-border-strong);
   border-radius: 0.875rem;

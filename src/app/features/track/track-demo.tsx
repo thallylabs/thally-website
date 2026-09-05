@@ -170,7 +170,16 @@ interface TrackSession {
 type SessionState = "loading" | "disconnected" | "connected" | "error";
 type HandoffState = "idle" | "loading" | "declined" | "error";
 type InstallationChoiceState =
-  "idle" | "loading" | "ready" | "submitting" | "expired" | "unavailable" | "error" | "cancelled";
+  | "idle"
+  | "loading"
+  | "ready"
+  | "submitting"
+  | "expired"
+  | "unavailable"
+  | "error"
+  | "cancelling"
+  | "cancel_error"
+  | "cancelled";
 
 function GitHubMark() {
   return (
@@ -291,6 +300,7 @@ export function TrackDemo() {
   const [installationChoices, setInstallationChoices] = useState<TrackInstallationChoice[]>([]);
   const [installationAccessManagement, setInstallationAccessManagement] = useState<AccessManagement | null>(null);
   const [installationError, setInstallationError] = useState<string | null>(null);
+  const [installationNotice, setInstallationNotice] = useState<string | null>(null);
   const [selectedInstallationId, setSelectedInstallationId] = useState<number | null>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const findingDetailRef = useRef<HTMLElement>(null);
@@ -372,6 +382,7 @@ export function TrackDemo() {
   const loadInstallationChoices = useCallback(async () => {
     setInstallationChoiceState("loading");
     setInstallationError(null);
+    setInstallationNotice(null);
     setSelectedInstallationId(null);
     try {
       const response = await fetch(`${CLOUD_API}/api/track/demo/github/installations`, {
@@ -494,7 +505,7 @@ export function TrackDemo() {
   };
 
   const chooseInstallation = async (installation: TrackInstallationChoice) => {
-    if (installationChoiceState !== "ready") return;
+    if (installationChoiceState !== "ready" && installationChoiceState !== "unavailable") return;
     setSelectedInstallationId(installation.installationId);
     setInstallationChoiceState("submitting");
     setInstallationError(null);
@@ -510,6 +521,14 @@ export function TrackDemo() {
       });
       const body = (await response.json().catch(() => null)) as InstallationChoiceErrorResponse | null;
       if (!response.ok) {
+        if (response.status === 403) {
+          setInstallationAccessManagement(
+            body?.accessManagement ?? {
+              message: "Manage access for this account, then try connecting it again.",
+              url: installation.accessManagementUrl,
+            },
+          );
+        }
         setInstallationError(
           body?.error ||
             (response.status === 401
@@ -533,14 +552,42 @@ export function TrackDemo() {
     }
   };
 
-  const cancelInstallationChoice = () => {
-    setInstallationChoiceState("cancelled");
-    setInstallationChoices([]);
-    setSelectedInstallationId(null);
+  /**
+   * Cancel the chooser at Cloud before changing the local UI. The reset clears
+   * both the sealed chooser and any older demo session, so a refresh cannot
+   * silently reconnect an account the reader just rejected.
+   */
+  const cancelInstallationChoice = async () => {
+    if (installationChoiceState === "cancelling") return;
+    setInstallationChoiceState("cancelling");
     setInstallationError(null);
-    setSessionState("disconnected");
-    setError("GitHub account selection was cancelled. No account was connected.");
-    window.history.replaceState({}, "", `${window.location.pathname}#demo`);
+    setInstallationNotice(null);
+    try {
+      const response = await fetch(`${CLOUD_API}/api/track/demo/github/installations`, {
+        credentials: "include",
+        headers: { "X-Thally-Track-Demo": API_VERSION_HEADER },
+        method: "DELETE",
+      });
+      if (response.status !== 204) {
+        throw new Error(await responseError(response, "GitHub account selection could not be cancelled. Try again."));
+      }
+      setInstallationChoiceState("cancelled");
+      setInstallationChoices([]);
+      setInstallationAccessManagement(null);
+      setSelectedInstallationId(null);
+      setSession(null);
+      setSessionState("disconnected");
+      setError(null);
+      setInstallationNotice("GitHub account selection cancelled. No Track demo account is connected.");
+      window.history.replaceState({}, "", `${window.location.pathname}#demo`);
+    } catch (cancelError) {
+      setInstallationError(
+        cancelError instanceof Error
+          ? cancelError.message
+          : "GitHub account selection could not be cancelled. Try again.",
+      );
+      setInstallationChoiceState("cancel_error");
+    }
   };
 
   const toggleProductRepository = (name: string) => {
@@ -666,11 +713,10 @@ export function TrackDemo() {
   const selectedInstallation = installationChoices.find(
     (installation) => installation.installationId === selectedInstallationId,
   );
-  const chooserManagementUrl = safeGitHubUrl(
+  const chooserManagementUrl =
     installationChoiceState === "unavailable"
-      ? selectedInstallation?.accessManagementUrl
-      : installationAccessManagement?.url,
-  );
+      ? (safeGitHubUrl(installationAccessManagement?.url) ?? safeGitHubUrl(selectedInstallation?.accessManagementUrl))
+      : safeGitHubUrl(installationAccessManagement?.url);
 
   return (
     <div className={`${styles.stage} ${step === 4 ? styles.stageWide : ""}`} ref={stageRef}>
@@ -701,7 +747,11 @@ export function TrackDemo() {
 
           {isInstallationChooserVisible ? (
             <section
-              aria-busy={installationChoiceState === "loading" || installationChoiceState === "submitting"}
+              aria-busy={
+                installationChoiceState === "loading" ||
+                installationChoiceState === "submitting" ||
+                installationChoiceState === "cancelling"
+              }
               aria-labelledby="github-account-heading"
               className={styles.githubBox}
             >
@@ -716,6 +766,12 @@ export function TrackDemo() {
               {installationChoiceState === "loading" ? (
                 <p aria-live="polite" className={styles.installationStatus} role="status">
                   Loading authorized GitHub accounts...
+                </p>
+              ) : null}
+
+              {installationChoiceState === "cancelling" ? (
+                <p aria-live="polite" className={styles.installationStatus} role="status">
+                  Cancelling account selection...
                 </p>
               ) : null}
 
@@ -776,13 +832,38 @@ export function TrackDemo() {
 
               {installationChoiceState === "expired" ||
               installationChoiceState === "unavailable" ||
-              installationChoiceState === "error" ? (
+              installationChoiceState === "error" ||
+              installationChoiceState === "cancel_error" ? (
                 <div className={styles.installationRecovery}>
                   <p className={styles.errorMessage} role="alert">
                     {installationError}
                   </p>
+                  {installationAccessManagement ? (
+                    <p className={styles.installationHelp}>{installationAccessManagement.message}</p>
+                  ) : null}
                   <div className={styles.installationRecoveryActions}>
-                    {installationChoiceState === "error" ? (
+                    {installationChoiceState === "cancel_error" ? (
+                      <>
+                        <button
+                          className={`${styles.button} ${styles.primaryButton}`}
+                          onClick={() => void cancelInstallationChoice()}
+                          type="button"
+                        >
+                          Try cancelling again
+                        </button>
+                        <button
+                          className={`${styles.button} ${styles.ghostButton}`}
+                          onClick={() =>
+                            installationChoices.length > 1
+                              ? setInstallationChoiceState("ready")
+                              : void loadInstallationChoices()
+                          }
+                          type="button"
+                        >
+                          {installationChoices.length > 1 ? "Keep choosing an account" : "Reload account choices"}
+                        </button>
+                      </>
+                    ) : installationChoiceState === "error" ? (
                       <button
                         className={`${styles.button} ${styles.primaryButton}`}
                         onClick={() => void loadInstallationChoices()}
@@ -790,6 +871,23 @@ export function TrackDemo() {
                       >
                         Try loading accounts again
                       </button>
+                    ) : installationChoiceState === "unavailable" && selectedInstallation ? (
+                      <>
+                        <button
+                          className={`${styles.button} ${styles.primaryButton}`}
+                          onClick={() => void chooseInstallation(selectedInstallation)}
+                          type="button"
+                        >
+                          Try this account again
+                        </button>
+                        <button
+                          className={`${styles.button} ${styles.ghostButton}`}
+                          onClick={authorizeExistingInstallation}
+                          type="button"
+                        >
+                          Authorize GitHub again
+                        </button>
+                      </>
                     ) : (
                       <button
                         className={`${styles.button} ${styles.primaryButton}`}
@@ -808,14 +906,22 @@ export function TrackDemo() {
                 </div>
               ) : null}
 
-              <button
-                className={styles.cancelInstallationButton}
-                disabled={installationChoiceState === "loading" || installationChoiceState === "submitting"}
-                onClick={cancelInstallationChoice}
-                type="button"
-              >
-                Cancel account selection
-              </button>
+              {installationChoiceState !== "cancel_error" ? (
+                <button
+                  className={styles.cancelInstallationButton}
+                  disabled={
+                    installationChoiceState === "loading" ||
+                    installationChoiceState === "submitting" ||
+                    installationChoiceState === "cancelling"
+                  }
+                  onClick={() => void cancelInstallationChoice()}
+                  type="button"
+                >
+                  {installationChoiceState === "cancelling"
+                    ? "Cancelling account selection"
+                    : "Cancel account selection"}
+                </button>
+              ) : null}
             </section>
           ) : sessionState !== "connected" ? (
             <div className={styles.githubBox}>
@@ -855,6 +961,11 @@ export function TrackDemo() {
               {error ? (
                 <p aria-live="polite" className={styles.errorMessage}>
                   {error}
+                </p>
+              ) : null}
+              {installationNotice ? (
+                <p aria-live="polite" className={styles.installationNotice} role="status">
+                  {installationNotice}
                 </p>
               ) : null}
             </div>

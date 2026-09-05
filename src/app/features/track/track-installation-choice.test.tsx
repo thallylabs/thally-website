@@ -7,7 +7,7 @@
 
 import { readFileSync } from "node:fs";
 
-import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen } from "@testing-library/react";
 import axe from "axe-core";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -183,23 +183,52 @@ describe("Track GitHub installation choice", () => {
     );
   });
 
-  it("uses account-specific recovery when a selected installation was revoked", async () => {
+  it("uses chooser-stage account recovery when Cloud rejects an unavailable installation", async () => {
+    const requests: Array<{ method: string; url: string }> = [];
     vi.stubGlobal(
       "fetch",
-      vi.fn(async (_input: string | URL | Request, init?: RequestInit) =>
-        init?.method === "POST"
-          ? jsonResponse({ error: "That GitHub installation is unavailable or expired." }, 403)
-          : jsonResponse(CHOICES),
-      ),
+      vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
+        const method = init?.method ?? "GET";
+        const url = input.toString();
+        requests.push({ method, url });
+        if (url.endsWith("/api/track/demo/github/installations") && method === "GET") {
+          return jsonResponse(CHOICES);
+        }
+        if (url.endsWith("/api/track/demo/github/installations") && method === "POST") {
+          return jsonResponse(
+            {
+              accessManagement: {
+                message:
+                  "This installation is unavailable or no longer grants your GitHub user repository access. Manage access, then try again.",
+                url: ORGANIZATION_INSTALLATION.accessManagementUrl,
+              },
+              error: "That GitHub installation is unavailable or has no authorized repositories.",
+            },
+            403,
+          );
+        }
+        throw new Error(`Unexpected request: ${method} ${url}`);
+      }),
     );
     render(<TrackDemo />);
     fireEvent.click(await screen.findByRole("button", { name: "Use acme, Organization, All repositories" }));
 
-    expect(await screen.findByRole("alert")).toHaveTextContent("unavailable or expired");
+    expect(await screen.findByRole("alert")).toHaveTextContent("unavailable or has no authorized repositories");
+    expect(
+      screen.getByText(
+        "This installation is unavailable or no longer grants your GitHub user repository access. Manage access, then try again.",
+      ),
+    ).toBeVisible();
     expect(screen.getByRole("link", { name: "Manage GitHub access" })).toHaveAttribute(
       "href",
       ORGANIZATION_INSTALLATION.accessManagementUrl,
     );
+    expect(screen.getByRole("button", { name: "Try this account again" })).toBeVisible();
+    expect(screen.getByRole("button", { name: "Authorize GitHub again" })).toBeVisible();
+    expect(requests).toEqual([
+      { method: "GET", url: "https://app.thally.io/api/track/demo/github/installations" },
+      { method: "POST", url: "https://app.thally.io/api/track/demo/github/installations" },
+    ]);
   });
 
   it("retries a transient choice-list failure", async () => {
@@ -228,18 +257,107 @@ describe("Track GitHub installation choice", () => {
     expect(String(fetchMock.mock.calls[0]?.[0])).toBe("https://app.thally.io/api/track/demo/session");
   });
 
-  it("cancels without selecting or exposing an installation", async () => {
-    const fetchMock = vi.fn(async () => jsonResponse(CHOICES));
+  it("awaits Cloud cancellation and keeps a prior session cleared after reload", async () => {
+    let hasPriorSession = true;
+    let resolveCancellation!: (response: Response) => void;
+    const cancellation = new Promise<Response>((resolve) => {
+      resolveCancellation = resolve;
+    });
+    const requests: Array<{
+      body: BodyInit | null | undefined;
+      credentials?: RequestCredentials;
+      headers: Headers;
+      method: string;
+      url: string;
+    }> = [];
+    const fetchMock = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
+      const method = init?.method ?? "GET";
+      const url = input.toString();
+      requests.push({
+        body: init?.body,
+        credentials: init?.credentials,
+        headers: new Headers(init?.headers),
+        method,
+        url,
+      });
+      if (url.endsWith("/api/track/demo/github/installations") && method === "GET") {
+        return jsonResponse(CHOICES);
+      }
+      if (url.endsWith("/api/track/demo/github/installations") && method === "DELETE") {
+        const response = await cancellation;
+        hasPriorSession = false;
+        return response;
+      }
+      if (url.endsWith("/api/track/demo/session") && method === "GET") {
+        return hasPriorSession
+          ? jsonResponse(sessionFor("prior-account"))
+          : jsonResponse({ error: "Connect GitHub to run Track." }, 401);
+      }
+      throw new Error(`Unexpected request: ${method} ${url}`);
+    });
     vi.stubGlobal("fetch", fetchMock);
-    render(<TrackDemo />);
+    const firstRender = render(<TrackDemo />);
 
     fireEvent.click(await screen.findByRole("button", { name: "Cancel account selection" }));
-    expect(screen.getByText("GitHub account selection was cancelled. No account was connected.")).toBeVisible();
+    expect(await screen.findByText("Cancelling account selection...")).toBeVisible();
+    expect(
+      screen.queryByText("GitHub account selection cancelled. No Track demo account is connected."),
+    ).not.toBeInTheDocument();
+    expect(window.location.search).toBe("?github=select_installation");
+
+    const cancelRequest = requests.find((request) => request.method === "DELETE");
+    expect(cancelRequest).toMatchObject({
+      body: undefined,
+      credentials: "include",
+      method: "DELETE",
+      url: "https://app.thally.io/api/track/demo/github/installations",
+    });
+    expect(cancelRequest?.headers.get("x-thally-track-demo")).toBe("track-v2");
+    expect(cancelRequest?.headers.has("content-type")).toBe(false);
+
+    await act(async () => {
+      resolveCancellation(new Response(null, { status: 204 }));
+    });
+
+    expect(
+      await screen.findByText("GitHub account selection cancelled. No Track demo account is connected."),
+    ).toBeVisible();
     expect(
       screen.queryByRole("button", { name: "Use alex, Personal account, Selected repositories only" }),
     ).not.toBeInTheDocument();
     expect(window.location.search).toBe("");
-    expect(fetchMock).toHaveBeenCalledTimes(1);
+
+    firstRender.unmount();
+    window.history.replaceState({}, "", "/features/track#demo");
+    render(<TrackDemo />);
+
+    expect(await screen.findByRole("button", { name: "Connect GitHub and choose repos" })).toBeVisible();
+    expect(screen.queryByText("Connected to prior-account")).not.toBeInTheDocument();
+    expect(requests.filter((request) => request.method === "GET")).toHaveLength(2);
+  });
+
+  it("does not claim cancellation when the Cloud reset fails", async () => {
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValueOnce(jsonResponse(CHOICES))
+      .mockResolvedValueOnce(jsonResponse({ error: "GitHub installation reset is temporarily unavailable." }, 502))
+      .mockResolvedValueOnce(new Response(null, { status: 204 }));
+    vi.stubGlobal("fetch", fetchMock);
+    render(<TrackDemo />);
+
+    fireEvent.click(await screen.findByRole("button", { name: "Cancel account selection" }));
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("reset is temporarily unavailable");
+    expect(
+      screen.queryByText("GitHub account selection cancelled. No Track demo account is connected."),
+    ).not.toBeInTheDocument();
+    expect(window.location.search).toBe("?github=select_installation");
+
+    fireEvent.click(screen.getByRole("button", { name: "Try cancelling again" }));
+    expect(
+      await screen.findByText("GitHub account selection cancelled. No Track demo account is connected."),
+    ).toBeVisible();
+    expect(fetchMock).toHaveBeenCalledTimes(3);
   });
 
   it("keeps a cancelled OAuth callback out of the chooser", async () => {
