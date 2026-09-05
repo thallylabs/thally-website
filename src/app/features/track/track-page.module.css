@@ -1552,6 +1552,96 @@
   margin: 0;
 }
 
+.provenanceCard {
+  background: var(--track-surface);
+  border: 1px solid var(--track-border-strong);
+  border-radius: 1rem;
+  margin: 0 0 1.25rem;
+  padding: 1.125rem 1.25rem;
+}
+
+.provenanceHeader {
+  align-items: flex-start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.provenanceHeader h4 {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.assessmentStatus {
+  background: color-mix(in oklab, var(--track-forest) 12%, transparent);
+  border: 1px solid color-mix(in oklab, var(--track-forest) 28%, transparent);
+  border-radius: 999px;
+  color: var(--track-forest-ink);
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 0.3rem 0.625rem;
+  text-transform: uppercase;
+}
+
+.assessmentNotice {
+  color: var(--muted-foreground);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  margin: 0.75rem 0 0;
+  max-width: 72ch;
+}
+
+.provenanceGrid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 1rem 0 0;
+}
+
+.provenanceGrid > div {
+  background: var(--track-panel);
+  border: 1px solid var(--track-border);
+  border-radius: 0.6875rem;
+  min-width: 0;
+  padding: 0.7rem 0.75rem;
+}
+
+.provenanceGrid > .provenanceIdentity {
+  grid-column: 1 / -1;
+}
+
+.provenanceGrid dt {
+  color: var(--track-faint);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.provenanceGrid dd {
+  margin: 0.25rem 0 0;
+  min-width: 0;
+}
+
+.provenanceGrid code,
+.prMeta code,
+.gapIdentity,
+.evidenceGrid code {
+  font-family: var(--font-mono);
+}
+
+.provenanceGrid code {
+  color: var(--track-secondary);
+  font-size: 0.7rem;
+  overflow-wrap: anywhere;
+}
+
 .prGroup {
   border-bottom: 1px solid var(--track-border);
   padding: 0.5rem 0 0.625rem;
@@ -1617,6 +1707,18 @@
 .prMeta {
   color: var(--track-faint);
   font-size: 0.74rem;
+}
+
+.prMeta code {
+  color: var(--track-secondary);
+  font-size: 0.7rem;
+}
+
+.gapIdentity {
+  color: var(--track-faint);
+  display: block;
+  font-size: 0.65rem;
+  margin-top: 0.25rem;
 }
 
 .prCovered {
@@ -1692,6 +1794,19 @@
 
   .runSummary {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .provenanceHeader {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .provenanceGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .provenanceGrid > .provenanceIdentity {
+    grid-column: auto;
   }
 
   .prTitle {
