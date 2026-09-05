@@ -15,7 +15,7 @@ import {
   type EmailPreferenceState,
   normalizeEmail,
 } from "@/lib/email-preferences";
-import { DESTINATIONS, LEGAL_ENTITY_NAME, SITE_NAME, SOCIAL } from "@/lib/site";
+import { DESTINATIONS, SITE_NAME, SOCIAL } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 /* The one brand flourish on this page: forest green for the period, the
@@ -417,8 +417,7 @@ export default function EmailPreferences() {
           thally.io
         </Link>
         <span className="text-muted-foreground mt-1.5 w-full font-mono text-[0.72rem]">
-          {SITE_NAME} is built and operated by {LEGAL_ENTITY_NAME}. You are seeing this page because you followed a link
-          from a Thally email.
+          {SITE_NAME} · You are seeing this page because you followed a link from a Thally email.
         </span>
       </footer>
     </div>

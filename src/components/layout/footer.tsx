@@ -2,7 +2,7 @@ import { Github } from "lucide-react";
 import Link from "next/link";
 
 import { ThallyMark } from "@/components/layout/logo";
-import { DESTINATIONS, LEGAL_ENTITY_NAME, SOCIAL } from "@/lib/site";
+import { DESTINATIONS, SOCIAL } from "@/lib/site";
 
 const navigation = [
   {
