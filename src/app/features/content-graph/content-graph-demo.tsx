@@ -32,7 +32,7 @@ function HtmlProjection() {
   return (
     <div className={styles.renderView}>
       <div className={styles.renderCrumbs}>Docs / SDK / Sending a job</div>
-      <h1>Sending a job</h1>
+      <h2>Sending a job</h2>
       <p>
         The client sends a job and waits for the result. Every request is subject to a <strong>timeout</strong>:{" "}
         <strong>60{" "}seconds</strong> by default.
@@ -170,11 +170,7 @@ export function FormatStudio() {
   const Projection = PROJECTIONS[format];
 
   return (
-    <div
-      className={styles.studio}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <div className={styles.studio} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <div className={styles.studioSource}>
         <div className={styles.studioBar}>
           <span aria-hidden="true" className={styles.barDots}>

@@ -55,20 +55,32 @@ const comparisonFeatures: FeatureSection[] = [
       {
         name: "Documentation sites",
         free: "1 managed",
-        cloud: "Unlimited",
-        enterprise: "Unlimited",
+        cloud: "3 included",
+        enterprise: "Custom",
       },
       {
         name: "AI credits per month",
         free: "Bring your own key",
-        cloud: "10,000",
+        cloud: "10,000 + rollover",
         enterprise: "Custom",
       },
       {
         name: "Workspace members",
         free: "Owner only",
-        cloud: "5 included",
-        enterprise: "5 included",
+        cloud: "5 included · $20/mo extra",
+        enterprise: "Custom",
+      },
+      {
+        name: "Additional managed sites",
+        free: false,
+        cloud: "$39/mo or $390/yr",
+        enterprise: "Custom",
+      },
+      {
+        name: "Credit packs",
+        free: false,
+        cloud: "10,000 for $79",
+        enterprise: "Custom",
       },
       {
         name: "Connected product repositories",

@@ -13,29 +13,29 @@ const STAGES = [
   {
     number: "01.",
     label: "Connect repositories",
-    title: "Set it up once. It runs on every merge.",
-    body: "Install the read-only GitHub App and choose the product repos Thally should watch. You choose exactly what Thally can see.",
+    title: "Connect the repos that define and explain your product.",
+    body: "Choose the product and customer-facing repositories Thally should watch. You decide exactly what Thally can see.",
     icon: GitBranch,
   },
   {
     number: "02.",
-    label: "Impact analysis",
-    title: "Understand the change before the update.",
-    body: "Track evaluates merged changes, gathers evidence, and finds the documentation each change affects.",
+    label: "Understand the change",
+    title: "Work out what changed before touching a word.",
+    body: "Track evaluates each merged change, gathers evidence, and works out what it means for the people using your product.",
     icon: Track,
   },
   {
     number: "03.",
-    label: "Drafted docs PRs",
-    title: "Evidence-backed drafts, ready to review.",
-    body: "Thally opens a pull request on your docs repo only when the evidence says an update is needed.",
+    label: "Trace the impact",
+    title: "Find every connected surface the change affects.",
+    body: "Thally traces the impact across your docs, website, help center, and changelog, then drafts only the updates the evidence supports.",
     icon: GitPullRequest,
   },
   {
     number: "04.",
     label: "Human review",
-    title: "You approve what ships. Every time.",
-    body: "Your team reviews, edits, and merges. A no-change result is valid. Thally never pushes to main.",
+    title: "You approve what ships, every time.",
+    body: "Your team reviews, edits, and merges. A no-change result is valid. Nothing publishes without a human.",
     icon: Structured,
   },
 ];
@@ -67,11 +67,12 @@ export function PipelineTabs() {
       <div className="mb-[60px] border-b border-white/18 pb-[60px]">
         <div className="mx-auto max-w-[746px] px-5 text-center">
           <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
-            One product change. The right knowledge updates.
+            One product change. Every connected surface, updated.
           </SplitReveal>
           <Reveal delay={0.15} distance={20}>
             <p className="mt-5 text-lg text-white/90">
-              Thally watches the repos you choose and drafts only the updates the evidence supports.
+              Thally works out what each merge means, traces where the impact lands, and drafts only the updates the
+              evidence supports.
             </p>
           </Reveal>
         </div>

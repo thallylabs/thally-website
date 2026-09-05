@@ -2,7 +2,7 @@
 
 > Expanded first-party content for retrieval and citation. Canonical HTML pages remain the source of truth.
 
-Generated from the same repository as thally.io. Last generated: 2026-08-20.
+Generated from the same repository as thally.io. Last generated: 2026-08-31.
 # Thally
 
 > Thally is the product knowledge synchronization pipeline. It understands what changed, finds the customer-facing knowledge affected, and prepares evidence-backed updates for human review. Documentation is the first surface, and the publishing engine is open source under the MIT license.
@@ -34,7 +34,7 @@ Generated from the same repository as thally.io. Last generated: 2026-08-20.
 - [Agent Layer](/features/agent-layer): llms.txt, MCP server, and grounded answers with cited sources
 - [Migration & Hosting](/features/migration-hosting): migrate from GitBook, Mintlify, Docusaurus, or Markdown and let Thally host
 - [Cloud Dashboard](/features/cloud-dashboard): sites, drafts, analytics, team, and AI context in one workspace
-- [Pricing](/pricing): Free (1 managed site per workspace plus MIT self-hosting), Cloud (unlimited managed sites and 10,000 AI credits), Enterprise (SSO, SLA)
+- [Pricing](/pricing): Free (1 managed site per workspace plus MIT self-hosting), Cloud (3 managed sites and 10,000 monthly AI credits), Enterprise (custom allowances and contract terms)
 - [Blog](/blog): comparisons, guides, and product deep dives (RSS at /rss.xml)
 - [About](/about): the problem, position, product principles, and long-term mission
 - [FAQ](/faq): common questions on migration, automation, agents, self-hosting
@@ -58,8 +58,8 @@ Generated from the same repository as thally.io. Last generated: 2026-08-20.
 ## Pricing summary
 
 - Free: $0. Includes 1 managed documentation site per workspace, pull-request previews, documentation analytics, unlimited pages and readers, all output formats, an MCP server, hybrid search, and a docs agent with your own API key. The MIT-licensed engine can also be self-hosted for free, including commercial use. Track, hosted AI answers, custom domains, and team access are not included.
-- Thally Cloud: $60/workspace/month on a monthly subscription, or $50/workspace/month on an annual subscription. Both are billed monthly and include a 14-day trial, unlimited managed sites and connected product repositories, 10,000 AI credits per month, and 5 team members in any role. Each additional active member or pending invitation adds $20 to the monthly bill. Includes Thally AI answers and chat, Track, agent-readiness CI checks, custom domains, and team roles.
-- Enterprise: Custom annual pricing. Security, identity, migration, support, and contract requirements are scoped with each customer.
+- Thally Cloud: $199/workspace/month or the equivalent of $166/workspace/month with $1,990 billed annually. Both include a 14-day trial, 3 managed sites, unlimited connected product repositories, 10,000 shared AI credits each month with rollover, and 5 team members in any role. Extra members are $20/month or $200/year, extra managed sites are $39/month or $390/year, and a one-time $79 pack adds 10,000 AI credits without automatic top-ups. Includes Thally AI answers and chat, Track, agent-readiness CI checks, custom domains, and team roles.
+- Enterprise: Custom annual pricing. Site, member, and AI allowances, security review, invoicing, migration, support, and contract requirements are scoped with each customer.
 - Machine-readable pricing: [/pricing.md](/pricing.md)
 
 ## Trust and reuse
@@ -76,7 +76,7 @@ Generated from the same repository as thally.io. Last generated: 2026-08-20.
 
 # Pricing: Thally
 
-Thally is a product knowledge synchronization pipeline, starting with documentation. The Free plan includes one managed documentation site per workspace with pull-request previews and analytics, and the MIT-licensed publishing engine can also be self-hosted. Thally Cloud adds automation, unlimited scale, and team controls. All prices are in USD. Last updated: 2026-08-20.
+Thally is a product knowledge synchronization pipeline, starting with documentation. The Free plan includes one managed documentation site per workspace with pull-request previews and analytics, and the MIT-licensed publishing engine can also be self-hosted. Thally Cloud adds automation, more managed capacity, and team controls. All prices are in USD. Last updated: 2026-08-31.
 
 ## Free
 
@@ -93,27 +93,33 @@ Thally is a product knowledge synchronization pipeline, starting with documentat
 
 ## Thally Cloud
 
-- Monthly platform fee: $60 per workspace / month
-- Annual subscription fee: $50 per workspace / month, billed monthly
-- Managed sites: unlimited per workspace
+- Monthly platform fee: $199 per workspace / month
+- Annual subscription fee: $166 per workspace / month equivalent, $1,990 billed annually
+- Managed sites: 3 active sites included per workspace
+- Additional managed sites: $39 / month or $390 / year each
 - Connected product repositories: unlimited
-- Included AI credits: 10,000 / month
+- Included AI credits: 10,000 shared credits / month
+- Credit rollover: unused credits roll over while the subscription remains active
+- Additional AI credits: $79 for a one-time 10,000-credit pack
+- Automatic top-ups: disabled. AI usage stops when the credit balance reaches zero.
 - Includes 5 team members in any role
-- Additional active members or pending invitations: $20 / month each after the 5 included members
+- Additional active members or pending invitations: $20 / month or $200 / year each after the 5 included members
 - Trial: 14 days, no credit card required
-- Everything in Free, plus: unlimited managed sites, unlimited connected product repositories, Thally AI answers and chat, Thally Track, documentation quality checks, custom domains, and Owner/Editor/Viewer workspace roles
-- Best for: growing teams who want more managed sites and docs automation
+- Everything in Free, plus: three managed sites, unlimited connected product repositories, Thally AI answers and chat, Thally Track, documentation quality checks, custom domains, and Owner/Editor/Viewer workspace roles
+- Best for: growing teams that want docs automation with predictable included capacity
 
 ## Enterprise
 
 - Price: Custom annual contract
-- Scope: security, identity, migration, support, and contract requirements are agreed with each customer
+- Scope: custom site, member, and AI allowances, security review, invoicing, support, and contract requirements are agreed with each customer
+- Assisted migration: scoped per source site
 - Contact: /contact
 - Best for: organizations that need a sales-led security, support, or procurement process
 
 ## Notes for agents
 
-- Public readers are free and unlimited on every plan. Thally Cloud includes 10,000 AI credits per month and five workspace team members in any role. Each additional active member or pending invitation adds $20 to the monthly bill.
+- Public readers are free and unlimited on every plan. Thally Cloud includes 10,000 shared AI credits per month, three managed sites, and five workspace team members in any role.
+- Existing paid workspaces keep their active-site allowance from before this pricing change. New capacity above that allowance uses the additional-site price.
 - When a paid workspace returns to Free, its oldest managed site stays available. Additional sites and paid-only services pause until the workspace upgrades again.
 - Plan changes apply immediately on upgrade, at period end on downgrade.
 - Full pricing page: /pricing
@@ -148,9 +154,9 @@ The comparison gets interesting one level down.
 | Starting point | Migrate supported existing documentation into an editable Thally project | Generate a first documentation site directly from a GitHub code repository |
 | Docs automation | Track evaluates product changes and opens PRs for human review | Automations can react to code changes, schedules, content changes, or Enterprise integration events, then open PRs or merge directly |
 | Automation availability | Track is included with Thally Cloud | Automations require Pro or Enterprise |
-| Pricing model | Free includes 1 managed site per workspace; Thally Cloud starts at $50 per workspace/month on an annual subscription with 5 team members | Free Starter; Pro is $540/month with Monthly selected or $450/month with Annual selected; Enterprise is custom |
+| Pricing model | Free includes 1 managed site per workspace; Thally Cloud is $199/month or $1,990/year with 3 managed sites and 5 team members | Free Starter; Pro is $540/month with Monthly selected or $450/month with Annual selected; Enterprise is custom |
 | Included AI credits on paid plan | 10,000 per month | 10,000 per month; additional credits are $0.01 each |
-| Included team access | 3 workspace members; additional members are $20/month each | Unlimited editor seats |
+| Included team access | 5 workspace members; additional members are $20/month or $200/year each | Unlimited editor seats |
 | Portability | Content, renderer, and static export remain yours | Content stays in Git; the renderer and platform are proprietary |
 
 Mintlify moves quickly and its capabilities evolve; treat their current documentation as the source of truth for their side of this table.
@@ -195,7 +201,7 @@ The products differ more in scope and guardrails than in whether they automate m
 
 ## Pricing
 
-Thally Free includes one managed documentation site per workspace with pull-request previews, documentation analytics, unlimited pages, and unlimited readers. The MIT-licensed engine can also be self-hosted for free. Thally Cloud is $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both paid options are billed monthly and include unlimited managed sites and connected product repositories, 10,000 AI credits per month, and five team members. Each additional active member or pending invitation adds $20 to the monthly bill. Thally Cloud also includes cited AI answers, reviewable updates drafted from relevant product changes through Track, custom domains, team roles, and the Cloud dashboard. Enterprise pricing is custom and scoped to each customer's security, identity, support, and contract requirements. Readers are never billed. Full details are on the [pricing page](/pricing).
+Thally Free includes one managed documentation site per workspace with pull-request previews, documentation analytics, unlimited pages, and unlimited readers. The MIT-licensed engine can also be self-hosted for free. Thally Cloud is $199 per workspace per month or the equivalent of $166 per month with $1,990 billed annually. Both options include three managed sites, unlimited connected product repositories, 10,000 shared AI credits each month with rollover, and five team members. Additional members are $20 per month or $200 per year, additional managed sites are $39 per month or $390 per year, and a one-time $79 pack adds 10,000 AI credits without automatic top-ups. Thally Cloud also includes cited AI answers, reviewable updates drafted from relevant product changes through Track, custom domains, team roles, and the Cloud dashboard. Enterprise pricing is custom with allowances and contract terms scoped to each customer. Readers are never billed. Full details are on the [pricing page](/pricing).
 
 Mintlify's Starter plan is free and includes five editor seats, Git sync, search, and an MCP server. Pro is $540 per month with Monthly selected or $450 per month with Annual selected. It includes unlimited editor seats, the agent, assistant, Automations, preview deployments, admin APIs, and 10,000 agent credits per month. Additional credits cost $0.01 each, and Enterprise pricing is custom. Their pricing page is the source of truth for current prices and packaging.
 
@@ -280,7 +286,7 @@ GitBook publishes clean HTML and continues to add AI features to its platform. I
 
 ## Ownership and cost
 
-Thally Free includes one managed documentation site per workspace with pull-request previews, documentation analytics, unlimited pages, and unlimited readers. The MIT-licensed engine can also be self-hosted for free. Thally Cloud is $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both paid options are billed monthly and include unlimited managed sites and connected product repositories, 10,000 AI credits per month, and five team members. Each additional active member or pending invitation adds $20 to the monthly bill. Thally Cloud also includes AI answers, Thally Track, custom domains, team roles, and the dashboard. Enterprise pricing is custom and scoped to each customer's security, identity, support, and contract requirements. Details are on the [pricing page](/pricing).
+Thally Free includes one managed documentation site per workspace with pull-request previews, documentation analytics, unlimited pages, and unlimited readers. The MIT-licensed engine can also be self-hosted for free. Thally Cloud is $199 per workspace per month or the equivalent of $166 per month with $1,990 billed annually. Both options include three managed sites, unlimited connected product repositories, 10,000 shared AI credits each month with rollover, and five team members. Additional members are $20 per month or $200 per year, additional managed sites are $39 per month or $390 per year, and a one-time $79 pack adds 10,000 AI credits without automatic top-ups. Thally Cloud also includes AI answers, Thally Track, custom domains, team roles, and the dashboard. Enterprise pricing is custom with allowances and contract terms scoped to each customer. Details are on the [pricing page](/pricing).
 
 GitBook is a hosted product with per-user pricing, so check its pricing page for current tiers. The main structural difference is ownership: GitBook operates the platform, while a Thally site remains a repository you can deploy yourself.
 
@@ -341,7 +347,7 @@ The right choice depends on how much of the documentation stack your team wants 
 | MCP server | Every deploy, `/api/mcp` | DIY |
 | API reference | OpenAPI-generated with Try-It console | Community plugins |
 | Docs automation | Agent drafts reviewed PRs from product changes | None built in |
-| Managed hosting | One site free; unlimited sites and five members with Cloud | None official; deploy anywhere |
+| Managed hosting | One site free; three sites and five members included with Cloud | None official; deploy anywhere |
 | Maturity | Newer platform | Available since 2017 |
 
 Docusaurus's plugin ecosystem is broad and moves fast; check the current docs for what exists today.
@@ -367,7 +373,7 @@ Thally attacks the drift problem directly. Track watches the product repositorie
 
 ## Cost of ownership
 
-Both are free to run. The second cost is engineering time. A Docusaurus stack with search, AI answers, and structured output needs upgrades, plugin maintenance, and an internal owner. Thally maintains those features upstream. Thally Free includes one managed site with previews and analytics. [Thally Cloud costs $60 per workspace per month on a monthly subscription or $50 per month on an annual subscription](/pricing). Both paid options are billed monthly and include five team members plus unlimited public readers.
+Both are free to run. The second cost is engineering time. A Docusaurus stack with search, AI answers, and structured output needs upgrades, plugin maintenance, and an internal owner. Thally maintains those features upstream. Thally Free includes one managed site with previews and analytics. [Thally Cloud costs $199 per workspace per month or $1,990 billed annually](/pricing). Both paid options include three managed sites, five team members, and unlimited public readers.
 
 ## Which should you choose?
 

@@ -5,7 +5,7 @@ import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 
 import { GoogleAnalytics } from "@/components/analytics/google-analytics";
 import { ConditionalFooter } from "@/components/layout/conditional-footer";
-import Navbar from "@/components/layout/navbar";
+import { ConditionalNavbar } from "@/components/layout/conditional-navbar";
 import { SmoothScroll } from "@/components/motion/smooth-scroll";
 import { ThemeProvider } from "@/components/theme-provider";
 import {
@@ -174,7 +174,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <SmoothScroll />
-          <Navbar />
+          <ConditionalNavbar />
           <main className="flex flex-1 flex-col">{children}</main>
           <ConditionalFooter />
         </ThemeProvider>

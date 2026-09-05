@@ -649,12 +649,29 @@ export function QuotePanels({
 /* Partner strip                                                       */
 /* ------------------------------------------------------------------ */
 
-export function PartnerStrip({ title, items }: { title: string; items: Array<{ name: string; icon: ReactNode }> }) {
+export function PartnerStrip({
+  title,
+  description,
+  items,
+}: {
+  title: string;
+  description?: string;
+  items: Array<{ name: string; icon: ReactNode }>;
+}) {
   return (
     <section className="bg-canvas pt-[120px] pb-[60px]">
-      <SplitReveal as="h2" mode="chars" className="heading-section mx-auto mb-14 max-w-3xl px-5 text-center text-white">
+      <SplitReveal
+        as="h2"
+        mode="chars"
+        className={cn("heading-section mx-auto max-w-3xl px-5 text-center text-white", description ? "mb-6" : "mb-14")}
+      >
         {title}
       </SplitReveal>
+      {description && (
+        <Reveal delay={0.15} distance={20} className="mx-auto mb-14 max-w-2xl px-5 text-center">
+          <p className="text-lg leading-relaxed text-white/65">{description}</p>
+        </Reveal>
+      )}
       <div className="mx-auto grid w-full max-w-[1240px] grid-cols-2 sm:grid-cols-3">
         {items.map((item, i) => (
           <div

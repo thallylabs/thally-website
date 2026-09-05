@@ -30,12 +30,12 @@ export function CTA() {
       <div className="mx-auto w-full max-w-[1260px] px-5">
         <div className="mx-auto mb-20 max-w-[800px] text-center">
           <SplitReveal as="h2" mode="chars" className="heading-section text-white">
-            Ship the code. Docs follow.
+            Ship the code. Everything else follows.
           </SplitReveal>
           <Reveal delay={0.2} distance={24}>
             <p className="mt-4 text-lg text-white/85">
-              Keep shipping without letting your docs fall behind. Thally drafts the updates; your team approves what
-              ships.
+              Keep your product knowledge accurate without chasing information across tickets, pull requests, and
+              conversations. Thally drafts the updates, your team approves what ships.
             </p>
           </Reveal>
           <Reveal delay={0.35} distance={16} className="mt-8">

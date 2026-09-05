@@ -11,7 +11,7 @@ export const faqItems: FAQItem[] = [
     category: "Support",
     question: "Is there a free version?",
     answer:
-      "Yes. The Free plan includes one managed documentation site per workspace, pull-request previews, documentation analytics, unlimited pages and readers, all four output formats, and the MCP server. The engine is also open source under the MIT license and free to self-host forever. Thally Cloud adds unlimited managed sites, AI answers, Track, custom domains, and team controls.",
+      "Yes. The Free plan includes one managed documentation site per workspace, pull-request previews, documentation analytics, unlimited pages and readers, all four output formats, and the MCP server. The engine is also open source under the MIT license and free to self-host forever. Thally Cloud adds three managed sites, AI answers, Track, custom domains, and team controls.",
   },
   {
     category: "Support",
@@ -41,13 +41,19 @@ export const faqItems: FAQItem[] = [
     category: "Account",
     question: "What roles are available?",
     answer:
-      "Owner, Editor, and Viewer. Owners manage billing and SSO, Editors write and publish, and Viewers get read access to private documentation.",
+      "Owner, Editor, and Viewer. Owners manage billing and workspace access, Editors write and publish, and Viewers get read access to private documentation.",
   },
   {
     category: "Account",
     question: "How does billing work?",
     answer:
-      "Thally Cloud costs $60 per workspace per month on a monthly subscription, or $50 per month on an annual subscription. Both are billed monthly and include 10,000 AI credits per month, unlimited connected product repositories, and five team members. Each additional active member or pending invitation adds $20 to the monthly bill.",
+      "Thally Cloud costs $199 per workspace per month, or the equivalent of $166 per month with $1,990 billed annually. Both include three managed sites, 10,000 shared monthly AI credits that roll over, unlimited connected product repositories, and five team members. Extra members are $20 per month or $200 per year, and extra sites are $39 per month or $390 per year.",
+  },
+  {
+    category: "Account",
+    question: "Can I buy more AI credits?",
+    answer:
+      "Yes. A one-time $79 credit pack adds 10,000 AI credits to your workspace. Credits roll over while your subscription remains active, usage stops when the balance reaches zero, and packs never auto-recharge.",
   },
   {
     category: "Account",
@@ -59,19 +65,19 @@ export const faqItems: FAQItem[] = [
     category: "Features",
     question: "What is Thally?",
     answer:
-      "Thally is a product knowledge synchronization pipeline. It connects product changes to customer-facing knowledge, identifies what needs to change, and prepares reviewable updates. Documentation is the first surface.",
+      "Thally is the product knowledge layer for software teams. It connects product changes to your docs, website, help center, and other customer-facing content, identifies what needs to change, and opens evidence-backed pull requests for your team to review.",
   },
   {
     category: "Features",
     question: "How is Thally different from a documentation platform?",
     answer:
-      "A documentation platform is a destination where knowledge is written and stored. Thally adds the synchronization pipeline around it. Track evaluates product changes, maps them to affected documentation, and prepares evidence-backed updates for human review.",
+      "Thally is a complete documentation platform, and it also keeps customer-facing knowledge aligned with the product. Track evaluates product changes, maps them to affected pages across your docs, website, and support content, and prepares evidence-backed updates for human review.",
   },
   {
     category: "Features",
     question: "What knowledge surfaces can Thally update today?",
     answer:
-      "Thally currently focuses automated updates on documentation repositories, including the guides, API references, examples, and release notes maintained there. The long-term direction is to keep the broader customer-facing knowledge ecosystem synchronized.",
+      "Thally can update your documentation site, including guides, API references, examples, and the changelog, plus connected customer-facing repositories such as your website and support content. Most teams start with docs and connect other surfaces as they go.",
   },
   {
     category: "Features",

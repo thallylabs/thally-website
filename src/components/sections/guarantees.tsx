@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 
 const GUARANTEES = [
   {
-    title: "Your content stays in your repository",
-    body: "Your documentation remains as source files in your repository. There is nothing to export because we never hold the source.",
+    title: "Your content stays in your repositories",
+    body: "Your docs, website, and content remain as source files in Git. There is nothing to export because we never hold the source.",
     tag: "Source files in Git",
   },
   {
@@ -17,7 +17,7 @@ const GUARANTEES = [
   },
   {
     title: "Self-hosting stays available",
-    body: "Clone the repository and deploy the open-source engine wherever Next.js runs. Managed hosting is a service, not a content lock-in.",
+    body: "Clone your docs repository and deploy the open-source engine wherever Next.js runs. Managed hosting is a service, not a content lock-in.",
     tag: "Deploy anywhere",
   },
   {
@@ -27,22 +27,22 @@ const GUARANTEES = [
   },
   {
     title: "Cancellation leaves you with the source",
-    body: "Your repository and the MIT-licensed engine remain yours. If Cloud hosting ends, you can deploy the site elsewhere.",
+    body: "Your repositories and the MIT-licensed engine remain yours. If Cloud hosting ends, you can deploy your docs site elsewhere.",
     tag: "No exit tax",
   },
   {
-    title: "Humans approve important communication",
-    body: "Thally prepares reviewable work. Your team keeps judgment and publishing authority.",
+    title: "A human approves every update",
+    body: "Thally drafts the work, your team decides what publishes. Nothing goes live without review.",
     tag: "Human review",
   },
   {
     title: "Understand before generating",
-    body: "Thally finds what changed, gathers evidence, and maps the affected knowledge before drafting new words.",
+    body: "Thally works out what a change means and maps the affected surfaces before drafting new words.",
     tag: "Evidence first",
   },
   {
     title: "A no-change result is valid",
-    body: "Thally reports when no documentation update is needed instead of inventing one.",
+    body: "When the evidence shows nothing needs to change, Thally says so instead of inventing an update.",
     tag: "No busywork",
   },
 ];
@@ -106,12 +106,12 @@ export function Guarantees() {
         <div className="marketing-section-pad relative">
           <div className="mx-auto max-w-3xl px-5 text-center">
             <SplitReveal as="h2" mode="chars" className="heading-section text-white">
-              Proof over promises
+              Evidence first. Your surfaces stay yours.
             </SplitReveal>
             <Reveal delay={0.15} distance={24}>
               <p className="mx-auto mt-5 max-w-xl text-lg text-white/85">
-                Pay for the service. Keep the source. Thally Cloud never takes ownership of your content, repository,
-                engine, or domain.
+                Thally removes the detective work while your team keeps judgment, publishing authority, and ownership of
+                every source.
               </p>
             </Reveal>
           </div>

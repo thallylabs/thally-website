@@ -25,14 +25,14 @@ import { TrackDemo } from "./track-demo";
 export const metadata: Metadata = {
   title: "Thally Track: Product Knowledge Impact Analysis",
   description:
-    "See how Thally Track understands a bounded product change, finds affected customer-facing knowledge, and drafts evidence-backed documentation updates for human review.",
+    "Run Thally Track on your own repositories. It reads your last five merged pull requests, finds what your docs, website, and support content have not caught up with, and offers to draft the fixes.",
   alternates: {
     canonical: "/features/track",
   },
   openGraph: {
-    title: "The product changed. The knowledge should follow.",
+    title: "Your product changed. Did your docs, website, and help center?",
     description:
-      "Experience how Thally Track maps specific product changes to evidence-backed documentation drafts for human review.",
+      "Experience how Thally Track maps a specific product change to evidence-backed drafts across connected customer-facing surfaces, ready for human review.",
     url: `${SITE_URL}/features/track`,
   },
 };
@@ -46,7 +46,7 @@ const softwareJsonLd = {
   operatingSystem: "Web",
   url: `${SITE_URL}/features/track`,
   description:
-    "Product knowledge impact analysis for explicit API, SDK, configuration, and CLI changes, starting with evidence-backed documentation drafts for human review.",
+    "Product knowledge impact analysis for API, SDK, configuration, and CLI changes. Track traces each merged change to affected docs, website pages, and support content, then drafts evidence-backed updates for human review.",
   isPartOf: { "@id": `${SITE_URL}/#software` },
   publisher: { "@id": `${SITE_URL}/#organization` },
 };
@@ -287,25 +287,25 @@ export default function TrackFeaturePage() {
 
       <FeatureBanner
         title="Your product changed."
-        titleAccent="Did your docs?"
-        description="Track connects your documentation to the repositories that change it. When a pull request merges, Thally analyzes the bounded change, finds the connected pages, and drafts evidence-backed updates for review."
-        primaryCta={{ label: "Try it on your repos", href: "#demo" }}
+        titleAccent="Did your docs, website, and help center?"
+        description="Track connects the repositories that change your product to the docs, website, and support content that explain it. When a pull request merges, Thally works out what changed for customers, finds every place that still says otherwise, and drafts evidence-backed updates for review."
+        primaryCta={{ label: "Run it on your repos", href: "#demo" }}
         secondaryCta={{ label: "See how it works", href: "#how-track-works" }}
-        finePrint="No Thally account needed. You choose exactly which GitHub repositories Thally can read."
+        finePrint="No Thally account needed. Connect GitHub, and Track reads your last five merged pull requests in plain language."
       >
         <ImpactBoard />
       </FeatureBanner>
 
       <div id="how-track-works">
         <ProcessCards
-          title="Understand the change before drafting the update."
+          title="Understand the change. Then trace it everywhere."
           steps={[
             {
               label: "Connect",
-              title: "Connect your documentation",
-              subtitle: "Pages, code samples, OpenAPI, and llms.txt, indexed once.",
+              title: "Connect your customer-facing surfaces",
+              subtitle: "Docs, website, help center, and content repositories.",
               description:
-                "Thally indexes your docs repository once, including pages, code samples, OpenAPI descriptions, and llms.txt.",
+                "Start with your docs site, including pages, code samples, OpenAPI descriptions, and llms.txt. Then connect the other repositories where customers learn about your product.",
               visual: <DocsIndexVisual />,
             },
             {
@@ -319,9 +319,9 @@ export default function TrackFeaturePage() {
             {
               label: "Analyze",
               title: "Analyze a merged change",
-              subtitle: "Candidates with evidence, confidence, and a drafted diff.",
+              subtitle: "Candidates across connected surfaces, with evidence, confidence, and a drafted diff.",
               description:
-                "For each merged pull request, Track extracts public-surface changes, searches the connected docs, and presents candidates with evidence, confidence, and a drafted diff.",
+                "For each merged pull request, Track works out what changed for users, searches every connected surface for pages that now contradict it, and presents candidates with evidence, confidence, and a drafted diff. A no-change result is valid.",
               visual: <CandidateVisual />,
             },
           ]}
@@ -345,22 +345,22 @@ export default function TrackFeaturePage() {
             <p className="absolute bottom-6 left-8 text-lg font-medium text-white">Track inside Thally Cloud</p>
           </div>
         }
-        quote="A no-change result is valid. Thally never pushes to main."
+        quote="A no-change result is valid. Thally never publishes to any surface without a human."
         quoteAttribution="How Track behaves, by design"
-        wideQuote="A repository is evidence about implementation; documentation is evidence about communicated behaviour. Track surfaces candidates backed by specific diffs, and every draft is reviewed by a human before it ships."
-        wideAttribution="What Track won't do: claim certainty"
+        wideQuote="A repository is evidence about implementation, and documentation is evidence about communicated behaviour. Track surfaces candidates backed by specific diffs, and every draft is reviewed by a human before it ships."
       />
 
       {/* Live demo */}
       <section id="demo" className="bg-canvas pb-[120px]">
         <div className="mx-auto mb-14 max-w-[746px] px-5 text-center">
           <SplitReveal as="h2" mode="chars" className="heading-section mt-4 text-white">
-            Try Track right now.
+            Run Track on your repos right now.
           </SplitReveal>
           <Reveal delay={0.15} distance={20}>
             <p className="mt-5 text-lg text-[#afafaf]">
-              Connect a documentation repository and at least one product repository, then let Thally analyze the most
-              recent merged change.
+              Connect the repositories where your product changes, then connect the docs, website, and help center your
+              customers read. Track reads your last five merged pull requests and explains what each one changed that
+              your public content has not caught up with. Then it offers to draft the pull requests.
             </p>
           </Reveal>
         </div>
